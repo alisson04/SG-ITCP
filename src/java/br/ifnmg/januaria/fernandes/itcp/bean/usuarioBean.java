@@ -119,6 +119,8 @@ public class usuarioBean implements Serializable {
             } else {
                 usuarioUsoGeral.setTelefoneAlternativoUsuario(telefoneAlternativoUsuario);
             }
+            
+            enviarEmail(usuarioUsoGeral.getEmailUsuario(), "Sistema Sigitec", "Suas informações no sistema foram editadas");
 
             usuarioDAO.salvarGenerico(usuarioUsoGeral);
             usrSendoVisualizado = true;

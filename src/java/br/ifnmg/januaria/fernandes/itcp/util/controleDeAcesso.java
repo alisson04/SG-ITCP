@@ -6,7 +6,8 @@
 package br.ifnmg.januaria.fernandes.itcp.util;
 
 import java.io.IOException;
-import java.util.logging.Filter;
+import javax.servlet.Filter;
+import java.util.logging.LogRecord;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -22,24 +23,26 @@ import javax.servlet.http.HttpSession;
  * @author alisson
  */
 @WebFilter(servletNames = {"Faces Servlet"})
-public abstract class controleDeAcesso implements Filter {
+public class controleDeAcesso implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
+        System.out.println("__________controleDeAcesso(doFilter) Inicio");
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
 
         if ((session.getAttribute("USUARIOLogado") != null)
                 || (req.getRequestURI().endsWith("Login.xhtml"))
                 || (req.getRequestURI().contains("javax.faces.resources/"))) {
-            
+            System.out.println("__________controleDeAcesso(doFilter) IF");
             //redireciona("/inicio.xhtml", responce);
             chain.doFilter(request, response);
         }
         
         else{
-            redireciona("/Login.xhtml", response);
+            System.out.println("__________controleDeAcesso(doFilter) ELSE");
+            redireciona("/sigitec/Login.xhtml", response);
         }
     }
     
@@ -52,5 +55,9 @@ public abstract class controleDeAcesso implements Filter {
     private void redireciona(String url, ServletResponse response) throws IOException{
         HttpServletResponse res = (HttpServletResponse) response;
         res.sendRedirect(url);
+    }
+
+    public boolean isLoggable(LogRecord record) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

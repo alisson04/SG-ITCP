@@ -13,6 +13,17 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+    
+    <!-- login filter --> 
+    <filter> 
+        <filter-name>controleDeAcesso</filter-name> 
+        <filter-class>br.ifnmg.januaria.fernandes.itcp.util.controleDeAcesso</filter-class> 
+    </filter> 
+    <filter-mapping> 
+        <filter-name>controleDeAcesso</filter-name> 
+        <url-pattern>/sigitec/*</url-pattern> 
+    </filter-mapping>
+    
     <session-config>
         <session-timeout>
             30

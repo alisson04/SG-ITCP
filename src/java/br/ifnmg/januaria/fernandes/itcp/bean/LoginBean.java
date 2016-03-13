@@ -41,8 +41,8 @@ public class LoginBean implements Serializable {
                 Object b = new Object();
                 SessionUtil.setParam("USUARIOLogado", b);
                 
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/inicio.xhtml");
-                return "/inicio.xhtml";
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/inicio.xhtml");
+                return "/sigitec/inicio.xhtml";
             } else {
                 System.out.println("__________BEAN(loginBean): Não encontrou o e-mail");
                 return null;
