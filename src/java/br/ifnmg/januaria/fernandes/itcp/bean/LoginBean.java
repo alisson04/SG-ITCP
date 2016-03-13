@@ -51,17 +51,18 @@ public class LoginBean implements Serializable {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        /*
-        System.out.println("BEAN(logar): SENHA: " + usuarioLogado.getSenhaUsuario());
-        System.out.println("BEAN(logar): EMAIL: " + usuarioLogado.getEmailUsuario());
-        usuarioLogado = usuarioDAO.logar(usuarioLogado.getEmailUsuario(), usuarioLogado.getSenhaUsuario());
-        System.out.println("BEAN(logar): SENHA: " + usuarioLogado.getSenhaUsuario());
-        /*
-        System.out.println("BEAN(logar): SENHA: " + usuarioLogado.getSenhaUsuario());
-        System.out.println("BEAN(logar): EMAIL: " + usuarioLogado.getEmailUsuario());
-        usuarioLogado = usuarioDAO.logar(usuarioLogado.getEmailUsuario(), usuarioLogado.getSenhaUsuario());
-        System.out.println("BEAN(logar): SENHA: " + usuarioLogado.getSenhaUsuario());
-        System.out.println("BEAN(logar): EMAIL: " + usuarioLogado.getEmailUsuario());*/
+    }
+    
+    public String sair(){
+        try {
+            SessionUtil.remove("USUARIOLogado");
+            System.out.println("__________LoginBean(sair): Inicio");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/Login.xhtml");
+            return "/sigitec/Login.xhtml";
+        } catch (IOException ex) {
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     public Usuario getUsuarioLogado() {

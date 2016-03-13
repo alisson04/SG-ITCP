@@ -38,10 +38,14 @@
                                         action="/ListarUsrInativos.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
-                        <f:facet name="options">
-                            <p:commandButton type="button" value="Sair" icon="fa fa-sign-out" />
-                        </f:facet>
+                        <p:menuitem value=" Sair" icon="fa fa-plus-circle"
+                                    action="#{loginBean.sair}"/>
+                        
                     </p:menubar>
+                    
+                    
+                            <p:commandButton type="button" value="Sair" icon="fa fa-sign-out" action="#{loginBean.sair()}"/>
+                        
                 </h:form>
 
                 <ui:insert name="conteudo" />

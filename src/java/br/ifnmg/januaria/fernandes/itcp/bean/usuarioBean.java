@@ -35,6 +35,15 @@ public class usuarioBean implements Serializable {
     private boolean usrSendoEditado;// P/ renderizar o campo de senha
     public String telefoneAlternativoUsuario;//Deve ser publico para a pagina poder acessar/foi colocado para evitar o bug de validaço de campos
     private MensagensBean mensagensBean;
+    private String[] cargos;//para a tela de listar usuarios
+
+    public String[] getCargos() {
+        return cargos;
+    }
+
+    public void setCargos(String[] cargos) {
+        this.cargos = cargos;
+    }
 
     // CONSTRUTOR
     @PostConstruct
@@ -53,6 +62,16 @@ public class usuarioBean implements Serializable {
         usuarioLogado = new Usuario();
         nomeDessaClasse = "Usuario";
         usrSendoEditado = false;
+
+        cargos = new String[8];
+        cargos[0] = "Coordenador";
+        cargos[1] = "Professor";
+        cargos[2] = "Técnico Administrativo";
+        cargos[3] = "Estagiário Remunerado";
+        cargos[4] = "Estagiário Voluntário";
+        cargos[5] = "Bolsista - PIBED";
+        cargos[6] = "Bolsista - PIBIC";
+        cargos[7] = "Bolsista - PROEXT";
     }
 
     public void messagemCaixa() {
@@ -102,9 +121,11 @@ public class usuarioBean implements Serializable {
                 System.out.println("BEAN(salvarUsrBd): Já tem esse email no BANCO");
                 mensagensBean.messagemCaixa("ERROR", "Erro no E-mail", "Este E-mail já esta cadastrado no sistema");
                 return null;
+
             }
         } catch (IOException ex) {
-            Logger.getLogger(usuarioBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(usuarioBean.class
+                    .getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -119,7 +140,7 @@ public class usuarioBean implements Serializable {
             } else {
                 usuarioUsoGeral.setTelefoneAlternativoUsuario(telefoneAlternativoUsuario);
             }
-            
+
             enviarEmail(usuarioUsoGeral.getEmailUsuario(), "Sistema Sigitec", "Suas informações no sistema foram editadas");
 
             usuarioDAO.salvarGenerico(usuarioUsoGeral);
@@ -139,10 +160,12 @@ public class usuarioBean implements Serializable {
             usuarioUsoGeral.setStatusSistemaUsuario(statusSistemaUsuario);
             mensagensBean.messagemCaixa("INFO", "Mudança no acesso", "O usuário " + usuarioUsoGeral.getNomeUsuario() + " esta " + statusSistemaUsuario);
             usuarioDAO.salvarGenerico(usuarioUsoGeral);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrAtivos.xhtml");
-            return "ListarUsrAtivos.xhtml";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrInativos.xhtml");
+            return "ListarUsrInativos.xhtml";
+
         } catch (IOException ex) {
-            Logger.getLogger(usuarioBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(usuarioBean.class
+                    .getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -166,8 +189,10 @@ public class usuarioBean implements Serializable {
             usrSendoVisualizado = true;
             FacesContext.getCurrentInstance().getExternalContext().redirect("CadastroUsuario.xhtml");
             return "CadastroUsuario.xhtml";
+
         } catch (IOException ex) {
-            Logger.getLogger(usuarioBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(usuarioBean.class
+                    .getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -189,8 +214,10 @@ public class usuarioBean implements Serializable {
             usrSendoVisualizado = false;
             usrSendoEditado = true;
             FacesContext.getCurrentInstance().getExternalContext().redirect("CadastroUsuario.xhtml");
+
         } catch (IOException ex) {
-            Logger.getLogger(usuarioBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(usuarioBean.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return "CadastroUsuario.xhtml";
     }

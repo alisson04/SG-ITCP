@@ -33,26 +33,24 @@ public class controleDeAcesso implements Filter {
         HttpSession session = req.getSession();
 
         if ((session.getAttribute("USUARIOLogado") != null)
-                || (req.getRequestURI().endsWith("Login.xhtml"))
-                || (req.getRequestURI().contains("javax.faces.resources/"))) {
+                || (req.getServletPath().endsWith("Login.xhtml"))
+                || (req.getServletPath().contains("/javax.faces.resource"))) {
             System.out.println("__________controleDeAcesso(doFilter) IF");
             //redireciona("/inicio.xhtml", responce);
             chain.doFilter(request, response);
-        }
-        
-        else{
+        } else {
             System.out.println("__________controleDeAcesso(doFilter) ELSE");
             redireciona("/sigitec/Login.xhtml", response);
         }
     }
-    
-    public void init(FilterConfig filterConfig) throws ServletException{
+
+    public void init(FilterConfig filterConfig) throws ServletException {
     }
-    
-    public void destroy(){
+
+    public void destroy() {
     }
-    
-    private void redireciona(String url, ServletResponse response) throws IOException{
+
+    private void redireciona(String url, ServletResponse response) throws IOException {
         HttpServletResponse res = (HttpServletResponse) response;
         res.sendRedirect(url);
     }

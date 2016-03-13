@@ -22,46 +22,49 @@
                     </f:facet>
                 </p:toolbar>
 
-                <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário cadastrado." 
+                <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." 
                              value="#{usuarioBean.listaUsuarios}"
                              filteredValue="#{usuarioBean.listaUsuariosFiltrados}"
-                             var="usuarioCursor" rows="10" paginator="true">
+                             var="usuarioCursor" widgetVar="varGlobal" rows="10" paginator="true">
 
                     <f:facet name="footer">
-                        <p:commandButton value="Cadastrar usuário" icon="fa fa-plus-circle"
-                                         action="#{usuarioBean.salvarUsrTela}"/>
-                        
+                        <p:outputPanel>
+                            <h:outputText value="Procurar palavra chave:" />
+                            <p:inputText id="globalFilter" onkeyup="PF('varGlobal').filter()" style="width:200px" placeholder="Digite a palavra chave"/>
+                        </p:outputPanel>
                     </f:facet>
 
                     <p:column headerText="Nome" filterBy="#{usuarioCursor.nomeUsuario}" 
-                              sortBy="#{usuarioCursor.nomeUsuario}">
+                              sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">
                         <h:outputText value="#{usuarioCursor.nomeUsuario}"/>
                     </p:column>
 
                     <p:column headerText="E-mail" filterBy="#{usuarioCursor.emailUsuario}" 
-                              sortBy="#{usuarioCursor.emailUsuario}">
+                              sortBy="#{usuarioCursor.emailUsuario}" filterMatchMode="contains">
                         <h:outputText value="#{usuarioCursor.emailUsuario}"/>
                     </p:column>
 
-                    <p:column headerText="Cargo" filterBy="#{usuarioCursor.cargoUsuario}" 
-                              sortBy="#{usuarioCursor.cargoUsuario}">
-                        <h:outputText value="#{usuarioCursor.cargoUsuario}"/>
+                    <p:column filterBy="#{usuarioCursor.cargoUsuario}" headerText="Cargo" filterMatchMode="exact">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{usuarioBean.cargos}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{usuarioCursor.cargoUsuario}" />
                     </p:column>
 
-                    <p:column headerText="Telefone">
+                    <p:column headerText="Telefone" filterBy="#{usuarioCursor.telefoneUsuario}" filterMatchMode="contains">
                         <h:outputText value="#{usuarioCursor.telefoneUsuario}"/>
                     </p:column>
 
-                    <p:column headerText="Telefone alternativo">
+                    <p:column headerText="Telefone alternativo" filterBy="#{usuarioCursor.telefoneAlternativoUsuario}" filterMatchMode="contains">
                         <h:outputText value="#{usuarioCursor.telefoneAlternativoUsuario}"/>
                     </p:column>
 
-                    <p:column headerText="Opções" width="22%">
+                    <p:column headerText="Opções">
                         <p:commandButton id="btnVisualizarusr" value="Visualizar" actionListener="#{usuarioBean.visualizarUsrTela(usuarioCursor.idUsuario)}" 
                                          icon="fa fa-search-plus"/>
-                        
-                        <p:commandButton id="btnEditarUsr" value="Editar" actionListener="#{usuarioBean.editarUsrTela(usuarioCursor.idUsuario)}" 
-                                         icon="fa fa-edit"/>
 
                         <p:commandButton id="btnInativarusr" value="Inativar"  actionListener="#{usuarioBean.ativarDesativarUsrBd(usuarioCursor.idUsuario, 'Desativado')}" icon="fa fa-frown-o">
                             <p:confirm header="ATENÇÃO" message="Deseja realmente inativa-lo?" icon="ui-icon-alert" />
@@ -75,8 +78,6 @@
                         <p:tooltip for="btnVisualizarusr" value="Visualizar informações deste usuário!"
                                    showEffect="clip" hideEffect="explode" />
                         <p:tooltip for="btnInativarusr" value="Inativar este usuário!"
-                                   showEffect="clip" hideEffect="explode" />
-                        <p:tooltip for="btnEditarUsr" value="Editar este usuário!"
                                    showEffect="clip" hideEffect="explode" />
                     </p:column>
 
