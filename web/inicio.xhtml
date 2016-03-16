@@ -10,8 +10,12 @@
             <h:form id="frmCadastro" >
 
                 <p:outputLabel value="INICIO"></p:outputLabel>
-
-                <p:commandButton value="MSGM" actionListener="#{usuarioBean.messagemCaixa()}" icon="fa fa-edit"/>
+                
+                <p:commandButton icon="ui-icon-search" value="View" oncomplete="PF('carDialog').show()" />
+                
+                <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    
+                </p:dialog>
 
             </h:form>
         </ui:define>

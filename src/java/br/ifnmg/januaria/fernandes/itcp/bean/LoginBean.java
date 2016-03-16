@@ -38,8 +38,7 @@ public class LoginBean implements Serializable {
             if ((usuarioDAO.buscarPorEmail(usuarioLogado.getEmailUsuario()) != null)) {
                 System.out.println("__________BEAN(loginBean): confirma user");
 
-                Object b = new Object();
-                SessionUtil.setParam("USUARIOLogado", b);
+                SessionUtil.setParam("USUARIOLogado", usuarioLogado);
                 
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/inicio.xhtml");
                 return "/sigitec/inicio.xhtml";

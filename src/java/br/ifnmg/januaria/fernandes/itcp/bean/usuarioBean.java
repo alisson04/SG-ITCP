@@ -160,8 +160,8 @@ public class usuarioBean implements Serializable {
             usuarioUsoGeral.setStatusSistemaUsuario(statusSistemaUsuario);
             mensagensBean.messagemCaixa("INFO", "Mudança no acesso", "O usuário " + usuarioUsoGeral.getNomeUsuario() + " esta " + statusSistemaUsuario);
             usuarioDAO.salvarGenerico(usuarioUsoGeral);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrInativos.xhtml");
-            return "ListarUsrInativos.xhtml";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrAtivos.xhtml");
+            return "ListarUsrAtivos.xhtml";
 
         } catch (IOException ex) {
             Logger.getLogger(usuarioBean.class

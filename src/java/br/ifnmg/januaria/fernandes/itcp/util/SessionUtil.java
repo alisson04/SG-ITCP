@@ -24,7 +24,7 @@ public class SessionUtil implements Serializable{
         return sessao;
     }
     
-    public static void setParam(String key, Object value){
+    public static void setParam(String key, Usuario value){
         getSession().setAttribute(key, value);
     }
     
