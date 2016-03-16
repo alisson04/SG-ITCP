@@ -18,6 +18,8 @@ import br.ifnmg.januaria.fernandes.itcp.util.FacesUtil;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.event.ActionEvent;
+import org.primefaces.context.RequestContext;
 
 @ManagedBean
 @SessionScoped
@@ -158,11 +160,14 @@ public class usuarioBean implements Serializable {
             UsuarioDAO usuarioDAO = new UsuarioDAO();
             usuarioUsoGeral = usuarioDAO.buscarPorCodigo(idUsrDesativar);
             usuarioUsoGeral.setStatusSistemaUsuario(statusSistemaUsuario);
-            mensagensBean.messagemCaixa("INFO", "Mudança no acesso", "O usuário " + usuarioUsoGeral.getNomeUsuario() + " esta " + statusSistemaUsuario);
             usuarioDAO.salvarGenerico(usuarioUsoGeral);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrAtivos.xhtml");
-            return "ListarUsrAtivos.xhtml";
-
+            if(statusSistemaUsuario.equals("Ativo")){
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrAtivos.xhtml");
+                return "ListarUsrAtivos.xhtml";
+            }else{
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrInativos.xhtml");
+                return "ListarUsrInativos.xhtml";
+            }
         } catch (IOException ex) {
             Logger.getLogger(usuarioBean.class
                     .getName()).log(Level.SEVERE, null, ex);
