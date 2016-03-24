@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.util;
 
+import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.Filter;
 import java.util.logging.LogRecord;
+import javax.faces.context.FacesContext;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -25,6 +23,8 @@ import javax.servlet.http.HttpSession;
 @WebFilter(servletNames = {"Faces Servlet"})
 public class controleDeAcesso implements Filter {
 
+    private List<String> listaIds;
+
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
@@ -32,12 +32,22 @@ public class controleDeAcesso implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
 
-        if ((session.getAttribute("USUARIOLogado") != null)
-                || (req.getServletPath().endsWith("Login.xhtml"))
-                || (req.getServletPath().contains("/javax.faces.resource"))) {
-            System.out.println("__________controleDeAcesso(doFilter) IF");
-            //redireciona("/inicio.xhtml", responce);
-            chain.doFilter(request, response);
+        if ((req.getServletPath().endsWith("Login.xhtml"))
+                || (req.getServletPath().contains("/javax.faces.resource"))
+                || session.getAttribute("USUARIOLogado") != null) {
+            if (session.getAttribute("USUARIOLogado") != null) {
+                if (!"Coordenador".equals(((Usuario) session.getAttribute("USUARIOLogado")).getCargoUsuario())
+                        && req.getServletPath().endsWith("CadastroUsuario.xhtml")) {
+                    System.out.println("5");
+                    redireciona("/sigitec/inicio.xhtml", response);
+                } else {
+                    System.out.println("2");
+                    chain.doFilter(request, response);
+                }
+            } else {
+                System.out.println("3");
+                chain.doFilter(request, response);
+            }
         } else {
             System.out.println("__________controleDeAcesso(doFilter) ELSE");
             redireciona("/sigitec/Login.xhtml", response);

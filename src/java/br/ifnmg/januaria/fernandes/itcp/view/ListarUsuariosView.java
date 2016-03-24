@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.view;
 
-/**
- *
- * @author alisson
- */
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -23,11 +14,20 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ListarUsuariosView implements Serializable {
     private Usuario usuarioSelecionado;
-    private boolean btnVisualizarUsr;
     private boolean btnEdicoesUsr;
+    private String[] cargos;//para a tela de listar usuarios
 
     public ListarUsuariosView() {
         btnEdicoesUsr = true;
+        cargos = new String[8];
+        cargos[0] = "Coordenador";
+        cargos[1] = "Professor";
+        cargos[2] = "Técnico Administrativo";
+        cargos[3] = "Estagiário Remunerado";
+        cargos[4] = "Estagiário Voluntário";
+        cargos[5] = "Bolsista - PIBED";
+        cargos[6] = "Bolsista - PIBIC";
+        cargos[7] = "Bolsista - PROEXT";
     }
     
     public void onRowSelect(SelectEvent event) {
@@ -50,5 +50,13 @@ public class ListarUsuariosView implements Serializable {
 
     public void setBtnEdicoesUsr(boolean btnEdicoesUsr) {
         this.btnEdicoesUsr = btnEdicoesUsr;
+    }
+    
+    public String[] getCargos() {
+        return cargos;
+    }
+
+    public void setCargos(String[] cargos) {
+        this.cargos = cargos;
     }
 }

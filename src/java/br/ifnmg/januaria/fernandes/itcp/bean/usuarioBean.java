@@ -19,6 +19,8 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 @ManagedBean
@@ -32,20 +34,13 @@ public class usuarioBean implements Serializable {
     private List<Usuario> listaUsuarios; //
     private List<Usuario> listaUsuariosFiltrados;
     private List<String> listaCargos; // lista de cargos da ITCP
-    private String ConfirmaSenha; // Variavel para comparar com a senha
+    private String confirmarSenha; // Variavel para comparar com a senha
     private boolean usrSendoVisualizado;// P/ renderizar os campos de usurio nas telas
     private boolean usrSendoEditado;// P/ renderizar o campo de senha
     public String telefoneAlternativoUsuario;//Deve ser publico para a pagina poder acessar/foi colocado para evitar o bug de validaço de campos
+
     private MensagensBean mensagensBean;
-    private String[] cargos;//para a tela de listar usuarios
-
-    public String[] getCargos() {
-        return cargos;
-    }
-
-    public void setCargos(String[] cargos) {
-        this.cargos = cargos;
-    }
+    
 
     // CONSTRUTOR
     @PostConstruct
@@ -64,16 +59,6 @@ public class usuarioBean implements Serializable {
         usuarioLogado = new Usuario();
         nomeDessaClasse = "Usuario";
         usrSendoEditado = false;
-
-        cargos = new String[8];
-        cargos[0] = "Coordenador";
-        cargos[1] = "Professor";
-        cargos[2] = "Técnico Administrativo";
-        cargos[3] = "Estagiário Remunerado";
-        cargos[4] = "Estagiário Voluntário";
-        cargos[5] = "Bolsista - PIBED";
-        cargos[6] = "Bolsista - PIBIC";
-        cargos[7] = "Bolsista - PROEXT";
     }
 
     public void messagemCaixa() {
@@ -116,6 +101,7 @@ public class usuarioBean implements Serializable {
 
                 usuarioDAO.salvarGenerico(usuarioUsoGeral);
                 usrSendoVisualizado = true;
+                telefoneAlternativoUsuario = "";//tira a informação apos o salvamento
                 FacesContext.getCurrentInstance().getExternalContext().redirect("CadastroUsuario.xhtml");
                 return "CadastroUsuario.xhtml";
 
@@ -133,22 +119,42 @@ public class usuarioBean implements Serializable {
     }
 
     public String editarUsrBd() throws IOException {
-        System.out.println("BEAN(editarUsrBd): INÍCIO");
+        System.out.println("__________BEAN(editarUsrBd): INÍCIO");
+        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpSession session = (HttpSession) request.getSession();
+
         try {
             UsuarioDAO usuarioDAO = new UsuarioDAO();
-            usuarioUsoGeral.setSenhaUsuario(DigestUtils.md5Hex(usuarioUsoGeral.getSenhaUsuario()));
-            if (telefoneAlternativoUsuario.equals("")) {
-                usuarioUsoGeral.setTelefoneAlternativoUsuario("Não possui");
+            //VERIFICA SE O EMAIL JA EXISTE NO DB
+            if (usuarioDAO.buscarPorEmail(usuarioUsoGeral.getEmailUsuario()) == null
+                    || usuarioUsoGeral.getEmailUsuario().equals(((Usuario) session.getAttribute("USUARIOLogado")).getEmailUsuario())) {
+                if (usuarioUsoGeral.getSenhaUsuario().equals(confirmarSenha)) {
+                    usuarioUsoGeral.setSenhaUsuario(DigestUtils.md5Hex(usuarioUsoGeral.getSenhaUsuario()));
+                    if (telefoneAlternativoUsuario.equals("")) {
+                        usuarioUsoGeral.setTelefoneAlternativoUsuario("Não possui");
+                    } else {
+                        usuarioUsoGeral.setTelefoneAlternativoUsuario(telefoneAlternativoUsuario);
+                    }
+
+                    enviarEmail(usuarioUsoGeral.getEmailUsuario(), "Sistema Sigitec", "Suas informações no sistema foram editadas");
+                    usuarioDAO.salvarGenerico(usuarioUsoGeral);
+                    usrSendoVisualizado = true;
+                    telefoneAlternativoUsuario = "";//tira a informação apos o salvamento
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("CadastroUsuario.xhtml");
+                    return "CadastroUsuario.xhtml";
+                } else {
+                    System.out.println("__________BEAN(salvarUsrBd): Já tem esse email no BANCO");
+                    mensagensBean.messagemCaixa("ERROR", "Erro na senha", "senhas incompatíveis");
+                    return null;
+                }
+
             } else {
-                usuarioUsoGeral.setTelefoneAlternativoUsuario(telefoneAlternativoUsuario);
+                System.out.println("__________BEAN(salvarUsrBd): Já tem esse email no BANCO");
+                mensagensBean.messagemCaixa("ERROR", "Erro no E-mail", "Este E-mail já esta cadastrado no sistema");
+                return null;
+
             }
-
-            enviarEmail(usuarioUsoGeral.getEmailUsuario(), "Sistema Sigitec", "Suas informações no sistema foram editadas");
-
-            usuarioDAO.salvarGenerico(usuarioUsoGeral);
-            usrSendoVisualizado = true;
-            FacesContext.getCurrentInstance().getExternalContext().redirect("CadastroUsuario.xhtml");
-            return "CadastroUsuario.xhtml";
         } catch (RuntimeException ex) {
             System.out.println("BEAN(editarUsrBd): Erro ao editar: " + ex);
             return null;
@@ -161,10 +167,10 @@ public class usuarioBean implements Serializable {
             usuarioUsoGeral = usuarioDAO.buscarPorCodigo(idUsrDesativar);
             usuarioUsoGeral.setStatusSistemaUsuario(statusSistemaUsuario);
             usuarioDAO.salvarGenerico(usuarioUsoGeral);
-            if(statusSistemaUsuario.equals("Ativo")){
+            if (statusSistemaUsuario.equals("Ativo")) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrAtivos.xhtml");
                 return "ListarUsrAtivos.xhtml";
-            }else{
+            } else {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrInativos.xhtml");
                 return "ListarUsrInativos.xhtml";
             }
@@ -212,7 +218,7 @@ public class usuarioBean implements Serializable {
 
     public String editarUsrTela(int idEditarUsr) {
         try {
-            System.out.println("BEAN(editarUsr): INÍCIO");
+            System.out.println("_________BEAN(editarUsr): INÍCIO");
             UsuarioDAO usuarioDAO = new UsuarioDAO();
             usuarioUsoGeral = usuarioDAO.buscarPorCodigo(idEditarUsr);
             telefoneAlternativoUsuario = usuarioUsoGeral.getTelefoneAlternativoUsuario();
@@ -269,12 +275,12 @@ public class usuarioBean implements Serializable {
         this.usuarioLogado = usuarioLogado;
     }
 
-    public String getConfirmaSenha() {
-        return ConfirmaSenha;
+    public String getConfirmarSenha() {
+        return confirmarSenha;
     }
 
-    public void setConfirmaSenha(String ConfirmaSenha) {
-        this.ConfirmaSenha = ConfirmaSenha;
+    public void setConfirmarSenha(String confirmarSenha) {
+        this.confirmarSenha = confirmarSenha;
     }
 
     public boolean isUsrSendoVisualizado() {

@@ -20,12 +20,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "Usuario")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.listarTodosUsuarios", query = "SELECT u FROM Usuario u"),
-    @NamedQuery(name = "Usuario.listarUsrAtivos", query = "SELECT u FROM Usuario u WHERE u.statusSistemaUsuario = :statusSistemaUsuario"),
     @NamedQuery(name = "Usuario.logar", query = "SELECT u FROM Usuario u WHERE u.emailUsuario = :emailUsuario AND u.senhaUsuario = :senhaUsuario"),
     @NamedQuery(name = "Usuario.buscarPorCodigo", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario"),
-    @NamedQuery(name = "Usuario.autenticar", query = "SELECT u FROM Usuario u WHERE u.emailUsuario = :emailUsuario and u.senhaUsuario = :senhaUsuario"),
-    @NamedQuery(name = "Usuario.buscarPorEmail", query = "SELECT u FROM Usuario u WHERE u.emailUsuario = :emailUsuario"),
     @NamedQuery(name = "Usuario.buscarPorCargo", query = "SELECT u FROM Usuario u WHERE u.cargoUsuario = :cargoUsuario")})
 
 public class Usuario implements Serializable {

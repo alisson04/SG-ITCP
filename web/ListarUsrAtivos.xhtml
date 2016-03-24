@@ -43,7 +43,7 @@
                         <f:facet name="filter">
                             <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                 <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{usuarioBean.cargos}" />
+                                <f:selectItems value="#{ListarUsuariosView.cargos}" />
                             </p:selectOneMenu>
                         </f:facet>
                         <h:outputText value="#{usuarioCursor.cargoUsuario}" />

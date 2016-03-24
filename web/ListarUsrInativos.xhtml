@@ -42,15 +42,15 @@
                         <f:facet name="filter">
                             <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                 <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{usuarioBean.cargos}" />
+                                <f:selectItems value="#{ListarUsuariosView.cargos}" />
                             </p:selectOneMenu>
                         </f:facet>
                         <h:outputText value="#{usuarioCursor.cargoUsuario}" />
                     </p:column>
-                    <p:column headerText="Telefone" filterBy="#{usuarioCursor.telefoneUsuario}" filterMatchMode="contains">
+                    <p:column headerText="Telefone">
                         <h:outputText value="#{usuarioCursor.telefoneUsuario}"/>
                     </p:column>
-                    <p:column headerText="Telefone alternativo" filterBy="#{usuarioCursor.telefoneAlternativoUsuario}" filterMatchMode="contains">
+                    <p:column headerText="Telefone alternativo">
                         <h:outputText value="#{usuarioCursor.telefoneAlternativoUsuario}"/>
                     </p:column>
 

@@ -11,27 +11,30 @@ import javax.persistence.Query;
  */
 public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
 
+    private EntityManager em;
+    
     //Construtor
     public DaoGenerico() {
-
     }
 
+    //Salvar um objeto no BD
     public void salvarGenerico(TipoClasse objeto) {
-        EntityManager em = gerarEntityManager();
+        em = gerarEntityManager();
         try {
             em.getTransaction().begin();
             em.merge(objeto);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao buscar objetos: ", e);
+            throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", e);
         } finally {
             em.close();
         }
     }
 
+    //Lista todos os objetos de uma classe no BD
     public List<TipoClasse> listarObjsGenerico(String classe) {
-        EntityManager em = gerarEntityManager();
+        em = gerarEntityManager();
         List<TipoClasse> listaObjs;
         listaObjs = new ArrayList<>();
         try {
@@ -47,8 +50,9 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
         return listaObjs;
     }
 
+    //Lista todos os objetos de uma classe no BD filtrados por um parametro
     public List<TipoClasse> listarObjsFiltradosGenerico(String classe, String atributoDaClasse, String parametroDeComparacao) {
-        EntityManager em = gerarEntityManager();
+        em = gerarEntityManager();
         List<TipoClasse> listaObjsFiltrados;
         listaObjsFiltrados = new ArrayList<>();
 

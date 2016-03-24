@@ -7,6 +7,8 @@ package br.ifnmg.januaria.fernandes.itcp.util;
 
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +24,14 @@ public class SessionUtil implements Serializable{
         FacesContext ctx = FacesContext.getCurrentInstance();
         HttpSession sessao = (HttpSession) ctx.getExternalContext().getSession(false);
         return sessao;
+    }
+    
+    public List<String> addUsr(int size){
+        List<String> list = new ArrayList<String>();
+        for(int i = 0 ; i < size ; i++) {
+            list.add("a");
+        }
+        return list;
     }
     
     public static void setParam(String key, Usuario value){
