@@ -3,6 +3,7 @@
   <persistence-unit name="sigitecPU" transaction-type="JTA">
     <jta-data-source>java:app/jdbc/sigitecDatasource</jta-data-source>
     <class>br.ifnmg.januaria.fernandes.itcp.domain.Usuario</class>
+    <class>br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
     </properties>

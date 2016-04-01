@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
@@ -25,6 +20,10 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
 
     public UsuarioDAO() {
 
+    }
+    
+    public void salvarUsr(Usuario usr){
+        salvarGenerico(usr);
     }
 
     public Usuario buscarPorEmail(String emailUsuario) {

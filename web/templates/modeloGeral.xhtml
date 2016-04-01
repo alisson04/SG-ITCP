@@ -27,7 +27,7 @@
                         <p:menuitem value="Início" icon="fa fa-home"
                                     action="/inicio.xhtml?faces-redirect=true"/>
 
-                        <p:submenu label="Usuários" icon="fa fa-reorder">
+                        <p:submenu label="Usuários" icon="fa fa-users">
                             <p:menuitem value=" Cadastrar usuário" icon="fa fa-plus-circle"
                                         action="#{usuarioBean.salvarUsrTela}" 
                                         rendered="#{InicioBean.usuarioLogado.cargoUsuario == 'Coordenador'}"/>
@@ -37,6 +37,11 @@
                                 <p:menuitem value="Usuários Inativos" icon="fa fa-frown-o"
                                             action="/ListarUsrInativos.xhtml?faces-redirect=true"/>
                             </p:submenu>
+                        </p:submenu>
+                        
+                        <p:submenu label="Empreendimentos" icon="fa fa-building-o">
+                            <p:menuitem value="Cadastrar empreendimento" 
+                                            action="/cadastroEmpreendimento.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <f:facet name="options">

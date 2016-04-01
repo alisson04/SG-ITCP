@@ -99,7 +99,7 @@ public class usuarioBean implements Serializable {
                 //CRIPTOGRAFA A SENHA ALEATORIA
                 usuarioUsoGeral.setSenhaUsuario(DigestUtils.md5Hex(usuarioUsoGeral.getSenhaUsuario()));
 
-                usuarioDAO.salvarGenerico(usuarioUsoGeral);
+                usuarioDAO.salvarUsr(usuarioUsoGeral);
                 usrSendoVisualizado = true;
                 telefoneAlternativoUsuario = "";//tira a informação apos o salvamento
                 FacesContext.getCurrentInstance().getExternalContext().redirect("CadastroUsuario.xhtml");

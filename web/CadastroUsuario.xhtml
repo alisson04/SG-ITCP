@@ -12,19 +12,19 @@
         </ui:define>
         <ui:define name="conteudo">
 
-            <h:form id="frmCadastro">
+            <h:form id="frmCadastroEmpreendimento">
 
                 <p:toolbar>
                     <f:facet name="left">
-                        <h:outputText value="Usuários" />
+                        <h:outputText value="Empreendimentos" />
                     </f:facet>
                 </p:toolbar>
                 <p:separator />
 
-                <p:focus context="frmCadastro" /> <!-- Grifa os campos -->
+                <p:focus context="frmCadastroEmpreendimento" /> <!-- Grifa os campos -->
 
                 <p:panel id="panel"
-                         header="Cadastro de usuário (* Campos obrigatórios)" rendered="#{usuarioBean.usrSendoVisualizado == 'false'}">
+                         header="Cadastro de empreendimento (* Campos obrigatórios)" rendered="#{usuarioBean.usrSendoVisualizado == 'false'}">
 
                     <p:separator />
                     <!--<p:message id="messages" showDetail="true"  />-->

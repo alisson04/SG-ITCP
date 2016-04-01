@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
@@ -79,6 +74,36 @@ public class Empreendimento implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "dataIncubacaoEpt")
     private String dataIncubacaoEpt;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "nomeFantasiaEpt")
+    private String nomeFantasiaEpt;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "tipoEpt")
+    private String tipoEpt;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "AtividadeExercidaEpt")
+    private String atividadeExercidaEpt;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "siteEpt")
+    private String siteEpt;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "faturamentoMedioMensalEmp")
+    private String faturamentoMedioMensalEmp;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "faturamentoMedioAnualEmp")
+    private String faturamentoMedioAnualEmp;
 
     public Empreendimento() {
     }
@@ -87,7 +112,7 @@ public class Empreendimento implements Serializable {
         this.idEpt = idEpt;
     }
 
-    public Empreendimento(Integer idEpt, String nomeEpt, String emailEpt, String telefoneEpt, String telefoneAlternativoEpt, String cnpjEpt, String enderecoEpt, String situacaoEpt, String dataCriacaoEpt, String dataIncubacaoEpt) {
+    public Empreendimento(Integer idEpt, String nomeEpt, String emailEpt, String telefoneEpt, String telefoneAlternativoEpt, String cnpjEpt, String enderecoEpt, String situacaoEpt, String dataCriacaoEpt, String dataIncubacaoEpt, String nomeFantasiaEpt, String tipoEpt, String atividadeExercidaEpt, String siteEpt, String faturamentoMedioMensalEmp, String faturamentoMedioAnualEmp) {
         this.idEpt = idEpt;
         this.nomeEpt = nomeEpt;
         this.emailEpt = emailEpt;
@@ -98,6 +123,12 @@ public class Empreendimento implements Serializable {
         this.situacaoEpt = situacaoEpt;
         this.dataCriacaoEpt = dataCriacaoEpt;
         this.dataIncubacaoEpt = dataIncubacaoEpt;
+        this.nomeFantasiaEpt = nomeFantasiaEpt;
+        this.tipoEpt = tipoEpt;
+        this.atividadeExercidaEpt = atividadeExercidaEpt;
+        this.siteEpt = siteEpt;
+        this.faturamentoMedioMensalEmp = faturamentoMedioMensalEmp;
+        this.faturamentoMedioAnualEmp = faturamentoMedioAnualEmp;
     }
 
     public Integer getIdEpt() {
@@ -178,6 +209,54 @@ public class Empreendimento implements Serializable {
 
     public void setDataIncubacaoEpt(String dataIncubacaoEpt) {
         this.dataIncubacaoEpt = dataIncubacaoEpt;
+    }
+
+    public String getNomeFantasiaEpt() {
+        return nomeFantasiaEpt;
+    }
+
+    public void setNomeFantasiaEpt(String nomeFantasiaEpt) {
+        this.nomeFantasiaEpt = nomeFantasiaEpt;
+    }
+
+    public String getTipoEpt() {
+        return tipoEpt;
+    }
+
+    public void setTipoEpt(String tipoEpt) {
+        this.tipoEpt = tipoEpt;
+    }
+
+    public String getAtividadeExercidaEpt() {
+        return atividadeExercidaEpt;
+    }
+
+    public void setAtividadeExercidaEpt(String atividadeExercidaEpt) {
+        this.atividadeExercidaEpt = atividadeExercidaEpt;
+    }
+
+    public String getSiteEpt() {
+        return siteEpt;
+    }
+
+    public void setSiteEpt(String siteEpt) {
+        this.siteEpt = siteEpt;
+    }
+
+    public String getFaturamentoMedioMensalEmp() {
+        return faturamentoMedioMensalEmp;
+    }
+
+    public void setFaturamentoMedioMensalEmp(String faturamentoMedioMensalEmp) {
+        this.faturamentoMedioMensalEmp = faturamentoMedioMensalEmp;
+    }
+
+    public String getFaturamentoMedioAnualEmp() {
+        return faturamentoMedioAnualEmp;
+    }
+
+    public void setFaturamentoMedioAnualEmp(String faturamentoMedioAnualEmp) {
+        this.faturamentoMedioAnualEmp = faturamentoMedioAnualEmp;
     }
 
     @Override
