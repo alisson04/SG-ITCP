@@ -7,19 +7,20 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
-            <h:form id="frmCadastroEmpreendimento">
+            <h:form id="frmCadastroParceiro">
 
                 <p:toolbar>
                     <f:facet name="left">
-                        <h:outputText value="Empreendimentos" />
+                        <h:outputText value="Parceiros" />
                     </f:facet>
                 </p:toolbar>
                 <p:separator />
 
-                <p:focus context="frmCadastroEmpreendimento" /> <!-- Grifa os campos -->
+                <p:focus context="frmCadastroParceiro" /> <!-- Grifa os campos -->
 
                 <p:panel id="panel"
-                         header="Cadastro de empreendimento (* Campos obrigatórios)">
+                         header="Cadastro de empreendimento (* Campos obrigatórios)" 
+                         rendered="#{CadastroParceiroView.parceiroSendoVisualizado == 'false'}">
 
                     <p:separator />
                     <!--<p:message id="messages" showDetail="true"  />-->
@@ -27,32 +28,24 @@
 
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
 
-                        <p:outputLabel for="nome" value="Razão social: " />
+                        <p:outputLabel for="nome" value="Nome: " />
                         <p:inputText id="nome"
-                                     value="#{CadastroEmpreendimentoView.eptCadastrado.nomeEpt}" required="true"
-                                     requiredMessage="O campo Razão social é obrigatório." size="57"
-                                     maxlength="45">
-                        </p:inputText>
-                        <p:message for="nome" />
-
-                        <p:outputLabel for="nomeFantasia" value="Nome fantasia" />
-                        <p:inputText id="nomeFantasia"
-                                     value="#{CadastroEmpreendimentoView.eptCadastrado.nomeFantasiaEpt}" required="true"
-                                     requiredMessage="O campo Nome fantasia é obrigatório." size="57"
+                                     value="#{CadastroParceiroView.parceiroSalvar.nomeParceiro}" required="true"
+                                     requiredMessage="O campo Nome é obrigatório." size="57"
                                      maxlength="45">
                         </p:inputText>
                         <p:message for="nome" />
 
                         <p:outputLabel for="e-mail" value="E-mail: " />  
                         <p:inputText id="e-mail"
-                                     value="#{CadastroEmpreendimentoView.eptCadastrado.emailEpt}" required="true"
+                                     value="#{CadastroParceiroView.parceiroSalvar.emailParceiro}" required="true"
                                      requiredMessage="O campo E-mail é obrigatório." size="57"
                                      maxlength="50"/>
                         <p:message for="e-mail" />
 
                         <p:outputLabel for="endereco" value="Endereço: "/>
                         <p:inputText id="endereco"
-                                     value="#{CadastroEmpreendimentoView.eptCadastrado.enderecoEpt}" required="true"
+                                     value="#{CadastroParceiroView.parceiroSalvar.enderecoParceiro}" required="true"
                                      requiredMessage="O campo Endereço é obrigatório." size="57"
                                      maxlength="50">
                         </p:inputText>
@@ -60,7 +53,7 @@
 
                         <p:outputLabel for="telefone" value="Telefone: " />
                         <p:inputMask id="telefone"
-                                     value="#{CadastroEmpreendimentoView.eptCadastrado.telefoneEpt}"
+                                     value="#{CadastroParceiroView.parceiroSalvar.telefoneParceiro}"
                                      mask="(99) 9999-9999?9" required="true"
                                      requiredMessage="O campo Telefone é obrigatório." size="57"
                                      maxlength="11"/>
@@ -68,86 +61,50 @@
 
                         <p:outputLabel value="Telefone alternativo: " />
                         <p:inputMask id="telefoneAlternativo"
-                                     value="#{CadastroEmpreendimentoView.telefoneAlternativo}"
+                                     value="#{CadastroParceiroView.telefoneAlternativo}"
                                      mask="(99) 9999-9999?9" size="57" maxlength="11"/>
                         <p:message for="telefoneAlternativo" />
-                        
-                        <p:outputLabel for="cnpj" value="CNPJ: "/>
-                        <p:inputMask id="cnpj" value="#{CadastroEmpreendimentoView.cnpj}"
-                                     mask="99.999.999/9999-99" size="57" maxlength="18" required="false">
-                        </p:inputMask>
-                        <p:message for="cnpj" />
 
-                        <p:outputLabel for="dataCriacao" value="Data de criação do empreendimento: "/>
-                        <p:inputMask id="dataCriacao"
-                                     value="#{CadastroEmpreendimentoView.eptCadastrado.dataCriacaoEpt}"
-                                     mask="99/99/9999" required="true"
-                                     requiredMessage="O campo de Data de criação do empreendimento é obrigatório."
-                                     size="57"/>
-                        <p:message for="dataCriacao" />
-
-                        <p:outputLabel for="dataIncubação" value="Data de início da incubação: "/>
-                        <p:inputMask id="dataIncubação"
-                                     value="#{CadastroEmpreendimentoView.eptCadastrado.dataIncubacaoEpt}" required="true"
-                                     mask="99/99/9999" requiredMessage="O campo Data de início da incubação é obrigatório." size="57"
-                                     maxlength="50"/>
-                        <p:message for="dataIncubação" />
-
-                        <p:outputLabel for="tipoEpt" value="Tipo de empreendimento: "/>
-                        <p:selectOneMenu id="tipoEpt" required="true"
-                                         requiredMessage="O Tipo de empreendimento é obrigatório."
-                                         value="#{CadastroEmpreendimentoView.eptCadastrado.tipoEpt}" style="width:590px">
-                            <f:selectItem itemLabel="Selecione o tipo" itemValue=""
-                                          noSelectionOption="true" />
-                            <f:selectItems value="#{CadastroEmpreendimentoView.tiposEpt}" />
-                        </p:selectOneMenu>
-                        <p:message for="tipoEpt"/>
-
-                        <p:outputLabel for="siteEpt" value="Site do empreendimento: "/>
-                        <p:inputText id="siteEpt"
-                                     value="#{CadastroEmpreendimentoView.site}" size="57" maxlength="50">
+                        <p:outputLabel for="tipoParceiro" value="Tipo de parceiro "/>
+                        <p:inputText id="tipoParceiro"
+                                     value="#{CadastroParceiroView.parceiroSalvar.tipoParceiro}" size="57" maxlength="50">
                         </p:inputText>
-                        <p:message for="siteEpt"/>
+                        <p:message for="tipoParceiro"/>
 
-                        <p:outputLabel for="faturamentoMedioMensal" value="Faturamento médio mensal: "/>
-                        <p:inputText id="faturamentoMedioMensal"
-                                     value="#{CadastroEmpreendimentoView.faturamentoMensal}"
-                                     size="57" maxlength="50">
-                        </p:inputText>
-                        <p:message for="faturamentoMedioMensal"/>
-
-                        <p:outputLabel for="faturamentoMedioAnual" value="Faturamento médio anual: "/>
-                        <p:inputText id="faturamentoMedioAnual"
-                                     value="#{CadastroEmpreendimentoView.faturamentoAnual}"
-                                     size="57" maxlength="50">
-                        </p:inputText>
-                        <p:message for="faturamentoMedioAnual"/>
-                        
-                        <p:outputLabel for="atividadeExercida" value="Atividades exercidas: "/>
-                        <p:inputText id="atividadeExercida"
-                                     value="#{CadastroEmpreendimentoView.eptCadastrado.atividadeExercidaEpt}"
-                                     size="57" maxlength="50">
-                        </p:inputText>
-                        <p:message for="atividadeExercida"/>
-                                                
-                        <p:outputLabel for="situacaoEpt" value="Processo de Incubação: "/>
-                        <p:selectOneMenu id="situacaoEpt" required="true"
-                                         requiredMessage="O Tipo de empreendimento é obrigatório."
-                                         value="#{CadastroEmpreendimentoView.eptCadastrado.situacaoEpt}" style="width:590px">
-                            <f:selectItem itemLabel="Selecione a situação" itemValue=""
-                                          noSelectionOption="true" />
-                            <f:selectItems value="#{CadastroEmpreendimentoView.situacaoEpt}" />
-                        </p:selectOneMenu>
-                        <p:message for="situacaoEpt"/>
-
-                    </h:panelGrid>
-                    <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroEmpreendimentoView.salvarEptView()}" 
-                                     update='grid' icon="fa fa-edit"/>
+                        </h:panelGrid>
+                    <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroParceiroView.salvarParceiroView}" 
+                                     update='frmCadastroParceiro' icon="fa fa-edit"/>
                     
                     <p:blockUI block="panel" trigger="btnSalvar">
                         CARREGANDO<br />
                         <p:graphicImage name="icons/LoadingBar.gif"/>
                     </p:blockUI>
+                </p:panel>
+                
+                <!-- O painel abaixo so e renderizado apos o empreendimento ser salvo-->
+                <p:panel id="painelUsuarioSalvo"
+                         header="Informações salvas com sucesso" rendered="#{CadastroParceiroView.parceiroSendoVisualizado == 'true'}">
+                    <p:separator />
+                    <h:panelGrid columns="2" >
+                        <p:outputLabel value="Nome: " />
+                        <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.nomeParceiro}" />
+
+                        <p:outputLabel value="E-mail: " />
+                        <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.emailParceiro}" />
+
+                        <p:outputLabel value="Endereço: " />
+                        <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.enderecoParceiro}" />
+
+                        <p:outputLabel value="Endereço: " />
+                        <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.telefoneParceiro}" />
+
+                        <p:outputLabel value="Telefone alternativo: " />
+                        <p:outputLabel value="#{CadastroParceiroView.telefoneAlternativo}" />
+
+                        <p:outputLabel value="Tipo de parceiro " />
+                        <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.tipoParceiro}" />
+
+                    </h:panelGrid>
                 </p:panel>
             </h:form>
         </ui:define>

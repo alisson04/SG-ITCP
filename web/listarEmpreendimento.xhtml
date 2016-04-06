@@ -9,74 +9,69 @@
 
         <ui:define name="metadata">
             <f:metadata>
-                <f:event listener="#{usuarioBean.listarUsrsAtivosInativosTela('Desativado')}" type="preRenderView"/>
+                <f:event listener="#{ListarEmpreendimentosView.listarTodosEmpreendimentos()}" type="preRenderView"/>
             </f:metadata>
         </ui:define>
 
         <ui:define name="conteudo">
-            <h:form id="frmListagemUsuarios" >
+            <h:form id="frmListagemEmpreendimentos" >
+                <p:growl id="msgs" showDetail="true" showSummary="false" />
 
-                <p:growl id="msgs" showDetail="true" showSummary="false"/>
-                
                 <p:toolbar>
-                    <f:facet name="left">
-                        <h:outputText value="Usuários inativos no sistema:"/>
-                    </f:facet>
+                        <f:facet name="left">
+                            <h:outputText value="Empreendimentos no sistema:"/>
+                        </f:facet>
                 </p:toolbar>
+                
+                <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." 
+                             value="#{ListarEmpreendimentosView.listaEmpreendimentos}" 
+                             filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}" selectionMode="single" 
+                             selection="#{ListarEmpreendimentosView.empreendimentoSelecionado}" rowKey="#{empreendimentoCursor.idEpt}"
+                             var="empreendimentoCursor" widgetVar="varGlobal">
+                    
 
-                <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{usuarioBean.listaUsuarios}" 
-                             filteredValue="#{usuarioBean.listaUsuariosFiltrados}" selectionMode="single" 
-                             selection="#{ListarUsuariosView.usuarioSelecionado}" rowKey="#{usuarioCursor.idUsuario}"
-                             var="usuarioCursor" widgetVar="varGlobal">
+                    <p:ajax event="rowSelect" listener="#{ListarEmpreendimentosView.onRowSelect}" 
+                            update="
+                            :frmListagemEmpreendimentos:dtListagemEmpreendimentos, 
+                            :frmListagemEmpreendimentos:dtListagemEmpreendimentos:btnInativarusr
+                            :frmListagemEmpreendimentos:msgs"/>
 
-                    <p:ajax event="rowSelect" listener="#{ListarUsuariosView.onRowSelect}" 
-                            update=":frmListagemUsuarios:ListagemUsuarios:btnVisualizarusr, 
-                            :frmListagemUsuarios:ListagemUsuarios:btnAtivarusr
-                            :frmListagemUsuarios:msgs"/>
-
-                    <p:column headerText="Nome" filterBy="#{usuarioCursor.nomeUsuario}" 
-                              sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">
-                        <h:outputText value="#{usuarioCursor.nomeUsuario}"/>
+                    <p:column headerText="Nome" filterBy="#{empreendimentoCursor.nomeFantasiaEpt}" 
+                              sortBy="#{empreendimentoCursor.nomeFantasiaEpt}" filterMatchMode="contains">
+                        <h:outputText value="#{empreendimentoCursor.nomeFantasiaEpt}"/>
                     </p:column>
-                    <p:column headerText="E-mail" filterBy="#{usuarioCursor.emailUsuario}" 
-                              sortBy="#{usuarioCursor.emailUsuario}" filterMatchMode="contains">
-                        <h:outputText value="#{usuarioCursor.emailUsuario}"/>
+                    <p:column headerText="Nome fantasia" filterBy="#{empreendimentoCursor.nomeFantasiaEpt}" 
+                              sortBy="#{empreendimentoCursor.nomeFantasiaEpt}" filterMatchMode="contains">
+                        <h:outputText value="#{empreendimentoCursor.nomeFantasiaEpt}"/>
                     </p:column>
-                    <p:column filterBy="#{usuarioCursor.cargoUsuario}" headerText="Cargo" filterMatchMode="exact">
+                    <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.emailEpt}" 
+                              sortBy="#{empreendimentoCursor.emailEpt}" filterMatchMode="contains">
+                        <h:outputText value="#{empreendimentoCursor.emailEpt}"/>
+                    </p:column>
+                    <p:column filterBy="#{empreendimentoCursor.situacaoEpt}" headerText="Processo de Incubação" filterMatchMode="exact">
                         <f:facet name="filter">
                             <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                 <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarUsuariosView.cargos}" />
+                                <f:selectItems value="#{ListarEmpreendimentosView.processoIncubacao}" />
                             </p:selectOneMenu>
                         </f:facet>
-                        <h:outputText value="#{usuarioCursor.cargoUsuario}" />
-                    </p:column>
-                    <p:column headerText="Telefone">
-                        <h:outputText value="#{usuarioCursor.telefoneUsuario}"/>
-                    </p:column>
-                    <p:column headerText="Telefone alternativo">
-                        <h:outputText value="#{usuarioCursor.telefoneAlternativoUsuario}"/>
+                        <h:outputText value="#{empreendimentoCursor.situacaoEpt}" />
                     </p:column>
 
                     <f:facet name="footer">
-                        <p:commandButton id="btnVisualizarusr" process="ListagemUsuarios" update=":frmListagemUsuarios:carDetail" 
+                        <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" update=":frmListagemEmpreendimentos:carDetail" 
                                          icon="fa fa-search-plus" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                         disabled="#{ListarUsuariosView.btnEdicoesUsr}"/>
+                                         disabled="#{ListarEmpreendimentosView.btnEdicoesEpt}"/>
 
-                        <p:commandButton id="btnAtivarusr" value="Ativar" icon="fa fa-frown-o" disabled="#{ListarUsuariosView.btnEdicoesUsr}"
-                                         actionListener="#{usuarioBean.ativarDesativarUsrBd(ListarUsuariosView.usuarioSelecionado.idUsuario, 'Ativo')}">
-                            <p:confirm header="ATENÇÃO" message="Deseja realmente Ativa-lo?" icon="ui-icon-alert" />
+                        <p:commandButton id="btnInativarusr" value="Inativar" icon="fa fa-frown-o" 
+                                         disabled="#{ListarEmpreendimentosView.btnEdicoesEpt}">
+                            <p:confirm header="ATENÇÃO" message="Deseja realmente inativa-lo?" icon="ui-icon-alert" />
                         </p:commandButton>
 
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                             <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                             <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                         </p:confirmDialog>
-
-                        <p:tooltip for="btnVisualizarusr" value="Visualizar informações deste usuário!"
-                                   showEffect="clip" hideEffect="explode" />
-                        <p:tooltip for="btnAtivarusr" value="Ativar este usuário!"
-                                   showEffect="clip" hideEffect="explode" />
                     </f:facet>
                 </p:dataTable>
 

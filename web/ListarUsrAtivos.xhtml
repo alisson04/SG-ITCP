@@ -15,7 +15,7 @@
 
         <ui:define name="conteudo">
             <h:form id="frmListagemUsuarios" >
-                <p:growl id="msgs" showDetail="true" />
+                <p:growl id="msgs" showDetail="true" showSummary="false"/>
 
                 <p:toolbar>
                         <f:facet name="left">
@@ -29,7 +29,9 @@
                              var="usuarioCursor" widgetVar="varGlobal">
 
                     <p:ajax event="rowSelect" listener="#{ListarUsuariosView.onRowSelect}" 
-                            update=":frmListagemUsuarios:ListagemUsuarios:btnVisualizarusr, :frmListagemUsuarios:ListagemUsuarios:btnInativarusr"/>
+                            update=":frmListagemUsuarios:ListagemUsuarios:btnVisualizarusr,
+                            :frmListagemUsuarios:ListagemUsuarios:btnInativarusr
+                            :frmListagemUsuarios:msgs"/>
 
                     <p:column headerText="Nome" filterBy="#{usuarioCursor.nomeUsuario}" 
                               sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">
@@ -117,11 +119,6 @@
                         </p:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
-
-                <p:blockUI block="ListagemUsuarios" trigger="ListagemUsuarios">
-                    CARREGANDO<br />
-                    <p:graphicImage name="icons/LoadingBar.gif"/>
-                </p:blockUI>
 
             </h:form>
         </ui:define>

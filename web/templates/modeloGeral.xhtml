@@ -11,8 +11,8 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>SIGITEC - Modelo Global</title>
-        <h:outputStylesheet library="css" name="estilos.css" />
-        <link rel="stylesheet" href="#{request.contextPath}/css/estilos.css"/>
+        <h:outputStylesheet library="css" name="tema.css" />
+        <link rel="stylesheet" href="#{request.contextPath}/css/tema.css"/>
     </h:head>
     <h:body>
         <!-- 
@@ -24,7 +24,7 @@
                 <h:form id="frmModeloGeral">
                     <!--<p:graphicImage library="imagens" name="3.png" width="100%" />-->
                     <p:menubar>
-                        <p:menuitem value="Início" icon="fa fa-home"
+                        <p:menuitem value="Início" icon="salvar-icon"
                                     action="/inicio.xhtml?faces-redirect=true"/>
 
                         <p:submenu label="Usuários" icon="fa fa-users">
@@ -42,7 +42,15 @@
                         <p:submenu label="Empreendimentos" icon="fa fa-building-o">
                             <p:menuitem value="Cadastrar empreendimento" 
                                             action="/cadastroEmpreendimento.xhtml?faces-redirect=true"/>
+                            <p:menuitem value="Listar empreendimentos" 
+                                            action="/listarEmpreendimento.xhtml?faces-redirect=true"/>
                         </p:submenu>
+                        
+                        <p:submenu label="Parceiros" icon="fa fa-building-o">
+                            <p:menuitem value="Cadastrar parceiro" 
+                                            action="/cadastroParceiro.xhtml?faces-redirect=true"/>
+                        </p:submenu>
+                        
 
                         <f:facet name="options">
                             <p:splitButton value="Minha conta"  icon="fa fa-gear">

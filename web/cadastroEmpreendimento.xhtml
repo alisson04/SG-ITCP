@@ -19,7 +19,8 @@
                 <p:focus context="frmCadastroEmpreendimento" /> <!-- Grifa os campos -->
 
                 <p:panel id="panel"
-                         header="Cadastro de empreendimento (* Campos obrigatórios)">
+                         header="Cadastro de empreendimento (* Campos obrigatórios)" 
+                         rendered="#{CadastroEmpreendimentoView.eptSendoVisualizado == 'false'}">
 
                     <p:separator />
                     <!--<p:message id="messages" showDetail="true"  />-->
@@ -71,7 +72,7 @@
                                      value="#{CadastroEmpreendimentoView.telefoneAlternativo}"
                                      mask="(99) 9999-9999?9" size="57" maxlength="11"/>
                         <p:message for="telefoneAlternativo" />
-                        
+
                         <p:outputLabel for="cnpj" value="CNPJ: "/>
                         <p:inputMask id="cnpj" value="#{CadastroEmpreendimentoView.cnpj}"
                                      mask="99.999.999/9999-99" size="57" maxlength="18" required="false">
@@ -122,14 +123,13 @@
                                      size="57" maxlength="50">
                         </p:inputText>
                         <p:message for="faturamentoMedioAnual"/>
-                        
+
                         <p:outputLabel for="atividadeExercida" value="Atividades exercidas: "/>
                         <p:inputText id="atividadeExercida"
-                                     value="#{CadastroEmpreendimentoView.eptCadastrado.atividadeExercidaEpt}"
+                                     value="#{CadastroEmpreendimentoView.atividadeExercidaEpt}"
                                      size="57" maxlength="50">
                         </p:inputText>
-                        <p:message for="atividadeExercida"/>
-                                                
+
                         <p:outputLabel for="situacaoEpt" value="Processo de Incubação: "/>
                         <p:selectOneMenu id="situacaoEpt" required="true"
                                          requiredMessage="O Tipo de empreendimento é obrigatório."
@@ -142,12 +142,68 @@
 
                     </h:panelGrid>
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroEmpreendimentoView.salvarEptView()}" 
-                                     update='grid' icon="fa fa-edit"/>
-                    
+                                     update='frmCadastroEmpreendimento' icon="fa fa-edit"/>
+
                     <p:blockUI block="panel" trigger="btnSalvar">
                         CARREGANDO<br />
                         <p:graphicImage name="icons/LoadingBar.gif"/>
                     </p:blockUI>
+                </p:panel>
+
+                <!-- O painel abaixo so e renderizado apos o empreendimento ser salvo-->
+                <p:panel id="painelUsuarioSalvo"
+                         header="Informações salvas com sucesso" rendered="#{CadastroEmpreendimentoView.eptSendoVisualizado == 'true'}">
+                    <p:separator />
+                    <h:panelGrid columns="2" rendered="#{CadastroEmpreendimentoView.eptSendoVisualizado == 'true'}">
+                        <p:outputLabel value="Razão social: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.nomeEpt}" />
+
+                        <p:outputLabel value="Nome fantasia: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.nomeFantasiaEpt}" />
+
+                        <p:outputLabel value="E-mail: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.emailEpt}" />
+
+                        <p:outputLabel value="Endereço: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.enderecoEpt}" />
+
+                        <p:outputLabel value="Telefone: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.telefoneEpt}" />
+
+                        <p:outputLabel value="Telefone alternativo: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.telefoneAlternativo}" />
+
+                        <p:outputLabel value="CNPJ: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.cnpj}" />
+
+                        <p:outputLabel value="Data de criação do empreendimento: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.dataCriacaoEpt}" />
+
+                        <p:outputLabel value="Data de início da incubação: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.dataIncubacaoEpt}" />
+
+                        <p:outputLabel value="Data de início da incubação: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.dataIncubacaoEpt}" />
+
+                        <p:outputLabel value="Tipo de empreendimento: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.tipoEpt}" />
+
+                        <p:outputLabel value="Site do empreendimento: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.site}" />
+
+                        <p:outputLabel value="Faturamento médio mensal: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.faturamentoMensal}" />
+
+                        <p:outputLabel value="Faturamento médio anual: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.faturamentoAnual}" />
+
+                        <p:outputLabel value="Atividades exercidas: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.atividadeExercidaEpt}" />
+
+                        <p:outputLabel value="Processo de Incubação: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.situacaoEpt}" />
+
+                    </h:panelGrid>
                 </p:panel>
             </h:form>
         </ui:define>

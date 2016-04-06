@@ -4,9 +4,11 @@ import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MensagensBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.util.ValidadorCNPJ;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -21,6 +23,7 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
     private String[] situacaoEpt;//Situação do empreendimentos
     private MensagensBean mensagensBean = new MensagensBean();
     private EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
+    private boolean eptSendoVisualizado;
 
     //variáveis para campos não obrigatórios
     private String telefoneAlternativo;
@@ -28,6 +31,7 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
     private String faturamentoMensal;
     private String faturamentoAnual;
     private String site;
+    private String atividadeExercidaEpt;
 
     public CadastroEmpreendimentoView() {
         tiposEpt = new String[3];
@@ -35,49 +39,59 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
         tiposEpt[1] = "Cooperativa";
         tiposEpt[2] = "Grupo não formalizado";
         
-        situacaoEpt = new String[3];
-        situacaoEpt[0] = "Pré-incubação";
-        situacaoEpt[1] = "Incubação";
-        situacaoEpt[2] = "Desincubação";
-        situacaoEpt[2] = "Desincubado";        
+        situacaoEpt = new String[5];
+        situacaoEpt[0] = "Não incubado";
+        situacaoEpt[1] = "Pré-incubação";
+        situacaoEpt[2] = "Incubação";
+        situacaoEpt[3] = "Desincubação";
+        situacaoEpt[4] = "Desincubado";        
     }
 
-    public void salvarEptView() {
+    public void salvarEptView() throws IOException {
 
+        //ATIVIDADE EXERCICIDA
+        if (atividadeExercidaEpt.equals("")) {
+            eptCadastrado.setAtividadeExercidaEpt("Não registrado");
+        } else {
+            eptCadastrado.setAtividadeExercidaEpt(atividadeExercidaEpt);
+        }
+        
         //VERIFICA O TELEFONE ALTERNATIVO
         if (telefoneAlternativo.equals("")) {
-            eptCadastrado.setTelefoneAlternativoEpt("Não possui");
+            eptCadastrado.setTelefoneAlternativoEpt("Não registrado");
         } else {
             eptCadastrado.setTelefoneAlternativoEpt(telefoneAlternativo);
         }
 
         //VERIFICA O faturamentoMensal
         if (faturamentoMensal.equals("")) {
-            eptCadastrado.setFaturamentoMedioMensalEmp("Não possui");
+            eptCadastrado.setFaturamentoMedioMensalEmp("Não registrado");
         } else {
             eptCadastrado.setFaturamentoMedioMensalEmp(faturamentoMensal);
         }
         //VERIFICA O faturamentoAnual
         if (faturamentoAnual.equals("")) {
-            eptCadastrado.setFaturamentoMedioAnualEmp("Não possui");
+            eptCadastrado.setFaturamentoMedioAnualEmp("Não registrado");
         } else {
             eptCadastrado.setFaturamentoMedioAnualEmp(faturamentoAnual);
         }
         //VERIFICA O site
         if (site.equals("")) {
-            eptCadastrado.setSiteEpt("Não possui");
+            eptCadastrado.setSiteEpt("Não registrado");
         } else {
             eptCadastrado.setSiteEpt(site);
         }
         //VERIFICA O CNPJ
         if (cnpj.equals("")) {
-            eptCadastrado.setCnpjEpt("Não possui");
+            eptCadastrado.setCnpjEpt("Não registrado");
             empreendimentoBean.salvarEptBd(eptCadastrado);
+            eptSendoVisualizado = true;
         } else {
             //VERIFICA se o CNPJ é válido
             if (isCNPJ(eptCadastrado.getCnpjEpt())) {
                 eptCadastrado.setCnpjEpt(cnpj);
                 empreendimentoBean.salvarEptBd(eptCadastrado);
+                eptSendoVisualizado = true;
             } else {
                 mensagensBean.messagemCaixa("ERROR", "Erro no CNPJ", "Este CNPJ não é valido!");
             }
@@ -147,4 +161,13 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
     public void setSituacaoEpt(String[] situacaoEpt) {
         this.situacaoEpt = situacaoEpt;
     }
+
+    public boolean isEptSendoVisualizado() {
+        return eptSendoVisualizado;
+    }
+
+    public void setEptSendoVisualizado(boolean eptSendoVisualizado) {
+        this.eptSendoVisualizado = eptSendoVisualizado;
+    }
+    
 }

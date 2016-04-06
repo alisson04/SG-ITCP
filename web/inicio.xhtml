@@ -10,8 +10,15 @@
             <h:form id="frmCadastro" >
 
                 <p:outputLabel value="INICIO"></p:outputLabel>
-<p:commandButton id="asdas" value="Saladssaadvar" action="#{CadastroEmpreendimentoView.testeCNPJ()}" 
-                                      icon="fa fa-edit"/>
+                <p:commandButton id="asdas" value="Saladssaadvar" icon="css/icons/add.png">
+                    <h:graphicImage name="css/icons/add.png" />
+                </p:commandButton>
+
+                <p:commandLink>  
+                    <h:graphicImage name="css/icons/add.png" />
+                </p:commandLink>
+                <p:graphicImage name="css/icons/LoadingBar.gif"/>
+                <h:graphicImage name="css/icons/add.png" />
             </h:form>
         </ui:define>
 

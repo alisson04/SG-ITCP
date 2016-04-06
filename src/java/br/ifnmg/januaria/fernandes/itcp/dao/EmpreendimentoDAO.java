@@ -1,6 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
+import java.util.List;
 
 /**
  *
@@ -15,5 +16,10 @@ public class EmpreendimentoDAO extends DaoGenerico<Empreendimento> {
     
     public void salvarEpt(Empreendimento ept){
         salvarGenerico(ept);
+    }
+    
+    public List<Empreendimento> listarTodosEmpreendimentos() {
+        List<Empreendimento> listaEmpreendimentos; //
+        return listarObjsGenerico("Empreendimento");
     }
 }
