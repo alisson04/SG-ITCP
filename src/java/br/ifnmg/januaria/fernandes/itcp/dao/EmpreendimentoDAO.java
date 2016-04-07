@@ -19,7 +19,6 @@ public class EmpreendimentoDAO extends DaoGenerico<Empreendimento> {
     }
     
     public List<Empreendimento> listarTodosEmpreendimentos() {
-        List<Empreendimento> listaEmpreendimentos; //
         return listarObjsGenerico("Empreendimento");
     }
 }
