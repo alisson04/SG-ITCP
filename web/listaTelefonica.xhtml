@@ -27,29 +27,10 @@
                 </p:toolbar>
 
                 <p:tabView>
-                    <p:tab title="Empreendimentos">
-                        <p:dataTable id="dtContatosEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." 
-                                     value="#{ListarEmpreendimentosView.listaEmpreendimentos}" 
-                                     filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}"
-                                     var="empreendimentoCursor" widgetVar="varGlobal">
-
-                            <p:column headerText="Nome" filterBy="#{empreendimentoCursor.nomeFantasiaEpt}" 
-                                      sortBy="#{empreendimentoCursor.nomeFantasiaEpt}" filterMatchMode="contains">
-                                <h:outputText value="#{empreendimentoCursor.nomeFantasiaEpt}"/>
-                            </p:column>
-
-                            <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.emailEpt}" 
-                                      sortBy="#{empreendimentoCursor.emailEpt}" filterMatchMode="contains">
-                                <h:outputText value="#{empreendimentoCursor.emailEpt}"/>
-                            </p:column>
-
-                        </p:dataTable>
-                    </p:tab>
+                                        
                     <p:tab title="Usuários ativos">
-                        <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{usuarioBean.listaUsuarios}" 
-                                     filteredValue="#{usuarioBean.listaUsuariosFiltrados}"
-                                     var="usuarioCursor" widgetVar="varGlobal">
-
+                        <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{usuarioBean.listaUsuarios}"
+                                     var="usuarioCursor" widgetVar="varGlobalUsuarios">
                             <p:column headerText="Nome" filterBy="#{usuarioCursor.nomeUsuario}" 
                                       sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">
                                 <h:outputText value="#{usuarioCursor.nomeUsuario}"/>
@@ -60,42 +41,63 @@
                             </p:column>
                             <p:column filterBy="#{usuarioCursor.cargoUsuario}" headerText="Cargo" filterMatchMode="exact">
                                 <f:facet name="filter">
-                                    <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                    <p:selectOneMenu onchange="PF('varGlobalUsuarios').filter()" >
                                         <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
                                         <f:selectItems value="#{ListarUsuariosView.cargos}" />
                                     </p:selectOneMenu>
                                 </f:facet>
                                 <h:outputText value="#{usuarioCursor.cargoUsuario}" />
                             </p:column>
-                            <p:column headerText="Telefone" filterBy="#{usuarioCursor.telefoneUsuario}" filterMatchMode="contains">
+                            <p:column headerText="Telefone">
                                 <h:outputText value="#{usuarioCursor.telefoneUsuario}"/>
                             </p:column>
-                            <p:column headerText="Telefone alternativo" filterBy="#{usuarioCursor.telefoneAlternativoUsuario}" filterMatchMode="contains">
+                            <p:column headerText="Telefone alternativo" >
                                 <h:outputText value="#{usuarioCursor.telefoneAlternativoUsuario}"/>
                             </p:column>
                         </p:dataTable>
                     </p:tab>
-                    <p:tab title="Membros de empreendimentos">
-                        <h:outputText value="After a break of more than 15 years..." />
-                    </p:tab>
-                    <p:tab title="Parceiros">
-                        <p:dataTable id="ListagemParceiros" emptyMessage="Nenhum parceiro encontrado." 
-                                     value="#{ListarParceirosView.listaParceiros}" 
-                                     var="usuarioCursor" widgetVar="varGlobal">
+                    
+                    <p:tab title="Empreendimentos">
+                        <p:dataTable id="dtContatosEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." 
+                                     value="#{ListarEmpreendimentosView.listaEmpreendimentos}"
+                                     var="empreendimentoCursor" widgetVar="varGlobalEmpreendimentos">
 
-                            <p:column headerText="Nome" filterBy="#{usuarioCursor.nomeParceiro}" 
-                                      sortBy="#{usuarioCursor.nomeParceiro}" filterMatchMode="contains">
-                                <h:outputText value="#{usuarioCursor.nomeParceiro}"/>
+                            <p:column headerText="Nome" filterBy="#{empreendimentoCursor.nomeFantasiaEpt}" 
+                                      sortBy="#{empreendimentoCursor.nomeFantasiaEpt}" filterMatchMode="contains">
+                                <h:outputText value="#{empreendimentoCursor.nomeFantasiaEpt}"/>
                             </p:column>
-                            <p:column headerText="E-mail" filterBy="#{usuarioCursor.emailParceiro}" 
-                                      sortBy="#{usuarioCursor.emailParceiro}" filterMatchMode="contains">
-                                <h:outputText value="#{usuarioCursor.emailParceiro}"/>
+                            <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.emailEpt}" 
+                                      sortBy="#{empreendimentoCursor.emailEpt}" filterMatchMode="contains">
+                                <h:outputText value="#{empreendimentoCursor.emailEpt}"/>
                             </p:column>
-                            <p:column headerText="Telefone" filterBy="#{usuarioCursor.telefoneParceiro}" filterMatchMode="contains">
-                                <h:outputText value="#{usuarioCursor.telefoneParceiro}"/>
+                            <p:column headerText="Telefone">
+                                <h:outputText value="#{empreendimentoCursor.telefoneEpt}"/>
                             </p:column>
-                            <p:column headerText="Telefone alternativo" filterBy="#{usuarioCursor.telefoneAlternativoParceiro}" filterMatchMode="contains">
-                                <h:outputText value="#{usuarioCursor.telefoneAlternativoParceiro}"/>
+                            <p:column headerText="Telefone alternativo">
+                                <h:outputText value="#{empreendimentoCursor.telefoneEpt}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:tab>
+                    
+                    <p:tab title="Parceiros">
+                        <p:dataTable id="asdasd" emptyMessage="Nenhum parceiro encontrado." 
+                                     value="#{ListarParceirosView.listaParceiros}" 
+                                     var="parceiroCursor" widgetVar="varGlobalParceiros">
+
+                            <p:column headerText="Nome" filterBy="#{parceiroCursor.nomeParceiro}" 
+                                      sortBy="#{parceiroCursor.nomeParceiro}" filterMatchMode="contains">
+                                <h:outputText value="#{parceiroCursor.nomeParceiro}"/>
+                            </p:column>
+                            <p:column headerText="E-mail" filterBy="#{parceiroCursor.emailParceiro}" 
+                                      sortBy="#{parceiroCursor.emailParceiro}" filterMatchMode="contains">
+                                <h:outputText value="#{parceiroCursor.emailParceiro}"/>
+                            </p:column>
+                            <p:column headerText="Telefone">
+                                <h:outputText value="#{parceiroCursor.telefoneParceiro}"/>
+                            </p:column>
+                            <p:column headerText="Telefone alternativo" >
+                                <h:outputText value="#{parceiroCursor.telefoneAlternativoParceiro}"/>
                             </p:column>
                         </p:dataTable>
                     </p:tab>
