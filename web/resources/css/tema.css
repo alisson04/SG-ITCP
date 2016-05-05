@@ -1,1 +1,7 @@
-.salvar-icon{background: url("icons/add.png") !important;}
+.salvar-icon{
+    background: url("/icons/add.png") !important;
+}
+
+.gravar {
+	background-image: url("/icons/add.png") !important;
+}

@@ -1,5 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
+import br.ifnmg.januaria.fernandes.itcp.domain.Atividade;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.util.ArrayList;
 import java.util.List;
