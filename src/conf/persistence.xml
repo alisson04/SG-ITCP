@@ -6,7 +6,7 @@
     <class>br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento</class>
     <class>br.ifnmg.januaria.fernandes.itcp.domain.Parceiro</class>
     <class>br.ifnmg.januaria.fernandes.itcp.domain.Atividade</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
     </properties>
   </persistence-unit>

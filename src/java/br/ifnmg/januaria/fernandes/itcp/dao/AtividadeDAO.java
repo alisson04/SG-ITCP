@@ -9,7 +9,6 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Atividade;
 public class AtividadeDAO extends DaoGenerico<Atividade>{
     public void TestaAtividade(){
         Atividade at = new Atividade();
-        at.setIdAtividade(12);
         salvarGenerico(at);
     }
 }
