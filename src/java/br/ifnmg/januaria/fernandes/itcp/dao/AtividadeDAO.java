@@ -2,6 +2,7 @@ package br.ifnmg.januaria.fernandes.itcp.dao;
 
 import br.ifnmg.januaria.fernandes.itcp.domain.Atividade;
 
+
 /**
  *
  * @author alisson
