@@ -27,6 +27,9 @@ import javax.validation.constraints.Size;
 public class Empreendimento implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
+    private List<MembroEmpreendimento> membroEmpreendimentoList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -287,5 +290,13 @@ public class Empreendimento implements Serializable {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento[ idEpt=" + idEpt + " ]";
+    }
+
+    public List<MembroEmpreendimento> getMembroEmpreendimentoList() {
+        return membroEmpreendimentoList;
+    }
+
+    public void setMembroEmpreendimentoList(List<MembroEmpreendimento> membroEmpreendimentoList) {
+        this.membroEmpreendimentoList = membroEmpreendimentoList;
     }
 }

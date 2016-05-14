@@ -6,6 +6,7 @@
 package br.ifnmg.januaria.fernandes.itcp.bean;
 
 import br.ifnmg.januaria.fernandes.itcp.dao.AtividadeDAO;
+import br.ifnmg.januaria.fernandes.itcp.dao.MembroEmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.dao.UsuarioDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
@@ -38,7 +39,7 @@ public class LoginBean implements Serializable {
     }
 
     public String logar() {
-        AtividadeDAO at = new AtividadeDAO();
+        MembroEmpreendimentoDAO at = new MembroEmpreendimentoDAO();
         
         at.TestaAtividade();
         

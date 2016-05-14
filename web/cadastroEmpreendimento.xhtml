@@ -20,7 +20,7 @@
 
                 <p:panel id="panel"
                          header="Cadastro de empreendimento (* Campos obrigatórios)" 
-                         rendered="#{CadastroEmpreendimentoView.eptSendoVisualizado == 'false'}">
+                         rendered="#{CadastroEmpreendimentoView.membroEptSendoVisualizado == 'false'}">
 
                     <p:separator />
                     <!--<p:message id="messages" showDetail="true"  />-->
@@ -133,9 +133,9 @@
 
                 <!-- O painel abaixo so e renderizado apos o empreendimento ser salvo-->
                 <p:panel id="painelUsuarioSalvo"
-                         header="Informações salvas com sucesso" rendered="#{CadastroEmpreendimentoView.eptSendoVisualizado == 'true'}">
+                         header="Informações salvas com sucesso" rendered="#{CadastroEmpreendimentoView.membroEptSendoVisualizado == 'true'}">
                     <p:separator />
-                    <h:panelGrid columns="2" rendered="#{CadastroEmpreendimentoView.eptSendoVisualizado == 'true'}">
+                    <h:panelGrid columns="2" rendered="#{CadastroEmpreendimentoView.membroEptSendoVisualizado == 'true'}">
                         <p:outputLabel value="Razão social: " />
                         <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.nomeEpt}" />
 

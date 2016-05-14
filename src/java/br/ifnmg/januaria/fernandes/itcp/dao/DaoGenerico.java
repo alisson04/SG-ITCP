@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolationException;
 
 /**
  *
@@ -24,9 +25,15 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             em.getTransaction().begin();
             em.merge(objeto);
             em.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (ConstraintViolationException x) {
+            
+            System.out.println("___________//////////////////////////////////////");
+            System.out.println(x.getConstraintViolations());
+            System.out.println("___________//////////////////////////////////////");
+            
             em.getTransaction().rollback();
-            throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", e);
+            throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
+            
         } finally {
             em.close();
         }
