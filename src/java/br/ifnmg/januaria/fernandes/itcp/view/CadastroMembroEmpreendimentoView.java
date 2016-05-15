@@ -18,7 +18,8 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean(name = "CadastroMembroEmpreendimentoView")
 @ViewScoped
-public class CadastroMembroEmpreendimentoView implements Serializable{
+public class CadastroMembroEmpreendimentoView implements Serializable {
+
     private MembroEmpreendimento membroEptCadastrado = new MembroEmpreendimento();
     private MensagensBean mensagensBean = new MensagensBean();
     private MembroEmpreendimentoBean membroEmpreendimentoBean = new MembroEmpreendimentoBean();
@@ -28,18 +29,13 @@ public class CadastroMembroEmpreendimentoView implements Serializable{
     EmpreendimentoDAO empreendimentoDAO = new EmpreendimentoDAO();
 
     public CadastroMembroEmpreendimentoView() {
-        System.out.println("NOME: ;;;;;;;;;;;;;;;;;;;;;");
         listaEpts = empreendimentoDAO.listarTodosEmpreendimentos();
-        System.out.println("NOME: ;;;;;;;;;;;;;;;;;;;;;");
-        
         listaNomeEpts = new String[listaEpts.size()];
         for (int i = 0; i < listaEpts.size(); i++) {
-            System.out.println("NOME: ...............;;;;;;;;;;;;;;;;;;;;;");    
             listaNomeEpts[i] = listaEpts.get(i).getNomeEpt();
         }
-        System.out.println("NOME: ;;;;;;;;;;;;;;;;;;;;;");
     }
-    
+
     //variáveis para campos não obrigatórios
     private String apelido;
     private String nomeMae;
@@ -50,7 +46,7 @@ public class CadastroMembroEmpreendimentoView implements Serializable{
     private String telefoneAlternativo;
     private String dataNascimento;
     private String empreedimentoSelecionado;
-    
+
     //Métodos
     public void salvarMembroEpt() {
         //Verificação de campos em branco
@@ -94,27 +90,26 @@ public class CadastroMembroEmpreendimentoView implements Serializable{
         } else {
             membroEptCadastrado.setDataNascimentoMembroEmpreendimento(dataNascimento);
         }
-        
+
         for (int i = 0; i < listaEpts.size(); i++) {
-            if(listaEpts.get(i).getNomeEpt().equals(empreedimentoSelecionado)){
+            if (listaEpts.get(i).getNomeEpt().equals(empreedimentoSelecionado)) {
                 membroEptCadastrado.setEmpreendimento(listaEpts.get(i));
             }
-           // else{
+            // else{
             //    mensagensBean.messagemCaixa("ERROR", "Erro no E-mail", "Este E-mail já esta cadastrado no sistema");
             //}
         }
-        
+
         membroEmpreendimentoBean.salvarMembroEpt(membroEptCadastrado);
         membroEptSendoVisualizado = true;
     }
 
     //SETS e GETS
-    public void setEmpreedimentoSelecionado(String empreedimentoSelecionado) {    
+    public void setEmpreedimentoSelecionado(String empreedimentoSelecionado) {
         this.empreedimentoSelecionado = empreedimentoSelecionado;
     }
 
-    
-    public String getEmpreedimentoSelecionado() {    
+    public String getEmpreedimentoSelecionado() {
         return empreedimentoSelecionado;
     }
 
@@ -129,6 +124,7 @@ public class CadastroMembroEmpreendimentoView implements Serializable{
     public List<Empreendimento> getListaEpts() {
         return listaEpts;
     }
+
     public void setListaEpts(List<Empreendimento> listaEpts) {
         this.listaEpts = listaEpts;
     }
@@ -184,8 +180,8 @@ public class CadastroMembroEmpreendimentoView implements Serializable{
     public String getDataNascimento() {
         return dataNascimento;
     }
-    
-    public void setDataNascimento(String dataNascimento) {    
+
+    public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -212,5 +208,5 @@ public class CadastroMembroEmpreendimentoView implements Serializable{
     public void setTelefoneAlternativo(String telefoneAlternativo) {
         this.telefoneAlternativo = telefoneAlternativo;
     }
-    
+
 }
