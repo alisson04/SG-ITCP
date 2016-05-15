@@ -23,19 +23,21 @@ public class CadastroMembroEmpreendimentoView implements Serializable{
     private MensagensBean mensagensBean = new MensagensBean();
     private MembroEmpreendimentoBean membroEmpreendimentoBean = new MembroEmpreendimentoBean();
     private boolean membroEptSendoVisualizado;
-    List<Empreendimento> listaEpts;
-    List<String> listaNomeEpts;
+    private List<Empreendimento> listaEpts;
+    private String[] listaNomeEpts;
     EmpreendimentoDAO empreendimentoDAO = new EmpreendimentoDAO();
 
     public CadastroMembroEmpreendimentoView() {
-        listaEpts = new ArrayList<>();
+        System.out.println("NOME: ;;;;;;;;;;;;;;;;;;;;;");
         listaEpts = empreendimentoDAO.listarTodosEmpreendimentos();
-        listaNomeEpts = new ArrayList<>();
+        System.out.println("NOME: ;;;;;;;;;;;;;;;;;;;;;");
         
+        listaNomeEpts = new String[listaEpts.size()];
         for (int i = 0; i < listaEpts.size(); i++) {
-            listaNomeEpts.set(i, listaEpts.get(i).getNomeEpt());
-            System.out.println("NOME: " + listaNomeEpts.get(i));
+            System.out.println("NOME: ...............;;;;;;;;;;;;;;;;;;;;;");    
+            listaNomeEpts[i] = listaEpts.get(i).getNomeEpt();
         }
+        System.out.println("NOME: ;;;;;;;;;;;;;;;;;;;;;");
     }
     
     //variáveis para campos não obrigatórios
@@ -47,6 +49,7 @@ public class CadastroMembroEmpreendimentoView implements Serializable{
     private String telefone;
     private String telefoneAlternativo;
     private String dataNascimento;
+    private String empreedimentoSelecionado;
     
     //Métodos
     public void salvarMembroEpt() {
@@ -92,15 +95,34 @@ public class CadastroMembroEmpreendimentoView implements Serializable{
             membroEptCadastrado.setDataNascimentoMembroEmpreendimento(dataNascimento);
         }
         
+        for (int i = 0; i < listaEpts.size(); i++) {
+            if(listaEpts.get(i).getNomeEpt().equals(empreedimentoSelecionado)){
+                membroEptCadastrado.setEmpreendimento(listaEpts.get(i));
+            }
+           // else{
+            //    mensagensBean.messagemCaixa("ERROR", "Erro no E-mail", "Este E-mail já esta cadastrado no sistema");
+            //}
+        }
+        
         membroEmpreendimentoBean.salvarMembroEpt(membroEptCadastrado);
         membroEptSendoVisualizado = true;
     }
 
     //SETS e GETS
-    public List<String> getListaNomeEpts() {    
+    public void setEmpreedimentoSelecionado(String empreedimentoSelecionado) {    
+        this.empreedimentoSelecionado = empreedimentoSelecionado;
+    }
+
+    
+    public String getEmpreedimentoSelecionado() {    
+        return empreedimentoSelecionado;
+    }
+
+    public String[] getListaNomeEpts() {
         return listaNomeEpts;
     }
-    public void setListaNomeEpts(List<String> listaNomeEpts) {
+
+    public void setListaNomeEpts(String[] listaNomeEpts) {
         this.listaNomeEpts = listaNomeEpts;
     }
 

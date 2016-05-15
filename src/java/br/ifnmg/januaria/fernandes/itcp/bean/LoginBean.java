@@ -32,16 +32,15 @@ public class LoginBean implements Serializable {
 
     private Usuario usuarioLogado;
     private UsuarioDAO usuarioDAO;
+    MensagensBean mensagensBean;
 
     public LoginBean() {
         usuarioLogado = new Usuario();
         usuarioDAO = new UsuarioDAO();
+        mensagensBean = new MensagensBean();
     }
 
     public String logar() {
-        MembroEmpreendimentoDAO at = new MembroEmpreendimentoDAO();
-        
-        at.TestaAtividade();
         
         try {
             //CRIPTOGRAFA A SENHA ALEATORIA

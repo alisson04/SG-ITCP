@@ -133,9 +133,9 @@
 
                 <!-- O painel abaixo so e renderizado apos o empreendimento ser salvo-->
                 <p:panel id="painelUsuarioSalvo"
-                         header="Informações salvas com sucesso" rendered="#{CadastroEmpreendimentoView.membroEptSendoVisualizado == 'true'}">
+                         header="Informações salvas com sucesso" rendered="#{CadastroEmpreendimentoView.EptSendoVisualizado == 'true'}">
                     <p:separator />
-                    <h:panelGrid columns="2" rendered="#{CadastroEmpreendimentoView.membroEptSendoVisualizado == 'true'}">
+                    <h:panelGrid columns="2" rendered="#{CadastroEmpreendimentoView.EptSendoVisualizado == 'true'}">
                         <p:outputLabel value="Razão social: " />
                         <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.nomeEpt}" />
 
