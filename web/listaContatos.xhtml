@@ -12,6 +12,7 @@
                 <f:event listener="#{ListarEmpreendimentosView.listarTodosEmpreendimentos()}" type="preRenderView"/>
                 <f:event listener="#{ListarParceirosView.listarTodosParceiros()}" type="preRenderView"/>
                 <f:event listener="#{usuarioBean.listarUsrsAtivosInativosTela('Ativo')}" type="preRenderView"/>
+                <f:event listener="#{ListarMembrosEptsView.ListarMembrosEpts()}" type="preRenderView"/>
             </f:metadata>
         </ui:define>
 
@@ -27,7 +28,7 @@
                 </p:toolbar>
 
                 <p:tabView>
-                                        
+
                     <p:tab title="Usuários ativos">
                         <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{usuarioBean.listaUsuarios}"
                                      var="usuarioCursor" widgetVar="varGlobalUsuarios">
@@ -56,7 +57,7 @@
                             </p:column>
                         </p:dataTable>
                     </p:tab>
-                    
+
                     <p:tab title="Empreendimentos">
                         <p:dataTable id="dtContatosEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." 
                                      value="#{ListarEmpreendimentosView.listaEmpreendimentos}"
@@ -79,7 +80,45 @@
 
                         </p:dataTable>
                     </p:tab>
-                    
+
+                    <p:tab title="Membros de empreendimentos">
+                        <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento encontrado." 
+                                     value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
+                                     filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}"  
+                                     rowKey="#{membroEmpreendimentoCursor.idMembroEmpreendimento}"
+                                     var="membroEmpreendimentoCursor" widgetVar="varGlobalMembroEmpreendimento">
+
+                            <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" 
+                                      sortBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" filterMatchMode="contains">
+                                <h:outputText value="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}"/>
+                            </p:column>
+
+                            <p:column headerText="Apelido" filterBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" 
+                                      sortBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" filterMatchMode="contains">
+                                <h:outputText value="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}"/>
+                            </p:column>
+
+                            <p:column headerText="Telefone">
+                                <h:outputText value="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}"/>
+                            </p:column>
+
+                            <p:column headerText="Telefone alternativo">
+                                <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}"/>
+                            </p:column>
+
+                            <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" headerText="Empreendimento" 
+                                      filterMatchMode="exact">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('varGlobalMembroEmpreendimento').filter()" >
+                                        <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{ListarMembrosEptsView.listaNomeEpts}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+
                     <p:tab title="Parceiros">
                         <p:dataTable id="asdasd" emptyMessage="Nenhum parceiro encontrado." 
                                      value="#{ListarParceirosView.listaParceiros}" 
