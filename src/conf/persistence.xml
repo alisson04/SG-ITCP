@@ -7,7 +7,7 @@
     <class>br.ifnmg.januaria.fernandes.itcp.domain.Parceiro</class>
     <class>br.ifnmg.januaria.fernandes.itcp.domain.Atividade</class>
     <class>br.ifnmg.januaria.fernandes.itcp.domain.MembroEmpreendimento</class>
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
     </properties>
   </persistence-unit>

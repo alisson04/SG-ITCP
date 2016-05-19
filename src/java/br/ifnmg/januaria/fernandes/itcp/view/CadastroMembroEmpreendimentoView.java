@@ -27,16 +27,7 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
     private List<Empreendimento> listaEpts;
     private String[] listaNomeEpts;
     EmpreendimentoDAO empreendimentoDAO = new EmpreendimentoDAO();
-
-    public CadastroMembroEmpreendimentoView() {
-        listaEpts = empreendimentoDAO.listarTodosEmpreendimentos();
-        listaNomeEpts = new String[listaEpts.size()];
-        for (int i = 0; i < listaEpts.size(); i++) {
-            listaNomeEpts[i] = listaEpts.get(i).getNomeEpt();
-        }
-    }
-
-    //variáveis para campos não obrigatórios
+//variáveis para campos não obrigatórios
     private String apelido;
     private String nomeMae;
     private String endereco;
@@ -46,6 +37,14 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
     private String telefoneAlternativo;
     private String dataNascimento;
     private String empreedimentoSelecionado;
+    
+    public CadastroMembroEmpreendimentoView() {
+        listaEpts = empreendimentoDAO.listarTodosEmpreendimentos();
+        listaNomeEpts = new String[listaEpts.size()];
+        for (int i = 0; i < listaEpts.size(); i++) {
+            listaNomeEpts[i] = listaEpts.get(i).getNomeEpt();
+        }
+    }
 
     //Métodos
     public void salvarMembroEpt() {
