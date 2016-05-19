@@ -47,14 +47,6 @@
                         <h:outputText value="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}"/>
                     </p:column>
                     
-                    <p:column headerText="Telefone">
-                        <h:outputText value="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}"/>
-                    </p:column>
-                    
-                    <p:column headerText="Telefone alternativo">
-                        <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}"/>
-                    </p:column>
-                    
                     <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" headerText="Empreendimento" 
                               filterMatchMode="exact">
                         <f:facet name="filter">
