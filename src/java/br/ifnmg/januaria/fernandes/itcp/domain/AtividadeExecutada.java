@@ -1,17 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -20,15 +26,23 @@ import javax.validation.constraints.Size;
  * @author alisson
  */
 @Entity
-@Table(name = "Atividade")
+@Table(name = "AtividadeExecutada")
 @NamedQueries({
-    @NamedQuery(name = "Atividade.findAll", query = "SELECT a FROM Atividade a")})
-public class Atividade implements Serializable {
+    @NamedQuery(name = "AtividadeExecutada.findAll", query = "SELECT a FROM AtividadeExecutada a")})
+public class AtividadeExecutada implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "atividade")
-    private List<AtividadeRelacionamento> atividadeRelacionamentoList;
+    @JoinTable(name = "AtiviExeParce", joinColumns = {
+        @JoinColumn(name = "idAtividadeExe", referencedColumnName = "idAtividade")}, inverseJoinColumns = {
+        @JoinColumn(name = "idParceiro", referencedColumnName = "idparceiro")})
+    @ManyToMany
+    private List<Parceiro> parceiroList;
+    @JoinTable(name = "AtiviExeUsua", joinColumns = {
+        @JoinColumn(name = "iDAtividadeExe", referencedColumnName = "idAtividade")}, inverseJoinColumns = {
+        @JoinColumn(name = "iDUsuario", referencedColumnName = "idUsuario")})
+    @ManyToMany
+    private List<Usuario> usuarioList;
 
-     private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -50,10 +64,10 @@ public class Atividade implements Serializable {
     @Column(name = "dataFimAtividade")
     private String dataFimAtividade;
 
-    public Atividade() {
+    public AtividadeExecutada() {
     }
 
-    public Atividade(Integer idAtividade) {
+    public AtividadeExecutada(Integer idAtividade) {
         this.idAtividade = idAtividade;
     }
 
@@ -115,10 +129,10 @@ public class Atividade implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Atividade)) {
+        if (!(object instanceof AtividadeExecutada)) {
             return false;
         }
-        Atividade other = (Atividade) object;
+        AtividadeExecutada other = (AtividadeExecutada) object;
         if ((this.idAtividade == null && other.idAtividade != null) || (this.idAtividade != null && !this.idAtividade.equals(other.idAtividade))) {
             return false;
         }
@@ -127,15 +141,23 @@ public class Atividade implements Serializable {
 
     @Override
     public String toString() {
-        return "br.ifnmg.januaria.fernandes.itcp.domain.Atividade[ idAtividade=" + idAtividade + " ]";
+        return "br.ifnmg.januaria.fernandes.itcp.domain.AtividadeExecutada[ idAtividade=" + idAtividade + " ]";
     }
 
-    public List<AtividadeRelacionamento> getAtividadeRelacionamentoList() {
-        return atividadeRelacionamentoList;
+    public List<Parceiro> getParceiroList() {
+        return parceiroList;
     }
 
-    public void setAtividadeRelacionamentoList(List<AtividadeRelacionamento> atividadeRelacionamentoList) {
-        this.atividadeRelacionamentoList = atividadeRelacionamentoList;
+    public void setParceiroList(List<Parceiro> parceiroList) {
+        this.parceiroList = parceiroList;
     }
 
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
+    }
+    
 }

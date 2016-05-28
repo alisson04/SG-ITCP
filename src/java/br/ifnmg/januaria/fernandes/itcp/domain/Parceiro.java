@@ -1,12 +1,14 @@
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,6 +24,9 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Parceiro.findAll", query = "SELECT p FROM Parceiro p")})
 public class Parceiro implements Serializable {
+
+    @ManyToMany(mappedBy = "parceiroList")
+    private List<AtividadeExecutada> atividadeExecutadaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -156,6 +161,14 @@ public class Parceiro implements Serializable {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Parceiro[ idparceiro=" + idparceiro + " ]";
+    }
+
+    public List<AtividadeExecutada> getAtividadeExecutadaList() {
+        return atividadeExecutadaList;
+    }
+
+    public void setAtividadeExecutadaList(List<AtividadeExecutada> atividadeExecutadaList) {
+        this.atividadeExecutadaList = atividadeExecutadaList;
     }
     
 }

@@ -5,7 +5,7 @@
  */
 package br.ifnmg.januaria.fernandes.itcp.bean;
 
-import br.ifnmg.januaria.fernandes.itcp.dao.AtividadeDAO;
+import br.ifnmg.januaria.fernandes.itcp.dao.AtividadeExecutadaDAO;
 import br.ifnmg.januaria.fernandes.itcp.dao.MembroEmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.dao.UsuarioDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;

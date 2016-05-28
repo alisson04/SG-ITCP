@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,8 +29,8 @@ import javax.validation.constraints.Size;
 
 public class Usuario implements Serializable {
 
-    @OneToMany(mappedBy = "usuario")
-    private List<AtividadeRelacionamento> atividadeRelacionamentoList;
+    @ManyToMany(mappedBy = "usuarioList")
+    private List<AtividadeExecutada> atividadeExecutadaList;
 
        private static final long serialVersionUID = 1L;
     @Id
@@ -278,12 +279,11 @@ public class Usuario implements Serializable {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Usuario[ idUsuario=" + idUsuario + " ]";
     }
 
-    public List<AtividadeRelacionamento> getAtividadeRelacionamentoList() {
-        return atividadeRelacionamentoList;
+    public List<AtividadeExecutada> getAtividadeExecutadaList() {
+        return atividadeExecutadaList;
     }
 
-    public void setAtividadeRelacionamentoList(List<AtividadeRelacionamento> atividadeRelacionamentoList) {
-        this.atividadeRelacionamentoList = atividadeRelacionamentoList;
+    public void setAtividadeExecutadaList(List<AtividadeExecutada> atividadeExecutadaList) {
+        this.atividadeExecutadaList = atividadeExecutadaList;
     }
-
-     }
+}

@@ -27,6 +27,9 @@ import javax.validation.constraints.Size;
 public class Empreendimento implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
+    private List<PlanoAcao> planoAcaoList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
     private List<MembroEmpreendimento> membroEmpreendimentoList;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
@@ -298,5 +301,13 @@ public class Empreendimento implements Serializable {
 
     public void setMembroEmpreendimentoList(List<MembroEmpreendimento> membroEmpreendimentoList) {
         this.membroEmpreendimentoList = membroEmpreendimentoList;
+    }
+
+    public List<PlanoAcao> getPlanoAcaoList() {
+        return planoAcaoList;
+    }
+
+    public void setPlanoAcaoList(List<PlanoAcao> planoAcaoList) {
+        this.planoAcaoList = planoAcaoList;
     }
 }

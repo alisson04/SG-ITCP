@@ -5,7 +5,6 @@
     <class>br.ifnmg.januaria.fernandes.itcp.domain.Usuario</class>
     <class>br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento</class>
     <class>br.ifnmg.januaria.fernandes.itcp.domain.Parceiro</class>
-    <class>br.ifnmg.januaria.fernandes.itcp.domain.Atividade</class>
     <class>br.ifnmg.januaria.fernandes.itcp.domain.MembroEmpreendimento</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>

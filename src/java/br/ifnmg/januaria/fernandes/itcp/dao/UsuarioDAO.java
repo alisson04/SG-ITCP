@@ -1,6 +1,5 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
-import br.ifnmg.januaria.fernandes.itcp.domain.Atividade;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,10 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
 
     public UsuarioDAO() {
 
+    }
+    
+    public List<Usuario> listarTodosUsuarios() {
+        return listarObjsGenerico("Usuario");
     }
     
     public void salvarUsr(Usuario usr){
