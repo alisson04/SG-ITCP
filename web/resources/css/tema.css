@@ -1,18 +1,56 @@
+.users-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/GroupUsers32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.bussiness-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/Bussiness32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.visualizarUser-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/VisualizarUser32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.visualizarList-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/VisualizarList32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.homePage-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/HomePage32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.addUser-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AddUser32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
 .salvar-icon{
-    background: url("icons/add.png") !important;
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/LoadingBar.gif") !important;
+    height: 32px;
+    width: 32px;
 }
 .gravar {
-	background-image: url("/icons/add.png") !important;
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
 }
 
 .ui-icon.meu-icone {
-  background: url("/icons/add.png") no-repeat;
-  height: 16px;
-  width: 16px;
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/LoadingBar.gif") !important;
+    height: 16px;
+    width: 16px;
 }
 
 .cabecalho {
-    background-image: url('resources/icons/dasdads.png') !important;
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
 }
 
 .dolar-icon {

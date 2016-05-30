@@ -11,14 +11,14 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>SIGITEC - Modelo Global</title>
-        <h:outputStylesheet library="css" name="default.css" />
-        <link rel="stylesheet" href="/resources/css/default.css"/>
         
-        <link href="${facesContext.externalContext.requestContextPath}/resources/css/default.css" 
-          rel="stylesheet"
-          type="text/css" />
+        <h:outputStylesheet library="css" name="estilos.css" />
+        <link rel="stylesheet" href="/resources/css/estilos.css"/>
+        <h:outputStylesheet library="css" name="tema.css" />
+        <link rel="stylesheet" href="/resources/css/tema.css"/>
     </h:head>
     <h:body>
+        
         <!-- 
         <p:growl id="msgGlobal" sticky="true" />
         -->
@@ -27,16 +27,16 @@
             <p:layoutUnit position="center">
                 <h:form id="frmModeloGeral">
                     <!--<p:graphicImage library="imagens" name="3.png" width="100%" />-->
-                    <p:menubar>
-                        <p:menuitem value="Início" icon="salvar-icon"
+                    <p:menubar style="ui-widget">
+                        <p:menuitem value="Início" icon="homePage-iconfinder" 
                                     action="/inicio.xhtml?faces-redirect=true"/>
 
-                        <p:submenu label="Usuários" icon="fa fa-users">
-                            <p:menuitem value=" Cadastrar usuário" icon="fa fa-plus-circle"
+                        <p:submenu label="Usuários" icon="users-iconfinder">
+                            <p:menuitem value=" Cadastrar usuário" icon="addUser-iconfinder"
                                         action="#{usuarioBean.salvarUsrTela}" 
                                         rendered="#{InicioBean.usuarioLogado.cargoUsuario == 'Coordenador'}"/>
-                            <p:submenu label="Listar usuários" icon="fa fa-reorder">
-                                <p:menuitem value="Usuários ativos" icon="fa fa-smile-o"
+                            <p:submenu label="Listar usuários" icon="visualizarList-iconfinder">
+                                <p:menuitem value="Usuários ativos" icon="visualizarList-iconfinder"
                                             action="/ListarUsrAtivos.xhtml?faces-redirect=true"/>
                                 <p:menuitem value="Usuários Inativos" icon="fa fa-frown-o"
                                             action="/ListarUsrInativos.xhtml?faces-redirect=true"/>
@@ -48,7 +48,7 @@
                                             action="/cadastroPlanoAcao.xhtml?faces-redirect=true"/>
                         </p:submenu>
                         
-                        <p:submenu label="Empreendimentos" icon="fa fa-building-o">
+                        <p:submenu label="Empreendimentos" icon="bussiness-iconfinder">
                             <p:menuitem value="Cadastrar empreendimento" 
                                             action="/cadastroEmpreendimento.xhtml?faces-redirect=true"/>
                             <p:menuitem value="Listar empreendimentos" 
@@ -58,8 +58,8 @@
                         <p:submenu label="Membros de empreendimentos" icon="fa fa-building-o">
                             <p:menuitem value="Cadastrar membros de empreendimentos" 
                                             action="/CadastroMembroEmpreendimento.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar membros de empreendimentos" 
-                                            action="/listarMembroEmpreendimento.xhtml?faces-redirect=true"/>                            
+                            <p:menuitem value="Listar membros de empreendimentos" icon="visualizarList-iconfinder"
+                                            action="/listarMembroEmpreendimento.xhtml?faces-redirect=true" />                            
                         </p:submenu>
                         
                         <p:submenu label="Parceiros" icon="fa fa-building-o">
@@ -102,9 +102,9 @@
                     <p:commandButton type="push" title="Editar cabeçalho" icon="dolar-icon" />
                     
                     <p:graphicImage name="icons/LoadingBar.gif"/>
-                    <p:commandLink value="teste">
+                    
                     <p:graphicImage name="icons/add.png"/>
-                    </p:commandLink>
+                    
                         
                     <p:dialog id="diaMudarSenha" header="Seus dados" widgetVar="senhaDia" showEffect="fade" hideEffect="fade" 
                         resizable="false" draggable="false" modal="true"  appendTo="@(body)">
