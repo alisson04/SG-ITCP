@@ -16,14 +16,14 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+import java.io.Serializable;
 /**
  *
  * @author alisson
  */
 @ManagedBean(name = "InicioBean")
 @SessionScoped
-public class InicioBean {
+public class InicioBean implements Serializable{
 
     Usuario usuarioLogado;
 

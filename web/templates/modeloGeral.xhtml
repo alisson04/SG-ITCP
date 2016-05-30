@@ -11,8 +11,12 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>SIGITEC - Modelo Global</title>
-        <h:outputStylesheet library="css" name="tema.css" />
-        <link rel="stylesheet" href="#{request.contextPath}/css/tema.css"/>
+        <h:outputStylesheet library="css" name="default.css" />
+        <link rel="stylesheet" href="/resources/css/default.css"/>
+        
+        <link href="${facesContext.externalContext.requestContextPath}/resources/css/default.css" 
+          rel="stylesheet"
+          type="text/css" />
     </h:head>
     <h:body>
         <!-- 
@@ -37,6 +41,11 @@
                                 <p:menuitem value="Usuários Inativos" icon="fa fa-frown-o"
                                             action="/ListarUsrInativos.xhtml?faces-redirect=true"/>
                             </p:submenu>
+                        </p:submenu>
+                        
+                        <p:submenu label="Planos de ação" icon="fa fa-building-o">
+                            <p:menuitem value="Cadastrar planos de ação" 
+                                            action="/cadastroPlanoAcao.xhtml?faces-redirect=true"/>
                         </p:submenu>
                         
                         <p:submenu label="Empreendimentos" icon="fa fa-building-o">
@@ -66,6 +75,7 @@
                         <p:menuitem value="Lista de contatos" 
                                             action="/listaContatos.xhtml?faces-redirect=true"/>
                         
+                        
 
                         <f:facet name="options">
                             <p:splitButton value="Minha conta"  icon="fa fa-gear">
@@ -83,6 +93,19 @@
                         </f:facet>
                     </p:menubar>
                     
+                    <p:commandButton value="Gravar"  icon="salvar-icon"/>
+                    <p:commandButton value="Gravar"  icon="gravar"/>
+                    <p:commandButton value="Gravar"  icon="meu-icone"/>
+                    <p:commandButton value="cabecalho"  icon="cabecalho"/>
+                    <p:commandButton value="Gravar"  icon="dolar-icon"/>
+                    <p:commandButton type="push" title="Editar cabeçalho" icon="fa fa-power-off" />
+                    <p:commandButton type="push" title="Editar cabeçalho" icon="dolar-icon" />
+                    
+                    <p:graphicImage name="icons/LoadingBar.gif"/>
+                    <p:commandLink value="teste">
+                    <p:graphicImage name="icons/add.png"/>
+                    </p:commandLink>
+                        
                     <p:dialog id="diaMudarSenha" header="Seus dados" widgetVar="senhaDia" showEffect="fade" hideEffect="fade" 
                         resizable="false" draggable="false" modal="true"  appendTo="@(body)">
                                   
