@@ -35,10 +35,37 @@
                                      maxlength="45">
                         </p:inputText>
                         <p:message for="nome" />
+                        
+                        <p:outputLabel for="dataInicio" value="Data de início " />
+                        <p:inputMask id="dataInicio"
+                                     value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataInicio}"
+                                     mask="99/99/9999" required="true"
+                                     requiredMessage="O campo data de início é obrigatório."
+                                     size="57"/>
+                        <p:message for="dataInicio" />
+                        
+                        <p:outputLabel for="dataFim" value="Data de fim " />
+                        <p:inputMask id="dataFim"
+                                     value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataFim}"
+                                     mask="99/99/9999" required="true"
+                                     requiredMessage="O campo data de fim é obrigatório."
+                                     size="57"/>
+                        <p:message for="dataFim" />
+                        
+                        <p:outputLabel for="empreendimento" value="Empreendimento: "/>
+                        <p:selectOneMenu id="empreendimento" required="true"
+                                         requiredMessage="O empreendimento é obrigatório."
+                                         value="#{CadastroPlanoAcaoView.empreedimentoSelecionado}" 
+                                         style="width:590px">
+                            <f:selectItem itemLabel="Selecione o empreendimento" itemValue=""
+                                          noSelectionOption="true" />
+                            <f:selectItems value="#{CadastroPlanoAcaoView.listaNomeEpts}" />
+                        </p:selectOneMenu>
+                        <p:message for="empreendimento"/>
 
                         </h:panelGrid>
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroPlanoAcaoView.salvarPlanoAcao()}" 
-                                     update='frmCadastroPlanoAcao' icon="fa fa-edit"/>
+                                     update='frmCadastroPlanoAcao' icon="Save16-iconfinder"/>
                     
                     <p:blockUI block="panel" trigger="btnSalvar">
                         CARREGANDO<br />
@@ -51,8 +78,14 @@
                          header="Informações salvas com sucesso" rendered="#{CadastroPlanoAcaoView.planoAcaoSendoVisualizado == 'true'}">
                     <p:separator />
                     <h:panelGrid columns="2" >
-                        <p:outputLabel value="Nome: " />
+                        <p:outputLabel value="Descrição: " />
                         <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.descricao}" />
+                        <p:outputLabel value="Data início:  " />
+                        <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataInicio}" />
+                        <p:outputLabel value="Data fim:  " />
+                        <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataFim}" />
+                        <p:outputLabel value="Empreendimento:  " />
+                        <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.empreendimento.nomeFantasiaEpt}" />
                     </h:panelGrid>
                 </p:panel>
             </h:form>

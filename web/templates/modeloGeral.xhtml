@@ -33,7 +33,7 @@
                     <!--<p:graphicImage library="imagens" name="3.png" width="100%" />-->
                     <p:menubar style="ui-widget">
                         <p:menuitem value="Início" icon="homePage-iconfinder" 
-                                    action="/inicio.xhtml?faces-redirect=true"/>
+                                    action="/inicio.xhtml?faces-redirect=true" />
 
                         <p:submenu label="Usuários" icon="users-iconfinder">
                             <p:menuitem value=" Cadastrar usuário" icon="addVerde16-iconfinder"
@@ -50,11 +50,13 @@
                         <p:submenu label="Planos de ação" icon="planoAcao-iconfinder">
                             <p:menuitem value="Cadastrar plano" icon="addVerde16-iconfinder"
                                         action="/cadastroPlanoAcao.xhtml?faces-redirect=true"/>
+                            <p:menuitem value="Listar planos" icon="find-iconfinder"
+                                            action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <p:submenu label="Empreendimentos" icon="empreendimento-iconfinder">
                             <p:menuitem value="Cadastrar empreendimento" icon="addVerde16-iconfinder"
-                                        action="/cadastroEmpreendimento.xhtml?faces-redirect=true"/>
+                                        action="/cadastroEmpreendimento.xhtml?faces-redirect=true" />
                             <p:menuitem value="Listar empreendimentos" icon="find-iconfinder"
                                         action="/listarEmpreendimento.xhtml?faces-redirect=true"/>
                         </p:submenu>

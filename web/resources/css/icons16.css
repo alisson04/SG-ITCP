@@ -55,3 +55,7 @@
 .Exit16-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Exit16.png") !important;
 }
+
+.Save16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Save16.png") !important;
+}

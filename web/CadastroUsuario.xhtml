@@ -16,15 +16,14 @@
 
                 <p:toolbar>
                     <f:facet name="left">
-                        <h:outputText value="Empreendimentos" />
+                        <h:outputText value="Usuários"/>
                     </f:facet>
                 </p:toolbar>
-                <p:separator />
 
                 <p:focus context="frmCadastroEmpreendimento" /> <!-- Grifa os campos -->
 
                 <p:panel id="panel"
-                         header="Cadastro de empreendimento (* Campos obrigatórios)" rendered="#{usuarioBean.usrSendoVisualizado == 'false'}">
+                         header="Cadastro de usuário (* Campos obrigatórios)" rendered="#{usuarioBean.usrSendoVisualizado == 'false'}">
 
                     <p:separator />
                     <!--<p:message id="messages" showDetail="true"  />-->
@@ -136,8 +135,8 @@
 
                     </h:panelGrid>
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{usuarioBean.salvarUsrBd()}" 
-                                     update='grid' icon="fa fa-edit" rendered="#{usuarioBean.usrSendoEditado == 'false'}"/>
-                    <p:commandButton value="Salvar Edições" action="#{usuarioBean.editarUsrBd()}" update='grid' icon="fa fa-edit"
+                                     update='grid' icon="Save16-iconfinder" rendered="#{usuarioBean.usrSendoEditado == 'false'}"/>
+                    <p:commandButton value="Salvar Edições" action="#{usuarioBean.editarUsrBd()}" update='grid' icon="Save16-iconfinder"
                                      rendered="#{usuarioBean.usrSendoEditado == 'true'}"/>
 
                     <p:blockUI block="panel" trigger="btnSalvar">

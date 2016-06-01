@@ -23,7 +23,7 @@ public class PlanoAcaoBean implements Serializable{
         planoAcaoDAO.salvarPlano(planoAcao);
     }
     
-    public List<PlanoAcao> listarTodosParceiros() {
+    public List<PlanoAcao> listarTodosPlanos() {
         return planoAcaoDAO.listarTodosPlanos();
     }
 }
