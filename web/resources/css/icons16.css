@@ -1,0 +1,57 @@
+.homePage-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/HomePage16.png") !important;
+}
+.users-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Users16.png") !important;
+}
+.addVerde16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/AddVerde16.png") !important;
+}
+
+.find-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Find16.png") !important;
+}
+
+.planoAcao-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/PlanoAcao16.png") !important;
+}
+
+.empreendimento-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Empreendimento16.png") !important;
+}
+
+.membroEpt-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/MembrosEpt16.png") !important;
+}
+
+.parceiros-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Parceiros16.png") !important;
+}
+
+.atividade-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Atividade16.png") !important;
+}
+
+.telefone-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Telefone16.png") !important;
+}
+
+.profile-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Profile16.png") !important;
+}
+
+.Information16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Information16.png") !important;
+}
+
+.Edit16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Edit16.png") !important;
+}
+
+.Key16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Key16.png") !important;
+}
+
+.Exit16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Exit16.png") !important;
+}

@@ -1,0 +1,5 @@
+.Find128-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons128/Find64.png") !important;
+    height: 128px;
+    width: 128px;
+}

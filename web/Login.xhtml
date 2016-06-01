@@ -8,12 +8,20 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>SIGITEC - Login!</title>
+        
+        <h:outputStylesheet library="css" name="estilos.css" />
+        <link rel="stylesheet" href="/resources/css/estilos.css"/>
+        <h:outputStylesheet library="css" name="icons16.css" />
+        <link rel="stylesheet" href="/resources/css/icons16.css"/>
+        
         <link type="text/css" rel="stylesheet" href="dot-luv/skin.css"/>
     </h:head>
     <h:form>
+        <p:graphicImage name="fotos/IfnmgNature1920.jpg" width="100%" height="50%" />
+        
         <p:dialog header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" resizable="false">
             <p:growl id="growl" showDetail="true" sticky="true" />
-            <h:panelGrid id="panelLogin" columns="2" cellpadding="5">
+            <h:panelGrid id="panelLogin" columns="2" cellpadding="5" style="ui-widget">
 
                 <p:outputLabel for="emailUsr" value="E-mail: " />
                 <p:inputText id="emailUsr" value="#{loginBean.usuarioLogado.emailUsuario}"
@@ -23,7 +31,7 @@
                 <p:password id="senhaUsr" value="#{loginBean.usuarioLogado.senhaUsuario}"
                             required="true" requiredMessage="Insira uma senha!"/>
             </h:panelGrid>
-            <p:commandButton value="Acessar" action="#{loginBean.logar()}" update="growl"/>
+            <p:commandButton value="Acessar" action="#{loginBean.logar()}" update="growl" icon="Key16-iconfinder" style="ui-button"/>
         </p:dialog>
     </h:form>
 </html>

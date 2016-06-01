@@ -1,5 +1,32 @@
-.users-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/GroupUsers32.png") !important;
+.padlock-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/Padlock32.png") !important;   
+}
+
+.Information32-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons32/Information32.png") !important;   
+    height: 32px;
+    width: 32px;
+}
+
+.atualizarUser-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AtualizarUser16.png") !important;
+    
+}
+
+.addVerde-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AddVerde32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.user-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/User32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.membrosEpt-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/MembrosEpt32.png") !important;
     height: 32px;
     width: 32px;
 }
@@ -22,11 +49,7 @@
     width: 32px;
 }
 
-.homePage-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/HomePage32.png") !important;
-    height: 32px;
-    width: 32px;
-}
+
 
 .addUser-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AddUser32.png") !important;
