@@ -23,7 +23,7 @@ public class CadastroPlanoAcaoView implements Serializable{
     private PlanoAcaoBean planoAcaoBean;
     private boolean planoAcaoSendoVisualizado;
     private List<Empreendimento> listaEpts;
-    EmpreendimentoDAO empreendimentoDAO;
+    private EmpreendimentoDAO empreendimentoDAO;
     private String[] listaNomeEpts;
     private String empreedimentoSelecionado;
     

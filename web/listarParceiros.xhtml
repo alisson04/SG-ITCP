@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/templates/modeloGeral.xhtml">
+
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event listener="#{ListarParceirosView.listarTodosParceiros()}" type="preRenderView"/>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="conteudo">
+            <h:form id="frmListagemParceiros" >
+                <p:growl id="msgs" showDetail="true" showSummary="false" />
+
+                <p:toolbar>
+                        <f:facet name="left">
+                            <h:outputText value="Parceiros no sistema:"/>
+                        </f:facet>
+                </p:toolbar>
+                
+                <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhum parceiro encontrado." 
+                             value="#{ListarParceirosView.listaParceiros}" 
+                             filteredValue="#{ListarParceirosView.listaParceirosFiltrados}" selectionMode="single" 
+                             selection="#{ListarParceirosView.parceiroSelecionado}" 
+                             rowKey="#{parceiroCursor.idparceiro}"
+                             var="parceiroCursor" widgetVar="varGlobal">
+                    
+
+                    <p:ajax event="rowSelect" listener="#{ListarParceirosView.onRowSelect}" 
+                            update="
+                            :frmListagemParceiros:dtListagemParceiros, 
+                            :frmListagemParceiros:dtListagemParceiros:btnVisualizarParceiro
+                            :frmListagemParceiros:msgs"/>
+
+                    <p:column headerText="Nome: " filterBy="#{parceiroCursor.nomeParceiro}" filterMatchMode="contains"
+                              sortBy="#{parceiroCursor.nomeParceiro}" >
+                        <h:outputText value="#{parceiroCursor.nomeParceiro}"/>
+                    </p:column>
+                    
+                    <p:column headerText="E-mail: " filterBy="#{parceiroCursor.emailParceiro}" filterMatchMode="contains"
+                              sortBy="#{parceiroCursor.emailParceiro}" >
+                        <h:outputText value="#{parceiroCursor.emailParceiro}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Endereço: " filterBy="#{parceiroCursor.enderecoParceiro}" filterMatchMode="contains"
+                              sortBy="#{parceiroCursor.enderecoParceiro}" >
+                        <h:outputText value="#{parceiroCursor.enderecoParceiro}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Telefone: " filterBy="#{parceiroCursor.telefoneParceiro}" filterMatchMode="contains">
+                        <h:outputText value="#{parceiroCursor.telefoneParceiro}"/>
+                    </p:column>
+                    
+                    <f:facet name="footer">
+                        <p:commandButton id="btnVisualizarParceiro" process="dtListagemParceiros" update=":frmListagemParceiros:carDetail" 
+                                         icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()"
+                                         disabled="#{ListarParceirosView.btnEdicoesParceiro}"/>
+                    </f:facet>
+                </p:dataTable>
+
+                <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                          resizable="false" draggable="false" modal="true"  appendTo="@(body)">
+
+                    <p:outputPanel id="carDetail" style="text-align:center;">
+                        <p:panelGrid  columns="2" columnClasses="label,value" >
+                            <h:outputText value="Nome: " />                            
+                            <h:outputText value="#{ListarParceirosView.parceiroSelecionado.nomeParceiro}" />
+                            <h:outputText value="E-mail: " />                            
+                            <h:outputText value="#{ListarParceirosView.parceiroSelecionado.emailParceiro}" />
+                            <h:outputText value="Endereço: " />                            
+                            <h:outputText value="#{ListarParceirosView.parceiroSelecionado.enderecoParceiro}" />
+                            <h:outputText value="Telefone: " />
+                            <h:outputText value="#{ListarParceirosView.parceiroSelecionado.telefoneParceiro}" />
+                            <h:outputText value="Telefone alternativo: " />
+                            <h:outputText value="#{ListarParceirosView.parceiroSelecionado.telefoneAlternativoParceiro}" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+</html>
