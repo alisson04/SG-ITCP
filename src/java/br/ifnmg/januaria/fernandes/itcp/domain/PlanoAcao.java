@@ -6,7 +6,9 @@
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,6 +32,9 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "PlanoAcao.findAll", query = "SELECT p FROM PlanoAcao p")})
 public class PlanoAcao implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPlanoAcaoFk")
+    private Collection<Meta> metaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -132,6 +138,14 @@ public class PlanoAcao implements Serializable {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao[ idPlanoAcao=" + idPlanoAcao + " ]";
+    }
+
+    public Collection<Meta> getMetaCollection() {
+        return metaCollection;
+    }
+
+    public void setMetaCollection(Collection<Meta> metaCollection) {
+        this.metaCollection = metaCollection;
     }
     
 }
