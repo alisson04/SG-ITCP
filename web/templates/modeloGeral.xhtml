@@ -84,8 +84,8 @@
                                     action="/listaContatos.xhtml?faces-redirect=true" icon="telefone-iconfinder"/>
                         
                         <f:facet name="options">
-                            
-                            <p:commandButton id="btnMinhaConta" value="Minha conta"  icon="profile-iconfinder" />
+                            <p:commandButton id="btnMinhaConta" type="push" title="Minha conta" 
+                                             icon="profile-iconfinder" />
                             
                             <p:slideMenu overlay="true" trigger="btnMinhaConta" my="left top" at="left bottom" >
                                 <p:menuitem value="Visualizar  conta" icon="Information16-iconfinder" oncomplete="PF('UserDia').show()"
