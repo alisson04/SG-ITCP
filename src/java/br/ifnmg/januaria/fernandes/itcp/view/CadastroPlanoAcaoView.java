@@ -6,6 +6,7 @@ import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -26,6 +27,7 @@ public class CadastroPlanoAcaoView implements Serializable{
     private EmpreendimentoDAO empreendimentoDAO;
     private String[] listaNomeEpts;
     private String empreedimentoSelecionado;
+    private Date dataInicio;
     
     public CadastroPlanoAcaoView(){
         empreendimentoDAO = new EmpreendimentoDAO();
@@ -91,6 +93,14 @@ public class CadastroPlanoAcaoView implements Serializable{
 
     public void setEmpreedimentoSelecionado(String empreedimentoSelecionado) {
         this.empreedimentoSelecionado = empreedimentoSelecionado;
+    }
+
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
     }
     
     

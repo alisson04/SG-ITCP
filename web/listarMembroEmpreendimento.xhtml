@@ -47,6 +47,16 @@
                         <h:outputText value="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}"/>
                     </p:column>
                     
+                    <p:column headerText="Telefone" filterBy="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}" 
+                              sortBy="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}" filterMatchMode="contains">
+                        <h:outputText value="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Telefone alternativo" filterBy="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}" 
+                              sortBy="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}" filterMatchMode="contains">
+                        <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}"/>
+                    </p:column>
+                    
                     <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" headerText="Empreendimento" 
                               filterMatchMode="exact">
                         <f:facet name="filter">
