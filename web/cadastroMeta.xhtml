@@ -7,104 +7,65 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
-            <h:form id="frmCadastroParceiro">
+            <h:form id="frmCadastroMeta">
 
                 <p:toolbar>
                     <f:facet name="left">
-                        <h:outputText value="Parceiros" />
+                        <h:outputText value="Metas" />
                     </f:facet>
                 </p:toolbar>
                 <p:separator />
 
-                <p:focus context="frmCadastroParceiro" /> <!-- Grifa os campos -->
+                <p:focus context="frmCadastroMeta" /> <!-- Grifa os campos -->
 
                 <p:panel id="panel"
                          header="Cadastro de empreendimento (* Campos obrigatórios)" 
-                         rendered="#{CadastroParceiroView.parceiroSendoVisualizado == 'false'}">
+                         rendered="#{CadastroMetaView.metaSendoVisualizada == 'false'}">
 
-                    <p:separator />
                     <!--<p:message id="messages" showDetail="true"  />-->
                     <p:growl id="growl" showDetail="true" sticky="true"/>
 
-                    <h:panelGrid id="grid" style="margin-top:20px" columns="3">
-
-                        <p:outputLabel for="nome" value="Nome: " />
-                        <p:inputText id="nome"
-                                     value="#{CadastroParceiroView.parceiroSalvar.nomeParceiro}" required="true"
-                                     requiredMessage="O campo Nome é obrigatório." size="57"
-                                     maxlength="45">
-                        </p:inputText>
-                        <p:message for="nome" />
-
-                        <p:outputLabel for="e-mail" value="E-mail: " />  
-                        <p:inputText id="e-mail"
-                                     value="#{CadastroParceiroView.parceiroSalvar.emailParceiro}" required="true"
-                                     requiredMessage="O campo E-mail é obrigatório." size="57"
-                                     maxlength="50"/>
-                        <p:message for="e-mail" />
-
-                        <p:outputLabel for="endereco" value="Endereço: "/>
-                        <p:inputText id="endereco"
-                                     value="#{CadastroParceiroView.parceiroSalvar.enderecoParceiro}" required="true"
-                                     requiredMessage="O campo Endereço é obrigatório." size="57"
-                                     maxlength="50">
-                        </p:inputText>
-                        <p:message for="endereco" />
-
-                        <p:outputLabel for="telefone" value="Telefone: " />
-                        <p:inputMask id="telefone"
-                                     value="#{CadastroParceiroView.parceiroSalvar.telefoneParceiro}"
-                                     mask="(99) 9999-9999?9" required="true"
-                                     requiredMessage="O campo Telefone é obrigatório." size="57"
-                                     maxlength="11"/>
-                        <p:message for="telefone" />
-
-                        <p:outputLabel value="Telefone alternativo: " />
-                        <p:inputMask id="telefoneAlternativo"
-                                     value="#{CadastroParceiroView.telefoneAlternativo}"
-                                     mask="(99) 9999-9999?9" size="57" maxlength="11"/>
-                        <p:message for="telefoneAlternativo" />
-
-                        <p:outputLabel for="tipoParceiro" value="Tipo de parceiro "/>
-                        <p:inputText id="tipoParceiro"
-                                     value="#{CadastroParceiroView.parceiroSalvar.tipoParceiro}" size="57" maxlength="50">
-                        </p:inputText>
-                        <p:message for="tipoParceiro"/>
-
+                    <p:panel >
+                        <h:panelGrid id="grid" style="margin-top:20px" columns="3">
+                            <p:outputLabel for="nome" value="Nome: " />
+                            <p:inputText id="nome"
+                                         value="#{CadastroMetaView.metaSalvar.nome}" required="true"
+                                         requiredMessage="O campo Nome é obrigatório." size="57"
+                                         maxlength="45">
+                            </p:inputText>
+                            <p:message for="nome" />
                         </h:panelGrid>
-                    <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroParceiroView.salvarParceiroView}" 
-                                     update='frmCadastroParceiro' icon="Save16-iconfinder"/>
-                    
+                        <h:panelGrid style="margin-top:20px" columns="4">
+                            <p:outputLabel for="dataInicio" value="Data início:" />
+                            <p:calendar id="dataInicio" value="#{CadastroMetaView.metaSalvar.dataInicio}" showOn="button" pattern="dd-MM-yyyy" 
+                                        mask="true" locale="pt"/>
+                            <p:outputLabel for="dataFim" value="Data fim:" />
+                            <p:calendar id="dataFim" value="#{CadastroMetaView.metaSalvar.dataFim}" showOn="button" pattern="dd-MM-yyyy" 
+                                        mask="true" locale="pt"/>
+                            <p:message for="dataInicio" />
+                            <p:message for="dataFim" />    
+                        </h:panelGrid>
+                        
+                        <p:outputLabel for="planoAcao" value="Plano de ação: "/>
+                        <p:selectOneMenu id="planoAcao" required="true"
+                                         requiredMessage="O plano de ação é obrigatório."
+                                         value="#{CadastroMetaView.nomePlanoSelecionado}" 
+                                         style="width:500px">
+                            <f:selectItem itemLabel="Selecione o plano de ação" itemValue=""
+                                          noSelectionOption="true" />
+                            <f:selectItems value="#{CadastroMetaView.listaNomePlanosAcao}" />
+                        </p:selectOneMenu>
+                        <p:message for="planoAcao"/>
+                    </p:panel>
+
+                    <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroMetaView.salvarParceiroView()}" 
+                                     update='frmCadastroMeta' icon="Save16-iconfinder"/>
+
+
                     <p:blockUI block="panel" trigger="btnSalvar">
                         CARREGANDO<br />
                         <p:graphicImage name="icons/LoadingBar.gif"/>
                     </p:blockUI>
-                </p:panel>
-                
-                <!-- O painel abaixo so e renderizado apos o empreendimento ser salvo-->
-                <p:panel id="painelUsuarioSalvo"
-                         header="Informações salvas com sucesso" rendered="#{CadastroParceiroView.parceiroSendoVisualizado == 'true'}">
-                    <p:separator />
-                    <h:panelGrid columns="2" >
-                        <p:outputLabel value="Nome: " />
-                        <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.nomeParceiro}" />
-
-                        <p:outputLabel value="E-mail: " />
-                        <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.emailParceiro}" />
-
-                        <p:outputLabel value="Endereço: " />
-                        <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.enderecoParceiro}" />
-
-                        <p:outputLabel value="Endereço: " />
-                        <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.telefoneParceiro}" />
-
-                        <p:outputLabel value="Telefone alternativo: " />
-                        <p:outputLabel value="#{CadastroParceiroView.telefoneAlternativo}" />
-
-                        <p:outputLabel value="Tipo de parceiro " />
-                        <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.tipoParceiro}" />
-
-                    </h:panelGrid>
                 </p:panel>
             </h:form>
         </ui:define>

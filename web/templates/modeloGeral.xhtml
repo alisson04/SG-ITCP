@@ -12,6 +12,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>SIGITEC - Modelo Global</title>
 
+        <!--<style type="text/css">
+            .ui-layout-unit-content{background-image:url('#{request.contextPath}/resources/fotos/IfnmgNatureClara1920.jpg');}
+        </style>-->
+
         <h:outputStylesheet library="css" name="icons16.css" />
         <link rel="stylesheet" href="/resources/css/icons16.css"/>
         <h:outputStylesheet library="css" name="icons32.css" />
@@ -21,6 +25,35 @@
         <h:outputStylesheet library="css" name="estilos.css" />
         <link rel="stylesheet" href="/resources/css/estilos.css"/>
     </h:head>
+    <script>
+            PrimeFaces.locales['pt'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Começo',
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Só Horas',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                ampm: false,
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText: 'Todo o Dia'
+            };
+        </script>
+
     <h:body>
 
         <!-- 
@@ -31,7 +64,7 @@
             <p:layoutUnit position="center">
                 <h:form id="frmModeloGeral">
                     <!--<p:graphicImage library="imagens" name="3.png" width="100%" />-->
-                    <p:menubar style="ui-widget">
+                    <p:menubar >
                         <p:menuitem value="Início" icon="homePage-iconfinder" 
                                     action="/inicio.xhtml?faces-redirect=true" />
 
@@ -51,18 +84,18 @@
                             <p:menuitem value="Cadastrar plano" icon="addVerde16-iconfinder"
                                         action="/cadastroPlanoAcao.xhtml?faces-redirect=true"/>
                             <p:menuitem value="Listar planos" icon="find-iconfinder"
-                                            action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
+                                        action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <p:submenu label="Empreendimentos" icon="empreendimento-iconfinder">
                             <p:menuitem value="Cadastrar empreendimento" icon="addVerde16-iconfinder"
-                                        action="/cadastroEmpreendimento.xhtml?faces-redirect=true" />
+                                        action="/cadastroEmpreendimento.xhtml?faces-redirect=true" style="width: 260px;"/>
                             <p:menuitem value="Listar empreendimentos" icon="find-iconfinder"
                                         action="/listarEmpreendimento.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
-                        <p:submenu label="Membros de empreendimentos" icon="membroEpt-iconfinder">
-                            <p:menuitem value="Cadastrar membros" icon="addVerde16-iconfinder"
+                        <p:submenu label="Membros de empreendimentos" icon="membroEpt-iconfinder" >
+                            <p:menuitem value="Cadastrar membros" icon="addVerde16-iconfinder" 
                                         action="/CadastroMembroEmpreendimento.xhtml?faces-redirect=true"/>
                             <p:menuitem value="Listar membros" icon="find-iconfinder"
                                         action="/listarMembroEmpreendimento.xhtml?faces-redirect=true" />                            
@@ -72,7 +105,7 @@
                             <p:menuitem value="Cadastrar parceiro" icon="addVerde16-iconfinder"
                                         action="/cadastroParceiro.xhtml?faces-redirect=true"/>
                             <p:menuitem value="Listar parceiros" icon="find-iconfinder"
-                                            action="/listarParceiros.xhtml?faces-redirect=true"/>
+                                        action="/listarParceiros.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <p:submenu label="Atividades" icon="atividade-iconfinder">
@@ -80,13 +113,21 @@
                                         action="/cadastroAtividade.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
+                        <p:submenu label="Metas" icon="atividade-iconfinder">
+                            <p:menuitem value="Cadastrar meta" icon="addVerde16-iconfinder"
+                                        action="/cadastroMeta.xhtml?faces-redirect=true"/>
+                        </p:submenu>
+
                         <p:menuitem value="Lista de contatos" 
-                                    action="/listaContatos.xhtml?faces-redirect=true" icon="telefone-iconfinder"/>
-                        
+                                    action="/listaContatos.xhtml?faces-redirect=true" icon="Telefone-iconfinder16"/>
+
                         <f:facet name="options">
-                            <p:commandButton id="btnMinhaConta" type="push" title="Minha conta" 
+                            <p:commandButton id="btnMinhaConta" type="push" title="Minha conta" style="ui-button"
                                              icon="profile-iconfinder" />
-                            
+
+                            <p:commandButton title="Minha conta" value="teste" style="height: 60px;"
+                                             icon="padlock-iconfinder" />
+
                             <p:slideMenu overlay="true" trigger="btnMinhaConta" my="left top" at="left bottom" >
                                 <p:menuitem value="Visualizar  conta" icon="Information16-iconfinder" oncomplete="PF('UserDia').show()"
                                             update=":frmModeloGeral:outPaMostrarUsr" />
@@ -156,7 +197,11 @@
 
                 <ui:insert name="conteudo" />
             </p:layoutUnit>
+            <p:layoutUnit position="south" size="40" resizable="false" closable="false" collapsible="false" >
+                <p:outputPanel style="text-align:center;" >
+                    <h:outputText value="Todos os direitos reservados ao IFNMG - Campus Januária" />
+                </p:outputPanel>
+            </p:layoutUnit>
         </p:layout>
-
     </h:body>
 </html>
