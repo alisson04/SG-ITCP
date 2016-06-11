@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/templates/modeloGeral.xhtml">
+
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event listener="#{ListarEmpreendimentosView.listarTodosEmpreendimentos()}" type="preRenderView"/>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="conteudo">
+            <h:form id="frmListagemEmpreendimentos" >
+                <p:growl id="msgs" showDetail="true" showSummary="false" />
+
+                <p:toolbar>
+                        <f:facet name="left">
+                            <h:outputText value="Empreendimentos no sistema:"/>
+                        </f:facet>
+                </p:toolbar>
+                
+                <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." 
+                             value="#{ListarEmpreendimentosView.listaEmpreendimentos}" 
+                             filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}" selectionMode="single" 
+                             selection="#{ListarEmpreendimentosView.empreendimentoSelecionado}" rowKey="#{empreendimentoCursor.idEpt}"
+                             var="empreendimentoCursor" widgetVar="varGlobal">
+                    
+
+                    <p:ajax event="rowSelect" listener="#{ListarEmpreendimentosView.onRowSelect}" 
+                            update="
+                            :frmListagemEmpreendimentos:dtListagemEmpreendimentos, 
+                            :frmListagemEmpreendimentos:dtListagemEmpreendimentos:btnInativarusr
+                            :frmListagemEmpreendimentos:msgs"/>
+
+                    <p:column headerText="Nome" filterBy="#{empreendimentoCursor.nomeEpt}" 
+                              sortBy="#{empreendimentoCursor.nomeEpt}" filterMatchMode="contains">
+                        <h:outputText value="#{empreendimentoCursor.nomeEpt}"/>
+                    </p:column>
+                    <p:column headerText="Nome fantasia" filterBy="#{empreendimentoCursor.nomeFantasiaEpt}" 
+                              sortBy="#{empreendimentoCursor.nomeFantasiaEpt}" filterMatchMode="contains">
+                        <h:outputText value="#{empreendimentoCursor.nomeFantasiaEpt}"/>
+                    </p:column>
+                    <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.emailEpt}" 
+                              sortBy="#{empreendimentoCursor.emailEpt}" filterMatchMode="contains">
+                        <h:outputText value="#{empreendimentoCursor.emailEpt}"/>
+                    </p:column>
+                    <p:column filterBy="#{empreendimentoCursor.situacaoEpt}" headerText="Processo de Incubação" filterMatchMode="exact">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{ListarEmpreendimentosView.processoIncubacao}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{empreendimentoCursor.situacaoEpt}" />
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" update=":frmListagemEmpreendimentos:carDetail" 
+                                         icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
+                                         disabled="#{ListarEmpreendimentosView.btnEdicoesEpt}"/>
+
+                        <p:commandButton id="btnInativarusr" value="Inativar" icon="fa fa-frown-o" 
+                                         disabled="#{ListarEmpreendimentosView.btnEdicoesEpt}">
+                            <p:confirm header="ATENÇÃO" message="Deseja realmente inativa-lo?" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:dataTable>
+
+                <p:dialog id="diaShowUsr" header="Informações do usuário" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                          resizable="false" draggable="false" modal="true"  appendTo="@(body)">
+
+                    <p:outputPanel id="carDetail" style="text-align:center;">
+                        <p:panelGrid  columns="2" columnClasses="label,value" >
+                            <h:outputText value="Nome: " />
+                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.nomeUsuario}" />
+
+                            <h:outputText value="E-mail: " />
+                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.emailUsuario}" />
+
+                            <h:outputText value="Endereço: " />
+                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.enderecoUsuario}" />
+
+                            <h:outputText value="Cargo: "/>
+                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.cargoUsuario}"/>
+
+                            <h:outputText value="Telefone: " />
+                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.telefoneUsuario}" />
+
+                            <h:outputText value="Telefone alternatico: " />
+                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.telefoneAlternativoUsuario}" />
+
+                            <p:outputLabel value="RG: " />
+                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.rgUsuario}"/>
+
+                            <p:outputLabel value="CPF: " />
+                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.cpfUsuario}"/>
+
+                            <p:outputLabel value="Data de nascimento: " />
+                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.dataNascimentoUsuario}"/>
+
+                            <p:outputLabel value="Data de entrada na ITCP: " />
+                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.dataEntradaUsuario}"/>
+
+                            <p:outputLabel value="Sexo: " />
+                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.sexoUsuario}"/>
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+</html>

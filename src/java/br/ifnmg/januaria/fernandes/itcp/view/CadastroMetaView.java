@@ -3,10 +3,10 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 import br.ifnmg.januaria.fernandes.itcp.bean.MensagensBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
-import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -40,12 +40,18 @@ public class CadastroMetaView implements Serializable {
         }
     }
     
-    public void salvarParceiroView() {
+    public void salvarMetaView() {
         for (int i = 0; i < listaPlanosAcao.size(); i++) {
             if (listaPlanosAcao.get(i).getDescricao().equals(nomePlanoSelecionado)) {
                 metaSalvar.setIdPlanoAcaoFk(listaPlanosAcao.get(i));
             }
         }
+        
+        System.out.println("DATA INCIO" + metaSalvar.getDataInicio());
+        SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+        String folderName = forma.format(metaSalvar.getDataInicio());
+        System.out.println("DATA FIM" + metaSalvar.getDataFim());
+        System.out.println("DATA folderName" + folderName);
         
         bean.salvarMetaBd(metaSalvar);
         metaSendoVisualizada = true;
