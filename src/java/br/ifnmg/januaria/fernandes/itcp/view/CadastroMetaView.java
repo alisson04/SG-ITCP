@@ -56,6 +56,8 @@ public class CadastroMetaView implements Serializable {
         bean.salvarMetaBd(metaSalvar);
         metaSendoVisualizada = true;
     }
+    
+    
 
     public Meta getMetaSalvar() {
         return metaSalvar;

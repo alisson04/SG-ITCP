@@ -51,6 +51,8 @@ public class ListarEmpreendimentosView implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
+    
+    
     //SETS GETS
     public Empreendimento getEmpreendimentoSelecionado() {
         return empreendimentoSelecionado;

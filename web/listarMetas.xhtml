@@ -9,64 +9,59 @@
 
         <ui:define name="metadata">
             <f:metadata>
-                <f:event listener="#{ListarEmpreendimentosView.listarTodosEmpreendimentos()}" type="preRenderView"/>
+                <f:event listener="#{ListarMetasView.listarTodasMetas()}" type="preRenderView"/>
             </f:metadata>
         </ui:define>
 
         <ui:define name="conteudo">
-            <h:form id="frmListagemEmpreendimentos" >
+            <h:form id="frmListagemMetas" >
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
 
                 <p:toolbar>
                         <f:facet name="left">
-                            <h:outputText value="Empreendimentos no sistema:"/>
+                            <h:outputText value="Metas no sistema:"/>
                         </f:facet>
                 </p:toolbar>
                 
-                <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." 
-                             value="#{ListarEmpreendimentosView.listaEmpreendimentos}" 
-                             filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}" selectionMode="single" 
-                             selection="#{ListarEmpreendimentosView.empreendimentoSelecionado}" rowKey="#{empreendimentoCursor.idEpt}"
-                             var="empreendimentoCursor" widgetVar="varGlobal">
+                <p:dataTable id="dtListagemMetas" emptyMessage="Nenhuma meta encontrada." 
+                             value="#{ListarMetasView.listaMetas}" 
+                             filteredValue="#{ListarMetasView.listaMetasFiltradas}" selectionMode="single" 
+                             selection="#{ListarMetasView.metaSelecionada}" rowKey="#{metaCursor.idMeta}"
+                             var="metaCursor" widgetVar="varGlobal">
                     
 
-                    <p:ajax event="rowSelect" listener="#{ListarEmpreendimentosView.onRowSelect}" 
+                    <p:ajax event="rowSelect" listener="#{ListarMetasView.onRowSelect}" 
                             update="
-                            :frmListagemEmpreendimentos:dtListagemEmpreendimentos, 
-                            :frmListagemEmpreendimentos:dtListagemEmpreendimentos:btnInativarusr
-                            :frmListagemEmpreendimentos:msgs"/>
+                            :frmListagemMetas:dtListagemMetas, 
+                            :frmListagemMetas:dtListagemMetas:btnVisualizarMeta
+                            :frmListagemMetas:msgs"/>
 
-                    <p:column headerText="Nome" filterBy="#{empreendimentoCursor.nomeEpt}" 
-                              sortBy="#{empreendimentoCursor.nomeEpt}" filterMatchMode="contains">
-                        <h:outputText value="#{empreendimentoCursor.nomeEpt}"/>
+                    <p:column headerText="Nome" filterBy="#{metaCursor.nome}" 
+                              sortBy="#{metaCursor.nome}" filterMatchMode="contains">
+                        <h:outputText value="#{metaCursor.nome}"/>
                     </p:column>
-                    <p:column headerText="Nome fantasia" filterBy="#{empreendimentoCursor.nomeFantasiaEpt}" 
-                              sortBy="#{empreendimentoCursor.nomeFantasiaEpt}" filterMatchMode="contains">
-                        <h:outputText value="#{empreendimentoCursor.nomeFantasiaEpt}"/>
+                    <p:column headerText="Data início" filterBy="#{ListarMetasView.conveteData(metaCursor.dataInicio)}" 
+                              filterMatchMode="contains">
+                        <h:outputText value="#{ListarMetasView.conveteData(metaCursor.dataInicio)}" />
                     </p:column>
-                    <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.emailEpt}" 
-                              sortBy="#{empreendimentoCursor.emailEpt}" filterMatchMode="contains">
-                        <h:outputText value="#{empreendimentoCursor.emailEpt}"/>
+                    <p:column headerText="Data fim" filterBy="#{ListarMetasView.conveteData(metaCursor.dataFim)}" 
+                              filterMatchMode="contains">
+                        <h:outputText value="#{ListarMetasView.conveteData(metaCursor.dataFim)}" />
                     </p:column>
-                    <p:column filterBy="#{empreendimentoCursor.situacaoEpt}" headerText="Processo de Incubação" filterMatchMode="exact">
+                    <p:column filterBy="#{metaCursor.idPlanoAcaoFk.descricao}" headerText="Planos de ação" filterMatchMode="exact">
                         <f:facet name="filter">
                             <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                 <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarEmpreendimentosView.processoIncubacao}" />
+                                <f:selectItems value="#{ListarMetasView.listaNomePlanosAcao}" />
                             </p:selectOneMenu>
                         </f:facet>
-                        <h:outputText value="#{empreendimentoCursor.situacaoEpt}" />
+                        <h:outputText value="#{metaCursor.idPlanoAcaoFk.descricao}" />
                     </p:column>
 
                     <f:facet name="footer">
-                        <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" update=":frmListagemEmpreendimentos:carDetail" 
+                        <p:commandButton id="btnVisualizarMeta" process="dtListagemMetas" update=":frmListagemMetas:carDetail" 
                                          icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                         disabled="#{ListarEmpreendimentosView.btnEdicoesEpt}"/>
-
-                        <p:commandButton id="btnInativarusr" value="Inativar" icon="fa fa-frown-o" 
-                                         disabled="#{ListarEmpreendimentosView.btnEdicoesEpt}">
-                            <p:confirm header="ATENÇÃO" message="Deseja realmente inativa-lo?" icon="ui-icon-alert" />
-                        </p:commandButton>
+                                         disabled="#{ListarMetasView.btnEdicoesMeta}"/>
 
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                             <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -75,43 +70,19 @@
                     </f:facet>
                 </p:dataTable>
 
-                <p:dialog id="diaShowUsr" header="Informações do usuário" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                <p:dialog id="diaShowUsr" header="Informações da meta" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
                           resizable="false" draggable="false" modal="true"  appendTo="@(body)">
 
                     <p:outputPanel id="carDetail" style="text-align:center;">
                         <p:panelGrid  columns="2" columnClasses="label,value" >
                             <h:outputText value="Nome: " />
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.nomeUsuario}" />
+                            <h:outputText value="#{ListarMetasView.metaSelecionada.nome}" />
 
-                            <h:outputText value="E-mail: " />
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.emailUsuario}" />
+                            <h:outputText value="Data início: " />
+                            <h:outputText value="#{ListarMetasView.metaSelecionada.dataInicio}" />
 
-                            <h:outputText value="Endereço: " />
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.enderecoUsuario}" />
-
-                            <h:outputText value="Cargo: "/>
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.cargoUsuario}"/>
-
-                            <h:outputText value="Telefone: " />
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.telefoneUsuario}" />
-
-                            <h:outputText value="Telefone alternatico: " />
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.telefoneAlternativoUsuario}" />
-
-                            <p:outputLabel value="RG: " />
-                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.rgUsuario}"/>
-
-                            <p:outputLabel value="CPF: " />
-                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.cpfUsuario}"/>
-
-                            <p:outputLabel value="Data de nascimento: " />
-                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.dataNascimentoUsuario}"/>
-
-                            <p:outputLabel value="Data de entrada na ITCP: " />
-                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.dataEntradaUsuario}"/>
-
-                            <p:outputLabel value="Sexo: " />
-                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.sexoUsuario}"/>
+                            <h:outputText value="Data fim: " />
+                            <h:outputText value="#{ListarMetasView.metaSelecionada.dataFim}" />
                         </p:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
