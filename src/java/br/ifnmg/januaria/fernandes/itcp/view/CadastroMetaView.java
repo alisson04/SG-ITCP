@@ -7,6 +7,7 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -47,18 +48,19 @@ public class CadastroMetaView implements Serializable {
             }
         }
         
-        System.out.println("DATA INCIO" + metaSalvar.getDataInicio());
         SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
         String folderName = forma.format(metaSalvar.getDataInicio());
-        System.out.println("DATA FIM" + metaSalvar.getDataFim());
-        System.out.println("DATA folderName" + folderName);
-        
         bean.salvarMetaBd(metaSalvar);
         metaSendoVisualizada = true;
     }
     
+    public String conveteData(Date data){
+        SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+        return forma.format(data);
+    }
     
-
+    
+    //SETES e GETS
     public Meta getMetaSalvar() {
         return metaSalvar;
     }

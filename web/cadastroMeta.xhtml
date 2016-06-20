@@ -77,13 +77,13 @@
                         <p:outputLabel value="Nome: " />
                         <p:outputLabel value="#{CadastroMetaView.metaSalvar.nome}" />
 
-                        <p:outputLabel value="Data de início " />
-                        <p:outputLabel value="#{CadastroMetaView.metaSalvar.dataInicio}" />
+                        <p:outputLabel value="Data de início: " />
+                        <p:outputLabel value="#{CadastroMetaView.conveteData(CadastroMetaView.metaSalvar.dataInicio)}" />
 
-                        <p:outputLabel value="Data de fim " />
-                        <p:outputLabel value="#{CadastroMetaView.metaSalvar.dataFim}"  />
+                        <p:outputLabel value="Data de fim: " />
+                        <p:outputLabel value="#{CadastroMetaView.conveteData(CadastroMetaView.metaSalvar.dataFim)}"  />
 
-                        <p:outputLabel value="Plano de ação " />
+                        <p:outputLabel value="Plano de ação: " />
                         <p:outputLabel value="#{CadastroMetaView.metaSalvar.idPlanoAcaoFk.descricao}" />
                     </h:panelGrid>
                 </p:panel>

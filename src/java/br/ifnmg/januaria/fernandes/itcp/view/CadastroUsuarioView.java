@@ -9,7 +9,9 @@ import br.ifnmg.januaria.fernandes.itcp.util.GeraSenhaAleatoria;
 import br.ifnmg.januaria.fernandes.itcp.util.ValidadorCNPJ;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
@@ -86,7 +88,13 @@ public class CadastroUsuarioView extends GeraSenhaAleatoria implements Serializa
                 //return null;
             }
     }
+    
+    public String conveteData(Date data){
+        SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+        return forma.format(data);
+    }
 
+    //SETS e GETS
     public Usuario getUsuarioUsoGeral() {
         return usuarioUsoGeral;
     }

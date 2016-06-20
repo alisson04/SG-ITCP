@@ -99,7 +99,7 @@
                     </h:panelGrid>
 
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroUsuarioView.salvarUsrView()}" 
-                                     update='panel' icon="Save16-iconfinder"/>
+                                     update='frmCadastroEmpreendimento' icon="Save16-iconfinder"/>
                     <p:blockUI block="panel" trigger="btnSalvar">
                         CARREGANDO<br />
                         <p:graphicImage name="icons/LoadingBar.gif"/>
@@ -133,10 +133,10 @@
                         <p:outputLabel value="#{CadastroUsuarioView.usuarioUsoGeral.cpfUsuario}"/>
 
                         <p:outputLabel value="Data de nascimento: " />
-                        <p:outputLabel value="#{CadastroUsuarioView.usuarioUsoGeral.dataNascimentoUsuario}"/>
+                        <p:outputLabel value="#{CadastroUsuarioView.conveteData(CadastroUsuarioView.usuarioUsoGeral.dataNascimentoUsuario)}"/>
 
-                        <p:outputLabel value="Data de entrada na ITCP: " />
-                        <p:outputLabel value="#{CadastroUsuarioView.usuarioUsoGeral.dataEntradaUsuario}"/>
+                        <p:outputLabel value="Data de ingresso na ITCP: " />
+                        <p:outputLabel value="#{CadastroUsuarioView.conveteData(CadastroUsuarioView.usuarioUsoGeral.dataEntradaUsuario)}"/>
 
                         <p:outputLabel value="Cargo na ITCP: " />
                         <p:outputLabel value="#{CadastroUsuarioView.usuarioUsoGeral.cargoUsuario}"/>
