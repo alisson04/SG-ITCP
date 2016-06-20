@@ -18,6 +18,7 @@ import br.ifnmg.januaria.fernandes.itcp.util.FacesUtil;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,52 +29,37 @@ import org.primefaces.context.RequestContext;
 public class usuarioBean implements Serializable {
 
     // VARIAVEIS
+    private UsuarioDAO dao;
     String nomeDessaClasse;
     private Usuario usuarioUsoGeral;
     private Usuario usuarioLogado; // Usuario que esta logado no momento
     private List<Usuario> listaUsuarios; //
     private List<Usuario> listaUsuariosFiltrados;
-    private List<String> listaCargos; // lista de cargos da ITCP
+    
     private String confirmarSenha; // Variavel para comparar com a senha
-    private boolean usrSendoVisualizado;// P/ renderizar os campos de usurio nas telas
+    
     private boolean usrSendoEditado;// P/ renderizar o campo de senha
     public String telefoneAlternativoUsuario;//Deve ser publico para a pagina poder acessar/foi colocado para evitar o bug de validaço de campos
 
     private MensagensBean mensagensBean;
-    
 
     // CONSTRUTOR
     @PostConstruct
     public void preencheCargos() {
-        listaCargos = new ArrayList<>();
-        listaCargos.add("Coordenador");
-        listaCargos.add("Professor");
-        listaCargos.add("Técnico Administrativo");
-        listaCargos.add("Estagiário Remunerado");
-        listaCargos.add("Estagiário Voluntário");
-        listaCargos.add("Bolsista - PIBED");
-        listaCargos.add("Bolsista - PIBIC");
-        listaCargos.add("Bolsista - PROEXT");
+        
 
         mensagensBean = new MensagensBean();
         usuarioLogado = new Usuario();
         nomeDessaClasse = "Usuario";
         usrSendoEditado = false;
+        
+        dao = new UsuarioDAO();
     }
 
     public void messagemCaixa() {
         mensagensBean.messagemCaixa("FATAL", "Titulo", "mensagem");
     }
-
-    public void enviarEmail(String enviarPara, String assunto, String mensagem) {
-        System.out.println("__________BEAN(enviarEmail): Para:" + enviarPara);
-        System.out.println("__________BEAN(enviarEmail): Assunto" + assunto);
-        System.out.println("__________BEAN(enviarEmail): Mensagem" + mensagem);
-        EnviarEmail enviarEmail = new EnviarEmail();
-        enviarEmail.enviarEmail(enviarPara, assunto, mensagem);
-        System.out.println("__________BEAN(enviarEmail): Fim");
-    }
-
+/*
     // CRUD
     public String salvarUsrBd() {
         System.out.println("__________BEAN(salvarUsrBd): INÍCIO");
@@ -90,7 +76,7 @@ public class usuarioBean implements Serializable {
                     usuarioUsoGeral.setTelefoneAlternativoUsuario(telefoneAlternativoUsuario);
                 }
                 // SETA A DATA DE SAIDA
-                usuarioUsoGeral.setDataSaidaUsuario("Ainda atuante");
+                usuarioUsoGeral.setDataSaidaUsuario(null);
                 //SETA O STATUS
                 usuarioUsoGeral.setStatusSistemaUsuario("Ativo");
                 //GERA A SENHA ALEATORIA
@@ -102,14 +88,14 @@ public class usuarioBean implements Serializable {
                 usuarioDAO.salvarUsr(usuarioUsoGeral);
                 usrSendoVisualizado = true;
                 telefoneAlternativoUsuario = "";//tira a informação apos o salvamento
+                
                 FacesContext.getCurrentInstance().getExternalContext().redirect("CadastroUsuario.xhtml");
                 return "CadastroUsuario.xhtml";
-
             } else {
-                System.out.println("BEAN(salvarUsrBd): Já tem esse email no BANCO");
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro:", "E-mail já cadastrado!"));
                 mensagensBean.messagemCaixa("ERROR", "Erro no E-mail", "Este E-mail já esta cadastrado no sistema");
                 return null;
-
             }
         } catch (IOException ex) {
             Logger.getLogger(usuarioBean.class
@@ -253,93 +239,8 @@ public class usuarioBean implements Serializable {
         }
     }
 
-    public String gerarSenhaAleatoria() {
-        String letras = "ABCDEFGHIJKLMNOPQRSTUVYWXZabcdefghijklmnopqrstuvwxyz0123456789";
-        Random random = new Random();
-        String senhaAleatoria = "";
-        int index = -1;
-        for (int i = 0; i < 10; i++) {
-            index = random.nextInt(letras.length());
-            senhaAleatoria += letras.substring(index, index + 1);
-        }
-        System.out.println("SENHA: " + senhaAleatoria);
-        return senhaAleatoria;
-    }
+    
 
     // SETS E GETS
-    public Usuario getUsuarioLogado() {
-        return usuarioLogado;
-    }
-
-    public void setUsuarioLogado(Usuario usuarioLogado) {
-        this.usuarioLogado = usuarioLogado;
-    }
-
-    public String getConfirmarSenha() {
-        return confirmarSenha;
-    }
-
-    public void setConfirmarSenha(String confirmarSenha) {
-        this.confirmarSenha = confirmarSenha;
-    }
-
-    public boolean isUsrSendoVisualizado() {
-        return usrSendoVisualizado;
-    }
-
-    public void setUsrSendoVisualizado(boolean usrSendoVisualizado) {
-        this.usrSendoVisualizado = usrSendoVisualizado;
-    }
-
-    public Usuario getUsuarioUsoGeral() {
-        if (usuarioUsoGeral == null) {
-            usuarioUsoGeral = new Usuario();
-        }
-        return usuarioUsoGeral;
-    }
-
-    public void setUsuarioUsoGeral(Usuario usuarioUsoGeral) {
-        this.usuarioUsoGeral = usuarioUsoGeral;
-    }
-
-    public List<String> getListaCargos() {
-        return listaCargos;
-    }
-
-    public void setListaCargos(List<String> listaCargos) {
-        this.listaCargos = listaCargos;
-    }
-
-    public void setListaUsuarios(List<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-    }
-
-    public List<Usuario> getListaUsuarios() {
-        return listaUsuarios;
-    }
-
-    public void setListaUsuariosFiltrados(List<Usuario> listaUsuariosFiltrados) {
-        this.listaUsuariosFiltrados = listaUsuariosFiltrados;
-    }
-
-    public List<Usuario> getListaUsuariosFiltrados() {
-        return listaUsuariosFiltrados;
-    }
-
-    public String getTelefoneAlternativoUsuario() {
-        return telefoneAlternativoUsuario;
-    }
-
-    public void setTelefoneAlternativoUsuario(String telefoneAlternativoUsuario) {
-        this.telefoneAlternativoUsuario = telefoneAlternativoUsuario;
-    }
-
-    public boolean isUsrSendoEditado() {
-        return usrSendoEditado;
-    }
-
-    public void setUsrSendoEditado(boolean usrSendoEditado) {
-        this.usrSendoEditado = usrSendoEditado;
-    }
-
+    */
 }

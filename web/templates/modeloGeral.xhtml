@@ -55,6 +55,7 @@
         </script>
 
     <h:body>
+        
 
         <!-- 
         <p:growl id="msgGlobal" sticky="true" />
@@ -63,16 +64,16 @@
 
             <p:layoutUnit position="center">
                 <h:form id="frmModeloGeral">
+                    <p:graphicImage name="fotos/IfnmgTopoMenor.jpg" width="100%" height="50%" />
                     <!--<p:graphicImage library="imagens" name="3.png" width="100%" />-->
                     <p:menubar >
                         <p:menuitem value="Início" icon="homePage-iconfinder" 
                                     action="/inicio.xhtml?faces-redirect=true" />
 
                         <p:submenu label="Usuários" icon="users-iconfinder">
-                            <p:menuitem value=" Cadastrar usuário" icon="addVerde16-iconfinder"
-                                        action="#{usuarioBean.salvarUsrTela}" 
-                                        rendered="#{InicioBean.usuarioLogado.cargoUsuario == 'Coordenador'}" />
-                            <p:submenu label="Listar usuários" icon="find-iconfinder">
+                            <p:menuitem value=" Cadastrar" icon="addVerde16-iconfinder"
+                                        action="/cadastroUsuario.xhtml?faces-redirect=true"/>
+                            <p:submenu label="Listar" icon="find-iconfinder">
                                 <p:menuitem value="Usuários ativos" icon="visualizarList-iconfinder"
                                             action="/ListarUsrAtivos.xhtml?faces-redirect=true"/>
                                 <p:menuitem value="Usuários Inativos" icon="fa fa-frown-o"
@@ -81,35 +82,35 @@
                         </p:submenu>
 
                         <p:submenu label="Planos de ação" icon="planoAcao-iconfinder">
-                            <p:menuitem value="Cadastrar plano" icon="addVerde16-iconfinder"
+                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder"
                                         action="/cadastroPlanoAcao.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar planos" icon="find-iconfinder"
+                            <p:menuitem value="Listar" icon="find-iconfinder"
                                         action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <p:submenu label="Empreendimentos" icon="empreendimento-iconfinder">
-                            <p:menuitem value="Cadastrar empreendimento" icon="addVerde16-iconfinder"
+                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder"
                                         action="/cadastroEmpreendimento.xhtml?faces-redirect=true" style="width: 260px;"/>
-                            <p:menuitem value="Listar empreendimentos" icon="find-iconfinder"
+                            <p:menuitem value="Listar" icon="find-iconfinder"
                                         action="/listarEmpreendimento.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <p:submenu label="Membros de empreendimentos" icon="membroEpt-iconfinder" >
-                            <p:menuitem value="Cadastrar membros" icon="addVerde16-iconfinder" 
+                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" 
                                         action="/CadastroMembroEmpreendimento.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar membros" icon="find-iconfinder"
+                            <p:menuitem value="Listar" icon="find-iconfinder"
                                         action="/listarMembroEmpreendimento.xhtml?faces-redirect=true" />                            
                         </p:submenu>
 
                         <p:submenu label="Parceiros" icon="parceiros-iconfinder">
-                            <p:menuitem value="Cadastrar parceiro" icon="addVerde16-iconfinder"
+                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder"
                                         action="/cadastroParceiro.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar parceiros" icon="find-iconfinder"
+                            <p:menuitem value="Listar" icon="find-iconfinder"
                                         action="/listarParceiros.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <p:submenu label="Atividades" icon="atividade-iconfinder">
-                            <p:menuitem value="Cadastrar atividade" icon="addVerde16-iconfinder"
+                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder"
                                         action="/cadastroAtividade.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
@@ -127,8 +128,8 @@
                             <p:commandButton id="btnMinhaConta" type="push" title="Minha conta" style="ui-button"
                                              icon="profile-iconfinder" />
 
-                            <p:commandButton title="Minha conta" value="teste" style="height: 60px;"
-                                             icon="padlock-iconfinder" />
+                            <!--<p:commandButton title="Minha conta" value="teste" style="height: 60px;"
+                                             icon="padlock-iconfinder" />-->
 
                             <p:slideMenu overlay="true" trigger="btnMinhaConta" my="left top" at="left bottom" >
                                 <p:menuitem value="Visualizar  conta" icon="Information16-iconfinder" oncomplete="PF('UserDia').show()"

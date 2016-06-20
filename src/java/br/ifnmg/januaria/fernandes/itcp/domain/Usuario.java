@@ -1,18 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,16 +28,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "Usuario")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.logar", query = "SELECT u FROM Usuario u WHERE u.emailUsuario = :emailUsuario AND u.senhaUsuario = :senhaUsuario"),
-    @NamedQuery(name = "Usuario.buscarPorCodigo", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario"),
-    @NamedQuery(name = "Usuario.buscarPorCargo", query = "SELECT u FROM Usuario u WHERE u.cargoUsuario = :cargoUsuario")})
-
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable {
 
-    @ManyToMany(mappedBy = "usuarioList")
-    private List<AtividadeExecutada> atividadeExecutadaList;
-
-       private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -59,15 +58,13 @@ public class Usuario implements Serializable {
     @Column(name = "telefoneUsuario")
     private String telefoneUsuario;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "telefoneAlternativoUsuario")
     private String telefoneAlternativoUsuario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "dataNascimentoUsuario")
-    private String dataNascimentoUsuario;
+    @Temporal(TemporalType.DATE)
+    private Date dataNascimentoUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -85,14 +82,12 @@ public class Usuario implements Serializable {
     private String cargoUsuario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "dataEntradaUsuario")
-    private String dataEntradaUsuario;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Temporal(TemporalType.DATE)
+    private Date dataEntradaUsuario;
     @Column(name = "dataSaidaUsuario")
-    private String dataSaidaUsuario;
+    @Temporal(TemporalType.DATE)
+    private Date dataSaidaUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -116,7 +111,7 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idUsuario, String nomeUsuario, String emailUsuario, String senhaUsuario, String telefoneUsuario, String telefoneAlternativoUsuario, String dataNascimentoUsuario, String rgUsuario, String cpfUsuario, String cargoUsuario, String dataEntradaUsuario, String dataSaidaUsuario, String sexoUsuario, String statusSistemaUsuario, String enderecoUsuario) {
+    public Usuario(Integer idUsuario, String nomeUsuario, String emailUsuario, String senhaUsuario, String telefoneUsuario, String telefoneAlternativoUsuario, Date dataNascimentoUsuario, String rgUsuario, String cpfUsuario, String cargoUsuario, Date dataEntradaUsuario, String sexoUsuario, String statusSistemaUsuario, String enderecoUsuario) {
         this.idUsuario = idUsuario;
         this.nomeUsuario = nomeUsuario;
         this.emailUsuario = emailUsuario;
@@ -128,7 +123,6 @@ public class Usuario implements Serializable {
         this.cpfUsuario = cpfUsuario;
         this.cargoUsuario = cargoUsuario;
         this.dataEntradaUsuario = dataEntradaUsuario;
-        this.dataSaidaUsuario = dataSaidaUsuario;
         this.sexoUsuario = sexoUsuario;
         this.statusSistemaUsuario = statusSistemaUsuario;
         this.enderecoUsuario = enderecoUsuario;
@@ -182,11 +176,11 @@ public class Usuario implements Serializable {
         this.telefoneAlternativoUsuario = telefoneAlternativoUsuario;
     }
 
-    public String getDataNascimentoUsuario() {
+    public Date getDataNascimentoUsuario() {
         return dataNascimentoUsuario;
     }
 
-    public void setDataNascimentoUsuario(String dataNascimentoUsuario) {
+    public void setDataNascimentoUsuario(Date dataNascimentoUsuario) {
         this.dataNascimentoUsuario = dataNascimentoUsuario;
     }
 
@@ -214,19 +208,19 @@ public class Usuario implements Serializable {
         this.cargoUsuario = cargoUsuario;
     }
 
-    public String getDataEntradaUsuario() {
+    public Date getDataEntradaUsuario() {
         return dataEntradaUsuario;
     }
 
-    public void setDataEntradaUsuario(String dataEntradaUsuario) {
+    public void setDataEntradaUsuario(Date dataEntradaUsuario) {
         this.dataEntradaUsuario = dataEntradaUsuario;
     }
 
-    public String getDataSaidaUsuario() {
+    public Date getDataSaidaUsuario() {
         return dataSaidaUsuario;
     }
 
-    public void setDataSaidaUsuario(String dataSaidaUsuario) {
+    public void setDataSaidaUsuario(Date dataSaidaUsuario) {
         this.dataSaidaUsuario = dataSaidaUsuario;
     }
 
@@ -278,12 +272,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Usuario[ idUsuario=" + idUsuario + " ]";
     }
-
-    public List<AtividadeExecutada> getAtividadeExecutadaList() {
-        return atividadeExecutadaList;
-    }
-
-    public void setAtividadeExecutadaList(List<AtividadeExecutada> atividadeExecutadaList) {
-        this.atividadeExecutadaList = atividadeExecutadaList;
-    }
+    
 }

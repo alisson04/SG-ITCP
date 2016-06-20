@@ -52,7 +52,7 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
 
         try {
             em.getTransaction().begin();
-            Query consulta = em.createNamedQuery("Usuario.buscarPorCodigo");
+            Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario");
             consulta.setParameter("idUsuario", idUsuario); // O primeiro "id" é do Domain.Usuario; o segundo do que foi criado nesse metodo
             usuario = (Usuario) consulta.getSingleResult();
         } catch (Exception e) {
@@ -63,6 +63,9 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         return usuario;
     }
 
+    /*
+    @NamedQuery(name = "Usuario.buscarPorCargo", query = "SELECT u FROM Usuario u WHERE u.cargoUsuario = :cargoUsuario")})
+    **/
     public Usuario logar(String emailUsuario, String senhaUsuario) {
         EntityManager em = emc.gerarEntityManager();
         Usuario usuario;
@@ -70,7 +73,7 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         try {
             em.getTransaction().begin();
 
-            Query consulta = em.createNamedQuery("Usuario.logar");
+            Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.emailUsuario = :emailUsuario AND u.senhaUsuario = :senhaUsuario");
             consulta.setParameter("emailUsuario", emailUsuario);
             consulta.setParameter("senhaUsuario", senhaUsuario);
             listaObjs = consulta.getResultList();//Pega a lista de objs
