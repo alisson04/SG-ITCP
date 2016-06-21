@@ -66,8 +66,9 @@
                         </p:confirmDialog>
 
                         <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemUsuarios"
-                                         disabled="#{ListarUsuariosView.btnEdicoesUsr}" actionListener="#{ListarUsuariosView.excluirUsrView()}">
-                            <p:confirm header="ATENÇÃO! Essa ação não poderá ser desfeita" message="Deseja confirmar a ação?" 
+                                         disabled="#{ListarUsuariosView.btnEdicoesUsr}" actionListener="#{ListarUsuariosView.excluirUsrView()}"
+                                         >
+                            <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                        icon="Alert16-iconfinder" />
                         </p:commandButton>
 

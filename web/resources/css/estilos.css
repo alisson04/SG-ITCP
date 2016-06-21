@@ -5,3 +5,7 @@
 .ui-button {
    height:40px;
 }
+
+.texto-centralizado {
+	text-align: center;
+}

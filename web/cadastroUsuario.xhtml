@@ -7,7 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
 
-        
+
         <ui:define name="conteudo">
 
             <h:form id="frmCadastroEmpreendimento">
@@ -19,7 +19,7 @@
                 </p:toolbar>
 
                 <p:focus context="frmCadastroEmpreendimento" /> <!-- Grifa os campos -->
-                
+
                 <p:panel id="panel" header="Cadastro de usuário (* Campos obrigatórios)" 
                          rendered="#{CadastroUsuarioView.usrSendoVisualizado == 'false'}">
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
@@ -41,7 +41,7 @@
                                      value="#{CadastroUsuarioView.usuarioUsoGeral.enderecoUsuario}" required="true"
                                      requiredMessage="O campo endereco é obrigatório." size="48" maxlength="50"/>
                         <p:message for="endereco"/>
-                        
+
                         <p:outputLabel for="telefone" value="Telefone: " />
                         <p:inputMask id="telefone" value="#{CadastroUsuarioView.usuarioUsoGeral.telefoneUsuario}"
                                      mask="(99) ?9-9999-9999" size="12" maxlength="11" required="true"
@@ -85,7 +85,7 @@
                             <f:selectItems value="#{CadastroUsuarioView.listaCargos}" />
                         </p:selectOneMenu>
                         <p:message for="cargoItcp"/>
-                        
+
                         <p:outputLabel for="sexo" value="Sexo: "/>
                         <p:selectOneMenu id="sexo" required="true" 
                                          requiredMessage="O campo Sexo é obrigatório."
@@ -98,10 +98,16 @@
                     </h:panelGrid>
 
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroUsuarioView.salvarUsrView()}" 
-                                     update='frmCadastroEmpreendimento' icon="Save16-iconfinder"/>
+                                     update='frmCadastroEmpreendimento' icon="Save16-iconfinder">
+                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                    </p:confirmDialog>
                     <p:blockUI block="panel" trigger="btnSalvar">
-                        CARREGANDO<br />
-                        <p:graphicImage name="icons/LoadingBar.gif"/>
+                    CARREGANDO<br />
+                    <p:graphicImage name="icons/LoadingBar.gif"/>
                     </p:blockUI>
                 </p:panel>
 
