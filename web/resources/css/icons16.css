@@ -60,3 +60,23 @@
 .Save16-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Save16.png") !important;
 }
+
+.Cofirma16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Cofirma16.png") !important;
+}
+
+.Alert16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Alert16.png") !important;
+}
+
+.Cancel16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Cancel16.png") !important;
+}
+
+.Update16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Update16.png") !important;
+}
+
+.Refresh16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Refresh16.png") !important;
+}

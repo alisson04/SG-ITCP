@@ -54,9 +54,13 @@ public class CadastroMetaView implements Serializable {
         metaSendoVisualizada = true;
     }
     
-    public String conveteData(Date data){
-        SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-        return forma.format(data);
+    public String conveteData(Date data) {
+        if (data != null) {
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+            return forma.format(data);
+        } else {
+            return "";
+        }
     }
     
     

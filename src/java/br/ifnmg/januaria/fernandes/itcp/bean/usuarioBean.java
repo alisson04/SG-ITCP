@@ -42,12 +42,11 @@ public class usuarioBean implements Serializable {
     public String telefoneAlternativoUsuario;//Deve ser publico para a pagina poder acessar/foi colocado para evitar o bug de validaço de campos
 
     private MensagensBean mensagensBean;
+    
 
     // CONSTRUTOR
     @PostConstruct
     public void preencheCargos() {
-        
-
         mensagensBean = new MensagensBean();
         usuarioLogado = new Usuario();
         nomeDessaClasse = "Usuario";
@@ -143,26 +142,6 @@ public class usuarioBean implements Serializable {
             }
         } catch (RuntimeException ex) {
             System.out.println("BEAN(editarUsrBd): Erro ao editar: " + ex);
-            return null;
-        }
-    }
-
-    public String ativarDesativarUsrBd(Integer idUsrDesativar, String statusSistemaUsuario) {//deve ser "Integer", Não mude.
-        try {
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
-            usuarioUsoGeral = usuarioDAO.buscarPorCodigo(idUsrDesativar);
-            usuarioUsoGeral.setStatusSistemaUsuario(statusSistemaUsuario);
-            usuarioDAO.salvarGenerico(usuarioUsoGeral);
-            if (statusSistemaUsuario.equals("Ativo")) {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrAtivos.xhtml");
-                return "ListarUsrAtivos.xhtml";
-            } else {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("ListarUsrInativos.xhtml");
-                return "ListarUsrInativos.xhtml";
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(usuarioBean.class
-                    .getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }

@@ -29,6 +29,10 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
     public void salvarUsr(Usuario usr){
         salvarGenerico(usr);
     }
+    
+    public void excluirUsrDao(Usuario usr){
+        excluirGenerico(usr);
+    }
 
     public Usuario buscarPorEmail(String emailUsuario) {
         List<Usuario> listaUsuarios;
@@ -46,14 +50,14 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         return usr;
     }
 
-    public Usuario buscarPorCodigo(Integer idUsuario) {
+    public Usuario buscarPorCodigo(Usuario user) {
         EntityManager em = emc.gerarEntityManager();
         Usuario usuario = null;
 
         try {
             em.getTransaction().begin();
             Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario");
-            consulta.setParameter("idUsuario", idUsuario); // O primeiro "id" é do Domain.Usuario; o segundo do que foi criado nesse metodo
+            consulta.setParameter("idUsuario", user.getIdUsuario()); // O primeiro "id" é do Domain.Usuario; o segundo do que foi criado nesse metodo
             usuario = (Usuario) consulta.getSingleResult();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao buscar por codigo", e);

@@ -32,6 +32,7 @@ public class CadastroUsuarioView extends GeraSenhaAleatoria implements Serializa
     private List<String> tiposSexo;//tipos de empreendimentos
     private boolean usrSendoVisualizado;// P/ renderizar os campos de usurio nas telas
     private List<String> listaCargos; // lista de cargos da ITCP
+    private MensagensBean mensagensBean;
 
     //variáveis para campos não obrigatórios
     private String telefoneAlternativoUser;
@@ -40,7 +41,7 @@ public class CadastroUsuarioView extends GeraSenhaAleatoria implements Serializa
         tiposSexo = new ArrayList<>();
         tiposSexo.add("Masculino");
         tiposSexo.add("Feminino");
-        
+
         listaCargos = new ArrayList<>();
         listaCargos.add("Coordenador");
         listaCargos.add("Professor");
@@ -50,48 +51,47 @@ public class CadastroUsuarioView extends GeraSenhaAleatoria implements Serializa
         listaCargos.add("Bolsista - PIBED");
         listaCargos.add("Bolsista - PIBIC");
         listaCargos.add("Bolsista - PROEXT");
-        
+
         usuarioUsoGeral = new Usuario();
         bean = new UsuarioBean();
+        mensagensBean = new MensagensBean();
     }
 
     public void salvarUsrView() {
         System.out.println("__________BEAN(salvarUsrBd): INÍCIO");
-            if ((bean.buscarPorEmailBean(usuarioUsoGeral.getEmailUsuario()) == null)) {
+        if ((bean.buscarPorEmailBean(usuarioUsoGeral.getEmailUsuario()) == null)) {
 
-                /*VERIFICA O TELEFONE ALTERNATIVO
-                if (telefoneAlternativoUser.equals("")) {
-                    usuarioUsoGeral.setTelefoneAlternativoUsuario("Não possui");
-                } else {
-                    //usuarioUsoGeral.setTelefoneAlternativoUsuario(telefoneAlternativoUsuario);
-                }*/
-                // SETA A DATA DE SAIDA
-                usuarioUsoGeral.setDataSaidaUsuario(null);
-                //SETA O STATUS
-                usuarioUsoGeral.setStatusSistemaUsuario("Ativo");
-                //GERA A SENHA ALEATORIA
-                usuarioUsoGeral.setSenhaUsuario(gerarSenhaAleatoria());
-                bean.enviarEmail(usuarioUsoGeral.getEmailUsuario(), "Sistema Sigitec", "Sua senha é: " + usuarioUsoGeral.getSenhaUsuario());
-                //CRIPTOGRAFA A SENHA ALEATORIA
-                usuarioUsoGeral.setSenhaUsuario(DigestUtils.md5Hex(usuarioUsoGeral.getSenhaUsuario()));
+            // SETA A DATA DE SAIDA
+            usuarioUsoGeral.setDataSaidaUsuario(null);
+            //SETA O STATUS
+            usuarioUsoGeral.setStatusSistemaUsuario("Ativo");
+            //GERA A SENHA ALEATORIA
+            usuarioUsoGeral.setSenhaUsuario(gerarSenhaAleatoria());
+            bean.enviarEmail(usuarioUsoGeral.getEmailUsuario(), "Sistema Sigitec", "Sua senha é: " + usuarioUsoGeral.getSenhaUsuario());
+            //CRIPTOGRAFA A SENHA ALEATORIA
+            usuarioUsoGeral.setSenhaUsuario(DigestUtils.md5Hex(usuarioUsoGeral.getSenhaUsuario()));
 
-                bean.salvarUserBean(usuarioUsoGeral);
-                usrSendoVisualizado = true;
-                //telefoneAlternativoUsuario = "";//tira a informação apos o salvamento
-                
-                //FacesContext.getCurrentInstance().getExternalContext().redirect("CadastroUsuario.xhtml");
-                //return "CadastroUsuario.xhtml";
-            } else {
-                //FacesContext.getCurrentInstance().addMessage(null,
-                //        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro:", "E-mail já cadastrado!"));
-                //mensagensBean.messagemCaixa("ERROR", "Erro no E-mail", "Este E-mail já esta cadastrado no sistema");
-                //return null;
-            }
+            bean.salvarUserBean(usuarioUsoGeral);
+            usrSendoVisualizado = true;
+            //telefoneAlternativoUsuario = "";//tira a informação apos o salvamento
+
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("CadastroUsuario.xhtml");
+            //return "CadastroUsuario.xhtml";
+        } else {
+            //FacesContext.getCurrentInstance().addMessage(null,
+            //        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro:", "E-mail já cadastrado!"));
+            mensagensBean.messagemCaixa("ERROR", "Erro no E-mail", "Este E-mail já esta cadastrado no sistema");
+            //return null;
+        }
     }
-    
-    public String conveteData(Date data){
-        SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-        return forma.format(data);
+
+    public String conveteData(Date data) {
+        if (data != null) {
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+            return forma.format(data);
+        } else {
+            return "";
+        }
     }
 
     //SETS e GETS
@@ -134,6 +134,5 @@ public class CadastroUsuarioView extends GeraSenhaAleatoria implements Serializa
     public void setListaCargos(List<String> listaCargos) {
         this.listaCargos = listaCargos;
     }
-    
-    
+
 }

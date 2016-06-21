@@ -51,9 +51,13 @@ public class ListarMetasView implements Serializable{
         }
     }
     
-    public String conveteData(Date data){
-        SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-        return forma.format(data);
+    public String conveteData(Date data) {
+        if (data != null) {
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+            return forma.format(data);
+        } else {
+            return "";
+        }
     }
     
     public void onRowSelect(SelectEvent event) {

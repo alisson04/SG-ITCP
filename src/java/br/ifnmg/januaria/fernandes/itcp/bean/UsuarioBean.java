@@ -25,6 +25,10 @@ public class UsuarioBean implements Serializable{
         dao.salvarUsr(user);
     }
     
+    public void excluirUsrBean(Usuario usr){
+        dao.excluirUsrDao(usr);
+    }
+    
     public List<Usuario> listarTodosUsuariosBean() {
         return dao.listarTodosUsuarios();
     }
@@ -40,5 +44,9 @@ public class UsuarioBean implements Serializable{
         EnviarEmail enviarEmail = new EnviarEmail();
         enviarEmail.enviarEmail(enviarPara, assunto, mensagem);
         System.out.println("__________BEAN(enviarEmail): Fim");
+    }
+    
+    public Usuario buscarPorCodigoBean(Usuario user){
+        return dao.buscarPorCodigo(user);
     }
 }

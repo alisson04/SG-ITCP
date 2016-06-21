@@ -27,13 +27,32 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             em.getTransaction().commit();
         } catch (ConstraintViolationException x) {
             
-            System.out.println("___________//////////////////////////////////////");
+            System.out.println("DaoGenerico(SalvarGenerico) - getConstraintViolations():");
             System.out.println(x.getConstraintViolations());
             System.out.println("___________//////////////////////////////////////");
             
             em.getTransaction().rollback();
             throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
             
+        } finally {
+            em.close();
+        }
+    }
+    
+    public void excluirGenerico(TipoClasse objeto) {
+        em = gerarEntityManager();
+        try {
+            em.getTransaction().begin();
+            objeto = em.merge(objeto);//Evita o bug de entidade sendo usada
+            em.remove(objeto);
+            em.getTransaction().commit();
+        } catch (ConstraintViolationException x) {
+            System.out.println("DaoGenerico(SalvarGenerico) - getConstraintViolations():");
+            System.out.println(x.getConstraintViolations());
+            System.out.println("DaoGenerico(SalvarGenerico) - getConstraintViolations():");
+            
+            em.getTransaction().rollback();
+            throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
         } finally {
             em.close();
         }

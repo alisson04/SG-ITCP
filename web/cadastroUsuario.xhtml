@@ -19,7 +19,6 @@
                 </p:toolbar>
 
                 <p:focus context="frmCadastroEmpreendimento" /> <!-- Grifa os campos -->
-                <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="false"/>
                 
                 <p:panel id="panel" header="Cadastro de usuário (* Campos obrigatórios)" 
                          rendered="#{CadastroUsuarioView.usrSendoVisualizado == 'false'}">
@@ -123,7 +122,7 @@
                         <p:outputLabel value="Telefone: " />
                         <p:outputLabel value="#{CadastroUsuarioView.usuarioUsoGeral.telefoneAlternativoUsuario}"/>
 
-                        <p:outputLabel value="Telefone alternativo" />
+                        <p:outputLabel value="Telefone alternativo: " />
                         <p:outputLabel value="#{CadastroUsuarioView.usuarioUsoGeral.telefoneAlternativoUsuario}"/>
 
                         <p:outputLabel value="RG: " />
@@ -145,10 +144,7 @@
                         <p:outputLabel value="#{CadastroUsuarioView.usuarioUsoGeral.sexoUsuario}"/>
                     </h:panelGrid>
 
-                    <p:commandButton value="Listar usuários ativos" icon="fa fa-smile-o"
-                                     action="/ListarUsrAtivos.xhtml?faces-redirect=true"/>
-                    <p:commandButton value="Listar usuários Inativos" icon="fa fa-frown-o"
-                                     action="/ListarUsrInativos.xhtml?faces-redirect=true"/>
+                    <p:commandButton value="Listar usuários" icon="find-iconfinder" action="/listarUsuarios.xhtml?faces-redirect=true"/>
                 </p:panel>
 
                 <p:dialog header="Informações do usuário" showEffect="fade" rendered="#{CadastroUsuarioView.usrSendoVisualizado == 'true'}"

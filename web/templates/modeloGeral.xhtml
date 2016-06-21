@@ -26,36 +26,36 @@
         <link rel="stylesheet" href="/resources/css/estilos.css"/>
     </h:head>
     <script>
-            PrimeFaces.locales['pt'] = {
-                closeText: 'Fechar',
-                prevText: 'Anterior',
-                nextText: 'Próximo',
-                currentText: 'Começo',
-                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
-                weekHeader: 'Semana',
-                firstDay: 0,
-                isRTL: false,
-                showMonthAfterYear: false,
-                yearSuffix: '',
-                timeOnlyTitle: 'Só Horas',
-                timeText: 'Tempo',
-                hourText: 'Hora',
-                minuteText: 'Minuto',
-                secondText: 'Segundo',
-                ampm: false,
-                month: 'Mês',
-                week: 'Semana',
-                day: 'Dia',
-                allDayText: 'Todo o Dia'
-            };
-        </script>
+        PrimeFaces.locales['pt'] = {
+            closeText: 'Fechar',
+            prevText: 'Anterior',
+            nextText: 'Próximo',
+            currentText: 'Começo',
+            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+            weekHeader: 'Semana',
+            firstDay: 0,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Só Horas',
+            timeText: 'Tempo',
+            hourText: 'Hora',
+            minuteText: 'Minuto',
+            secondText: 'Segundo',
+            ampm: false,
+            month: 'Mês',
+            week: 'Semana',
+            day: 'Dia',
+            allDayText: 'Todo o Dia'
+        };
+    </script>
 
     <h:body>
-        
+
 
         <!-- 
         <p:growl id="msgGlobal" sticky="true" />
@@ -73,12 +73,9 @@
                         <p:submenu label="Usuários" icon="users-iconfinder">
                             <p:menuitem value=" Cadastrar" icon="addVerde16-iconfinder"
                                         action="/cadastroUsuario.xhtml?faces-redirect=true"/>
-                            <p:submenu label="Listar" icon="find-iconfinder">
-                                <p:menuitem value="Usuários ativos" icon="visualizarList-iconfinder"
-                                            action="/ListarUsrAtivos.xhtml?faces-redirect=true"/>
-                                <p:menuitem value="Usuários Inativos" icon="fa fa-frown-o"
-                                            action="/ListarUsrInativos.xhtml?faces-redirect=true"/>
-                            </p:submenu>
+
+                            <p:menuitem value="Listar" icon="find-iconfinder"
+                                        action="/listarUsuarios.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <p:submenu label="Planos de ação" icon="planoAcao-iconfinder">
