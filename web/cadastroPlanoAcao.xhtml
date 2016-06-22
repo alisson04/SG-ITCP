@@ -14,7 +14,6 @@
                         <h:outputText value="Plano de Ação" />
                     </f:facet>
                 </p:toolbar>
-                <p:separator />
 
                 <p:focus context="frmCadastroPlanoAcao" /> <!-- Grifa os campos -->
 
@@ -22,40 +21,26 @@
                          header="Cadastro de plano de ação (* Campos obrigatórios)" 
                          rendered="#{CadastroPlanoAcaoView.planoAcaoSendoVisualizado == 'false'}">
 
-                    <p:separator />
-                    <!--<p:message id="messages" showDetail="true"  />-->
-                    <!--<p:growl id="growl" showDetail="true" sticky="true"/>-->
-
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
 
                         <p:outputLabel for="nome" value="Nome: " />
                         <p:inputText id="nome"
-                                     value="#{CadastroPlanoAcaoView.planoAcaoSalvar.descricao}" required="true"
+                                     value="#{CadastroPlanoAcaoView.planoAcaoSalvar.nomePlano}" required="true"
                                      requiredMessage="O campo Nome é obrigatório." size="57"
                                      maxlength="45">
                         </p:inputText>
                         <p:message for="nome" />
-                        
-                        <p:outputLabel for="effect" value="Effect:" />
-                        <p:calendar id="effect" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataInicio}" effect="fold" />
-                        <p:message for="dataInicio" />
-                        
-                        <p:outputLabel for="dataInicio" value="Data de início " />
-                        <p:inputMask id="dataInicio"
-                                     value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataInicio}"
-                                     mask="99/99/9999" required="true"
-                                     requiredMessage="O campo data de início é obrigatório."
-                                     size="57"/>
-                        <p:message for="dataInicio" />
-                        
-                        <p:outputLabel for="dataFim" value="Data de fim " />
-                        <p:inputMask id="dataFim"
-                                     value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataFim}"
-                                     mask="99/99/9999" required="true"
-                                     requiredMessage="O campo data de fim é obrigatório."
-                                     size="57"/>
-                        <p:message for="dataFim" />
-                        
+
+                        <p:outputLabel for="dataInicio" value="Data de início: " />
+                        <p:calendar id="dataInicio" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataInicio}" showOn="button" pattern="dd/MM/yyyy" 
+                                    size="8" mask="true" locale="pt" required="true" requiredMessage="O campo data de início é obrigatório."/>
+                        <p:message for="dataInicio"/>
+
+                        <p:outputLabel for="dataFim" value="Data de fim: " />
+                        <p:calendar id="dataFim" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataFim}" showOn="button" pattern="dd/MM/yyyy" 
+                                    size="8" mask="true" locale="pt" required="true" requiredMessage="O campo data de fim é obrigatório."/>
+                        <p:message for="dataInicio"/>
+
                         <p:outputLabel for="empreendimento" value="Empreendimento: "/>
                         <p:selectOneMenu id="empreendimento" required="true"
                                          requiredMessage="O empreendimento é obrigatório."
@@ -67,16 +52,23 @@
                         </p:selectOneMenu>
                         <p:message for="empreendimento"/>
 
-                        </h:panelGrid>
+                        <p:outputLabel for="descricao" value="Descrição: "/>
+                        <p:inputTextarea id="descricao" rows="5" cols="30" counter="display" maxlength="50" 
+                                         counterTemplate="{0} characters remaining." autoResize="false" 
+                                         required="true" requiredMessage="O campo data de início é obrigatório."/>
+                        <p:message for="descricao"/>
+                        <h:outputText id="display" />
+
+                    </h:panelGrid>
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroPlanoAcaoView.salvarPlanoAcao()}" 
                                      update='frmCadastroPlanoAcao' icon="Save16-iconfinder"/>
-                    
+
                     <p:blockUI block="panel" trigger="btnSalvar">
                         CARREGANDO<br />
                         <p:graphicImage name="icons/LoadingBar.gif"/>
                     </p:blockUI>
                 </p:panel>
-                
+
                 <!-- O painel abaixo so e renderizado apos o empreendimento ser salvo-->
                 <p:panel id="painelUsuarioSalvo"
                          header="Informações salvas com sucesso" rendered="#{CadastroPlanoAcaoView.planoAcaoSendoVisualizado == 'true'}">

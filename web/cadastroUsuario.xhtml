@@ -12,12 +12,6 @@
 
             <h:form id="frmCadastroEmpreendimento">
 
-                <p:toolbar>
-                    <f:facet name="left">
-                        <h:outputText value="Usuários"/>
-                    </f:facet>
-                </p:toolbar>
-
                 <p:focus context="frmCadastroEmpreendimento" /> <!-- Grifa os campos -->
 
                 <p:panel id="panel" header="Cadastro de usuário (* Campos obrigatórios)" 
@@ -33,13 +27,13 @@
                         <p:outputLabel for="e-mail" value="E-mail: " />  
                         <p:inputText id="e-mail"
                                      value="#{CadastroUsuarioView.usuarioUsoGeral.emailUsuario}" required="true"
-                                     requiredMessage="O campo E-mail é obrigatório." size="48" maxlength="50"/>
+                                     requiredMessage="O campo E-mail é obrigatório." size="48" maxlength="45"/>
                         <p:message for="e-mail"/>
 
                         <p:outputLabel for="endereco" value="Endereço: "/>
                         <p:inputText id="endereco"
                                      value="#{CadastroUsuarioView.usuarioUsoGeral.enderecoUsuario}" required="true"
-                                     requiredMessage="O campo endereco é obrigatório." size="48" maxlength="50"/>
+                                     requiredMessage="O campo endereco é obrigatório." size="48" maxlength="45"/>
                         <p:message for="endereco"/>
 
                         <p:outputLabel for="telefone" value="Telefone: " />
@@ -66,13 +60,14 @@
 
                         <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
                         <p:calendar id="dataNascimento" value="#{CadastroUsuarioView.usuarioUsoGeral.dataNascimentoUsuario}" showOn="button" 
-                                    pattern="dd-MM-yyyy" size="8"
+                                    pattern="dd-MM-yyyy" size="8" required="true" requiredMessage="O campo data de nascimento é obrigatório."
                                     mask="true" locale="pt"/>
                         <p:message for="dataNascimento"/>
 
                         <p:outputLabel for="dataEntrada" value="Ingresso na ITCP: " />
                         <p:calendar id="dataEntrada" value="#{CadastroUsuarioView.usuarioUsoGeral.dataEntradaUsuario}" showOn="button" 
-                                    pattern="dd-MM-yyyy" mask="true" locale="pt" size="8"/>
+                                    pattern="dd-MM-yyyy" mask="true" locale="pt" size="8"
+                                    required="true" requiredMessage="O campo de ingresso na ITCP é obrigatório."/>
                         <p:message for="dataEntrada"/>
 
                         <p:outputLabel for="cargoItcp" value="Cargo: " />

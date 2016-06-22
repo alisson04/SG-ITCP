@@ -46,9 +46,6 @@ public class CadastroPlanoAcaoView implements Serializable{
             if (listaEpts.get(i).getNomeEpt().equals(empreedimentoSelecionado)) {
                 planoAcaoSalvar.setEmpreendimento(listaEpts.get(i));
             }
-            // else{
-            //    mensagensBean.messagemCaixa("ERROR", "Erro no E-mail", "Este E-mail já esta cadastrado no sistema");
-            //}
         }
         planoAcaoBean.salvarParceiroBd(planoAcaoSalvar);
         planoAcaoSendoVisualizado = true;
@@ -102,6 +99,4 @@ public class CadastroPlanoAcaoView implements Serializable{
     public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
     }
-    
-    
 }
