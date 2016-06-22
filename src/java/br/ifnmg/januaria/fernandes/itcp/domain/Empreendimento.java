@@ -1,9 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -26,14 +33,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Empreendimento.findAll", query = "SELECT e FROM Empreendimento e")})
 public class Empreendimento implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
-    private List<PlanoAcao> planoAcaoList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
-    private List<MembroEmpreendimento> membroEmpreendimentoList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,24 +44,16 @@ public class Empreendimento implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nomeEpt")
     private String nomeEpt;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "emailEpt")
     private String emailEpt;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "telefoneEpt")
     private String telefoneEpt;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "telefoneAlternativoEpt")
     private String telefoneAlternativoEpt;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "cnpjEpt")
     private String cnpjEpt;
     @Basic(optional = false)
@@ -75,16 +66,12 @@ public class Empreendimento implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "situacaoEpt")
     private String situacaoEpt;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "dataCriacaoEpt")
-    private String dataCriacaoEpt;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Temporal(TemporalType.DATE)
+    private Date dataCriacaoEpt;
     @Column(name = "dataIncubacaoEpt")
-    private String dataIncubacaoEpt;
+    @Temporal(TemporalType.DATE)
+    private Date dataIncubacaoEpt;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -100,21 +87,17 @@ public class Empreendimento implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "AtividadeExercidaEpt")
     private String atividadeExercidaEpt;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "siteEpt")
     private String siteEpt;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "faturamentoMedioMensalEmp")
     private String faturamentoMedioMensalEmp;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "faturamentoMedioAnualEmp")
     private String faturamentoMedioAnualEmp;
+    @OneToMany(mappedBy = "empreendimento")
+    private List<PlanoAcao> planoAcaoList;
 
     public Empreendimento() {
     }
@@ -123,23 +106,14 @@ public class Empreendimento implements Serializable {
         this.idEpt = idEpt;
     }
 
-    public Empreendimento(Integer idEpt, String nomeEpt, String emailEpt, String telefoneEpt, String telefoneAlternativoEpt, String cnpjEpt, String enderecoEpt, String situacaoEpt, String dataCriacaoEpt, String dataIncubacaoEpt, String nomeFantasiaEpt, String tipoEpt, String atividadeExercidaEpt, String siteEpt, String faturamentoMedioMensalEmp, String faturamentoMedioAnualEmp) {
+    public Empreendimento(Integer idEpt, String nomeEpt, String enderecoEpt, String situacaoEpt, String nomeFantasiaEpt, String tipoEpt, String atividadeExercidaEpt) {
         this.idEpt = idEpt;
         this.nomeEpt = nomeEpt;
-        this.emailEpt = emailEpt;
-        this.telefoneEpt = telefoneEpt;
-        this.telefoneAlternativoEpt = telefoneAlternativoEpt;
-        this.cnpjEpt = cnpjEpt;
         this.enderecoEpt = enderecoEpt;
         this.situacaoEpt = situacaoEpt;
-        this.dataCriacaoEpt = dataCriacaoEpt;
-        this.dataIncubacaoEpt = dataIncubacaoEpt;
         this.nomeFantasiaEpt = nomeFantasiaEpt;
         this.tipoEpt = tipoEpt;
         this.atividadeExercidaEpt = atividadeExercidaEpt;
-        this.siteEpt = siteEpt;
-        this.faturamentoMedioMensalEmp = faturamentoMedioMensalEmp;
-        this.faturamentoMedioAnualEmp = faturamentoMedioAnualEmp;
     }
 
     public Integer getIdEpt() {
@@ -206,19 +180,19 @@ public class Empreendimento implements Serializable {
         this.situacaoEpt = situacaoEpt;
     }
 
-    public String getDataCriacaoEpt() {
+    public Date getDataCriacaoEpt() {
         return dataCriacaoEpt;
     }
 
-    public void setDataCriacaoEpt(String dataCriacaoEpt) {
+    public void setDataCriacaoEpt(Date dataCriacaoEpt) {
         this.dataCriacaoEpt = dataCriacaoEpt;
     }
 
-    public String getDataIncubacaoEpt() {
+    public Date getDataIncubacaoEpt() {
         return dataIncubacaoEpt;
     }
 
-    public void setDataIncubacaoEpt(String dataIncubacaoEpt) {
+    public void setDataIncubacaoEpt(Date dataIncubacaoEpt) {
         this.dataIncubacaoEpt = dataIncubacaoEpt;
     }
 
@@ -270,6 +244,14 @@ public class Empreendimento implements Serializable {
         this.faturamentoMedioAnualEmp = faturamentoMedioAnualEmp;
     }
 
+    public List<PlanoAcao> getPlanoAcaoList() {
+        return planoAcaoList;
+    }
+
+    public void setPlanoAcaoList(List<PlanoAcao> planoAcaoList) {
+        this.planoAcaoList = planoAcaoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -294,20 +276,5 @@ public class Empreendimento implements Serializable {
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento[ idEpt=" + idEpt + " ]";
     }
-
-    public List<MembroEmpreendimento> getMembroEmpreendimentoList() {
-        return membroEmpreendimentoList;
-    }
-
-    public void setMembroEmpreendimentoList(List<MembroEmpreendimento> membroEmpreendimentoList) {
-        this.membroEmpreendimentoList = membroEmpreendimentoList;
-    }
-
-    public List<PlanoAcao> getPlanoAcaoList() {
-        return planoAcaoList;
-    }
-
-    public void setPlanoAcaoList(List<PlanoAcao> planoAcaoList) {
-        this.planoAcaoList = planoAcaoList;
-    }
+    
 }

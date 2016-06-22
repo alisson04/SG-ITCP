@@ -73,20 +73,6 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
         } else {
             eptCadastrado.setTelefoneEpt(telefoneEpt);
         }
-        
-        //DATA CRIAÇÃO
-        if (dataCriacaoEpt.equals("")) {
-            eptCadastrado.setDataCriacaoEpt("Não registrado");
-        } else {
-            eptCadastrado.setDataCriacaoEpt(dataCriacaoEpt);
-        }
-
-        //DATA INCUBAÇÃO
-        if (dataIncubacaoEpt.equals("")) {
-            eptCadastrado.setDataIncubacaoEpt("Não registrado");
-        } else {
-            eptCadastrado.setDataIncubacaoEpt(dataIncubacaoEpt);
-        }
 
         //ATIVIDADE EXERCICIDA
         if (atividadeExercidaEpt.equals("")) {

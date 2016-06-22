@@ -24,11 +24,8 @@
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
 
                         <p:outputLabel for="nome" value="Nome: " />
-                        <p:inputText id="nome"
-                                     value="#{CadastroPlanoAcaoView.planoAcaoSalvar.nomePlano}" required="true"
-                                     requiredMessage="O campo Nome é obrigatório." size="57"
-                                     maxlength="45">
-                        </p:inputText>
+                        <p:inputText id="nome" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.nomePlano}" required="true"
+                                     requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
                         <p:message for="nome" />
 
                         <p:outputLabel for="dataInicio" value="Data de início: " />
@@ -53,11 +50,9 @@
                         <p:message for="empreendimento"/>
 
                         <p:outputLabel for="descricao" value="Descrição: "/>
-                        <p:inputTextarea id="descricao" rows="5" cols="30" counter="display" maxlength="50" 
-                                         counterTemplate="{0} characters remaining." autoResize="false" 
-                                         required="true" requiredMessage="O campo data de início é obrigatório."/>
+                        <p:inputText id="descricao" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.descricao}" required="true"
+                                     requiredMessage="O campo data de início é obrigatório." size="57" maxlength="45"/>
                         <p:message for="descricao"/>
-                        <h:outputText id="display" />
 
                     </h:panelGrid>
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroPlanoAcaoView.salvarPlanoAcao()}" 

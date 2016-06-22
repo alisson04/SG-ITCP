@@ -7,6 +7,7 @@ package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -59,8 +61,10 @@ public class PlanoAcao implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "descricao")
     private String descricao;
-    @JoinColumn(name = "idEmpreendimento", referencedColumnName = "idEpt")
-    @ManyToOne(optional = false)
+    @OneToMany(mappedBy = "planoAcao")
+    private List<Meta> metaList;
+    @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "idEpt")
+    @ManyToOne
     private Empreendimento empreendimento;
 
     public PlanoAcao() {
@@ -116,6 +120,14 @@ public class PlanoAcao implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public List<Meta> getMetaList() {
+        return metaList;
+    }
+
+    public void setMetaList(List<Meta> metaList) {
+        this.metaList = metaList;
     }
 
     public Empreendimento getEmpreendimento() {

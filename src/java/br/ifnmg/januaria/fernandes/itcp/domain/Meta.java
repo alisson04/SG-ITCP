@@ -42,7 +42,7 @@ public class Meta implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "Nome")
+    @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
     @NotNull
@@ -54,9 +54,14 @@ public class Meta implements Serializable {
     @Column(name = "dataFim")
     @Temporal(TemporalType.DATE)
     private Date dataFim;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "descricao")
+    private String descricao;
     @JoinColumn(name = "idPlanoAcaoFk", referencedColumnName = "idPlanoAcao")
-    @ManyToOne(optional = false)
-    private PlanoAcao idPlanoAcaoFk;
+    @ManyToOne
+    private PlanoAcao planoAcao;
 
     public Meta() {
     }
@@ -65,11 +70,12 @@ public class Meta implements Serializable {
         this.idMeta = idMeta;
     }
 
-    public Meta(Integer idMeta, String nome, Date dataInicio, Date dataFim) {
+    public Meta(Integer idMeta, String nome, Date dataInicio, Date dataFim, String descricao) {
         this.idMeta = idMeta;
         this.nome = nome;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
+        this.descricao = descricao;
     }
 
     public Integer getIdMeta() {
@@ -104,12 +110,20 @@ public class Meta implements Serializable {
         this.dataFim = dataFim;
     }
 
-    public PlanoAcao getIdPlanoAcaoFk() {
-        return idPlanoAcaoFk;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setIdPlanoAcaoFk(PlanoAcao idPlanoAcaoFk) {
-        this.idPlanoAcaoFk = idPlanoAcaoFk;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public PlanoAcao getPlanoAcao() {
+        return planoAcao;
+    }
+
+    public void setPlanoAcao(PlanoAcao planoAcao) {
+        this.planoAcao = planoAcao;
     }
 
     @Override

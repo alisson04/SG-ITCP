@@ -44,7 +44,7 @@ public class CadastroMetaView implements Serializable {
     public void salvarMetaView() {
         for (int i = 0; i < listaPlanosAcao.size(); i++) {
             if (listaPlanosAcao.get(i).getDescricao().equals(nomePlanoSelecionado)) {
-                metaSalvar.setIdPlanoAcaoFk(listaPlanosAcao.get(i));
+                metaSalvar.setPlanoAcao(listaPlanosAcao.get(i));
             }
         }
         
