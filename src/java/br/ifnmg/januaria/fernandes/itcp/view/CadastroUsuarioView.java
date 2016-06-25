@@ -1,22 +1,16 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
-import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MensagensBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
-import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.GeraSenhaAleatoria;
-import br.ifnmg.januaria.fernandes.itcp.util.ValidadorCNPJ;
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**

@@ -16,7 +16,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class MembroEmpreendimentoBean implements Serializable{
 
-    MembroEmpreendimentoDAO membroEmpreendimentoDAO= new MembroEmpreendimentoDAO();
+    MembroEmpreendimentoDAO dao = new MembroEmpreendimentoDAO();
     List<MembroEmpreendimento> listaMembroEmpreendimentos;
     
     
@@ -24,12 +24,16 @@ public class MembroEmpreendimentoBean implements Serializable{
     }
     
     public void salvarMembroEpt(MembroEmpreendimento membroEpt){
-        membroEmpreendimentoDAO.salvarMembroEpt(membroEpt);
+        dao.salvarMembroEpt(membroEpt);
+    }
+    
+    public void excluirMembroBean(MembroEmpreendimento membroEpt){
+        dao.excluirMembroDao(membroEpt);
     }
     
     public List<MembroEmpreendimento> listarTodosMembrosEpts() {
         System.out.println("BEAN(listarTodosMembrosEmpreendimentos): listarTodosMembrosEmpreendimentos: ");
-        listaMembroEmpreendimentos = membroEmpreendimentoDAO.listarTodosMembrosEmpreendimentos();
+        listaMembroEmpreendimentos = dao.listarTodosMembrosEmpreendimentos();
         return listaMembroEmpreendimentos;
     }
 }

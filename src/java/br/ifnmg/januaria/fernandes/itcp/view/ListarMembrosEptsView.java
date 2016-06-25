@@ -5,6 +5,8 @@ import br.ifnmg.januaria.fernandes.itcp.bean.MembroEmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.MembroEmpreendimento;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -20,7 +22,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ListarMembrosEptsView implements Serializable {
 
-    MembroEmpreendimentoBean mb = new MembroEmpreendimentoBean();
+    MembroEmpreendimentoBean bean = new MembroEmpreendimentoBean();
     EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
     private MembroEmpreendimento membroEmpreendimentoSelecionado;
     private boolean btnEdicoesMembroEpt;
@@ -37,15 +39,29 @@ public class ListarMembrosEptsView implements Serializable {
         System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
         try {
             listaEmpreendimentos = empreendimentoBean.listarTodosEptsBean();
-            listaMembrosEmpreendimentos = mb.listarTodosMembrosEpts();
-
-            //
+            listaMembrosEmpreendimentos = bean.listarTodosMembrosEpts();
             listaNomeEpts = new String[listaEmpreendimentos.size()];
             for (int i = 0; i < listaEmpreendimentos.size(); i++) {
                 listaNomeEpts[i] = listaEmpreendimentos.get(i).getNomeEpt();
             }
         } catch (RuntimeException ex) {
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Empreendimentos: " + ex);
+        }
+    }
+    
+    public void excluirMembroView(){
+        bean.excluirMembroBean(membroEmpreendimentoSelecionado);
+        membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+        FacesMessage msg = new FacesMessage("Membro excluido do sistema");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public String conveteData(Date data) {
+        if (data != null) {
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+            return forma.format(data);
+        } else {
+            return "";
         }
     }
 

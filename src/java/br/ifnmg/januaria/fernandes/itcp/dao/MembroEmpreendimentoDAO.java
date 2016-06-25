@@ -19,4 +19,8 @@ public class MembroEmpreendimentoDAO extends DaoGenerico<MembroEmpreendimento>{
     public List<MembroEmpreendimento> listarTodosMembrosEmpreendimentos() {
         return listarObjsGenerico("MembroEmpreendimento");
     }
+    
+    public void excluirMembroDao(MembroEmpreendimento membro){
+        excluirGenerico(membro);
+    }
 }

@@ -16,105 +16,97 @@
         <ui:define name="conteudo">
             <h:form id="frmListagemMembrosEpts" >
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
+                <p:panel styleClass="corPanel" header="Membros de empreendimentos no sistema:" >
+                    <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento encontrado." 
+                                 value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
+                                 filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}" selectionMode="single" 
+                                 selection="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado}" 
+                                 rowKey="#{membroEmpreendimentoCursor.idMembroEmpreendimento}" var="membroEmpreendimentoCursor" 
+                                 widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top" >
 
-                <p:toolbar>
-                        <f:facet name="left">
-                            <h:outputText value="Membros de empreendimentos no sistema:"/>
-                        </f:facet>
-                </p:toolbar>
-                
-                <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento encontrado." 
-                             value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
-                             filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}" selectionMode="single" 
-                             selection="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado}" 
-                             rowKey="#{membroEmpreendimentoCursor.idMembroEmpreendimento}"
-                             var="membroEmpreendimentoCursor" widgetVar="varGlobal">
-                    
+                        <p:ajax event="rowSelect" listener="#{ListarMembrosEptsView.onRowSelect}" 
+                                update=":frmListagemMembrosEpts"/>
 
-                    <p:ajax event="rowSelect" listener="#{ListarMembrosEptsView.onRowSelect}" 
-                            update="
-                            :frmListagemMembrosEpts:dtListagemMembrosEpts, 
-                            :frmListagemMembrosEpts:dtListagemMembrosEpts:btnInativarusr
-                            :frmListagemMembrosEpts:msgs"/>
+                        <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" 
+                                  sortBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" filterMatchMode="contains">
+                            <h:outputText value="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}"/>
+                        </p:column>
 
-                    <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" 
-                              sortBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" filterMatchMode="contains">
-                        <h:outputText value="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}"/>
-                    </p:column>
-                    
-                    <p:column headerText="Apelido" filterBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" 
-                              sortBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" filterMatchMode="contains">
-                        <h:outputText value="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}"/>
-                    </p:column>
-                    
-                    <p:column headerText="Telefone" filterBy="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}" 
-                              sortBy="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}" filterMatchMode="contains">
-                        <h:outputText value="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}"/>
-                    </p:column>
-                    
-                    <p:column headerText="Telefone alternativo" filterBy="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}" 
-                              sortBy="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}" filterMatchMode="contains">
-                        <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}"/>
-                    </p:column>
-                    
-                    <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" headerText="Empreendimento" 
-                              filterMatchMode="exact">
-                        <f:facet name="filter">
-                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarMembrosEptsView.listaNomeEpts}" />
-                            </p:selectOneMenu>
-                        </f:facet>
-                        <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" />
-                    </p:column>
+                        <p:column headerText="Apelido" filterBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" 
+                                  sortBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" filterMatchMode="contains">
+                            <h:outputText value="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}"/>
+                        </p:column>
 
-                    <f:facet name="footer">
-                        <p:commandButton id="btnVisualizarusr" process="dtListagemMembrosEpts" update=":frmListagemMembrosEpts:carDetail" 
-                                         icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                         disabled="#{ListarMembrosEptsView.btnEdicoesMembroEpt}"/>
+                        <p:column headerText="Telefone" filterBy="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}" 
+                                  filterMatchMode="contains">
+                            <h:outputText value="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}"/>
+                        </p:column>
 
-                        <p:commandButton id="btnInativarusr" value="Editar" icon="fa fa-frown-o" 
-                                         disabled="#{ListarEmpreendimentosView.btnEdicoesEpt}">
-                            <p:confirm header="ATENÇÃO" message="Deseja realmente inativa-lo?" icon="ui-icon-alert" />
-                        </p:commandButton>
+                        <p:column headerText="Telefone alternativo" filterBy="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}" 
+                                  filterMatchMode="contains">
+                            <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}"/>
+                        </p:column>
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                        </p:confirmDialog>
-                    </f:facet>
-                </p:dataTable>
+                        <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" headerText="Empreendimento" 
+                                  filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarMembrosEptsView.listaNomeEpts}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" />
+                        </p:column>
 
-                <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
-                          resizable="false" draggable="false" modal="true"  appendTo="@(body)">
-
-                    <p:outputPanel id="carDetail" style="text-align:center;">
-                        <p:panelGrid  columns="2" columnClasses="label,value" >
-                            <h:outputText value="Nome: " />                            
-                            <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nomeMembroEmpreendimento}" />
-                            <h:outputText value="Apelido: " />
-                            <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.apelidoMembroEmpreendimento}" />
-                            <h:outputText value="RG: " />
-                            <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.rgMembroEmpreendimento}" />
-                            <h:outputText value="Endereço: " />
-                            <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.enderecoMembroEmpreendimento}" />
-                            <h:outputText value="Data de nascimento: " />
-                            <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.dataNascimentoMembroEmpreendimento}" />
-                            <h:outputText value="NIS: " />
-                            <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nisMembroEmpreendimento}" />
-                            <h:outputText value="Telefone: " />
-                            <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneMembroEmpreendimento}" />
-                            <h:outputText value="Telefone alternativo: " />
-                            <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneAlternativoMembroEmpreendimento}" />
-                            <h:outputText value="Empreendimento: " />
-                            <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.empreendimento.nomeEpt}" />
-                            <h:outputText value="Sexo: " />
-                            <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.sexoMembroEmpreendimento}" />
+                        <f:facet name="footer">
+                            <p:commandButton id="btnVisualizarusr" process="dtListagemMembrosEpts" update=":frmListagemMembrosEpts:carDetail" 
+                                             icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
+                                             disabled="#{ListarMembrosEptsView.btnEdicoesMembroEpt}"/>
                             
-                        </p:panelGrid>
-                    </p:outputPanel>
-                </p:dialog>
+                            <p:commandButton id="btnExcluirMembro" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemMembrosEpts"
+                                             disabled="#{ListarMembrosEptsView.btnEdicoesMembroEpt}" 
+                                             actionListener="#{ListarMembrosEptsView.excluirMembroView()}">
+                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                           icon="Alert16-iconfinder" />
+                            </p:commandButton>
 
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
+                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                            </p:confirmDialog>
+                        </f:facet>
+                    </p:dataTable>
+
+                    <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
+
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <p:panelGrid  columns="2" columnClasses="label,value" >
+                                <h:outputText value="Nome: " />                            
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nomeMembroEmpreendimento}" />
+                                <h:outputText value="Apelido: " />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.apelidoMembroEmpreendimento}" />
+                                <h:outputText value="RG: " />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.rgMembroEmpreendimento}" />
+                                <h:outputText value="Endereço: " />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.enderecoMembroEmpreendimento}" />
+                                <h:outputText value="Data de nascimento: " />
+                                <h:outputText value="#{ListarMembrosEptsView.conveteData(ListarMembrosEptsView.membroEmpreendimentoSelecionado.dataNascimentoMembroEmpreendimento)}" />
+                                <h:outputText value="NIS: " />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nisMembroEmpreendimento}" />
+                                <h:outputText value="Telefone: " />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneMembroEmpreendimento}" />
+                                <h:outputText value="Telefone alternativo: " />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneAlternativoMembroEmpreendimento}" />
+                                <h:outputText value="Empreendimento: " />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.empreendimento.nomeEpt}" />
+                                <h:outputText value="Sexo: " />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.sexoMembroEmpreendimento}" />
+
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </p:panel>
             </h:form>
         </ui:define>
 

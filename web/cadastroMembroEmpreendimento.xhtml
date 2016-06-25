@@ -9,97 +9,67 @@
         <ui:define name="conteudo">
             <h:form id="frmCadastroMembroEmpreendimento">
 
-                <p:toolbar>
-                    <f:facet name="left">
-                        <h:outputText value="Mebros de Empreendimentos" />
-                    </f:facet>
-                </p:toolbar>
-                <p:separator />
-
                 <p:focus context="frmCadastroMembroEmpreendimento" /> <!-- Grifa os campos -->
 
-                <p:panel id="panel"
-                         header="Cadastro de empreendimento (* Campos obrigatórios)" 
+                <p:panel id="panel" header="Cadastro de membro empreendimento (* Campos obrigatórios)" styleClass="corPanel"
                          rendered="#{CadastroMembroEmpreendimentoView.membroEptSendoVisualizado == 'false'}">
-
-                    <p:separator /> 
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
-                        
                         <p:outputLabel for="nome" value="Nome: " />
-                        <p:inputText id="nome"
-                                     value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.nomeMembroEmpreendimento}" required="true"
-                                     requiredMessage="O campo Nome é obrigatório." size="57"
-                                     maxlength="45">
-                        </p:inputText>
+                        <p:inputText id="nome" value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.nomeMembroEmpreendimento}" 
+                                     required="true" requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
                         <p:message for="nome" />
 
                         <p:outputLabel for="apelido" value="Apelido: " />
-                        <p:inputText id="apelido"
-                                     value="#{CadastroMembroEmpreendimentoView.apelido}" size="57"
-                                     maxlength="45">
-                        </p:inputText>
+                        <p:inputText id="apelido" value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.apelidoMembroEmpreendimento}" 
+                                     required="true" requiredMessage="O campo Apelido é obrigatório." size="57" maxlength="45"/>
                         <p:message for="apelido" />
 
                         <p:outputLabel for="nomeMae" value="Nome da mãe: " />
-                        <p:inputText id="nomeMae"
-                                     value="#{CadastroMembroEmpreendimentoView.nomeMae}" size="57"
-                                     maxlength="45">
-                        </p:inputText>
+                        <p:inputText id="nomeMae" value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.nomeMaeMembroEmpreendimento}" 
+                                     size="57" maxlength="45"/>
                         <p:message for="nomeMae" />
 
                         <p:outputLabel for="endereco" value="Endereco: " />
-                        <p:inputText id="endereco"
-                                     value="#{CadastroMembroEmpreendimentoView.endereco}" size="57"
-                                     maxlength="45">
-                        </p:inputText>
+                        <p:inputText id="endereco" value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.enderecoMembroEmpreendimento}" 
+                                     size="57" maxlength="45"/>
                         <p:message for="endereco" />
 
                         <p:outputLabel for="rg" value="RG: " />
-                        <p:inputText id="rg"
-                                     value="#{CadastroMembroEmpreendimentoView.rg}" size="57"
-                                     maxlength="45">
-                        </p:inputText>
+                        <p:inputText id="rg" value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.rgMembroEmpreendimento}" 
+                                     size="57" maxlength="45"/>
                         <p:message for="rg" />
 
                         <p:outputLabel for="nis" value="NIS: " />
-                        <p:inputText id="nis"
-                                     value="#{CadastroMembroEmpreendimentoView.nis}" size="57"
-                                     maxlength="45">
-                        </p:inputText>
+                        <p:inputText id="nis" value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.nisMembroEmpreendimento}" 
+                                     size="57" maxlength="45"/>
                         <p:message for="nis" />
 
                         <p:outputLabel for="telefone" value="Telefone: " />
-                        <p:inputMask id="telefone" value="#{CadastroMembroEmpreendimentoView.telefone}"
+                        <p:inputMask id="telefone" value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.telefoneMembroEmpreendimento}"
                                      mask="(99) 9999-9999?9" size="57" maxlength="11"/>
                         <p:message for="telefone" />
 
                         <p:outputLabel value="Telefone alternativo: " />
-                        <p:inputMask id="telefoneAlternativo" 
-                                     value="#{CadastroMembroEmpreendimentoView.telefoneAlternativo}"
-                                     mask="(99) 9999-9999?9" size="57" maxlength="11"/>
+                        <p:inputMask id="telefoneAlternativo" mask="(99) 9999-9999?9" size="57" maxlength="11"
+                                     value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.telefoneAlternativoMembroEmpreendimento}" />
                         <p:message for="telefoneAlternativo" />
 
-
                         <p:outputLabel for="dataNascimento" value="Data Nascimento: "/>
-                        <p:inputMask id="dataNascimento" 
-                                     value="#{CadastroMembroEmpreendimentoView.dataNascimento}" 
-                                     mask="99/99/9999" size="57" maxlength="50"/>
+                        <p:calendar id="dataNascimento" requiredMessage="O campo data de nascimento é obrigatório." mask="true"
+                                    value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.dataNascimentoMembroEmpreendimento}"
+                                    showOn="button" pattern="dd-MM-yyyy" size="8" required="true"  locale="pt"/>
                         <p:message for="dataNascimento" />
 
                         <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                        <p:selectOneMenu id="empreendimento" required="true"
-                                         requiredMessage="O empreendimento é obrigatório."
-                                         value="#{CadastroMembroEmpreendimentoView.empreedimentoSelecionado}" 
-                                         style="width:500px">
-                            <f:selectItem itemLabel="Selecione o empreendimento" itemValue=""
-                                          noSelectionOption="true" />
+                        <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório."
+                                         value="#{CadastroMembroEmpreendimentoView.empreedimentoSelecionado}" style="width:500px">
+                            <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{CadastroMembroEmpreendimentoView.listaNomeEpts}" />
                         </p:selectOneMenu>
                         <p:message for="empreendimento"/>
 
                         <p:outputLabel for="sexo" value="Sexo: "/>
-                        <p:selectOneRadio id="sexo" required="true"
-                                          requiredMessage="O campo Sexo é obrigatório."
+                        <p:selectOneRadio id="sexo" required="true" requiredMessage="O campo Sexo é obrigatório."
                                           value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.sexoMembroEmpreendimento}">
                             <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
                             <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
@@ -107,8 +77,16 @@
                         <p:message for="sexo" />
 
                     </h:panelGrid>
+                    
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroMembroEmpreendimentoView.salvarMembroEpt()}" 
-                                     update='frmCadastroMembroEmpreendimento' icon="Save16-iconfinder"/>
+                                     update='frmCadastroMembroEmpreendimento' icon="Save16-iconfinder">
+                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                    </p:commandButton>
+                    
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                    </p:confirmDialog>
 
                     <p:blockUI block="panel" trigger="btnSalvar">
                         CARREGANDO<br />
@@ -117,11 +95,9 @@
                 </p:panel>
 
                 <!-- O painel abaixo so e renderizado apos o membro do empreendimento ser salvo-->
-                <p:panel id="painelMembroEptSalvo"
-                         header="Informações salvas com sucesso" rendered="#{CadastroMembroEmpreendimentoView.membroEptSendoVisualizado == 'true'}">
-                    <p:separator />
-                    <h:panelGrid columns="2" rendered="#{CadastroMembroEmpreendimentoView.membroEptSendoVisualizado == 'true'}">
-
+                <p:panel id="painelMembroEptSalvo" rendered="#{CadastroMembroEmpreendimentoView.membroEptSendoVisualizado == 'true'}"
+                         header="Informações salvas com sucesso" styleClass="corPanel" >
+                    <p:panelGrid columns="2" rendered="#{CadastroMembroEmpreendimentoView.membroEptSendoVisualizado == 'true'}">
                         <p:outputLabel value="Nome: " />
                         <p:outputLabel value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.nomeMembroEmpreendimento}" />
 
@@ -131,7 +107,7 @@
                         <p:outputLabel value="Nome da mãe: " />
                         <p:outputLabel value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.nomeMaeMembroEmpreendimento}"  />
 
-                        <p:outputLabel value="Endereco: " />
+                        <p:outputLabel value="Endereço: " />
                         <p:outputLabel value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.enderecoMembroEmpreendimento}" />
 
                         <p:outputLabel value="RG: " />
@@ -147,14 +123,17 @@
                         <p:outputLabel value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.telefoneAlternativoMembroEmpreendimento}"/>
 
                         <p:outputLabel value="Data Nascimento: "/>
-                        <p:outputLabel value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.dataNascimentoMembroEmpreendimento}" />
+                        <p:outputLabel value="#{CadastroMembroEmpreendimentoView.conveteData(CadastroMembroEmpreendimentoView.membroEptCadastrado.dataNascimentoMembroEmpreendimento)}" />
 
                         <p:outputLabel value="Empreendimento: "/>
                         <p:outputLabel value="#{CadastroMembroEmpreendimentoView.empreedimentoSelecionado}" />
 
                         <p:outputLabel value="Sexo: "/>
                         <p:outputLabel value="#{CadastroMembroEmpreendimentoView.membroEptCadastrado.sexoMembroEmpreendimento}"/>
-                    </h:panelGrid>
+                    </p:panelGrid>
+                    
+                    <p:commandButton value="Listar membros de empreendimentos" icon="find-iconfinder" 
+                                     action="/listarMembroEmpreendimento.xhtml?faces-redirect=true"/>
                 </p:panel>
             </h:form>
         </ui:define>

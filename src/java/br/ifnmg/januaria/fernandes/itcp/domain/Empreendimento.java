@@ -33,6 +33,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Empreendimento.findAll", query = "SELECT e FROM Empreendimento e")})
 public class Empreendimento implements Serializable {
 
+    @OneToMany(mappedBy = "empreendimento")
+    private List<MembroEmpreendimento> membroEmpreendimentoList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -275,6 +278,14 @@ public class Empreendimento implements Serializable {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento[ idEpt=" + idEpt + " ]";
+    }
+
+    public List<MembroEmpreendimento> getMembroEmpreendimentoList() {
+        return membroEmpreendimentoList;
+    }
+
+    public void setMembroEmpreendimentoList(List<MembroEmpreendimento> membroEmpreendimentoList) {
+        this.membroEmpreendimentoList = membroEmpreendimentoList;
     }
     
 }

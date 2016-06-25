@@ -7,7 +7,9 @@ import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.MembroEmpreendimento;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -27,15 +29,6 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
     private List<Empreendimento> listaEpts;
     private String[] listaNomeEpts;
     EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
-//variáveis para campos não obrigatórios
-    private String apelido;
-    private String nomeMae;
-    private String endereco;
-    private String rg;
-    private String nis;
-    private String telefone;
-    private String telefoneAlternativo;
-    private String dataNascimento;
     private String empreedimentoSelecionado;
     
     public CadastroMembroEmpreendimentoView() {
@@ -45,51 +38,19 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
             listaNomeEpts[i] = listaEpts.get(i).getNomeEpt();
         }
     }
+    
+    public String conveteData(Date data) {
+        if (data != null) {
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+            return forma.format(data);
+        } else {
+            return "";
+        }
+    }
 
     //Métodos
     public void salvarMembroEpt() {
-        //Verificação de campos em branco
-        if (apelido.equals("")) {
-            membroEptCadastrado.setApelidoMembroEmpreendimento("Não registrado");
-        } else {
-            membroEptCadastrado.setApelidoMembroEmpreendimento(apelido);
-        }
-        if (nomeMae.equals("")) {
-            membroEptCadastrado.setNomeMaeMembroEmpreendimento("Não registrado");
-        } else {
-            membroEptCadastrado.setNomeMaeMembroEmpreendimento(nomeMae);
-        }
-        if (endereco.equals("")) {
-            membroEptCadastrado.setEnderecoMembroEmpreendimento("Não registrado");
-        } else {
-            membroEptCadastrado.setEnderecoMembroEmpreendimento(endereco);
-        }
-        if (rg.equals("")) {
-            membroEptCadastrado.setRgMembroEmpreendimento("Não registrado");
-        } else {
-            membroEptCadastrado.setRgMembroEmpreendimento(rg);
-        }
-        if (nis.equals("")) {
-            membroEptCadastrado.setNisMembroEmpreendimento("Não registrado");
-        } else {
-            membroEptCadastrado.setNisMembroEmpreendimento(nis);
-        }
-        if (telefone.equals("")) {
-            membroEptCadastrado.setTelefoneMembroEmpreendimento("Não registrado");
-        } else {
-            membroEptCadastrado.setTelefoneMembroEmpreendimento(telefone);
-        }
-        if (telefoneAlternativo.equals("")) {
-            membroEptCadastrado.setTelefoneAlternativoMembroEmpreendimento("Não registrado");
-        } else {
-            membroEptCadastrado.setTelefoneAlternativoMembroEmpreendimento(telefoneAlternativo);
-        }
-        if (dataNascimento.equals("")) {
-            membroEptCadastrado.setDataNascimentoMembroEmpreendimento("Não registrado");
-        } else {
-            membroEptCadastrado.setDataNascimentoMembroEmpreendimento(dataNascimento);
-        }
-
+        
         for (int i = 0; i < listaEpts.size(); i++) {
             if (listaEpts.get(i).getNomeEpt().equals(empreedimentoSelecionado)) {
                 membroEptCadastrado.setEmpreendimento(listaEpts.get(i));
@@ -128,62 +89,6 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
         this.listaEpts = listaEpts;
     }
 
-    public String getApelido() {
-        return apelido;
-    }
-
-    public void setApelido(String apelido) {
-        this.apelido = apelido;
-    }
-
-    public String getNomeMae() {
-        return nomeMae;
-    }
-
-    public void setNomeMae(String nomeMae) {
-        this.nomeMae = nomeMae;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
-
-    public String getNis() {
-        return nis;
-    }
-
-    public void setNis(String nis) {
-        this.nis = nis;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
     public MembroEmpreendimento getMembroEptCadastrado() {
         return membroEptCadastrado;
     }
@@ -199,13 +104,4 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
     public void setMembroEptSendoVisualizado(boolean membroEptSendoVisualizado) {
         this.membroEptSendoVisualizado = membroEptSendoVisualizado;
     }
-
-    public String getTelefoneAlternativo() {
-        return telefoneAlternativo;
-    }
-
-    public void setTelefoneAlternativo(String telefoneAlternativo) {
-        this.telefoneAlternativo = telefoneAlternativo;
-    }
-
 }
