@@ -20,4 +20,8 @@ public class ParceiroDAO extends DaoGenerico<Parceiro> {
     public List<Parceiro> listarTodosParceiros() {
         return listarObjsGenerico("Parceiro");
     }
+    
+    public void excluirParceiroDao(Parceiro parceiro){
+        excluirGenerico(parceiro);
+    }
 }

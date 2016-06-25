@@ -20,18 +20,9 @@ public class CadastroParceiroView implements Serializable {
     private Parceiro parceiroSalvar = new Parceiro();
     private MensagensBean mensagensBean = new MensagensBean();
     private ParceiroBean parceiroBean = new ParceiroBean();
-    //variáveis para campos não obrigatórios
-    private String telefoneAlternativo;
     private boolean parceiroSendoVisualizado;
     
     public void salvarParceiroView() {
-
-        //VERIFICA O TELEFONE ALTERNATIVO
-        if (telefoneAlternativo.equals("")) {
-            parceiroSalvar.setTelefoneAlternativoParceiro("Não possui");
-        } else {
-            parceiroSalvar.setTelefoneAlternativoParceiro(telefoneAlternativo);
-        }
         parceiroBean.salvarParceiroBd(parceiroSalvar);
         parceiroSendoVisualizado = true;
     }
@@ -42,14 +33,6 @@ public class CadastroParceiroView implements Serializable {
 
     public void setParceiroSalvar(Parceiro parceiroSalvar) {
         this.parceiroSalvar = parceiroSalvar;
-    }
-
-    public String getTelefoneAlternativo() {
-        return telefoneAlternativo;
-    }
-
-    public void setTelefoneAlternativo(String telefoneAlternativo) {
-        this.telefoneAlternativo = telefoneAlternativo;
     }
 
     public boolean isParceiroSendoVisualizado() {

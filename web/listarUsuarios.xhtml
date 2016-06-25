@@ -54,14 +54,13 @@
                                 <p:confirm header="ATENÇÃO!" message="Deseja confirmar a ação?" icon="Alert16-iconfinder"/>
                             </p:commandButton>
 
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
                             </p:confirmDialog>
 
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemUsuarios"
-                                             disabled="#{ListarUsuariosView.btnEdicoesUsr}" actionListener="#{ListarUsuariosView.excluirUsrView()}"
-                                             >
+                                             disabled="#{ListarUsuariosView.btnEdicoesUsr}" actionListener="#{ListarUsuariosView.excluirUsrView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert16-iconfinder" />
                             </p:commandButton>

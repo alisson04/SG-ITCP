@@ -15,17 +15,21 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class ParceiroBean implements Serializable{
     
-    private ParceiroDAO parceiroDAO;
+    private ParceiroDAO dao;
     
     public ParceiroBean(){
-        parceiroDAO = new ParceiroDAO();
+        dao = new ParceiroDAO();
     }
     
     public void salvarParceiroBd(Parceiro parceiroSalvar) {
-        parceiroDAO.salvarEpt(parceiroSalvar);
+        dao.salvarEpt(parceiroSalvar);
     }
     
     public List<Parceiro> listarTodosParceiros() {
-        return parceiroDAO.listarTodosParceiros();
+        return dao.listarTodosParceiros();
+    }
+    
+    public void excluirParceiroBean(Parceiro parceiro){
+        dao.excluirParceiroDao(parceiro);
     }
 }

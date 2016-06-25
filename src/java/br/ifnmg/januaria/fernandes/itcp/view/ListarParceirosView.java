@@ -39,6 +39,13 @@ public class ListarParceirosView {
         }
     }
     
+    public void excluirParceiroView(){
+        bean.excluirParceiroBean(parceiroSelecionado);
+        parceiroSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+        FacesMessage msg = new FacesMessage("Parceiro excluido do sistema");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
     public void onRowSelect(SelectEvent event) {
         btnEdicoesParceiro = false;
         FacesMessage msg = new FacesMessage("Parceiro " + parceiroSelecionado.getNomeParceiro()+ " selecionado!");
