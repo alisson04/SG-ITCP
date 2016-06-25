@@ -16,72 +16,75 @@
         <ui:define name="conteudo">
             <h:form id="frmListagemPlanosAcao" >
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
+                <p:panel styleClass="corPanel" header="Planos de ação no sistema:" >
+                    <p:dataTable id="dtListagemPlanosAcao" emptyMessage="Nenhum plano de ação encontrado." 
+                                 value="#{ListarPlanoAcaoView.listaPlanoAcao}" filteredValue="#{ListarPlanoAcaoView.listaPlanoAcaoFiltrados}" 
+                                 selectionMode="single" selection="#{ListarPlanoAcaoView.planoAcaoSelecionado}" 
+                                 rowKey="#{planoAcaoCursor.idPlanoAcao}" var="planoAcaoCursor" widgetVar="varGlobal"
+                                 rows="12" paginator="true" paginatorPosition="top">
 
-                <p:toolbar>
-                        <f:facet name="left">
-                            <h:outputText value="Planos de ação no sistema:"/>
+                        <p:ajax event="rowSelect" listener="#{ListarPlanoAcaoView.onRowSelect}" 
+                                update=":frmListagemPlanosAcao"/>
+
+                        <p:column headerText="Nome" filterBy="#{planoAcaoCursor.descricao}" filterMatchMode="contains">
+                            <h:outputText value="#{planoAcaoCursor.nomePlano}"/>
+                        </p:column>
+
+                        <p:column headerText="Data de início" filterBy="#{planoAcaoCursor.dataInicio}" filterMatchMode="contains">
+                            <h:outputText value="#{ListarPlanoAcaoView.conveteData(planoAcaoCursor.dataInicio)}"/>
+                        </p:column>
+
+                        <p:column headerText="Data de fim" filterBy="#{planoAcaoCursor.dataFim}" filterMatchMode="contains">
+                            <h:outputText value="#{ListarPlanoAcaoView.conveteData(planoAcaoCursor.dataFim)}"/>
+                        </p:column>
+
+                        <p:column filterBy="#{planoAcaoCursor.empreendimento.nomeEpt}" headerText="Empreendimento" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarPlanoAcaoView.listaNomeEpts}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{planoAcaoCursor.empreendimento.nomeEpt}" />
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:commandButton id="btnVisualizarPlanoAcao" process="dtListagemPlanosAcao" update=":frmListagemPlanosAcao" 
+                                             icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" styleClass="corDialog"
+                                             disabled="#{ListarPlanoAcaoView.btnEdicoesPlanoAcao}"  style="text-align:center;" />
+                            
+                            <p:commandButton id="btnExcluirPlano" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemPlanosAcao"
+                                             disabled="#{ListarPlanoAcaoView.btnEdicoesPlanoAcao}" 
+                                             actionListener="#{ListarPlanoAcaoView.excluirPlanoView()}">
+                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                           icon="Alert16-iconfinder" />
+                            </p:commandButton>
+                            
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                            </p:confirmDialog>
                         </f:facet>
-                </p:toolbar>
-                
-                <p:dataTable id="dtListagemPlanosAcao" emptyMessage="Nenhum plano de ação encontrado." 
-                             value="#{ListarPlanoAcaoView.listaPlanoAcao}" 
-                             filteredValue="#{ListarPlanoAcaoView.listaPlanoAcaoFiltrados}" selectionMode="single" 
-                             selection="#{ListarPlanoAcaoView.planoAcaoSelecionado}" 
-                             rowKey="#{planoAcaoCursor.idPlanoAcao}"
-                             var="planoAcaoCursor" widgetVar="varGlobal">
-                    
-                    <p:ajax event="rowSelect" listener="#{ListarPlanoAcaoView.onRowSelect}" 
-                            update="
-                            :frmListagemPlanosAcao:dtListagemPlanosAcao, 
-                            :frmListagemPlanosAcao:dtListagemPlanosAcao:btnVisualizarPlanoAcao
-                            :frmListagemPlanosAcao:msgs"/>
+                    </p:dataTable>
 
-                    <p:column headerText="Descrição" filterBy="#{planoAcaoCursor.descricao}" filterMatchMode="contains">
-                        <h:outputText value="#{planoAcaoCursor.descricao}"/>
-                    </p:column>
-                    
-                    <p:column headerText="Data de início" filterBy="#{planoAcaoCursor.dataInicio}" filterMatchMode="contains">
-                        <h:outputText value="#{planoAcaoCursor.dataInicio}"/>
-                    </p:column>
-                    
-                    <p:column headerText="Data de fim" filterBy="#{planoAcaoCursor.dataFim}" filterMatchMode="contains">
-                        <h:outputText value="#{planoAcaoCursor.dataFim}"/>
-                    </p:column>
-                    
-                    <p:column filterBy="#{planoAcaoCursor.empreendimento.nomeEpt}" headerText="Empreendimento" filterMatchMode="exact">
-                        <f:facet name="filter">
-                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarPlanoAcaoView.listaNomeEpts}" />
-                            </p:selectOneMenu>
-                        </f:facet>
-                        <h:outputText value="#{planoAcaoCursor.empreendimento.nomeEpt}" />
-                    </p:column>
+                    <p:dialog id="diaShowUsr" header="Informações do plano" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                              styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
+                              style="text-align:center;" >
 
-                    <f:facet name="footer">
-                        <p:commandButton id="btnVisualizarPlanoAcao" process="dtListagemPlanosAcao" update=":frmListagemPlanosAcao:carDetail" 
-                                         icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                         disabled="#{ListarPlanoAcaoView.btnEdicoesPlanoAcao}"/>
-                    </f:facet>
-                </p:dataTable>
-
-                <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
-                          resizable="false" draggable="false" modal="true"  appendTo="@(body)">
-
-                    <p:outputPanel id="carDetail" style="text-align:center;">
-                        <p:panelGrid  columns="2" columnClasses="label,value" >
-                            <h:outputText value="Descrição: " />                            
-                            <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.descricao}" />
-                            <h:outputText value="Data de início: " />
-                            <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.dataInicio}" />
-                            <h:outputText value="Data de fim: " />
-                            <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.dataFim}" />
-                            <h:outputText value="Empreendimento: " />
-                            <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.empreendimento.nomeEpt}" />
-                        </p:panelGrid>
-                    </p:outputPanel>
-                </p:dialog>
-
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <p:panelGrid  columns="2" columnClasses="label,value" >
+                                <h:outputText value="Nome: " />                            
+                                <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.nomePlano}" />
+                                <h:outputText value="Data de início: " />
+                                <h:outputText value="#{ListarPlanoAcaoView.conveteData(ListarPlanoAcaoView.planoAcaoSelecionado.dataInicio)}" />
+                                <h:outputText value="Data de fim: " />
+                                <h:outputText value="#{ListarPlanoAcaoView.conveteData(ListarPlanoAcaoView.planoAcaoSelecionado.dataFim)}" />
+                                <h:outputText value="Empreendimento: " />
+                                <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.empreendimento.nomeEpt}" />
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </p:panel>
             </h:form>
         </ui:define>
 

@@ -17,6 +17,10 @@ public class PlanoAcaoDAO extends DaoGenerico<PlanoAcao>{
         salvarGenerico(planoAcao);
     }
     
+    public void excluirPlanoDao(PlanoAcao planoAcao){
+        excluirGenerico(planoAcao);
+    }
+    
     public List<PlanoAcao> listarTodosPlanos() {
         return listarObjsGenerico("PlanoAcao");
     }

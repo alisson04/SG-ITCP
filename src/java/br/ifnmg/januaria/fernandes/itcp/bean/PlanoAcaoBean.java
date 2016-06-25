@@ -13,17 +13,21 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 public class PlanoAcaoBean implements Serializable{
-    PlanoAcaoDAO planoAcaoDAO;
+    PlanoAcaoDAO dao;
     
     public PlanoAcaoBean(){
-        planoAcaoDAO = new PlanoAcaoDAO();
+        dao = new PlanoAcaoDAO();
     }
     
     public void salvarParceiroBd(PlanoAcao planoAcao) {
-        planoAcaoDAO.salvarPlano(planoAcao);
+        dao.salvarPlano(planoAcao);
+    }
+    
+    public void excluirPlanoBean(PlanoAcao planoAcao){
+        dao.excluirPlanoDao(planoAcao);
     }
     
     public List<PlanoAcao> listarTodosPlanos() {
-        return planoAcaoDAO.listarTodosPlanos();
+        return dao.listarTodosPlanos();
     }
 }

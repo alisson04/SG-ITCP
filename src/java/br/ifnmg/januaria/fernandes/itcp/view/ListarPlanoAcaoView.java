@@ -6,6 +6,8 @@ import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,7 +23,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ListarPlanoAcaoView implements Serializable {
 
-    PlanoAcaoBean mb = new PlanoAcaoBean();
+    PlanoAcaoBean bean = new PlanoAcaoBean();
     EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
     private PlanoAcao planoAcaoSelecionado;
     private boolean btnEdicoesPlanoAcao;
@@ -37,7 +39,7 @@ public class ListarPlanoAcaoView implements Serializable {
     public void ListarPlanosAcao() {
         try {
             listaEmpreendimentos = empreendimentoBean.listarTodosEptsBean();
-            listaPlanoAcao = mb.listarTodosPlanos();
+            listaPlanoAcao = bean.listarTodosPlanos();
 
             //
             listaNomeEpts = new String[listaEmpreendimentos.size()];
@@ -46,6 +48,22 @@ public class ListarPlanoAcaoView implements Serializable {
             }
         } catch (RuntimeException ex) {
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
+        }
+    }
+    
+    public void excluirPlanoView(){
+        bean.excluirPlanoBean(planoAcaoSelecionado);
+        planoAcaoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+        FacesMessage msg = new FacesMessage("Plano de ação excluido do sistema");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public String conveteData(Date data) {
+        if (data != null) {
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+            return forma.format(data);
+        } else {
+            return "";
         }
     }
 
