@@ -16,73 +16,65 @@
         <ui:define name="conteudo">
             <h:form id="frmListagemUsuarios" >
                 <p:growl id="msgs" showDetail="true" showSummary="false"/>
+                <p:panel styleClass="corPanel" header="Usuários no sistema:" >
+                    <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
+                                 filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" selectionMode="single" 
+                                 selection="#{ListarUsuariosView.usuarioSelecionado}" rowKey="#{usuarioCursor.idUsuario}"
+                                 var="usuarioCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
-                <p:toolbar>
-                    <f:facet name="left">
-                        <h:outputText value="Usuários no sistema:"/>
-                    </f:facet>
-                </p:toolbar>
+                        <p:ajax event="rowSelect" listener="#{ListarUsuariosView.onRowSelect}" 
+                                update=":frmListagemUsuarios"/>
 
-                <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
-                             filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" selectionMode="single" 
-                             selection="#{ListarUsuariosView.usuarioSelecionado}" rowKey="#{usuarioCursor.idUsuario}"
-                             var="usuarioCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                        <p:column headerText="Nome" filterBy="#{usuarioCursor.nomeUsuario}" 
+                                  sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{usuarioCursor.nomeUsuario}"/>
+                        </p:column>
+                        <p:column headerText="E-mail" filterBy="#{usuarioCursor.emailUsuario}" 
+                                  sortBy="#{usuarioCursor.emailUsuario}" filterMatchMode="contains">
+                            <h:outputText value="#{usuarioCursor.emailUsuario}"/>
+                        </p:column>
+                        <p:column filterBy="#{usuarioCursor.cargoUsuario}" headerText="Cargo" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarUsuariosView.cargos}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{usuarioCursor.cargoUsuario}" />
+                        </p:column>
 
-                    <p:ajax event="rowSelect" listener="#{ListarUsuariosView.onRowSelect}" 
-                            update=":frmListagemUsuarios"/>
+                        <f:facet name="footer">
+                            <p:commandButton id="btnVisualizarusr" process="ListagemUsuarios" update=":frmListagemUsuarios:carDetail" 
+                                             icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
+                                             disabled="#{ListarUsuariosView.btnEdicoesUsr}"/>
+                            <p:commandButton id="btnInativarusr" 
+                                             value="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.usuarioSelecionado)}" 
+                                             icon="Refresh16-iconfinder" disabled="#{ListarUsuariosView.btnEdicoesUsr}" update=":frmListagemUsuarios"
+                                             actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}">
+                                <p:confirm header="ATENÇÃO!" message="Deseja confirmar a ação?" icon="Alert16-iconfinder"/>
+                            </p:commandButton>
 
-                    <p:column headerText="Nome" filterBy="#{usuarioCursor.nomeUsuario}" 
-                              sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">
-                        <h:outputText value="#{usuarioCursor.nomeUsuario}"/>
-                    </p:column>
-                    <p:column headerText="E-mail" filterBy="#{usuarioCursor.emailUsuario}" 
-                              sortBy="#{usuarioCursor.emailUsuario}" filterMatchMode="contains">
-                        <h:outputText value="#{usuarioCursor.emailUsuario}"/>
-                    </p:column>
-                    <p:column filterBy="#{usuarioCursor.cargoUsuario}" headerText="Cargo" filterMatchMode="exact">
-                        <f:facet name="filter">
-                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarUsuariosView.cargos}" />
-                            </p:selectOneMenu>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                            </p:confirmDialog>
+
+                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemUsuarios"
+                                             disabled="#{ListarUsuariosView.btnEdicoesUsr}" actionListener="#{ListarUsuariosView.excluirUsrView()}"
+                                             >
+                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                           icon="Alert16-iconfinder" />
+                            </p:commandButton>
+
+                            <p:tooltip for="btnVisualizarusr" value="Visualizar informações deste usuário!"
+                                       showEffect="clip" hideEffect="explode" />
                         </f:facet>
-                        <h:outputText value="#{usuarioCursor.cargoUsuario}" />
-                    </p:column>
+                    </p:dataTable>
 
-                    <f:facet name="footer">
-                        <p:commandButton id="btnVisualizarusr" process="ListagemUsuarios" update=":frmListagemUsuarios:carDetail" 
-                                         icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                         disabled="#{ListarUsuariosView.btnEdicoesUsr}"/>
-                        <p:commandButton id="btnInativarusr" 
-                                         value="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.usuarioSelecionado)}" 
-                                         icon="Refresh16-iconfinder" disabled="#{ListarUsuariosView.btnEdicoesUsr}" update=":frmListagemUsuarios"
-                                         actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}">
-                            <p:confirm header="ATENÇÃO!" message="Deseja confirmar a ação?" icon="Alert16-iconfinder"/>
-                        </p:commandButton>
+                    <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade" header="Informações do usuário" modal="true"
+                              resizable="false" draggable="false"   appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
-                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
-                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
-                        </p:confirmDialog>
-
-                        <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemUsuarios"
-                                         disabled="#{ListarUsuariosView.btnEdicoesUsr}" actionListener="#{ListarUsuariosView.excluirUsrView()}"
-                                         >
-                            <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                       icon="Alert16-iconfinder" />
-                        </p:commandButton>
-
-                        <p:tooltip for="btnVisualizarusr" value="Visualizar informações deste usuário!"
-                                   showEffect="clip" hideEffect="explode" />
-
-                    </f:facet>
-                </p:dataTable>
-
-                <p:dialog id="diaShowUsr" header="Informações do usuário" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
-                          resizable="false" draggable="false" modal="true"  appendTo="@(body)">
-
-                    <p:outputPanel id="carDetail" style="text-align:center;">
-                        <p:panelGrid  columns="2" columnClasses="label,value" >
+                        <p:panelGrid  id="carDetail" columns="2" columnClasses="label,value" >
                             <h:outputText value="Nome: " />
                             <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.nomeUsuario}" />
 
@@ -116,11 +108,9 @@
                             <p:outputLabel value="Sexo: " />
                             <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.sexoUsuario}"/>
                         </p:panelGrid>
-                    </p:outputPanel>
-                </p:dialog>
-
+                    </p:dialog>
+                </p:panel>
             </h:form>
         </ui:define>
-
     </ui:composition>
 </html>

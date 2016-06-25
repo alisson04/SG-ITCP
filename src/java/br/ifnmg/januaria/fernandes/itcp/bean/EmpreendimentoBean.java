@@ -14,11 +14,17 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class EmpreendimentoBean implements Serializable {
 
+    private EmpreendimentoDAO dao;
+    
     public EmpreendimentoBean() {
+        dao = new EmpreendimentoDAO();
     }
 
     public void salvarEptBd(Empreendimento ept) {
-        EmpreendimentoDAO empreendimentoDAO = new EmpreendimentoDAO();
-        empreendimentoDAO.salvarEpt(ept);
+        dao.salvarEpt(ept);
+    }
+    
+    public void excluirEptBean(Empreendimento ept){
+        dao.excluirEptDao(ept);
     }
 }

@@ -18,6 +18,10 @@ public class EmpreendimentoDAO extends DaoGenerico<Empreendimento> {
         salvarGenerico(ept);
     }
     
+    public void excluirEptDao(Empreendimento ept){
+        excluirGenerico(ept);
+    }
+    
     public List<Empreendimento> listarTodosEmpreendimentos() {
         return listarObjsGenerico("Empreendimento");
     }

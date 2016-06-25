@@ -14,7 +14,7 @@
 
                 <p:focus context="frmCadastroEmpreendimento" /> <!-- Grifa os campos -->
 
-                <p:panel id="panel" header="Cadastro de usuário (* Campos obrigatórios)" 
+                <p:panel id="panel" header="Cadastro de usuário (* Campos obrigatórios)" styleClass="corPanel"
                          rendered="#{CadastroUsuarioView.usrSendoVisualizado == 'false'}">
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
 
@@ -107,10 +107,9 @@
                 </p:panel>
 
                 <!-- O painel abaixo so e renderizado apos o usuario ser salvo-->
-                <p:panel id="painelUsuarioSalvo"
-                         header="Informações salvas com sucesso" rendered="#{CadastroUsuarioView.usrSendoVisualizado == 'true'}">
-                    <p:separator />
-                    <h:panelGrid columns="2">
+                <p:panel id="painelUsuarioSalvo" styleClass="corPanel" header="Informações salvas com sucesso" 
+                         rendered="#{CadastroUsuarioView.usrSendoVisualizado == 'true'}">
+                    <p:panelGrid columns="2" >
                         <p:outputLabel value="Nome: " />
                         <p:outputLabel value="#{CadastroUsuarioView.usuarioUsoGeral.nomeUsuario}" />
 
@@ -143,7 +142,7 @@
 
                         <p:outputLabel value="Sexo: " />
                         <p:outputLabel value="#{CadastroUsuarioView.usuarioUsoGeral.sexoUsuario}"/>
-                    </h:panelGrid>
+                    </p:panelGrid>
 
                     <p:commandButton value="Listar usuários" icon="find-iconfinder" action="/listarUsuarios.xhtml?faces-redirect=true"/>
                 </p:panel>

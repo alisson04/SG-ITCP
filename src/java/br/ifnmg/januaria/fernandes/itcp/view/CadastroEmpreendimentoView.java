@@ -6,6 +6,8 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.util.ValidadorCNPJ;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -49,6 +51,15 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
             eptSendoVisualizado = true;
         } else {
             mensagensBean.messagemCaixa("ERROR", "Erro no CNPJ", "Este CNPJ não é valido!");
+        }
+    }
+    
+    public String conveteData(Date data) {
+        if (data != null) {
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+            return forma.format(data);
+        } else {
+            return "";
         }
     }
 

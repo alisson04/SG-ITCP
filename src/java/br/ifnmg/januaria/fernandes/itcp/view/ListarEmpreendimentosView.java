@@ -1,8 +1,11 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +25,7 @@ public class ListarEmpreendimentosView implements Serializable{
     private List<Empreendimento> listaEmpreendimentos; //
     private List<Empreendimento> listaEmpreendimentosFiltrados;
     private String[] processoIncubacao;//para a tela de listar usuarios
+    private EmpreendimentoBean bean;
     
     public ListarEmpreendimentosView() {
         btnEdicoesEpt = true; //recebe true para desabillitar o botão da tela
@@ -31,6 +35,8 @@ public class ListarEmpreendimentosView implements Serializable{
         processoIncubacao[2] = "Incubação";
         processoIncubacao[3] = "Desincubação";
         processoIncubacao[4] = "Desincubado";
+        
+        bean = new EmpreendimentoBean();
     }
     
     public void listarTodosEmpreendimentos() {
@@ -44,6 +50,13 @@ public class ListarEmpreendimentosView implements Serializable{
         }
     }
     
+    public void excluirEptView(){
+        bean.excluirEptBean(empreendimentoSelecionado);
+        empreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+        FacesMessage msg = new FacesMessage("Empreendimento excluido do sistema");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
     public void onRowSelect(SelectEvent event) {
         System.out.println("BEAN(ListarEmpreendimentosView): onRowSelect: ");
         btnEdicoesEpt = false;
@@ -51,7 +64,14 @@ public class ListarEmpreendimentosView implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
-    
+    public String conveteData(Date data) {
+        if (data != null) {
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+            return forma.format(data);
+        } else {
+            return "";
+        }
+    }
     
     //SETS GETS
     public Empreendimento getEmpreendimentoSelecionado() {
