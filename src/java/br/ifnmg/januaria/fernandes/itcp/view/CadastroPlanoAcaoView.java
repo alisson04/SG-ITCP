@@ -7,6 +7,7 @@ import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -50,6 +51,15 @@ public class CadastroPlanoAcaoView implements Serializable{
         }
         planoAcaoBean.salvarParceiroBd(planoAcaoSalvar);
         planoAcaoSendoVisualizado = true;
+    }
+    
+    public String conveteData(Date data) {
+        if (data != null) {
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+            return forma.format(data);
+        } else {
+            return "";
+        }
     }
 
     //SETS E GETS

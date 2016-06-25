@@ -25,14 +25,12 @@
                         <p:message for="nome"/>
 
                         <p:outputLabel for="e-mail" value="E-mail: " />  
-                        <p:inputText id="e-mail"
-                                     value="#{CadastroUsuarioView.usuarioUsoGeral.emailUsuario}" required="true"
+                        <p:inputText id="e-mail" value="#{CadastroUsuarioView.usuarioUsoGeral.emailUsuario}" required="true"
                                      requiredMessage="O campo E-mail é obrigatório." size="48" maxlength="45"/>
                         <p:message for="e-mail"/>
 
                         <p:outputLabel for="endereco" value="Endereço: "/>
-                        <p:inputText id="endereco"
-                                     value="#{CadastroUsuarioView.usuarioUsoGeral.enderecoUsuario}" required="true"
+                        <p:inputText id="endereco" value="#{CadastroUsuarioView.usuarioUsoGeral.enderecoUsuario}" required="true"
                                      requiredMessage="O campo endereco é obrigatório." size="48" maxlength="45"/>
                         <p:message for="endereco"/>
 
@@ -96,7 +94,7 @@
                                      update='frmCadastroEmpreendimento' icon="Save16-iconfinder">
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                     </p:commandButton>
-                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog">
                         <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
                         <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
                     </p:confirmDialog>

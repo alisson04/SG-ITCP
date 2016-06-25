@@ -8,21 +8,11 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmCadastroPlanoAcao">
-
-                <p:toolbar>
-                    <f:facet name="left">
-                        <h:outputText value="Plano de Ação" />
-                    </f:facet>
-                </p:toolbar>
-
                 <p:focus context="frmCadastroPlanoAcao" /> <!-- Grifa os campos -->
-
-                <p:panel id="panel"
-                         header="Cadastro de plano de ação (* Campos obrigatórios)" 
+                <p:panel id="panel" header="Cadastro de plano de ação (* Campos obrigatórios)" styleClass="corPanel"
                          rendered="#{CadastroPlanoAcaoView.planoAcaoSendoVisualizado == 'false'}">
 
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
-
                         <p:outputLabel for="nome" value="Nome: " />
                         <p:inputText id="nome" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.nomePlano}" required="true"
                                      requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
@@ -56,7 +46,13 @@
 
                     </h:panelGrid>
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroPlanoAcaoView.salvarPlanoAcao()}" 
-                                     update='frmCadastroPlanoAcao' icon="Save16-iconfinder"/>
+                                     update='frmCadastroPlanoAcao' icon="Save16-iconfinder">
+                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" >
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                    </p:confirmDialog>
 
                     <p:blockUI block="panel" trigger="btnSalvar">
                         CARREGANDO<br />
@@ -65,16 +61,15 @@
                 </p:panel>
 
                 <!-- O painel abaixo so e renderizado apos o empreendimento ser salvo-->
-                <p:panel id="painelUsuarioSalvo"
-                         header="Informações salvas com sucesso" rendered="#{CadastroPlanoAcaoView.planoAcaoSendoVisualizado == 'true'}">
-                    <p:separator />
+                <p:panel id="painelUsuarioSalvo" styleClass="corPanel" header="Informações salvas com sucesso" 
+                         rendered="#{CadastroPlanoAcaoView.planoAcaoSendoVisualizado == 'true'}">
                     <h:panelGrid columns="2" >
                         <p:outputLabel value="Descrição: " />
                         <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.descricao}" />
                         <p:outputLabel value="Data início:  " />
-                        <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataInicio}" />
+                        <p:outputLabel value="#{CadastroPlanoAcaoView.conveteData(CadastroPlanoAcaoView.planoAcaoSalvar.dataInicio)}" />
                         <p:outputLabel value="Data fim:  " />
-                        <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataFim}" />
+                        <p:outputLabel value="#{CadastroPlanoAcaoView.conveteData(CadastroPlanoAcaoView.planoAcaoSalvar.dataFim)}" />
                         <p:outputLabel value="Empreendimento:  " />
                         <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.empreendimento.nomeFantasiaEpt}" />
                     </h:panelGrid>
