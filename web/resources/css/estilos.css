@@ -9,3 +9,8 @@
 .texto-centralizado {
 	text-align: center;
 }
+
+.corPanel .ui-panel-titlebar {
+    background: #8FBC8F;
+    color:#000000;
+}

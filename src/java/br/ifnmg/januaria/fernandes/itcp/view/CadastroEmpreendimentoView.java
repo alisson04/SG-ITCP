@@ -25,19 +25,6 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
     private EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
     private boolean eptSendoVisualizado;
 
-    //variáveis para campos não obrigatórios
-    private String telefoneAlternativo;
-    private String cnpj;
-    private String faturamentoMensal;
-    private String faturamentoAnual;
-    private String site;
-    private String atividadeExercidaEpt;
-    private String dataIncubacaoEpt;
-    private String dataCriacaoEpt;
-    private String telefoneEpt;
-    private String enderecoEpt;
-    private String emailEpt;
-
     public CadastroEmpreendimentoView() {
         tiposEpt = new String[3];
         tiposEpt[0] = "Associação";
@@ -53,67 +40,11 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
     }
 
     public void salvarEptView() throws IOException {
-        //E-MAIL EMPREENDIMENTO
-        if (emailEpt.equals("")) {
-            eptCadastrado.setEmailEpt("Não registrado");
-        } else {
-            eptCadastrado.setEmailEpt(emailEpt);
-        } 
-
-        //TELEFONE EMPREENDIMENTO
-        if (enderecoEpt.equals("")) {
-            eptCadastrado.setEnderecoEpt("Não registrado");
-        } else {
-            eptCadastrado.setEnderecoEpt(enderecoEpt);
-        }        
-
-        //TELEFONE EMPREENDIMENTO
-        if (telefoneEpt.equals("")) {
-            eptCadastrado.setTelefoneEpt("Não registrado");
-        } else {
-            eptCadastrado.setTelefoneEpt(telefoneEpt);
-        }
-
-        //ATIVIDADE EXERCICIDA
-        if (atividadeExercidaEpt.equals("")) {
-            eptCadastrado.setAtividadeExercidaEpt("Não registrado");
-        } else {
-            eptCadastrado.setAtividadeExercidaEpt(atividadeExercidaEpt);
-        }
-
-        //VERIFICA O TELEFONE ALTERNATIVO
-        if (telefoneAlternativo.equals("")) {
-            eptCadastrado.setTelefoneAlternativoEpt("Não registrado");
-        } else {
-            eptCadastrado.setTelefoneAlternativoEpt(telefoneAlternativo);
-        }
-
-        //VERIFICA O faturamentoMensal
-        if (faturamentoMensal.equals("")) {
-            eptCadastrado.setFaturamentoMedioMensalEmp("Não registrado");
-        } else {
-            eptCadastrado.setFaturamentoMedioMensalEmp(faturamentoMensal);
-        }
-        //VERIFICA O faturamentoAnual
-        if (faturamentoAnual.equals("")) {
-            eptCadastrado.setFaturamentoMedioAnualEmp("Não registrado");
-        } else {
-            eptCadastrado.setFaturamentoMedioAnualEmp(faturamentoAnual);
-        }
-        //VERIFICA O site
-        if (site.equals("")) {
-            eptCadastrado.setSiteEpt("Não registrado");
-        } else {
-            eptCadastrado.setSiteEpt(site);
-        }
         //VERIFICA O CNPJ
-        if (cnpj.equals("")) {
-            eptCadastrado.setCnpjEpt("Não registrado");
+        if (eptCadastrado.getCnpjEpt().equals("")) {
             empreendimentoBean.salvarEptBd(eptCadastrado);
             eptSendoVisualizado = true;
-        } else //VERIFICA se o CNPJ é válido
-        if (isCNPJ(eptCadastrado.getCnpjEpt())) {
-            eptCadastrado.setCnpjEpt(cnpj);
+        } else if (isCNPJ(eptCadastrado.getCnpjEpt())) {//VERIFICA se o CNPJ é válido
             empreendimentoBean.salvarEptBd(eptCadastrado);
             eptSendoVisualizado = true;
         } else {
@@ -138,46 +69,6 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
         this.tiposEpt = tiposEpt;
     }
 
-    public String getTelefoneAlternativo() {
-        return telefoneAlternativo;
-    }
-
-    public void setTelefoneAlternativo(String telefoneAlternativo) {
-        this.telefoneAlternativo = telefoneAlternativo;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public String getFaturamentoMensal() {
-        return faturamentoMensal;
-    }
-
-    public void setFaturamentoMensal(String faturamentoMensal) {
-        this.faturamentoMensal = faturamentoMensal;
-    }
-
-    public String getFaturamentoAnual() {
-        return faturamentoAnual;
-    }
-
-    public void setFaturamentoAnual(String faturamentoAnual) {
-        this.faturamentoAnual = faturamentoAnual;
-    }
-
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
-    }
-
     public String[] getSituacaoEpt() {
         return situacaoEpt;
     }
@@ -193,55 +84,4 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
     public void setEptSendoVisualizado(boolean eptSendoVisualizado) {
         this.eptSendoVisualizado = eptSendoVisualizado;
     }
-
-    public String getAtividadeExercidaEpt() {
-        return atividadeExercidaEpt;
-    }
-
-    public void setAtividadeExercidaEpt(String atividadeExercidaEpt) {
-        this.atividadeExercidaEpt = atividadeExercidaEpt;
-    }
-
-    public String getDataIncubacaoEpt() {
-        return dataIncubacaoEpt;
-    }
-
-    public void setDataIncubacaoEpt(String dataIncubacaoEpt) {
-        this.dataIncubacaoEpt = dataIncubacaoEpt;
-    }
-
-    public String getDataCriacaoEpt() {
-        return dataCriacaoEpt;
-    }
-
-    public void setDataCriacaoEpt(String dataCriacaoEpt) {
-        this.dataCriacaoEpt = dataCriacaoEpt;
-    }
-
-    public String getTelefoneEpt() {
-        return telefoneEpt;
-    }
-
-    public void setTelefoneEpt(String telefoneEpt) {
-        this.telefoneEpt = telefoneEpt;
-    }
-
-    public String getEnderecoEpt() {
-        return enderecoEpt;
-    }
-
-    public void setEnderecoEpt(String enderecoEpt) {
-        this.enderecoEpt = enderecoEpt;
-    }
-
-    public String getEmailEpt() {
-        return emailEpt;
-    }
-
-    public void setEmailEpt(String emailEpt) {
-        this.emailEpt = emailEpt;
-    }
-
-    
-    
 }
