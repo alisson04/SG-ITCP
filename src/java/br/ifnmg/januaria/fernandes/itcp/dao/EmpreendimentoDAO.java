@@ -22,7 +22,7 @@ public class EmpreendimentoDAO extends DaoGenerico<Empreendimento> {
         excluirGenerico(ept);
     }
     
-    public List<Empreendimento> listarTodosEmpreendimentos() {
+    public List<Empreendimento> listarTodosEptsDao() {
         return listarObjsGenerico("Empreendimento");
     }
 }

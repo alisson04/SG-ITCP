@@ -42,12 +42,11 @@ public class ListarEmpreendimentosView implements Serializable{
     public void listarTodosEmpreendimentos() {
         System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
         try {
-            EmpreendimentoDAO empreendimentoDAO = new EmpreendimentoDAO();
-            listaEmpreendimentos = empreendimentoDAO.listarTodosEmpreendimentos();
+            listaEmpreendimentos = bean.listarTodosEptsBean();
         } catch (RuntimeException ex) {
             //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Empreendimentos: " + ex);
-        }
+        } 
     }
     
     public void excluirEptView(){

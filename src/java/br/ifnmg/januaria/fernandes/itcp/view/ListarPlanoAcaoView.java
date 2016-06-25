@@ -1,5 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
 import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
@@ -21,7 +22,7 @@ import org.primefaces.event.SelectEvent;
 public class ListarPlanoAcaoView implements Serializable {
 
     PlanoAcaoBean mb = new PlanoAcaoBean();
-    EmpreendimentoDAO empreendimentoDao = new EmpreendimentoDAO();
+    EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
     private PlanoAcao planoAcaoSelecionado;
     private boolean btnEdicoesPlanoAcao;
     private List<PlanoAcao> listaPlanoAcao;
@@ -35,7 +36,7 @@ public class ListarPlanoAcaoView implements Serializable {
 
     public void ListarPlanosAcao() {
         try {
-            listaEmpreendimentos = empreendimentoDao.listarTodosEmpreendimentos();
+            listaEmpreendimentos = empreendimentoBean.listarTodosEptsBean();
             listaPlanoAcao = mb.listarTodosPlanos();
 
             //

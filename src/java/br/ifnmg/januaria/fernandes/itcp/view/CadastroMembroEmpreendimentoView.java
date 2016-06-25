@@ -26,7 +26,7 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
     private boolean membroEptSendoVisualizado;
     private List<Empreendimento> listaEpts;
     private String[] listaNomeEpts;
-    EmpreendimentoDAO empreendimentoDAO = new EmpreendimentoDAO();
+    EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
 //variáveis para campos não obrigatórios
     private String apelido;
     private String nomeMae;
@@ -39,7 +39,7 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
     private String empreedimentoSelecionado;
     
     public CadastroMembroEmpreendimentoView() {
-        listaEpts = empreendimentoDAO.listarTodosEmpreendimentos();
+        listaEpts = empreendimentoBean.listarTodosEptsBean();
         listaNomeEpts = new String[listaEpts.size()];
         for (int i = 0; i < listaEpts.size(); i++) {
             listaNomeEpts[i] = listaEpts.get(i).getNomeEpt();

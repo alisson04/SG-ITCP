@@ -1,5 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MensagensBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
 import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
@@ -24,17 +25,17 @@ public class CadastroPlanoAcaoView implements Serializable{
     private PlanoAcaoBean planoAcaoBean;
     private boolean planoAcaoSendoVisualizado;
     private List<Empreendimento> listaEpts;
-    private EmpreendimentoDAO empreendimentoDAO;
+    private EmpreendimentoBean empreendimentoBean;
     private String[] listaNomeEpts;
     private String empreedimentoSelecionado;
     private Date dataInicio;
     
     public CadastroPlanoAcaoView(){
-        empreendimentoDAO = new EmpreendimentoDAO();
+        empreendimentoBean = new EmpreendimentoBean();
         planoAcaoSalvar = new PlanoAcao();
         mensagensBean = new MensagensBean();
         planoAcaoBean = new PlanoAcaoBean();
-        listaEpts = empreendimentoDAO.listarTodosEmpreendimentos();
+        listaEpts = empreendimentoBean.listarTodosEptsBean();
         listaNomeEpts = new String[listaEpts.size()];
         for (int i = 0; i < listaEpts.size(); i++) {
             listaNomeEpts[i] = listaEpts.get(i).getNomeEpt();

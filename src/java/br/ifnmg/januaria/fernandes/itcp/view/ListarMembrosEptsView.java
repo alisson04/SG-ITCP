@@ -1,7 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MembroEmpreendimentoBean;
-import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.MembroEmpreendimento;
 import java.io.Serializable;
@@ -21,7 +21,7 @@ import org.primefaces.event.SelectEvent;
 public class ListarMembrosEptsView implements Serializable {
 
     MembroEmpreendimentoBean mb = new MembroEmpreendimentoBean();
-    EmpreendimentoDAO empreendimentoDAO = new EmpreendimentoDAO();
+    EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
     private MembroEmpreendimento membroEmpreendimentoSelecionado;
     private boolean btnEdicoesMembroEpt;
     private List<MembroEmpreendimento> listaMembrosEmpreendimentos;
@@ -36,7 +36,7 @@ public class ListarMembrosEptsView implements Serializable {
     public void ListarMembrosEpts() {
         System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
         try {
-            listaEmpreendimentos = empreendimentoDAO.listarTodosEmpreendimentos();
+            listaEmpreendimentos = empreendimentoBean.listarTodosEptsBean();
             listaMembrosEmpreendimentos = mb.listarTodosMembrosEpts();
 
             //

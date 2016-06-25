@@ -1,6 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.AtividadeExecutadaBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MensagensBean;
 import br.ifnmg.januaria.fernandes.itcp.dao.AtividadeExecutadaDAO;
 import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
@@ -32,7 +33,7 @@ public class CadastroAtividadeView implements Serializable{
     private String[]  nomeEmpreendimentos;
     private List<Empreendimento> listaEmpreendimentos;
     private List<String> listaEmpreendimentosSelecionados;
-    private EmpreendimentoDAO daoEpt = new EmpreendimentoDAO();
+    private EmpreendimentoBean eptBean = new EmpreendimentoBean();
     
     private MensagensBean mensagensBean = new MensagensBean();
     
@@ -45,7 +46,7 @@ public class CadastroAtividadeView implements Serializable{
     private UsuarioDAO daoUsu = new UsuarioDAO();
 
     public CadastroAtividadeView() {
-        listaEmpreendimentos = daoEpt.listarTodosEmpreendimentos();
+        listaEmpreendimentos = eptBean.listarTodosEptsBean();
         nomeEmpreendimentos = new String[listaEmpreendimentos.size()];
         for (int i = 0; i < listaEmpreendimentos.size(); i++) {
             nomeEmpreendimentos[i] = listaEmpreendimentos.get(i).getNomeEpt();

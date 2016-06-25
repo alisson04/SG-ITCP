@@ -3,6 +3,7 @@ package br.ifnmg.januaria.fernandes.itcp.bean;
 import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -26,5 +27,9 @@ public class EmpreendimentoBean implements Serializable {
     
     public void excluirEptBean(Empreendimento ept){
         dao.excluirEptDao(ept);
+    }
+    
+    public List<Empreendimento> listarTodosEptsBean() {
+        return dao.listarTodosEptsDao();
     }
 }
