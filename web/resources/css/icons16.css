@@ -80,3 +80,15 @@
 .Refresh16-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Refresh16.png") !important;
 }
+
+.Pen16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Pen16.png") !important;
+}
+
+.Pencil16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/Pencil16.png") !important;
+}
+
+.EditBlue16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/EditBlue16.png") !important;
+}

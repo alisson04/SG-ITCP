@@ -45,6 +45,7 @@
                         <p:message for="tipoParceiro"/>
                     </h:panelGrid>
                     
+                    <p:separator />
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroParceiroView.salvarParceiroView}" 
                                      update='frmCadastroParceiro' icon="Save16-iconfinder">
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
@@ -85,6 +86,9 @@
                         <p:outputLabel value="Tipo de parceiro " />
                         <p:outputLabel value="#{CadastroParceiroView.parceiroSalvar.tipoParceiro}" />
                     </p:panelGrid>
+                    
+                    <p:separator />
+                    <p:commandButton value="Listar usuários" icon="find-iconfinder" action="/listarParceiros.xhtml?faces-redirect=true"/>
                 </p:panel>
             </h:form>
         </ui:define>

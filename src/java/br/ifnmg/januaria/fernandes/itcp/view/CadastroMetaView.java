@@ -37,19 +37,16 @@ public class CadastroMetaView implements Serializable {
         listaPlanosAcao = beanPlanoAcao.listarTodosPlanos();
         listaNomePlanosAcao = new String[listaPlanosAcao.size()];
         for (int i = 0; i < listaPlanosAcao.size(); i++) {
-            listaNomePlanosAcao[i] = listaPlanosAcao.get(i).getDescricao();
+            listaNomePlanosAcao[i] = listaPlanosAcao.get(i).getNomePlano();
         }
     }
     
     public void salvarMetaView() {
         for (int i = 0; i < listaPlanosAcao.size(); i++) {
-            if (listaPlanosAcao.get(i).getDescricao().equals(nomePlanoSelecionado)) {
+            if (listaPlanosAcao.get(i).getNomePlano().equals(nomePlanoSelecionado)) {
                 metaSalvar.setPlanoAcao(listaPlanosAcao.get(i));
             }
         }
-        
-        SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-        String folderName = forma.format(metaSalvar.getDataInicio());
         bean.salvarMetaBd(metaSalvar);
         metaSendoVisualizada = true;
     }

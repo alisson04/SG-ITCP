@@ -19,7 +19,7 @@
         <p:graphicImage name="fotos/IfnmgNatureClara1920.jpg" width="100%" height="50%" />
         
         <p:dialog header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" resizable="false">
-            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:growl id="growl" showDetail="true" sticky="true" showSummary="false"/>
             <h:panelGrid id="panelLogin" columns="2" cellpadding="5" style="ui-widget">
 
                 <p:outputLabel for="emailUsr" value="E-mail: " />
@@ -28,7 +28,7 @@
 
                 <p:outputLabel for="senhaUsr" value="Senha: " />
                 <p:password id="senhaUsr" value="#{loginView.usuarioLogado.senhaUsuario}"
-                            required="true" requiredMessage="Insira uma senha!"/>
+                            required="true" requiredMessage="Insira uma senha!" />
             </h:panelGrid>
             <p:commandButton value="Acessar" action="#{loginView.logar()}" update="growl" icon="Key16-iconfinder" style="ui-button"/>
         </p:dialog>

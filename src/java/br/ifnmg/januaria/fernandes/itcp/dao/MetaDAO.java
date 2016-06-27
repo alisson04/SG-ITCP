@@ -20,4 +20,8 @@ public class MetaDAO extends DaoGenerico<Meta> {
     public List<Meta> listarTodasMetas() {
         return listarObjsGenerico("Meta");
     }
+    
+    public void excluirMetaDao(Meta meta){
+        excluirGenerico(meta);
+    }
 }

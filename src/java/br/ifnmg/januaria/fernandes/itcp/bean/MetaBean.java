@@ -28,4 +28,8 @@ public class MetaBean implements Serializable{
     public List<Meta> listarTodasMetas() {
         return dao.listarTodasMetas();
     }
+    
+    public void excluirMetaBean(Meta meta){
+        dao.excluirMetaDao(meta);
+    }
 }

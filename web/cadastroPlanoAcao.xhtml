@@ -9,7 +9,7 @@
         <ui:define name="conteudo">
             <h:form id="frmCadastroPlanoAcao">
                 <p:focus context="frmCadastroPlanoAcao" /> <!-- Grifa os campos -->
-                <p:panel id="panel" header="Cadastro de plano de ação (* Campos obrigatórios)" styleClass="corPanel"
+                <p:panel id="panel" header="#{CadastroPlanoAcaoView.configuraNomePanel()}" styleClass="corPanel"
                          rendered="#{CadastroPlanoAcaoView.planoAcaoSendoVisualizado == 'false'}">
 
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
@@ -45,6 +45,8 @@
                         <p:message for="descricao"/>
 
                     </h:panelGrid>
+                    
+                    <p:separator />
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroPlanoAcaoView.salvarPlanoAcao()}" 
                                      update='frmCadastroPlanoAcao' icon="Save16-iconfinder">
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
@@ -73,6 +75,9 @@
                         <p:outputLabel value="Empreendimento:  " />
                         <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.empreendimento.nomeFantasiaEpt}" />
                     </h:panelGrid>
+                    
+                    <p:separator />
+                    <p:commandButton value="Listar usuários" icon="find-iconfinder" action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
                 </p:panel>
             </h:form>
         </ui:define>

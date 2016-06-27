@@ -60,6 +60,13 @@ public class ListarMetasView implements Serializable{
         }
     }
     
+    public void excluirMetaView(){
+        bean.excluirMetaBean(metaSelecionada);
+        metaSelecionada = null;//Volta o usuario para o estado de nulo/ Não retire
+        FacesMessage msg = new FacesMessage("Meta excluida do sistema");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
     public void onRowSelect(SelectEvent event) {
         btnEdicoesMeta = false;
         FacesMessage msg = new FacesMessage("Meta " + metaSelecionada.getNome()+ " selecionada!");

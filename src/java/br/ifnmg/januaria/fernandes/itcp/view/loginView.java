@@ -40,7 +40,7 @@ public class loginView implements Serializable{
             } else {
                 System.out.println("__________BEAN(loginBean): Não encontrou o e-mail");
                 FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail e senha invalidos:", "Verifique os dados e tente novamente!"));
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail ou senha invalidos", "E-mail ou senha invalidos!"));
                 return null;
             }
     }

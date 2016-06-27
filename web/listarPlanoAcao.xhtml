@@ -60,6 +60,12 @@
                                            icon="Alert16-iconfinder" />
                             </p:commandButton>
                             
+                            <p:commandButton id="btnEditarPlano" value="Editar" icon="Pencil16-iconfinder" update=":frmListagemPlanosAcao"
+                                             disabled="#{ListarPlanoAcaoView.btnEdicoesPlanoAcao}" 
+                                             actionListener="#{ListarPlanoAcaoView.editarPlanoView()}">
+                                <p:confirm header="CONTINUAR? " message="Deseja editar esse plano de ação?" icon="Alert16-iconfinder" />
+                            </p:commandButton>
+                            
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />

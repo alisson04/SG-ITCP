@@ -8,74 +8,70 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmCadastroMeta">
-
-                <p:toolbar>
-                    <f:facet name="left">
-                        <h:outputText value="Metas" />
-                    </f:facet>
-                </p:toolbar>
-                <p:separator />
-
                 <p:focus context="frmCadastroMeta" /> <!-- Grifa os campos -->
 
-                <p:panel id="panel"
-                         header="Cadastro de empreendimento (* Campos obrigatórios)" 
+                <p:panel id="panel" header="Cadastro de meta (* Campos obrigatórios)" styleClass="corPanel"
                          rendered="#{CadastroMetaView.metaSendoVisualizada == 'false'}">
-
-                    <!--<p:message id="messages" showDetail="true"  />-->
-                    <p:growl id="growl" showDetail="true" sticky="true"/>
-
-                    <p:panel >
-                        <h:panelGrid id="grid" style="margin-top:20px" columns="3">
-                            <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome"
-                                         value="#{CadastroMetaView.metaSalvar.nome}" required="true"
-                                         requiredMessage="O campo Nome é obrigatório." size="57"
-                                         maxlength="45">
-                            </p:inputText>
-                            <p:message for="nome" />
-                        </h:panelGrid>
-                        <h:panelGrid style="margin-top:20px" columns="4">
-                            <p:outputLabel for="dataInicio" value="Data início:" />
-                            <p:calendar id="dataInicio" value="#{CadastroMetaView.metaSalvar.dataInicio}" showOn="button" pattern="dd-MM-yyyy" 
-                                        mask="true" locale="pt"/>
-                            <p:outputLabel for="dataFim" value="Data fim:" />
-                            <p:calendar id="dataFim" value="#{CadastroMetaView.metaSalvar.dataFim}" showOn="button" pattern="dd-MM-yyyy" 
-                                        mask="true" locale="pt"/>
-                            <p:message for="dataInicio" />
-                            <p:message for="dataFim" />    
-                        </h:panelGrid>
+                    <h:panelGrid id="grid" style="margin-top:20px" columns="3">
+                        <p:outputLabel for="nome" value="Nome: " />
+                        <p:inputText id="nome" value="#{CadastroMetaView.metaSalvar.nome}" required="true" 
+                                     requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
+                        <p:message for="nome" />
                         
+                        <p:outputLabel for="descricao" value="Descrição: " />
+                        <p:inputText id="descricao" value="#{CadastroMetaView.metaSalvar.descricao}" required="true" 
+                                     requiredMessage="O campo Descrição é obrigatório." size="57" maxlength="45"/>
+                        <p:message for="descricao" />
+
                         <p:outputLabel for="planoAcao" value="Plano de ação: "/>
                         <p:selectOneMenu id="planoAcao" required="true"
                                          requiredMessage="O plano de ação é obrigatório."
                                          value="#{CadastroMetaView.nomePlanoSelecionado}" 
-                                         style="width:500px">
+                                         style="width:662px">
                             <f:selectItem itemLabel="Selecione o plano de ação" itemValue=""
                                           noSelectionOption="true" />
                             <f:selectItems value="#{CadastroMetaView.listaNomePlanosAcao}" />
                         </p:selectOneMenu>
                         <p:message for="planoAcao"/>
-                    </p:panel>
+                        
+                        <p:outputLabel for="dataInicio" value="Data início:" />
+                        <p:calendar id="dataInicio" value="#{CadastroMetaView.metaSalvar.dataInicio}" showOn="button" 
+                                    pattern="dd-MM-yyyy" size="8" required="true" requiredMessage="O campo Data início é obrigatório."
+                                    mask="true" locale="pt"/>
+                        <p:message for="dataInicio" />
+                        
+                        <p:outputLabel for="dataFim" value="Data fim:" />
+                        <p:calendar id="dataFim" value="#{CadastroMetaView.metaSalvar.dataFim}" showOn="button" pattern="dd-MM-yyyy"
+                                    size="8" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                        <p:message for="dataFim" />
+                    </h:panelGrid>
 
+                    <p:separator />
+                    
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroMetaView.salvarMetaView()}" 
-                                     update='frmCadastroMeta' icon="Save16-iconfinder"/>
-
+                                     update='frmCadastroMeta' icon="Save16-iconfinder">
+                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                    </p:confirmDialog>
 
                     <p:blockUI block="panel" trigger="btnSalvar">
                         CARREGANDO<br />
                         <p:graphicImage name="icons/LoadingBar.gif"/>
                     </p:blockUI>
                 </p:panel>
-                
-                <!-- O painel abaixo so e renderizado apos o membro do empreendimento ser salvo-->
-                <p:panel id="painelMetaSalva"
-                         header="Informações salvas com sucesso" rendered="#{CadastroMetaView.metaSendoVisualizada == 'true'}">
-                    <p:separator />
-                    <h:panelGrid columns="2" rendered="#{CadastroMetaView.metaSendoVisualizada == 'true'}">
 
+                <!-- O painel abaixo so e renderizado apos o membro do empreendimento ser salvo-->
+                <p:panel id="painelMetaSalva" styleClass="corPanel" header="Informações salvas com sucesso" 
+                         rendered="#{CadastroMetaView.metaSendoVisualizada == 'true'}">
+                    <p:panelGrid columns="2" rendered="#{CadastroMetaView.metaSendoVisualizada == 'true'}">
                         <p:outputLabel value="Nome: " />
                         <p:outputLabel value="#{CadastroMetaView.metaSalvar.nome}" />
+                        
+                        <p:outputLabel value="Descrição: " />
+                        <p:outputLabel value="#{CadastroMetaView.metaSalvar.descricao}" />
 
                         <p:outputLabel value="Data de início: " />
                         <p:outputLabel value="#{CadastroMetaView.conveteData(CadastroMetaView.metaSalvar.dataInicio)}" />
@@ -84,8 +80,10 @@
                         <p:outputLabel value="#{CadastroMetaView.conveteData(CadastroMetaView.metaSalvar.dataFim)}"  />
 
                         <p:outputLabel value="Plano de ação: " />
-                        <p:outputLabel value="#{CadastroMetaView.metaSalvar.idPlanoAcaoFk.descricao}" />
-                    </h:panelGrid>
+                        <p:outputLabel value="#{CadastroMetaView.metaSalvar.planoAcao.nomePlano}" />
+                    </p:panelGrid>
+                    <p:separator />
+                    <p:commandButton value="Listar usuários" icon="find-iconfinder" action="/listarMetas.xhtml?faces-redirect=true"/>
                 </p:panel>
             </h:form>
         </ui:define>

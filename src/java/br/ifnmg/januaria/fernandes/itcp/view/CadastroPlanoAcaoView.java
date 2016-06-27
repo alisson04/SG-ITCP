@@ -23,7 +23,7 @@ public class CadastroPlanoAcaoView implements Serializable{
     
     private PlanoAcao planoAcaoSalvar;
     private MensagensBean mensagensBean;
-    private PlanoAcaoBean planoAcaoBean;
+    private PlanoAcaoBean bean;
     private boolean planoAcaoSendoVisualizado;
     private List<Empreendimento> listaEpts;
     private EmpreendimentoBean empreendimentoBean;
@@ -35,11 +35,19 @@ public class CadastroPlanoAcaoView implements Serializable{
         empreendimentoBean = new EmpreendimentoBean();
         planoAcaoSalvar = new PlanoAcao();
         mensagensBean = new MensagensBean();
-        planoAcaoBean = new PlanoAcaoBean();
+        bean = new PlanoAcaoBean();
         listaEpts = empreendimentoBean.listarTodosEptsBean();
         listaNomeEpts = new String[listaEpts.size()];
         for (int i = 0; i < listaEpts.size(); i++) {
             listaNomeEpts[i] = listaEpts.get(i).getNomeEpt();
+        }
+    }
+    
+    public String configuraNomePanel(){
+        if(bean.getPlanoEditar() == null){
+            return "Cadastro de plano de ação (* Campos obrigatórios)";
+        }else{
+            return "Editar de plano de ação (* Campos obrigatórios)";
         }
     }
     
@@ -49,7 +57,7 @@ public class CadastroPlanoAcaoView implements Serializable{
                 planoAcaoSalvar.setEmpreendimento(listaEpts.get(i));
             }
         }
-        planoAcaoBean.salvarParceiroBd(planoAcaoSalvar);
+        bean.salvarParceiroBd(planoAcaoSalvar);
         planoAcaoSendoVisualizado = true;
     }
     

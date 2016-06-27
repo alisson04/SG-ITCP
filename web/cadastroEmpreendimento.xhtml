@@ -96,6 +96,8 @@
                         <p:message for="situacaoEpt"/>
 
                     </h:panelGrid>
+                    
+                    <p:separator />
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroEmpreendimentoView.salvarEptView()}" 
                                      update='frmCadastroEmpreendimento' icon="Save16-iconfinder">
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
@@ -161,6 +163,8 @@
                         <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.situacaoEpt}" />
 
                     </p:panelGrid>
+                    
+                    <p:separator />
                     <p:commandButton value="Listar empreendimentos" icon="find-iconfinder" 
                                      action="/listarEmpreendimento.xhtml?faces-redirect=true"/>
                 </p:panel>
