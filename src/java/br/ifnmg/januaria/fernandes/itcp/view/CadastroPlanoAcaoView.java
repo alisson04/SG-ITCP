@@ -20,7 +20,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name = "CadastroPlanoAcaoView")
 @ViewScoped
 public class CadastroPlanoAcaoView implements Serializable{
-    
     private PlanoAcao planoAcaoSalvar;
     private MensagensBean mensagensBean;
     private PlanoAcaoBean bean;
@@ -40,14 +39,6 @@ public class CadastroPlanoAcaoView implements Serializable{
         listaNomeEpts = new String[listaEpts.size()];
         for (int i = 0; i < listaEpts.size(); i++) {
             listaNomeEpts[i] = listaEpts.get(i).getNomeEpt();
-        }
-    }
-    
-    public String configuraNomePanel(){
-        if(bean.getPlanoEditar() == null){
-            return "Cadastro de plano de ação (* Campos obrigatórios)";
-        }else{
-            return "Editar de plano de ação (* Campos obrigatórios)";
         }
     }
     

@@ -52,20 +52,17 @@
                             <p:commandButton id="btnVisualizarPlanoAcao" process="dtListagemPlanosAcao" update=":frmListagemPlanosAcao" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" styleClass="corDialog"
                                              disabled="#{ListarPlanoAcaoView.btnEdicoesPlanoAcao}"  style="text-align:center;" />
-                            
-                            <p:commandButton id="btnExcluirPlano" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemPlanosAcao"
-                                             disabled="#{ListarPlanoAcaoView.btnEdicoesPlanoAcao}" 
-                                             actionListener="#{ListarPlanoAcaoView.excluirPlanoView()}">
-                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert16-iconfinder" />
+
+                            <p:commandButton id="btnExcluirPlano"  update=":frmListagemPlanosAcao"
+                                             value="Excluir" icon="Cancel16-iconfinder" disabled="#{ListarPlanoAcaoView.btnEdicoesPlanoAcao}" 
+                                              actionListener="#{ListarPlanoAcaoView.excluirPlanoView()}">
+                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" icon="Alert16-iconfinder" />
                             </p:commandButton>
-                            
+
                             <p:commandButton id="btnEditarPlano" value="Editar" icon="Pencil16-iconfinder" update=":frmListagemPlanosAcao"
-                                             disabled="#{ListarPlanoAcaoView.btnEdicoesPlanoAcao}" 
-                                             actionListener="#{ListarPlanoAcaoView.editarPlanoView()}">
-                                <p:confirm header="CONTINUAR? " message="Deseja editar esse plano de ação?" icon="Alert16-iconfinder" />
-                            </p:commandButton>
-                            
+                                             disabled="#{ListarPlanoAcaoView.btnEdicoesPlanoAcao}" process="dtListagemPlanosAcao"
+                                             oncomplete="PF('planoDialog').show()" />
+
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
@@ -73,11 +70,63 @@
                         </f:facet>
                     </p:dataTable>
 
+                    <p:dialog id="dlgEditarPlano" header="Editar plano de ação" widgetVar="planoDialog" showEffect="fade" hideEffect="fade" 
+                              styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" >
+                        <p:panel id="panel" styleClass="corPanel" >
+                            <h:panelGrid style="margin-top:20px" columns="3">
+                                <p:outputLabel for="nome" value="Nome: " />
+                                <p:inputText id="nome" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.nomePlano}" required="true"
+                                             requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
+                                <p:message for="nome" />
+
+                                <p:outputLabel for="dataInicio" value="Data de início: " />
+                                <p:calendar id="dataInicio" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataInicio}" showOn="button" pattern="dd/MM/yyyy" 
+                                            size="8" mask="true" locale="pt" required="true" requiredMessage="O campo data de início é obrigatório."/>
+                                <p:message for="dataInicio"/>
+
+                                <p:outputLabel for="dataFim" value="Data de fim: " />
+                                <p:calendar id="dataFim" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.dataFim}" showOn="button" pattern="dd/MM/yyyy" 
+                                            size="8" mask="true" locale="pt" required="true" requiredMessage="O campo data de fim é obrigatório."/>
+                                <p:message for="dataInicio"/>
+
+                                <p:outputLabel for="empreendimento" value="Empreendimento: "/>
+                                <p:selectOneMenu id="empreendimento" required="true"
+                                                 requiredMessage="O empreendimento é obrigatório."
+                                                 value="#{CadastroPlanoAcaoView.empreedimentoSelecionado}" 
+                                                 style="width:500px">
+                                    <f:selectItem itemLabel="Selecione o empreendimento" itemValue=""
+                                                  noSelectionOption="true" />
+                                    <f:selectItems value="#{CadastroPlanoAcaoView.listaNomeEpts}" />
+                                </p:selectOneMenu>
+                                <p:message for="empreendimento"/>
+
+                                <p:outputLabel for="descricao" value="Descrição: "/>
+                                <p:inputText id="descricao" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.descricao}" required="true"
+                                             requiredMessage="O campo data de início é obrigatório." size="57" maxlength="45"/>
+                                <p:message for="descricao"/>
+                            </h:panelGrid>
+
+                            <p:separator />
+                            <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroPlanoAcaoView.salvarPlanoAcao()}" 
+                                             icon="Save16-iconfinder">
+                                <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" >
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                            </p:confirmDialog>
+
+                            <p:blockUI block="panel" trigger="btnSalvar">
+                                CARREGANDO<br />
+                                <p:graphicImage name="icons/LoadingBar.gif"/>
+                            </p:blockUI>
+                        </p:panel>
+                    </p:dialog>
+
                     <p:dialog id="diaShowUsr" header="Informações do plano" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
                               styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
                               style="text-align:center;" >
-
-                        <p:outputPanel id="carDetail" style="text-align:center;">
+                        <p:outputPanel id="carDetail">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />                            
                                 <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.nomePlano}" />
