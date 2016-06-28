@@ -53,6 +53,8 @@ public class LoginBean implements Serializable {
             return "/sigitec/Login.xhtml";
         } catch (IOException ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage msg = new FacesMessage("IOExceptionl: " + ex.getMessage() );
+            FacesContext.getCurrentInstance().addMessage(null, msg);
             return null;
         }
     }

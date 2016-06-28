@@ -29,6 +29,7 @@ public class ListarPlanoAcaoView implements Serializable {
     PlanoAcaoBean bean = new PlanoAcaoBean();
     EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
     private PlanoAcao planoAcaoSelecionado;
+    private PlanoAcao planoAcaoEditar;
     private boolean btnEdicoesPlanoAcao;
     private List<PlanoAcao> listaPlanoAcao;
     private List<PlanoAcao> listaPlanoAcaoFiltrados;
@@ -54,28 +55,34 @@ public class ListarPlanoAcaoView implements Serializable {
         }
     }
 
-    public String editarPlanoView() {
+    public void editarPlanoView() {
         try {
-            bean.editarPlanoBean(planoAcaoSelecionado);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/cadastroPlanoAcao.xhtml");
-            return "/sigitec/cadastroPlanoAcao.xhtml";
-        } catch (IOException ex) {
+            bean.salvarPlanoBean(planoAcaoSelecionado);
+            planoAcaoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            FacesMessage msg = new FacesMessage("Plano de ação editado com sucesso!");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Erro de exceção:", ex.getMessage()));
-            return null;
-        }catch(Exception ex){
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Erro de exceção:", ex.getMessage()));
-            return null;
         }
     }
 
     public void excluirPlanoView() {
-        bean.excluirPlanoBean(planoAcaoSelecionado);
-        planoAcaoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
-        FacesMessage msg = new FacesMessage("Plano de ação excluido do sistema");
+        try {
+            bean.excluirPlanoBean(planoAcaoSelecionado);
+            planoAcaoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            FacesMessage msg = new FacesMessage("Plano de ação excluido com sucesso!");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } catch (Exception ex) {
+            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Erro de exceção:", ex.getMessage()));
+        }
+    }
+
+    public void testa() {
+        FacesMessage msg = new FacesMessage("Plano de ação excluido com sucesso!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
@@ -90,6 +97,7 @@ public class ListarPlanoAcaoView implements Serializable {
 
     public void onRowSelect(SelectEvent event) {
         btnEdicoesPlanoAcao = false;
+        planoAcaoEditar = planoAcaoSelecionado;
         FacesMessage msg = new FacesMessage("Plano de ação selecionado!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }

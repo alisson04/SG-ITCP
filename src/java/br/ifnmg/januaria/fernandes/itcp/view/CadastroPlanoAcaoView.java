@@ -48,7 +48,7 @@ public class CadastroPlanoAcaoView implements Serializable{
                 planoAcaoSalvar.setEmpreendimento(listaEpts.get(i));
             }
         }
-        bean.salvarParceiroBd(planoAcaoSalvar);
+        bean.salvarPlanoBean(planoAcaoSalvar);
         planoAcaoSendoVisualizado = true;
     }
     

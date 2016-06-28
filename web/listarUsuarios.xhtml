@@ -6,7 +6,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-
         <ui:define name="metadata">
             <f:metadata>
                 <f:event listener="#{ListarUsuariosView.ListarTodosUsers()}" type="preRenderView"/>
@@ -19,11 +18,10 @@
                 <p:panel styleClass="corPanel" header="Usuários no sistema:" >
                     <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
                                  filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" selectionMode="single" 
-                                 selection="#{ListarUsuariosView.usuarioSelecionado}" rowKey="#{usuarioCursor.idUsuario}"
-                                 var="usuarioCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                                 selection="#{ListarUsuariosView.usuarioSelecionado}" rowKey="#{usuarioCursor.idUsuario}" var="usuarioCursor" 
+                                 widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
-                        <p:ajax event="rowSelect" listener="#{ListarUsuariosView.onRowSelect}" 
-                                update=":frmListagemUsuarios"/>
+                        <p:ajax event="rowSelect" listener="#{ListarUsuariosView.onRowSelect}" update=":frmListagemUsuarios"/>
 
                         <p:column headerText="Nome" filterBy="#{usuarioCursor.nomeUsuario}" 
                                   sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">
@@ -46,24 +44,26 @@
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizarusr" process="ListagemUsuarios" update=":frmListagemUsuarios:carDetail" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarUsuariosView.btnEdicoesUsr}"/>
-                            <p:commandButton id="btnInativarusr" 
+                                             disabled="#{ListarUsuariosView.usuarioSelecionado == null}"/>
+                            
+                            <p:commandButton id="btnInativarusr" actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}"
                                              value="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.usuarioSelecionado)}" 
-                                             icon="Refresh16-iconfinder" disabled="#{ListarUsuariosView.btnEdicoesUsr}" update=":frmListagemUsuarios"
-                                             actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}">
+                                             icon="Refresh16-iconfinder" disabled="#{ListarUsuariosView.usuarioSelecionado == null}" 
+                                             update=":frmListagemUsuarios" >
                                 <p:confirm header="ATENÇÃO!" message="Deseja confirmar a ação?" icon="Alert16-iconfinder"/>
+                            </p:commandButton>
+
+                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemUsuarios"
+                                             disabled="#{ListarUsuariosView.usuarioSelecionado == null}" 
+                                             actionListener="#{ListarUsuariosView.excluirUsrView()}">
+                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                           icon="Alert16-iconfinder" />
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
                             </p:confirmDialog>
-
-                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemUsuarios"
-                                             disabled="#{ListarUsuariosView.btnEdicoesUsr}" actionListener="#{ListarUsuariosView.excluirUsrView()}">
-                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert16-iconfinder" />
-                            </p:commandButton>
 
                             <p:tooltip for="btnVisualizarusr" value="Visualizar informações deste usuário!"
                                        showEffect="clip" hideEffect="explode" />

@@ -18,14 +18,12 @@ import org.primefaces.event.SelectEvent;
 public class ListarUsuariosView implements Serializable {
 
     private Usuario usuarioSelecionado;
-    private boolean btnEdicoesUsr;
     private String[] cargos;//para a tela de listar usuarios
     private List<Usuario> listaUsuarios;
     private List<Usuario> listaUsuariosFiltrados;
-    private UsuarioBean bean;
+    private UsuarioBean bean = new UsuarioBean();
 
     public ListarUsuariosView() {
-        btnEdicoesUsr = true;
         cargos = new String[8];
         cargos[0] = "Coordenador";
         cargos[1] = "Professor";
@@ -35,9 +33,6 @@ public class ListarUsuariosView implements Serializable {
         cargos[5] = "Bolsista - PIBED";
         cargos[6] = "Bolsista - PIBIC";
         cargos[7] = "Bolsista - PROEXT";
-
-        bean = new UsuarioBean();
-
     }
 
     public void ListarTodosUsers() {
@@ -45,7 +40,6 @@ public class ListarUsuariosView implements Serializable {
     }
 
     public void onRowSelect(SelectEvent event) {
-        btnEdicoesUsr = false;
         FacesMessage msg = new FacesMessage("Usuário " + usuarioSelecionado.getNomeUsuario() + " selecionado!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
@@ -96,14 +90,6 @@ public class ListarUsuariosView implements Serializable {
 
     public void setUsuarioSelecionado(Usuario usuarioSelecionado) {
         this.usuarioSelecionado = usuarioSelecionado;
-    }
-
-    public boolean isBtnEdicoesUsr() {
-        return btnEdicoesUsr;
-    }
-
-    public void setBtnEdicoesUsr(boolean btnEdicoesUsr) {
-        this.btnEdicoesUsr = btnEdicoesUsr;
     }
 
     public String[] getCargos() {

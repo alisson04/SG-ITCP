@@ -19,20 +19,9 @@ public class PlanoAcaoBean implements Serializable{
     
     public PlanoAcaoBean(){
         dao = new PlanoAcaoDAO();
-        System.out.println( i + "º ACESSO =============");
     }
     
-    public void editarPlanoBean(PlanoAcao plano){
-        contar();
-        planoEditar = plano;
-    }
-    
-    public void contar(){
-        i = i + 1;
-        System.out.println( i + "º ACESSO =============");
-    }
-    
-    public void salvarParceiroBd(PlanoAcao planoAcao) {
+    public void salvarPlanoBean(PlanoAcao planoAcao) {
         dao.salvarPlano(planoAcao);
     }
     

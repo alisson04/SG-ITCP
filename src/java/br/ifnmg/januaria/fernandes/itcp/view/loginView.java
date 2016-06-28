@@ -45,11 +45,6 @@ public class loginView implements Serializable{
             }
     }
     
-    public void testa(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Erro, contate o admin:"));
-    }
-    
     public String sair(){
         return bean.sair(usuarioLogado);
     }

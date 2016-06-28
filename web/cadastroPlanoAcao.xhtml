@@ -65,7 +65,7 @@
                 <!-- O painel abaixo so e renderizado apos o empreendimento ser salvo-->
                 <p:panel id="painelUsuarioSalvo" styleClass="corPanel" header="Informações salvas com sucesso" 
                          rendered="#{CadastroPlanoAcaoView.planoAcaoSendoVisualizado == 'true'}">
-                    <h:panelGrid columns="2" >
+                    <p:panelGrid columns="2" >
                         <p:outputLabel value="Descrição: " />
                         <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.descricao}" />
                         <p:outputLabel value="Data início:  " />
@@ -74,10 +74,10 @@
                         <p:outputLabel value="#{CadastroPlanoAcaoView.conveteData(CadastroPlanoAcaoView.planoAcaoSalvar.dataFim)}" />
                         <p:outputLabel value="Empreendimento:  " />
                         <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.empreendimento.nomeFantasiaEpt}" />
-                    </h:panelGrid>
+                    </p:panelGrid>
                     
                     <p:separator />
-                    <p:commandButton value="Listar usuários" icon="find-iconfinder" action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
+                    <p:commandButton value="Listar planos de ação" icon="find-iconfinder" action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
                 </p:panel>
             </h:form>
         </ui:define>
