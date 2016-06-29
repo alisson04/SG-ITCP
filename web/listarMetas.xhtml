@@ -50,10 +50,11 @@
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizarMeta" process="dtListagemMetas" update=":frmListagemMetas:carDetail" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarMetasView.btnEdicoesMeta}"/>
+                                             disabled="#{ListarMetasView.metaSelecionada == null}"/>
 
                             <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemMetas"
-                                             disabled="#{ListarMetasView.btnEdicoesMeta}" actionListener="#{ListarMetasView.excluirMetaView()}">
+                                             disabled="#{ListarMetasView.metaSelecionada == null}" 
+                                             actionListener="#{ListarMetasView.excluirMetaView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert16-iconfinder" />
                             </p:commandButton>

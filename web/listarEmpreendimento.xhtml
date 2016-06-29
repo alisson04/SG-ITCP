@@ -51,10 +51,10 @@
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" update=":frmListagemEmpreendimentos:carDetail" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarEmpreendimentosView.btnEdicoesEpt}"/>
+                                             disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}"/>
 
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemEmpreendimentos"
-                                             disabled="#{ListarEmpreendimentosView.btnEdicoesEpt}" 
+                                             disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" 
                                              actionListener="#{ListarEmpreendimentosView.excluirEptView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert16-iconfinder" />

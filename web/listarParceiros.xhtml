@@ -47,7 +47,7 @@
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizarParceiro" process="dtListagemParceiros" update=":frmListagemParceiros:carDetail" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()"
-                                             disabled="#{ListarParceirosView.btnEdicoesParceiro}"/>
+                                             disabled="#{ListarParceirosView.parceiroSelecionado == null}"/>
                             
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
@@ -55,7 +55,7 @@
                             </p:confirmDialog>
 
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemParceiros"
-                                             disabled="#{ListarParceirosView.btnEdicoesParceiro}" 
+                                             disabled="#{ListarParceirosView.parceiroSelecionado == null}" 
                                              actionListener="#{ListarParceirosView.excluirParceiroView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert16-iconfinder" />
