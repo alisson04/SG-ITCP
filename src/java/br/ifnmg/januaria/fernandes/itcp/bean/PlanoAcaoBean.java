@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import org.primefaces.context.RequestContext;
 /**
  *
  * @author alisson
@@ -15,7 +16,6 @@ import java.util.List;
 public class PlanoAcaoBean implements Serializable{
     private PlanoAcaoDAO dao;
     private PlanoAcao planoEditar = null;//deve receber null
-    private int i=0;
     
     public PlanoAcaoBean(){
         dao = new PlanoAcaoDAO();

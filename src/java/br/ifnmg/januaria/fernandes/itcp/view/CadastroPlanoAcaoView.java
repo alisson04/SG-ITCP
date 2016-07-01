@@ -20,21 +20,17 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name = "CadastroPlanoAcaoView")
 @ViewScoped
 public class CadastroPlanoAcaoView implements Serializable{
-    private PlanoAcao planoAcaoSalvar;
-    private MensagensBean mensagensBean;
-    private PlanoAcaoBean bean;
+    private PlanoAcao planoAcaoSalvar = new PlanoAcao();
+    private MensagensBean mensagensBean = new MensagensBean();
+    private PlanoAcaoBean bean = new PlanoAcaoBean();
     private boolean planoAcaoSendoVisualizado;
     private List<Empreendimento> listaEpts;
-    private EmpreendimentoBean empreendimentoBean;
+    private EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
     private String[] listaNomeEpts;
     private String empreedimentoSelecionado;
     private Date dataInicio;
     
     public CadastroPlanoAcaoView(){
-        empreendimentoBean = new EmpreendimentoBean();
-        planoAcaoSalvar = new PlanoAcao();
-        mensagensBean = new MensagensBean();
-        bean = new PlanoAcaoBean();
         listaEpts = empreendimentoBean.listarTodosEptsBean();
         listaNomeEpts = new String[listaEpts.size()];
         for (int i = 0; i < listaEpts.size(); i++) {

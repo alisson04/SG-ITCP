@@ -21,14 +21,12 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ListarEmpreendimentosView implements Serializable{
     private Empreendimento empreendimentoSelecionado;
-    private boolean btnEdicoesEpt;
     private List<Empreendimento> listaEmpreendimentos; //
     private List<Empreendimento> listaEmpreendimentosFiltrados;
     private String[] processoIncubacao;//para a tela de listar usuarios
     private EmpreendimentoBean bean;
     
     public ListarEmpreendimentosView() {
-        btnEdicoesEpt = true; //recebe true para desabillitar o botão da tela
         processoIncubacao = new String[5];
         processoIncubacao[0] = "Não incubado";
         processoIncubacao[1] = "Pré-incubação";
@@ -58,7 +56,6 @@ public class ListarEmpreendimentosView implements Serializable{
     
     public void onRowSelect(SelectEvent event) {
         System.out.println("BEAN(ListarEmpreendimentosView): onRowSelect: ");
-        btnEdicoesEpt = false;
         FacesMessage msg = new FacesMessage("Empreendimento " + empreendimentoSelecionado.getNomeFantasiaEpt()+ " selecionado!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
@@ -79,14 +76,6 @@ public class ListarEmpreendimentosView implements Serializable{
 
     public void setEmpreendimentoSelecionado(Empreendimento empreendimentoSelecionado) {
         this.empreendimentoSelecionado = empreendimentoSelecionado;
-    }
-
-    public boolean isBtnEdicoesEpt() {
-        return btnEdicoesEpt;
-    }
-
-    public void setBtnEdicoesEpt(boolean btnEdicoesEpt) {
-        this.btnEdicoesEpt = btnEdicoesEpt;
     }
 
     public List<Empreendimento> getListaEmpreendimentos() {

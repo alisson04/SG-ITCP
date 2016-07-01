@@ -22,7 +22,6 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ListarMetasView implements Serializable{
     private Meta metaSelecionada;
-    private boolean btnEdicoesMeta;
     private List<PlanoAcao> listaPlanos;
     private List<Meta> listaMetas;
     private List<Meta> listaMetasFiltradas;
@@ -32,7 +31,6 @@ public class ListarMetasView implements Serializable{
     private String[] listaNomePlanosAcao;
     
     public ListarMetasView() {
-        btnEdicoesMeta = true; //recebe true para desabillitar o botão da tela
         bean = new MetaBean();
         planoAcaoBean = new PlanoAcaoBean();
     }
@@ -68,7 +66,6 @@ public class ListarMetasView implements Serializable{
     }
     
     public void onRowSelect(SelectEvent event) {
-        btnEdicoesMeta = false;
         FacesMessage msg = new FacesMessage("Meta " + metaSelecionada.getNome()+ " selecionada!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
@@ -79,14 +76,6 @@ public class ListarMetasView implements Serializable{
 
     public void setMetaSelecionada(Meta metaSelecionada) {
         this.metaSelecionada = metaSelecionada;
-    }
-
-    public boolean isBtnEdicoesMeta() {
-        return btnEdicoesMeta;
-    }
-
-    public void setBtnEdicoesMeta(boolean btnEdicoesMeta) {
-        this.btnEdicoesMeta = btnEdicoesMeta;
     }
 
     public List<Meta> getListaMetas() {

@@ -21,10 +21,8 @@ public class ListarParceirosView {
     private List<Parceiro> listaParceiros;
     private List<Parceiro> listaParceirosFiltrados;
     private ParceiroBean bean;
-    private boolean btnEdicoesParceiro;
     
     public ListarParceirosView(){
-        btnEdicoesParceiro = true; //recebe true para desabillitar o botão da tela
         bean = new ParceiroBean();
         parceiroSelecionado = new Parceiro();
     }
@@ -47,7 +45,6 @@ public class ListarParceirosView {
     }
     
     public void onRowSelect(SelectEvent event) {
-        btnEdicoesParceiro = false;
         FacesMessage msg = new FacesMessage("Parceiro " + parceiroSelecionado.getNomeParceiro()+ " selecionado!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
@@ -67,14 +64,6 @@ public class ListarParceirosView {
 
     public void setListaParceirosFiltrados(List<Parceiro> listaParceirosFiltrados) {
         this.listaParceirosFiltrados = listaParceirosFiltrados;
-    }
-
-    public boolean isBtnEdicoesParceiro() {
-        return btnEdicoesParceiro;
-    }
-
-    public void setBtnEdicoesParceiro(boolean btnEdicoesParceiro) {
-        this.btnEdicoesParceiro = btnEdicoesParceiro;
     }
 
     public Parceiro getParceiroSelecionado() {

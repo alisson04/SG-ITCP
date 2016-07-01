@@ -25,14 +25,12 @@ public class ListarMembrosEptsView implements Serializable {
     MembroEmpreendimentoBean bean = new MembroEmpreendimentoBean();
     EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
     private MembroEmpreendimento membroEmpreendimentoSelecionado;
-    private boolean btnEdicoesMembroEpt;
     private List<MembroEmpreendimento> listaMembrosEmpreendimentos;
     private List<MembroEmpreendimento> listaMembrosEmpreendimentosFiltrados;
     private List<Empreendimento> listaEmpreendimentos;
     private String[] listaNomeEpts;
 
     public ListarMembrosEptsView() {
-        btnEdicoesMembroEpt=true;
     }
 
     public void ListarMembrosEpts() {
@@ -67,7 +65,6 @@ public class ListarMembrosEptsView implements Serializable {
 
     public void onRowSelect(SelectEvent event) {
         System.out.println("BEAN(ListarEmpreendimentosView): onRowSelect: ");
-        btnEdicoesMembroEpt = false;
         FacesMessage msg = new FacesMessage(membroEmpreendimentoSelecionado.getNomeMembroEmpreendimento() + " selecionado!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
@@ -87,14 +84,6 @@ public class ListarMembrosEptsView implements Serializable {
 
     public void setListaNomeEpts(String[] listaNomeEpts) {
         this.listaNomeEpts = listaNomeEpts;
-    }
-
-    public boolean isBtnEdicoesMembroEpt() {
-        return btnEdicoesMembroEpt;
-    }
-
-    public void setBtnEdicoesMembroEpt(boolean btnEdicoesMembroEpt) {
-        this.btnEdicoesMembroEpt = btnEdicoesMembroEpt;
     }
 
     public List<MembroEmpreendimento> getListaMembrosEmpreendimentos() {

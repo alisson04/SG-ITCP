@@ -9,7 +9,34 @@
         <ui:define name="conteudo">
             <h:form id="frmCadastro" >
 
-                
+                <p:commandButton value="testaA" actionListener="#{ListarPlanoAcaoView.testaA()}"  />
+                <p:commandButton value="testaA" actionListener="#{ListarPlanoAcaoView.testaD()}"  />
+                <p:commandButton value="testaA" actionListener="#{ListarPlanoAcaoView.testaE()}"  />
+                <p:commandButton onclick="PF('carDialog').hide()"  value="Cancelar edição" type="button" />
+
+                <p:panel id="asds">
+                    <p:dialog id="diaShowUsr" header="Informações do plano" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                              styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
+                              style="text-align:center;" >
+                        <p:outputPanel id="carDetail">
+                            <p:panelGrid  columns="2" columnClasses="label,value" >
+                                <h:outputText value="Nome: " />                            
+                                <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.nomePlano}" />
+                                <h:outputText value="Descrição: " />                            
+                                <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.descricao}" />
+                                <h:outputText value="Data de início: " />
+                                <h:outputText value="#{ListarPlanoAcaoView.conveteData(ListarPlanoAcaoView.planoAcaoSelecionado.dataInicio)}" />
+                                <h:outputText value="Data de fim: " />
+                                <h:outputText value="#{ListarPlanoAcaoView.conveteData(ListarPlanoAcaoView.planoAcaoSelecionado.dataFim)}" />
+                                <h:outputText value="Empreendimento: " />
+                                <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.empreendimento.nomeEpt}" />
+                            </p:panelGrid>
+                            <p:commandButton value="testaClose" actionListener="#{ListarPlanoAcaoView.testaD()}"  />
+                            <p:commandButton value="testaHIde" actionListener="#{ListarPlanoAcaoView.testaE()}"  update="asds"/>
+                            <p:commandButton onclick="PF('carDialog').hide()"  value="Cancelar edição" type="button" />
+                        </p:outputPanel>
+                    </p:dialog>
+                </p:panel>
             </h:form>
         </ui:define>
 
