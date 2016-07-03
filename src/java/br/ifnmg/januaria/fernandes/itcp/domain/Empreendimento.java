@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Empreendimento")
 @NamedQueries({
     @NamedQuery(name = "Empreendimento.findAll", query = "SELECT e FROM Empreendimento e")})
-public class Empreendimento implements Serializable {
+public class Empreendimento implements Serializable, EntityConverter {
 
     @OneToMany(mappedBy = "empreendimento")
     private List<MembroEmpreendimento> membroEmpreendimentoList;
@@ -117,6 +117,11 @@ public class Empreendimento implements Serializable {
         this.nomeFantasiaEpt = nomeFantasiaEpt;
         this.tipoEpt = tipoEpt;
         this.atividadeExercidaEpt = atividadeExercidaEpt;
+    }
+    
+    @Override
+    public Integer getIdConverter(){
+        return idEpt;
     }
 
     public Integer getIdEpt() {

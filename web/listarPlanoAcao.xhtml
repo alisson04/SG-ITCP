@@ -18,11 +18,10 @@
             <h:form id="frmListagemPlanosAcao" >
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
                 <p:panel id="panelListagemPlanosAcao" styleClass="corPanel" header="Planos de ação no sistema:" >
-                    <p:dataTable id="dtListagemPlanosAcao" emptyMessage="Nenhum plano de ação encontrado." 
+                    <p:dataTable id="dtListagemPlanosAcao" emptyMessage="Nenhum plano de ação encontrado." var="planoAcaoCursor"
                                  value="#{ListarPlanoAcaoView.listaPlanoAcao}" filteredValue="#{ListarPlanoAcaoView.listaPlanoAcaoFiltrados}" 
-                                 selectionMode="single" selection="#{ListarPlanoAcaoView.planoAcaoSelecionado}" 
-                                 rowKey="#{planoAcaoCursor.idPlanoAcao}" var="planoAcaoCursor" widgetVar="varGlobal"
-                                 rows="12" paginator="true" paginatorPosition="top">
+                                 selectionMode="single" selection="#{ListarPlanoAcaoView.planoAcaoSelecionado}" paginatorPosition="top"
+                                 rowKey="#{planoAcaoCursor.idPlanoAcao}"  widgetVar="varGlobal" rows="12" paginator="true" >
 
                         <p:ajax event="rowSelect" listener="#{ListarPlanoAcaoView.onRowSelect}" 
                                 update=":frmListagemPlanosAcao"/>
@@ -39,11 +38,12 @@
                             <h:outputText value="#{ListarPlanoAcaoView.conveteData(planoAcaoCursor.dataFim)}"/>
                         </p:column>
 
-                        <p:column filterBy="#{planoAcaoCursor.empreendimento.nomeEpt}" headerText="Empreendimento" filterMatchMode="exact">
+                        <p:column filterBy="#{planoAcaoCursor.empreendimento}" headerText="Empreendimento" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarPlanoAcaoView.listaNomeEpts}" />
+                                    <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nomeEpt}" 
+                                                   itemValue="ept"/>
                                 </p:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{planoAcaoCursor.empreendimento.nomeEpt}" />
@@ -56,7 +56,7 @@
 
                             <p:commandButton id="btnEditarPlano" value="Editar" icon="Pencil16-iconfinder" update=":frmEdicaoPlano"
                                              disabled="#{ListarPlanoAcaoView.planoAcaoSelecionado == null}" process="dtListagemPlanosAcao"
-                                             oncomplete="PF('planoDialog').show()" actionListener="#{ListarPlanoAcaoView.ligaDesligaMsgListagem()}"/>
+                                             oncomplete="PF('planoDialog').show()"/>
 
                             <p:commandButton id="btnExcluirPlano"  update=":frmListagemPlanosAcao" value="Excluir" icon="Cancel16-iconfinder" 
                                              actionListener="#{ListarPlanoAcaoView.excluirPlanoView()}"
@@ -75,11 +75,11 @@
                     <p:dialog widgetVar="test" header="Informações do plano">
 
                     </p:dialog>
-                    
+
                     <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
                               styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
-                        style="text-align:center;" >
-                            <h:outputText value="Plano de ação editado com sucesso! " />
+                              style="text-align:center;" >
+                        <h:outputText value="Plano de ação editado com sucesso! " />
                     </p:dialog>
 
                     <p:dialog id="diaShowUsr" header="Informações do plano" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
@@ -103,7 +103,6 @@
                 </p:panel>
             </h:form>
 
-
             <p:dialog id="dlgEditarPlano" header="Editar plano de ação" widgetVar="planoDialog" showEffect="fade" hideEffect="fade" 
                       styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" closable="false">
                 <h:form id="frmEdicaoPlano">
@@ -123,14 +122,14 @@
                             <p:calendar id="dataFim" value="#{ListarPlanoAcaoView.planoAcaoSelecionado.dataFim}" showOn="button" pattern="dd/MM/yyyy" 
                                         size="8" mask="true" locale="pt" required="true" requiredMessage="O campo data de fim é obrigatório."/>
                             <p:message for="dataInicio"/>
-
+                            
                             <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                            <p:selectOneMenu id="empreendimento" required="true"
-                                             requiredMessage="O empreendimento é obrigatório."
-                                             value="#{ListarPlanoAcaoView.empreedimentoSelecionado}" 
-                                             style="width:500px">
+                            <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório."
+                                             value="#{ListarPlanoAcaoView.planoAcaoSelecionado.empreendimento}" style="width:500px"
+                                             converter="generic">
                                 <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarPlanoAcaoView.listaNomeEpts}" />
+                                <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nomeEpt}" 
+                                               itemValue="#{ept}"/>
                             </p:selectOneMenu>
                             <p:message for="empreendimento"/>
 

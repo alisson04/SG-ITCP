@@ -23,7 +23,6 @@ public class CadastroUsuarioView extends GeraSenhaAleatoria implements Serializa
 
     private Usuario usuarioUsoGeral;
     private UsuarioBean bean;
-    private List<String> tiposSexo;//tipos de empreendimentos
     private boolean usrSendoVisualizado;// P/ renderizar os campos de usurio nas telas
     private List<String> listaCargos; // lista de cargos da ITCP
     private MensagensBean mensagensBean;
@@ -32,10 +31,6 @@ public class CadastroUsuarioView extends GeraSenhaAleatoria implements Serializa
     private String telefoneAlternativoUser;
 
     public CadastroUsuarioView() {
-        tiposSexo = new ArrayList<>();
-        tiposSexo.add("Masculino");
-        tiposSexo.add("Feminino");
-
         listaCargos = new ArrayList<>();
         listaCargos.add("Coordenador");
         listaCargos.add("Professor");
@@ -111,14 +106,6 @@ public class CadastroUsuarioView extends GeraSenhaAleatoria implements Serializa
 
     public void setTelefoneAlternativoUser(String telefoneAlternativoUser) {
         this.telefoneAlternativoUser = telefoneAlternativoUser;
-    }
-
-    public List<String> getTiposSexo() {
-        return tiposSexo;
-    }
-
-    public void setTiposSexo(List<String> tiposSexo) {
-        this.tiposSexo = tiposSexo;
     }
 
     public List<String> getListaCargos() {

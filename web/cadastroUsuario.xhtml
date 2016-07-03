@@ -81,7 +81,9 @@
                                          value="#{CadastroUsuarioView.usuarioUsoGeral.sexoUsuario}" style="width:125px">
                             <f:selectItem itemLabel="Selecione" itemValue=""
                                           noSelectionOption="true" />
-                            <f:selectItems value="#{CadastroUsuarioView.tiposSexo}" />
+                            <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                            <f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+                            <f:selectItem itemLabel="Outro" itemValue="Outro" />
                         </p:selectOneMenu>
                         <p:message for="sexo"/>
                     </h:panelGrid>

@@ -29,13 +29,11 @@
                         <p:message for="dataInicio"/>
 
                         <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                        <p:selectOneMenu id="empreendimento" required="true"
-                                         requiredMessage="O empreendimento é obrigatório."
-                                         value="#{CadastroPlanoAcaoView.empreedimentoSelecionado}" 
-                                         style="width:500px">
-                            <f:selectItem itemLabel="Selecione o empreendimento" itemValue=""
-                                          noSelectionOption="true" />
-                            <f:selectItems value="#{CadastroPlanoAcaoView.listaNomeEpts}" />
+                        <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório." 
+                                         value="#{CadastroPlanoAcaoView.planoAcaoSalvar.empreendimento}" style="width:500px"
+                                         converter="generic">
+                            <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{CadastroPlanoAcaoView.listaEpts}" var="ept" itemLabel="#{ept.nomeEpt}" itemValue="#{ept}"/>
                         </p:selectOneMenu>
                         <p:message for="empreendimento"/>
 
@@ -43,7 +41,6 @@
                         <p:inputText id="descricao" value="#{CadastroPlanoAcaoView.planoAcaoSalvar.descricao}" required="true"
                                      requiredMessage="O campo data de início é obrigatório." size="57" maxlength="45"/>
                         <p:message for="descricao"/>
-
                     </h:panelGrid>
                     
                     <p:separator />
@@ -66,6 +63,8 @@
                 <p:panel id="painelUsuarioSalvo" styleClass="corPanel" header="Informações salvas com sucesso" 
                          rendered="#{CadastroPlanoAcaoView.planoAcaoSendoVisualizado == 'true'}">
                     <p:panelGrid columns="2" >
+                        <p:outputLabel value="Nome: " />
+                        <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.nomePlano}" />
                         <p:outputLabel value="Descrição: " />
                         <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.descricao}" />
                         <p:outputLabel value="Data início:  " />
@@ -73,7 +72,7 @@
                         <p:outputLabel value="Data fim:  " />
                         <p:outputLabel value="#{CadastroPlanoAcaoView.conveteData(CadastroPlanoAcaoView.planoAcaoSalvar.dataFim)}" />
                         <p:outputLabel value="Empreendimento:  " />
-                        <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.empreendimento.nomeFantasiaEpt}" />
+                        <p:outputLabel value="#{CadastroPlanoAcaoView.planoAcaoSalvar.empreendimento.nomeEpt}" />
                     </p:panelGrid>
                     
                     <p:separator />

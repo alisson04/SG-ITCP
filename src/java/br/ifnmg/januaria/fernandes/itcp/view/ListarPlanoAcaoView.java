@@ -31,54 +31,21 @@ public class ListarPlanoAcaoView implements Serializable {
     private List<PlanoAcao> listaPlanoAcao;
     private List<PlanoAcao> listaPlanoAcaoFiltrados;
     private List<Empreendimento> listaEmpreendimentos;
-    private String[] listaNomeEpts;
-    private String empreedimentoSelecionado;
-    private boolean msgListagem;
 
     public ListarPlanoAcaoView() {
-        msgListagem = true;
-    }
-
-    public void ligaDesligaMsgListagem() {
-        if (msgListagem == true) {
-            msgListagem = false;
-            System.out.println("Botão: FALSE============================");
-        } else {
-            msgListagem = true;
-            System.out.println("Botão: TRUE===========================");
-        }
     }
 
     public void ListarPlanosAcao() {
         try {
             listaEmpreendimentos = empreendimentoBean.listarTodosEptsBean();
             listaPlanoAcao = bean.listarTodosPlanos();
-
-            listaNomeEpts = new String[listaEmpreendimentos.size()];
-            for (int i = 0; i < listaEmpreendimentos.size(); i++) {
-                listaNomeEpts[i] = listaEmpreendimentos.get(i).getNomeEpt();
-            }
         } catch (RuntimeException ex) {
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
         }
     }
 
-    public void cancelarEdicao() {
-        ligaDesligaMsgListagem();
-        RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('planoDialog').hide()");
-    }
-
     public void editarPlanoView() {
         try {
-            ligaDesligaMsgListagem();
-
-            for (int i = 0; i < listaEmpreendimentos.size(); i++) {
-                if (listaEmpreendimentos.get(i).getNomeEpt().equals(empreedimentoSelecionado)) {
-                    planoAcaoSelecionado.setEmpreendimento(listaEmpreendimentos.get(i));
-                }
-            }
-
             bean.salvarPlanoBean(planoAcaoSelecionado);
             planoAcaoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
             //FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Plano de ação editado com sucesso!");
@@ -152,29 +119,5 @@ public class ListarPlanoAcaoView implements Serializable {
 
     public void setListaEmpreendimentos(List<Empreendimento> listaEmpreendimentos) {
         this.listaEmpreendimentos = listaEmpreendimentos;
-    }
-
-    public String[] getListaNomeEpts() {
-        return listaNomeEpts;
-    }
-
-    public void setListaNomeEpts(String[] listaNomeEpts) {
-        this.listaNomeEpts = listaNomeEpts;
-    }
-
-    public String getEmpreedimentoSelecionado() {
-        return empreedimentoSelecionado;
-    }
-
-    public void setEmpreedimentoSelecionado(String empreedimentoSelecionado) {
-        this.empreedimentoSelecionado = empreedimentoSelecionado;
-    }
-
-    public boolean isMsgListagem() {
-        return msgListagem;
-    }
-
-    public void setMsgListagem(boolean msgListagem) {
-        this.msgListagem = msgListagem;
     }
 }
