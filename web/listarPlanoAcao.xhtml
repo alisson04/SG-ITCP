@@ -43,7 +43,7 @@
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nomeEpt}" 
-                                                   itemValue="ept"/>
+                                                   itemValue="#{ept}"/>
                                 </p:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{planoAcaoCursor.empreendimento.nomeEpt}" />

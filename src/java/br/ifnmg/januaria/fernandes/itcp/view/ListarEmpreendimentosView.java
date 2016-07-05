@@ -57,7 +57,7 @@ public class ListarEmpreendimentosView implements Serializable {
         try {
             listaEmpreendimentos = bean.listarTodosEptsBean();
         } catch (RuntimeException ex) {
-            //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
+            System.out.println("RuntimeException: " + ex);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
                     "Erro inesperado", "Erro ao tentar listar os empreendimentos, contate o administrador do sistema!");
             RequestContext.getCurrentInstance().showMessageInDialog(message);

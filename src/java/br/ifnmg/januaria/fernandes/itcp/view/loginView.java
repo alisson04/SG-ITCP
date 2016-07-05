@@ -10,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -28,8 +29,8 @@ public class loginView implements Serializable{
     }
     
     public String logar() throws IOException{
+        try{
         usuarioLogado = bean.logar(usuarioLogado);
-        
         if (usuarioLogado != null) {
 
                 SessionUtil.setParam("USUARIOLogado", usuarioLogado);
@@ -43,6 +44,13 @@ public class loginView implements Serializable{
                         new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail ou senha invalidos", "E-mail ou senha invalidos!"));
                 return null;
             }
+        }catch(RuntimeException ex){
+            System.out.println("RuntimeException: " + ex);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "Erro inesperado", "Erro ao tentar listar os empreendimentos, contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            return null;
+        }      
     }
     
     public String sair(){

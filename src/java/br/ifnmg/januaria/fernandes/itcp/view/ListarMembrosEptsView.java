@@ -12,6 +12,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -28,7 +29,6 @@ public class ListarMembrosEptsView implements Serializable {
     private List<MembroEmpreendimento> listaMembrosEmpreendimentos;
     private List<MembroEmpreendimento> listaMembrosEmpreendimentosFiltrados;
     private List<Empreendimento> listaEmpreendimentos;
-    private String[] listaNomeEpts;
 
     public ListarMembrosEptsView() {
     }
@@ -38,19 +38,18 @@ public class ListarMembrosEptsView implements Serializable {
         try {
             listaEmpreendimentos = empreendimentoBean.listarTodosEptsBean();
             listaMembrosEmpreendimentos = bean.listarTodosMembrosEpts();
-            listaNomeEpts = new String[listaEmpreendimentos.size()];
-            for (int i = 0; i < listaEmpreendimentos.size(); i++) {
-                listaNomeEpts[i] = listaEmpreendimentos.get(i).getNomeEpt();
-            }
+            
         } catch (RuntimeException ex) {
-            System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Empreendimentos: " + ex);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "Erro inesperado", "Erro ao tentar listar os membros, contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
     
     public void excluirMembroView(){
         bean.excluirMembroBean(membroEmpreendimentoSelecionado);
         membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
-        FacesMessage msg = new FacesMessage("Membro excluido do sistema");
+        FacesMessage msg = new FacesMessage("Exclusão realizada com sucesso!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
@@ -65,7 +64,7 @@ public class ListarMembrosEptsView implements Serializable {
 
     public void onRowSelect(SelectEvent event) {
         System.out.println("BEAN(ListarEmpreendimentosView): onRowSelect: ");
-        FacesMessage msg = new FacesMessage(membroEmpreendimentoSelecionado.getNomeMembroEmpreendimento() + " selecionado!");
+        FacesMessage msg = new FacesMessage("Membro de empreendimento selecionado!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
@@ -76,14 +75,6 @@ public class ListarMembrosEptsView implements Serializable {
 
     public void setMembroEmpreendimentoSelecionado(MembroEmpreendimento membroEmpreendimentoSelecionado) {
         this.membroEmpreendimentoSelecionado = membroEmpreendimentoSelecionado;
-    }
-
-    public String[] getListaNomeEpts() {
-        return listaNomeEpts;
-    }
-
-    public void setListaNomeEpts(String[] listaNomeEpts) {
-        this.listaNomeEpts = listaNomeEpts;
     }
 
     public List<MembroEmpreendimento> getListaMembrosEmpreendimentos() {

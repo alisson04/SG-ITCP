@@ -52,7 +52,8 @@
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarMembrosEptsView.listaNomeEpts}" />
+                                    <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nomeEpt}" 
+                                                   itemValue="ept"/>
                                 </p:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" />
@@ -62,7 +63,6 @@
                             <p:commandButton id="btnVisualizarusr" process="dtListagemMembrosEpts" update=":frmListagemMembrosEpts:carDetail" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}"/>
-                            
                             <p:commandButton id="btnExcluirMembro" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemMembrosEpts"
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
                                              actionListener="#{ListarMembrosEptsView.excluirMembroView()}">

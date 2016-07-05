@@ -30,8 +30,7 @@
 
                         <p:outputLabel for="empreendimento" value="Empreendimento: "/>
                         <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório." 
-                                         value="#{CadastroPlanoAcaoView.planoAcaoSalvar.empreendimento}" style="width:500px"
-                                         converter="generic">
+                                         value="#{CadastroPlanoAcaoView.planoAcaoSalvar.empreendimento}" style="width:500px" converter="generic">
                             <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{CadastroPlanoAcaoView.listaEpts}" var="ept" itemLabel="#{ept.nomeEpt}" itemValue="#{ept}"/>
                         </p:selectOneMenu>
