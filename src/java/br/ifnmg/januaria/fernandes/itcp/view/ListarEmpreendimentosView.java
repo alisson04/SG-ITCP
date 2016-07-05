@@ -74,8 +74,9 @@ public class ListarEmpreendimentosView implements Serializable {
 
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Erro de exceção:", ex.getMessage()));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "Erro inesperado", "Erro ao tentar editar o empreendimento, contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
 

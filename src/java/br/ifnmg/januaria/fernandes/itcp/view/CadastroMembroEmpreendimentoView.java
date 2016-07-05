@@ -23,20 +23,14 @@ import javax.faces.bean.ViewScoped;
 public class CadastroMembroEmpreendimentoView implements Serializable {
 
     private MembroEmpreendimento membroEptCadastrado = new MembroEmpreendimento();
-    private MensagensBean mensagensBean = new MensagensBean();
     private MembroEmpreendimentoBean membroEmpreendimentoBean = new MembroEmpreendimentoBean();
     private boolean membroEptSendoVisualizado;
     private List<Empreendimento> listaEpts;
-    private String[] listaNomeEpts;
-    EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
-    private String empreedimentoSelecionado;
+    private EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
+    
     
     public CadastroMembroEmpreendimentoView() {
-        listaEpts = empreendimentoBean.listarTodosEptsBean();
-        listaNomeEpts = new String[listaEpts.size()];
-        for (int i = 0; i < listaEpts.size(); i++) {
-            listaNomeEpts[i] = listaEpts.get(i).getNomeEpt();
-        }
+        listaEpts = empreendimentoBean.listarTodosEptsBean();        
     }
     
     public String conveteData(Date data) {
@@ -50,37 +44,11 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
 
     //Métodos
     public void salvarMembroEpt() {
-        
-        for (int i = 0; i < listaEpts.size(); i++) {
-            if (listaEpts.get(i).getNomeEpt().equals(empreedimentoSelecionado)) {
-                membroEptCadastrado.setEmpreendimento(listaEpts.get(i));
-            }
-            // else{
-            //    mensagensBean.messagemCaixa("ERROR", "Erro no E-mail", "Este E-mail já esta cadastrado no sistema");
-            //}
-        }
-
         membroEmpreendimentoBean.salvarMembroEpt(membroEptCadastrado);
         membroEptSendoVisualizado = true;
     }
 
     //SETS e GETS
-    public void setEmpreedimentoSelecionado(String empreedimentoSelecionado) {
-        this.empreedimentoSelecionado = empreedimentoSelecionado;
-    }
-
-    public String getEmpreedimentoSelecionado() {
-        return empreedimentoSelecionado;
-    }
-
-    public String[] getListaNomeEpts() {
-        return listaNomeEpts;
-    }
-
-    public void setListaNomeEpts(String[] listaNomeEpts) {
-        this.listaNomeEpts = listaNomeEpts;
-    }
-
     public List<Empreendimento> getListaEpts() {
         return listaEpts;
     }

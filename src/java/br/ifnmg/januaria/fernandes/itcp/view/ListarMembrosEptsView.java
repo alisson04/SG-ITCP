@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -51,6 +53,22 @@ public class ListarMembrosEptsView implements Serializable {
         membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
         FacesMessage msg = new FacesMessage("Exclusão realizada com sucesso!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void editarView() {
+        try {
+            bean.salvarMembroEpt(membroEmpreendimentoSelecionado);
+            membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('wVarDlgEditar').hide()");
+            context.execute("PF('dlgEdicaoPronta').show()");
+
+        } catch (Exception ex) {
+            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "Erro inesperado", "Erro ao tentar editar o empreendimento, contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
     }
 
     public String conveteData(Date data) {

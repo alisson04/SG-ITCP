@@ -16,7 +16,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagemMembrosEpts" >
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
-                <p:panel styleClass="corPanel" header="Membros de empreendimentos no sistema:" >
+                <p:panel id="pnlListagem" styleClass="corPanel" header="Membros de empreendimentos no sistema:" >
                     <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento encontrado." 
                                  value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
                                  filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}" selectionMode="single" 
@@ -47,13 +47,12 @@
                             <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}"/>
                         </p:column>
 
-                        <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" headerText="Empreendimento" 
-                                  filterMatchMode="exact">
+                        <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento}" headerText="Empreendimento" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nomeEpt}" 
-                                                   itemValue="ept"/>
+                                                   itemValue="#{ept}"/>
                                 </p:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" />
@@ -63,6 +62,9 @@
                             <p:commandButton id="btnVisualizarusr" process="dtListagemMembrosEpts" update=":frmListagemMembrosEpts:carDetail" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}"/>
+                            <p:commandButton id="btnEditarMembro" value="Editar" icon="Pencil16-iconfinder" update=":frmListagemMembrosEpts"
+                                             disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" process="dtListagemMembrosEpts"
+                                             oncomplete="PF('wVarDlgEditar').show()"/>
                             <p:commandButton id="btnExcluirMembro" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemMembrosEpts"
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
                                              actionListener="#{ListarMembrosEptsView.excluirMembroView()}">
@@ -71,11 +73,17 @@
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
                             </p:confirmDialog>
                         </f:facet>
                     </p:dataTable>
+
+                    <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
+                              styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
+                              style="text-align:center;" >
+                        <h:outputText value="Edição concluida com sucesso! " />
+                    </p:dialog>
 
                     <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
                               resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
@@ -102,12 +110,97 @@
                                 <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.empreendimento.nomeEpt}" />
                                 <h:outputText value="Sexo: " />
                                 <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.sexoMembroEmpreendimento}" />
-
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
                 </p:panel>
             </h:form>
+
+            <p:dialog id="dlgEditar" header="Editar membro de empreedndimento" widgetVar="wVarDlgEditar" showEffect="fade" hideEffect="fade" 
+                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" closable="false">
+                <h:form id="frmEdicao">
+                    <p:panel id="panel" styleClass="corPanel" >
+                        <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
+                            <p:outputLabel for="nome" value="Nome: " />
+                            <p:inputText id="nome" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nomeMembroEmpreendimento}" 
+                                         required="true" requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
+                            <p:message for="nome" />
+
+                            <p:outputLabel for="apelido" value="Apelido: " />
+                            <p:inputText id="apelido" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.apelidoMembroEmpreendimento}" 
+                                         required="true" requiredMessage="O campo Apelido é obrigatório." size="57" maxlength="45"/>
+                            <p:message for="apelido" />
+
+                            <p:outputLabel for="nomeMae" value="Nome da mãe: " />
+                            <p:inputText id="nomeMae" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nomeMaeMembroEmpreendimento}" 
+                                         size="57" maxlength="45"/>
+                            <p:message for="nomeMae" />
+
+                            <p:outputLabel for="endereco" value="Endereco: " />
+                            <p:inputText id="endereco" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.enderecoMembroEmpreendimento}" 
+                                         size="57" maxlength="45"/>
+                            <p:message for="endereco" />
+
+                            <p:outputLabel for="rg" value="RG: " />
+                            <p:inputText id="rg" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.rgMembroEmpreendimento}" 
+                                         size="57" maxlength="45"/>
+                            <p:message for="rg" />
+
+                            <p:outputLabel for="nis" value="NIS: " />
+                            <p:inputText id="nis" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nisMembroEmpreendimento}" 
+                                         size="57" maxlength="45"/>
+                            <p:message for="nis" />
+
+                            <p:outputLabel for="telefone" value="Telefone: " />
+                            <p:inputMask id="telefone" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneMembroEmpreendimento}"
+                                         mask="(99) 9999-9999?9" size="57" maxlength="11"/>
+                            <p:message for="telefone" />
+
+                            <p:outputLabel value="Telefone alternativo: " />
+                            <p:inputMask id="telefoneAlternativo" mask="(99) 9999-9999?9" size="57" maxlength="11"
+                                         value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneAlternativoMembroEmpreendimento}" />
+                            <p:message for="telefoneAlternativo" />
+
+                            <p:outputLabel for="dataNascimento" value="Data Nascimento: "/>
+                            <p:calendar id="dataNascimento" requiredMessage="O campo data de nascimento é obrigatório." mask="true"
+                                        value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.dataNascimentoMembroEmpreendimento}"
+                                        showOn="button" pattern="dd-MM-yyyy" size="8" required="true"  locale="pt"/>
+                            <p:message for="dataNascimento" />
+
+                            <p:outputLabel for="empreendimento" value="Empreendimento: "/>
+                            <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório." 
+                                             value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.empreendimento}" style="width:500px" 
+                                             converter="generic">
+                                <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nomeEpt}" 
+                                               itemValue="#{ept}"/>
+                            </p:selectOneMenu>
+                            <p:message for="empreendimento"/>
+
+                            <p:outputLabel for="sexo" value="Sexo: "/>
+                            <p:selectOneRadio id="sexo" required="true" requiredMessage="O campo Sexo é obrigatório."
+                                              value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.sexoMembroEmpreendimento}">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
+                            </p:selectOneRadio>
+                            <p:message for="sexo" />
+                        </h:panelGrid>
+
+                        <p:separator />
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMembrosEptsView.editarView()}" 
+                                         icon="Save16-iconfinder" update=":frmEdicao, :frmListagemMembrosEpts:pnlListagem" >
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                        </p:commandButton>
+
+                        <p:commandButton value="Cancelar edição" type="button" icon="Cancel16-iconfinder" onclick="PF('wVarDlgEditar').hide()" />
+
+                        <p:blockUI block="panel" trigger="btnSalvar">
+                            CARREGANDO<br />
+                            <p:graphicImage name="icons/LoadingBar.gif"/>
+                        </p:blockUI>
+                    </p:panel>
+                </h:form>
+            </p:dialog>
         </ui:define>
 
     </ui:composition>
