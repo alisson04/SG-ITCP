@@ -1,31 +1,36 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
-import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 /**
  *
  * @author alisson
  */
-@ManagedBean(name="ListarEmpreendimentosView")
+@ManagedBean(name = "ListarEmpreendimentosView")
 @ViewScoped
-public class ListarEmpreendimentosView implements Serializable{
+public class ListarEmpreendimentosView implements Serializable {
+
     private Empreendimento empreendimentoSelecionado;
     private List<Empreendimento> listaEmpreendimentos; //
     private List<Empreendimento> listaEmpreendimentosFiltrados;
     private String[] processoIncubacao;//para a tela de listar usuarios
-    private EmpreendimentoBean bean;
-    
+    private EmpreendimentoBean bean = new EmpreendimentoBean();
+    private String[] tiposEpt;//tipos de empreendimentos
+    private String[] situacaoEpt;//Situação do empreendimentos
+
     public ListarEmpreendimentosView() {
         processoIncubacao = new String[5];
         processoIncubacao[0] = "Não incubado";
@@ -33,33 +38,60 @@ public class ListarEmpreendimentosView implements Serializable{
         processoIncubacao[2] = "Incubação";
         processoIncubacao[3] = "Desincubação";
         processoIncubacao[4] = "Desincubado";
-        
-        bean = new EmpreendimentoBean();
+
+        tiposEpt = new String[3];
+        tiposEpt[0] = "Associação";
+        tiposEpt[1] = "Cooperativa";
+        tiposEpt[2] = "Grupo não formalizado";
+
+        situacaoEpt = new String[5];
+        situacaoEpt[0] = "Não incubado";
+        situacaoEpt[1] = "Pré-incubação";
+        situacaoEpt[2] = "Incubação";
+        situacaoEpt[3] = "Desincubação";
+        situacaoEpt[4] = "Desincubado";
     }
-    
+
     public void listarTodosEmpreendimentos() {
         System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
         try {
             listaEmpreendimentos = bean.listarTodosEptsBean();
         } catch (RuntimeException ex) {
             //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
-            System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Empreendimentos: " + ex);
-        } 
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "Erro inesperado", "Erro ao tentar listar os empreendimentos, contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
     }
-    
-    public void excluirEptView(){
+
+    public void editarPlanoView() {
+        try {
+            bean.salvarEptBean(empreendimentoSelecionado);
+            empreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('wVarEditarDialog').hide()");
+            context.execute("PF('dlgEdicaoPronta').show()");
+
+        } catch (Exception ex) {
+            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Erro de exceção:", ex.getMessage()));
+        }
+    }
+
+    public void excluirEptView() {
         bean.excluirEptBean(empreendimentoSelecionado);
         empreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
         FacesMessage msg = new FacesMessage("Empreendimento excluido do sistema");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
+
     public void onRowSelect(SelectEvent event) {
         System.out.println("BEAN(ListarEmpreendimentosView): onRowSelect: ");
-        FacesMessage msg = new FacesMessage("Empreendimento " + empreendimentoSelecionado.getNomeFantasiaEpt()+ " selecionado!");
+        FacesMessage msg = new FacesMessage("Empreendimento " + empreendimentoSelecionado.getNomeFantasiaEpt() + " selecionado!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
+
     public String conveteData(Date data) {
         if (data != null) {
             SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
@@ -68,7 +100,7 @@ public class ListarEmpreendimentosView implements Serializable{
             return "";
         }
     }
-    
+
     //SETS GETS
     public Empreendimento getEmpreendimentoSelecionado() {
         return empreendimentoSelecionado;
@@ -93,12 +125,28 @@ public class ListarEmpreendimentosView implements Serializable{
     public void setListaEmpreendimentosFiltrados(List<Empreendimento> listaEmpreendimentosFiltrados) {
         this.listaEmpreendimentosFiltrados = listaEmpreendimentosFiltrados;
     }
-    
+
     public String[] getProcessoIncubacao() {
         return processoIncubacao;
     }
 
     public void setProcessoIncubacao(String[] processoIncubacao) {
         this.processoIncubacao = processoIncubacao;
+    }
+
+    public String[] getTiposEpt() {
+        return tiposEpt;
+    }
+
+    public void setTiposEpt(String[] tiposEpt) {
+        this.tiposEpt = tiposEpt;
+    }
+
+    public String[] getSituacaoEpt() {
+        return situacaoEpt;
+    }
+
+    public void setSituacaoEpt(String[] situacaoEpt) {
+        this.situacaoEpt = situacaoEpt;
     }
 }

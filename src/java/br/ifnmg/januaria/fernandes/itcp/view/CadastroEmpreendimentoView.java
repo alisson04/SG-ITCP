@@ -44,10 +44,10 @@ public class CadastroEmpreendimentoView extends ValidadorCNPJ implements Seriali
     public void salvarEptView() throws IOException {
         //VERIFICA O CNPJ
         if (eptCadastrado.getCnpjEpt().equals("")) {
-            empreendimentoBean.salvarEptBd(eptCadastrado);
+            empreendimentoBean.salvarEptBean(eptCadastrado);
             eptSendoVisualizado = true;
         } else if (isCNPJ(eptCadastrado.getCnpjEpt())) {//VERIFICA se o CNPJ é válido
-            empreendimentoBean.salvarEptBd(eptCadastrado);
+            empreendimentoBean.salvarEptBean(eptCadastrado);
             eptSendoVisualizado = true;
         } else {
             mensagensBean.messagemCaixa("ERROR", "Erro no CNPJ", "Este CNPJ não é valido!");

@@ -16,8 +16,7 @@
 
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3" >
                         <p:outputLabel for="nome" value="Razão social: " />
-                        <p:inputText id="nome"
-                                     value="#{CadastroEmpreendimentoView.eptCadastrado.nomeEpt}" required="true"
+                        <p:inputText id="nome" value="#{CadastroEmpreendimentoView.eptCadastrado.nomeEpt}" required="true"
                                      requiredMessage="O campo Razão social é obrigatório." size="57" maxlength="45"/>
                         <p:message for="nome" />
 
@@ -94,7 +93,6 @@
                             <f:selectItems value="#{CadastroEmpreendimentoView.situacaoEpt}" />
                         </p:selectOneMenu>
                         <p:message for="situacaoEpt"/>
-
                     </h:panelGrid>
                     
                     <p:separator />
