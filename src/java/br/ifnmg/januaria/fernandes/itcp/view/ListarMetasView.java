@@ -8,10 +8,13 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -25,24 +28,31 @@ public class ListarMetasView implements Serializable{
     private List<PlanoAcao> listaPlanos;
     private List<Meta> listaMetas;
     private List<Meta> listaMetasFiltradas;
-    private MetaBean bean;
-    private PlanoAcaoBean planoAcaoBean;    
-    private String planoSelecionado;
-    private String[] listaNomePlanosAcao;
+    private MetaBean bean= new MetaBean();
+    private PlanoAcaoBean planoAcaoBean = new PlanoAcaoBean();
     
     public ListarMetasView() {
-        bean = new MetaBean();
-        planoAcaoBean = new PlanoAcaoBean();
+    }
+    
+    public void editarView() {
+        try {
+            bean.salvarMetaBd(metaSelecionada);
+            metaSelecionada = null;//Volta o usuario para o estado de nulo/ Não retire
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('wVarEditarDialog').hide()");
+            context.execute("PF('dlgEdicaoPronta').show()");
+        } catch (Exception ex) {
+            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "Erro inesperado", "Erro ao tentar editar o empreendimento, contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
     }
     
     public void listarTodasMetas() {
         try {
             listaMetas = bean.listarTodasMetas();
             listaPlanos = planoAcaoBean.listarTodosPlanos();
-            listaNomePlanosAcao = new String[listaPlanos.size()];
-            for (int i = 0; i < listaPlanos.size(); i++) {
-                listaNomePlanosAcao[i] = listaPlanos.get(i).getDescricao();
-            }
         } catch (RuntimeException ex) {
             //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Empreendimentos: " + ex);
@@ -101,22 +111,4 @@ public class ListarMetasView implements Serializable{
     public void setListaPlanos(List<PlanoAcao> listaPlanos) {
         this.listaPlanos = listaPlanos;
     }
-
-    public String getPlanoSelecionado() {
-        return planoSelecionado;
-    }
-
-    public void setPlanoSelecionado(String planoSelecionado) {
-        this.planoSelecionado = planoSelecionado;
-    }
-
-    public String[] getListaNomePlanosAcao() {
-        return listaNomePlanosAcao;
-    }
-
-    public void setListaNomePlanosAcao(String[] listaNomePlanosAcao) {
-        this.listaNomePlanosAcao = listaNomePlanosAcao;
-    }
-    
-    
 }

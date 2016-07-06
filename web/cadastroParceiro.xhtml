@@ -13,7 +13,6 @@
                 <p:panel id="panel" header="Cadastro de empreendimento (* Campos obrigatórios)" styleClass="corPanel"
                          rendered="#{CadastroParceiroView.parceiroSendoVisualizado == 'false'}">
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
-
                         <p:outputLabel for="nome" value="Nome: " />
                         <p:inputText id="nome" value="#{CadastroParceiroView.parceiroSalvar.nomeParceiro}" required="true"
                                      requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>

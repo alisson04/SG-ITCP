@@ -4,10 +4,13 @@ import br.ifnmg.januaria.fernandes.itcp.bean.ParceiroBean;
 import br.ifnmg.januaria.fernandes.itcp.dao.ParceiroDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -37,15 +40,31 @@ public class ListarParceirosView {
         }
     }
     
+    public void editarView() {
+        try {
+            bean.salvarParceiroBd(parceiroSelecionado);
+            parceiroSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('wVarEditarDialog').hide()");
+            context.execute("PF('dlgEdicaoPronta').show()");
+
+        } catch (Exception ex) {
+            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "Erro inesperado", "Erro ao tentar editar o parceiro, contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
+    }
+    
     public void excluirParceiroView(){
         bean.excluirParceiroBean(parceiroSelecionado);
         parceiroSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
-        FacesMessage msg = new FacesMessage("Parceiro excluido do sistema");
+        FacesMessage msg = new FacesMessage("Parceiro excluido com sucesso!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Parceiro " + parceiroSelecionado.getNomeParceiro()+ " selecionado!");
+        FacesMessage msg = new FacesMessage("Parceiro selecionado!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 

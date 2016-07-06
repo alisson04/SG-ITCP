@@ -54,11 +54,9 @@
                             <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" update=":frmListagemEmpreendimentos:carDetail" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}"/>
-
                             <p:commandButton id="btnEditarEpt" value="Editar" icon="Pencil16-iconfinder" update=":frmEdicaoEpt"
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" process="dtListagemEmpreendimentos"
                                              oncomplete="PF('wVarEditarDialog').show()"/>
-
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemEmpreendimentos"
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" 
                                              actionListener="#{ListarEmpreendimentosView.excluirEptView()}">
@@ -219,7 +217,6 @@
                     </p:panel>
                 </h:form>
             </p:dialog>
-
         </ui:define>
     </ui:composition>
 </html>

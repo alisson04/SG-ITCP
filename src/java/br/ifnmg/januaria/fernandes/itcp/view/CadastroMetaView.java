@@ -19,38 +19,23 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name = "CadastroMetaView")
 @ViewScoped
 public class CadastroMetaView implements Serializable {
-    
-    private Meta metaSalvar;
-    private MensagensBean mensagensBean;
-    private MetaBean bean;
-    private PlanoAcaoBean beanPlanoAcao;
+
+    private Meta metaSalvar = new Meta();
+    private MensagensBean mensagensBean = new MensagensBean();
+    private MetaBean bean = new MetaBean();
+    private PlanoAcaoBean beanPlanoAcao = new PlanoAcaoBean();
     private List<PlanoAcao> listaPlanosAcao;
-    private String[] listaNomePlanosAcao;
     private boolean metaSendoVisualizada;
-    private String nomePlanoSelecionado;
-    
-    public CadastroMetaView(){
-        beanPlanoAcao = new PlanoAcaoBean();
-        metaSalvar = new Meta();
-        mensagensBean = new MensagensBean();
-        bean = new MetaBean();
+
+    public CadastroMetaView() {
         listaPlanosAcao = beanPlanoAcao.listarTodosPlanos();
-        listaNomePlanosAcao = new String[listaPlanosAcao.size()];
-        for (int i = 0; i < listaPlanosAcao.size(); i++) {
-            listaNomePlanosAcao[i] = listaPlanosAcao.get(i).getNomePlano();
-        }
     }
-    
+
     public void salvarMetaView() {
-        for (int i = 0; i < listaPlanosAcao.size(); i++) {
-            if (listaPlanosAcao.get(i).getNomePlano().equals(nomePlanoSelecionado)) {
-                metaSalvar.setPlanoAcao(listaPlanosAcao.get(i));
-            }
-        }
         bean.salvarMetaBd(metaSalvar);
         metaSendoVisualizada = true;
     }
-    
+
     public String conveteData(Date data) {
         if (data != null) {
             SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
@@ -59,8 +44,7 @@ public class CadastroMetaView implements Serializable {
             return "";
         }
     }
-    
-    
+
     //SETES e GETS
     public Meta getMetaSalvar() {
         return metaSalvar;
@@ -85,21 +69,4 @@ public class CadastroMetaView implements Serializable {
     public void setListaPlanosAcao(List<PlanoAcao> listaPlanosAcao) {
         this.listaPlanosAcao = listaPlanosAcao;
     }
-
-    public String[] getListaNomePlanosAcao() {
-        return listaNomePlanosAcao;
-    }
-
-    public void setListaNomePlanosAcao(String[] listaNomePlanosAcao) {
-        this.listaNomePlanosAcao = listaNomePlanosAcao;
-    }
-
-    public String getNomePlanoSelecionado() {
-        return nomePlanoSelecionado;
-    }
-
-    public void setNomePlanoSelecionado(String nomePlanoSelecionado) {
-        this.nomePlanoSelecionado = nomePlanoSelecionado;
-    }
-    
 }

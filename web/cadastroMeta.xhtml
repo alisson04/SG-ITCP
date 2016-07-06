@@ -24,15 +24,13 @@
                         <p:message for="descricao" />
 
                         <p:outputLabel for="planoAcao" value="Plano de ação: "/>
-                        <p:selectOneMenu id="planoAcao" required="true"
-                                         requiredMessage="O plano de ação é obrigatório."
-                                         value="#{CadastroMetaView.nomePlanoSelecionado}" 
-                                         style="width:662px">
-                            <f:selectItem itemLabel="Selecione o plano de ação" itemValue=""
-                                          noSelectionOption="true" />
-                            <f:selectItems value="#{CadastroMetaView.listaNomePlanosAcao}" />
-                        </p:selectOneMenu>
-                        <p:message for="planoAcao"/>
+                            <p:selectOneMenu id="planoAcao" required="true" requiredMessage="O plano de ação é obrigatório."
+                                             value="#{CadastroMetaView.metaSalvar.planoAcao}" style="width:662px" converter="generic">
+                                <f:selectItem itemLabel="Selecione o plano de ação" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{CadastroMetaView.listaPlanosAcao}" var="plano" itemLabel="#{plano.nomePlano}" 
+                                                   itemValue="#{plano}"/>
+                            </p:selectOneMenu>
+                            <p:message for="planoAcao"/>
                         
                         <p:outputLabel for="dataInicio" value="Data início:" />
                         <p:calendar id="dataInicio" value="#{CadastroMetaView.metaSalvar.dataInicio}" showOn="button" 
@@ -83,7 +81,7 @@
                         <p:outputLabel value="#{CadastroMetaView.metaSalvar.planoAcao.nomePlano}" />
                     </p:panelGrid>
                     <p:separator />
-                    <p:commandButton value="Listar usuários" icon="find-iconfinder" action="/listarMetas.xhtml?faces-redirect=true"/>
+                    <p:commandButton value="Listar metas" icon="find-iconfinder" action="/listarMetas.xhtml?faces-redirect=true"/>
                 </p:panel>
             </h:form>
         </ui:define>
