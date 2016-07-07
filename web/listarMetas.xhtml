@@ -9,7 +9,7 @@
 
         <ui:define name="metadata">
             <f:metadata>
-                <f:event listener="#{ListarMetasView.listarTodasMetas()}" type="preRenderView"/>
+                <f:event listener="#{ListarMetasView.listarView()}" type="preRenderView"/>
             </f:metadata>
         </ui:define>
 
@@ -57,7 +57,7 @@
                                              oncomplete="PF('wVarEditarDialog').show()"/>
                             <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagem"
                                              disabled="#{ListarMetasView.metaSelecionada == null}" 
-                                             actionListener="#{ListarMetasView.excluirMetaView()}">
+                                             actionListener="#{ListarMetasView.excluirView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert16-iconfinder" />
                             </p:commandButton>

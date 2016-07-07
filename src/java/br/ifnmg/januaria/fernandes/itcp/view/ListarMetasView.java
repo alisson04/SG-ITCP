@@ -49,7 +49,7 @@ public class ListarMetasView implements Serializable{
         }
     }
     
-    public void listarTodasMetas() {
+    public void listarView() {
         try {
             listaMetas = bean.listarBean();
             listaPlanos = planoAcaoBean.listarTodosPlanos();
@@ -68,7 +68,7 @@ public class ListarMetasView implements Serializable{
         }
     }
     
-    public void excluirMetaView(){
+    public void excluirView(){
         bean.excluirBean(metaSelecionada);
         metaSelecionada = null;//Volta o usuario para o estado de nulo/ Não retire
         FacesMessage msg = new FacesMessage("Meta excluida do sistema");

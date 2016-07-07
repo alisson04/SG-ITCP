@@ -9,7 +9,7 @@
 
         <ui:define name="metadata">
             <f:metadata>
-                <f:event listener="#{ListarMetasView.listarTodasMetas()}" type="preRenderView"/>
+                <f:event listener="#{ListarAtiviPlanejadasView.listarView()}" type="preRenderView"/>
             </f:metadata>
         </ui:define>
 
@@ -17,47 +17,48 @@
             <h:form id="frmListagem" >
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
 
-                <p:panel styleClass="corPanel" header="Metas no sistema:" >
+                <p:panel styleClass="corPanel" header="Atividades planejadas no sistema:" >
 
-                    <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." 
-                                 value="#{ListarMetasView.listaMetas}" filteredValue="#{ListarMetasView.listaMetasFiltradas}" 
-                                 selectionMode="single" selection="#{ListarMetasView.metaSelecionada}" rowKey="#{metaCursor.idMeta}"
-                                 var="metaCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                    <p:dataTable id="dtListagem" emptyMessage="Nenhuma atividade encontrada." value="#{ListarAtiviPlanejadasView.listaObjs}" 
+                                 filteredValue="#{ListarAtiviPlanejadasView.listaObjsFiltradas}" 
+                                 selectionMode="single" selection="#{ListarAtiviPlanejadasView.objSelecionado}" rowKey="#{objCursor.id}"
+                                 var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
-                        <p:ajax event="rowSelect" listener="#{ListarMetasView.onRowSelect}" update=":frmListagem"/>
+                        <p:ajax event="rowSelect" listener="#{ListarAtiviPlanejadasView.onRowSelect}" update=":frmListagem"/>
 
-                        <p:column headerText="Nome" filterBy="#{metaCursor.nome}" sortBy="#{metaCursor.nome}" filterMatchMode="contains">
-                            <h:outputText value="#{metaCursor.nome}"/>
+                        <p:column headerText="Nome" filterBy="#{objCursor.nome}" sortBy="#{objCursor.nome}" filterMatchMode="contains">
+                            <h:outputText value="#{objCursor.nome}"/>
                         </p:column>
-                        <p:column headerText="Data início" filterBy="#{ListarMetasView.conveteData(metaCursor.dataInicio)}" 
+                        <p:column headerText="Data início" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" 
                                   filterMatchMode="contains">
-                            <h:outputText value="#{ListarMetasView.conveteData(metaCursor.dataInicio)}" />
+                            <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" />
                         </p:column>
-                        <p:column headerText="Data fim" filterBy="#{ListarMetasView.conveteData(metaCursor.dataFim)}" filterMatchMode="contains">
-                            <h:outputText value="#{ListarMetasView.conveteData(metaCursor.dataFim)}" />
+                        <p:column headerText="Data fim" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" 
+                                  filterMatchMode="contains">
+                            <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
                         </p:column>
 
-                        <p:column filterBy="#{metaCursor.planoAcao}" headerText="Empreendimento" filterMatchMode="exact">
+                        <p:column filterBy="#{objCursor.planoAcao}" headerText="Empreendimento" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nomePlano}" 
-                                                   itemValue="#{plano}"/>
+                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaSelectOneMenu}" var="var" itemLabel="#{var.nome}" 
+                                                   itemValue="#{var}"/>
                                 </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{metaCursor.planoAcao.nomePlano}" />
+                            <h:outputText value="#{objCursor.meta.nome}" />
                         </p:column>
 
                         <f:facet name="footer">
-                            <p:commandButton id="btnVisualizarMeta" process="dtListagem" update=":frmListagem:carDetail" 
+                            <p:commandButton id="btnVisualizar" process="dtListagem" update=":frmListagem:carDetail" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarMetasView.metaSelecionada == null}"/>
-                            <p:commandButton id="btnEditarEpt" value="Editar" icon="Pencil16-iconfinder" update=":frmEdicao"
-                                             disabled="#{ListarMetasView.metaSelecionada == null}" process="dtListagem"
+                                             disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}"/>
+                            <p:commandButton id="btnEditar" value="Editar" icon="Pencil16-iconfinder" update=":frmEdicao"
+                                             disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" process="dtListagem"
                                              oncomplete="PF('wVarEditarDialog').show()"/>
-                            <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagem"
-                                             disabled="#{ListarMetasView.metaSelecionada == null}" 
-                                             actionListener="#{ListarMetasView.excluirMetaView()}">
+                            <p:commandButton id="btnExcluir" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagem"
+                                             disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" 
+                                             actionListener="#{ListarAtiviPlanejadasView.excluirView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert16-iconfinder" />
                             </p:commandButton>
@@ -75,68 +76,69 @@
                         <h:outputText value="Edição concluida com sucesso! " />
                     </p:dialog>
 
-                    <p:dialog id="diaShowUsr" header="Informações da meta" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)">
+                    <p:dialog id="diaShowUsr" header="Informações da atividade" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog">
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />
-                                <h:outputText value="#{ListarMetasView.metaSelecionada.nome}" />
+                                <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.nome}" />
 
                                 <h:outputText value="Descrição: " />
-                                <h:outputText value="#{ListarMetasView.metaSelecionada.descricao}" />
+                                <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.descricao}" />
 
                                 <h:outputText value="Plano de ação: " />
-                                <h:outputText value="#{ListarMetasView.metaSelecionada.planoAcao.nomePlano}" />
+                                <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.meta.nome}" />
 
                                 <h:outputText value="Data início: " />
-                                <h:outputText value="#{ListarMetasView.conveteData(ListarMetasView.metaSelecionada.dataInicio)}" />
+                                <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(ListarAtiviPlanejadasView.objSelecionado.dataInicio)}" />
 
                                 <h:outputText value="Data fim: " />
-                                <h:outputText value="#{ListarMetasView.conveteData(ListarMetasView.metaSelecionada.dataFim)}" />
+                                <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(ListarAtiviPlanejadasView.objSelecionado.dataFim)}" />
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
                 </p:panel>
             </h:form>
 
-            <p:dialog id="dlgEditar" header="Editar meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
+            <p:dialog id="dlgEditar" header="Editar atividade " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
                       styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" closable="false">
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarMetasView.metaSelecionada.nome}" required="true" 
+                            <p:inputText id="nome" value="#{ListarAtiviPlanejadasView.objSelecionado.nome}" required="true" 
                                          requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputText id="descricao" value="#{ListarMetasView.metaSelecionada.descricao}" required="true" 
+                            <p:inputText id="descricao" value="#{ListarAtiviPlanejadasView.objSelecionado.descricao}" required="true" 
                                          requiredMessage="O campo Descrição é obrigatório." size="57" maxlength="45"/>
                             <p:message for="descricao" />
 
-                            <p:outputLabel for="planoAcao" value="Plano de ação: "/>
-                            <p:selectOneMenu id="planoAcao" required="true" requiredMessage="O plano de ação é obrigatório."
-                                             value="#{ListarMetasView.metaSelecionada.planoAcao}" style="width:662px" converter="generic">
-                                <f:selectItem itemLabel="Selecione o plano de ação" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nomePlano}" 
-                                                   itemValue="#{plano}"/>
+                            <p:outputLabel for="meta" value="Meta: "/>
+                            <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
+                                             value="#{ListarAtiviPlanejadasView.objSelecionado.meta}" style="width:662px" converter="generic">
+                                <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{ListarAtiviPlanejadasView.listaSelectOneMenu}" var="obj" itemLabel="#{obj.nome}" 
+                                               itemValue="#{obj}"/>
                             </p:selectOneMenu>
-                            <p:message for="planoAcao"/>
+                            <p:message for="meta"/>
 
                             <p:outputLabel for="dataInicio" value="Data início:" />
-                            <p:calendar id="dataInicio" value="#{ListarMetasView.metaSelecionada.dataInicio}" showOn="button" 
+                            <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSelecionado.dataInicio}" showOn="button" 
                                         pattern="dd-MM-yyyy" size="8" required="true" requiredMessage="O campo Data início é obrigatório."
                                         mask="true" locale="pt"/>
                             <p:message for="dataInicio" />
 
                             <p:outputLabel for="dataFim" value="Data fim:" />
-                            <p:calendar id="dataFim" value="#{ListarMetasView.metaSelecionada.dataFim}" showOn="button" pattern="dd-MM-yyyy"
+                            <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSelecionado.dataFim}" showOn="button" 
+                                        pattern="dd-MM-yyyy"
                                         size="8" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
                             <p:message for="dataFim" />
                         </h:panelGrid>
 
                         <p:separator />
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMetasView.editarView()}" 
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAtiviPlanejadasView.editarView()}" 
                                          icon="Save16-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
