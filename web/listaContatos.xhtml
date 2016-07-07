@@ -11,8 +11,8 @@
             <f:metadata>
                 <f:event listener="#{ListarEmpreendimentosView.listarTodosEmpreendimentos()}" type="preRenderView"/>
                 <f:event listener="#{ListarParceirosView.listarTodosParceiros()}" type="preRenderView"/>
-                <f:event listener="#{usuarioBean.listarUsrsAtivosInativosTela('Ativo')}" type="preRenderView"/>
                 <f:event listener="#{ListarMembrosEptsView.ListarMembrosEpts()}" type="preRenderView"/>
+                <f:event listener="#{ListarUsuariosView.ListarTodosUsers()}" type="preRenderView"/>
             </f:metadata>
         </ui:define>
 
@@ -20,126 +20,150 @@
             <h:form id="frmListagemEmpreendimentos" >
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
 
-
                 <p:toolbar>
                     <f:facet name="left" >
-                        <h:outputText value="Lista de contatos" />
+                        <h:outputText value="" />
                     </f:facet>
                 </p:toolbar>
+                <p:panel styleClass="corPanel" header="Lista de contatos:" >
+                    <p:tabView>
+                        <p:tab title="Usuários ativos">
+                            <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
+                                         var="usuarioCursor" widgetVar="varGlobalUsuarios" rows="12" paginator="true" paginatorPosition="top">
+                                <p:column headerText="Nome: " filterBy="#{usuarioCursor.nomeUsuario}" 
+                                          sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuarioCursor.nomeUsuario}"/>
+                                </p:column>
 
-                <p:tabView>
-                    <p:tab title="Usuários ativos">
-                        <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{usuarioBean.listaUsuarios}"
-                                     var="usuarioCursor" widgetVar="varGlobalUsuarios">
-                            <p:column headerText="Nome" filterBy="#{usuarioCursor.nomeUsuario}" 
-                                      sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">
-                                <h:outputText value="#{usuarioCursor.nomeUsuario}"/>
-                            </p:column>
-                            <p:column headerText="E-mail" filterBy="#{usuarioCursor.emailUsuario}" 
-                                      sortBy="#{usuarioCursor.emailUsuario}" filterMatchMode="contains">
-                                <h:outputText value="#{usuarioCursor.emailUsuario}"/>
-                            </p:column>
-                            <p:column filterBy="#{usuarioCursor.cargoUsuario}" headerText="Cargo" filterMatchMode="exact">
-                                <f:facet name="filter">
-                                    <p:selectOneMenu onchange="PF('varGlobalUsuarios').filter()" >
-                                        <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItems value="#{ListarUsuariosView.cargos}" />
-                                    </p:selectOneMenu>
-                                </f:facet>
-                                <h:outputText value="#{usuarioCursor.cargoUsuario}" />
-                            </p:column>
-                            <p:column headerText="Telefone">
-                                <h:outputText value="#{usuarioCursor.telefoneUsuario}"/>
-                            </p:column>
-                            <p:column headerText="Telefone alternativo" >
-                                <h:outputText value="#{usuarioCursor.telefoneAlternativoUsuario}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
+                                <p:column headerText="E-mail: " filterBy="#{usuarioCursor.emailUsuario}" 
+                                          sortBy="#{usuarioCursor.emailUsuario}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuarioCursor.emailUsuario}"/>
+                                </p:column>
 
-                    <p:tab title="Empreendimentos">
-                        <p:dataTable id="dtContatosEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." 
-                                     value="#{ListarEmpreendimentosView.listaEmpreendimentos}"
-                                     var="empreendimentoCursor" widgetVar="varGlobalEmpreendimentos">
+                                <p:column headerText="Telefone: " filterBy="#{usuarioCursor.telefoneUsuario}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuarioCursor.telefoneUsuario}"/>
+                                </p:column>
 
-                            <p:column headerText="Nome" filterBy="#{empreendimentoCursor.nomeFantasiaEpt}" 
-                                      sortBy="#{empreendimentoCursor.nomeFantasiaEpt}" filterMatchMode="contains">
-                                <h:outputText value="#{empreendimentoCursor.nomeFantasiaEpt}"/>
-                            </p:column>
-                            <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.emailEpt}" 
-                                      sortBy="#{empreendimentoCursor.emailEpt}" filterMatchMode="contains">
-                                <h:outputText value="#{empreendimentoCursor.emailEpt}"/>
-                            </p:column>
-                            <p:column headerText="Telefone">
-                                <h:outputText value="#{empreendimentoCursor.telefoneEpt}"/>
-                            </p:column>
-                            <p:column headerText="Telefone alternativo">
-                                <h:outputText value="#{empreendimentoCursor.telefoneEpt}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
+                                <p:column headerText="Telefone alternativo: " filterBy="#{usuarioCursor.telefoneAlternativoUsuario}" 
+                                          filterMatchMode="contains">
+                                    <h:outputText value="#{usuarioCursor.telefoneAlternativoUsuario}"/>
+                                </p:column>
 
-                    <p:tab title="Membros de empreendimentos">
-                        <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento encontrado." 
-                                     value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
-                                     filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}"
-                                     selection="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado}" 
-                                     rowKey="#{membroEmpreendimentoCursor.idMembroEmpreendimento}"
-                                     var="membroEmpreendimentoCursor" widgetVar="varGlobalMembro">
+                                <p:column filterBy="#{usuarioCursor.cargoUsuario}" headerText="Cargo" filterMatchMode="exact">
+                                    <f:facet name="filter">
+                                        <p:selectOneMenu onchange="PF('varGlobalUsuarios').filter()" >
+                                            <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                            <f:selectItems value="#{ListarUsuariosView.cargos}" />
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                    <h:outputText value="#{usuarioCursor.cargoUsuario}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
 
-                            <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" 
-                                      sortBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" filterMatchMode="contains">
-                                <h:outputText value="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}"/>
-                            </p:column>
+                        <p:tab title="Empreendimentos">
+                            <p:dataTable id="dtContatosEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." 
+                                         value="#{ListarEmpreendimentosView.listaEmpreendimentos}" rows="12" paginator="true" paginatorPosition="top"
+                                         var="empreendimentoCursor" widgetVar="varGlobalEmpreendimentos">
 
-                            <p:column headerText="Apelido" filterBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" 
-                                      sortBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" filterMatchMode="contains">
-                                <h:outputText value="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}"/>
-                            </p:column>
-                            <p:column headerText="Telefone" filterBy="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}" 
-                                      sortBy="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}" filterMatchMode="contains">
-                                <h:outputText value="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}"/>
-                            </p:column>
-                            <p:column headerText="Telefone alternativo" filterBy="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}" 
-                                      sortBy="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}" filterMatchMode="contains">
-                                <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}"/>
-                            </p:column>
+                                <p:column headerText="Nome fantasia:" filterBy="#{empreendimentoCursor.nomeFantasiaEpt}" 
+                                          sortBy="#{empreendimentoCursor.nomeFantasiaEpt}" filterMatchMode="contains">
+                                    <h:outputText value="#{empreendimentoCursor.nomeFantasiaEpt}"/>
+                                </p:column>
 
-                            <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" headerText="Empreendimento" 
-                                      filterMatchMode="exact">
-                                <f:facet name="filter">
-                                    <p:selectOneMenu onchange="PF('varGlobalMembro').filter()" >
-                                        <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItems value="#{ListarMembrosEptsView.listaNomeEpts}" />
-                                    </p:selectOneMenu>
-                                </f:facet>
-                                <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" />
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
+                                <p:column headerText="E-mail: " filterBy="#{empreendimentoCursor.emailEpt}" 
+                                          sortBy="#{empreendimentoCursor.emailEpt}" filterMatchMode="contains">
+                                    <h:outputText value="#{empreendimentoCursor.emailEpt}"/>
+                                </p:column>
 
-                    <p:tab title="Parceiros">
-                        <p:dataTable id="asdasd" emptyMessage="Nenhum parceiro encontrado." 
-                                     value="#{ListarParceirosView.listaParceiros}" 
-                                     var="parceiroCursor" widgetVar="varGlobalParceiros">
+                                <p:column headerText="Telefone: " filterBy="#{empreendimentoCursor.telefoneEpt}" filterMatchMode="contains">
+                                    <h:outputText value="#{empreendimentoCursor.telefoneEpt}"/>
+                                </p:column>
 
-                            <p:column headerText="Nome" filterBy="#{parceiroCursor.nomeParceiro}" 
-                                      sortBy="#{parceiroCursor.nomeParceiro}" filterMatchMode="contains">
-                                <h:outputText value="#{parceiroCursor.nomeParceiro}"/>
-                            </p:column>
-                            <p:column headerText="E-mail" filterBy="#{parceiroCursor.emailParceiro}" 
-                                      sortBy="#{parceiroCursor.emailParceiro}" filterMatchMode="contains">
-                                <h:outputText value="#{parceiroCursor.emailParceiro}"/>
-                            </p:column>
-                            <p:column headerText="Telefone">
-                                <h:outputText value="#{parceiroCursor.telefoneParceiro}"/>
-                            </p:column>
-                            <p:column headerText="Telefone alternativo" >
-                                <h:outputText value="#{parceiroCursor.telefoneAlternativoParceiro}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>
-                </p:tabView>
+                                <p:column headerText="Telefone alternativo: " filterBy="#{empreendimentoCursor.telefoneAlternativoEpt}"
+                                          filterMatchMode="contains">
+                                    <h:outputText value="#{empreendimentoCursor.telefoneAlternativoEpt}"/>
+                                </p:column>
+
+                                <p:column filterBy="#{empreendimentoCursor.situacaoEpt}" headerText="Processo de Incubação" filterMatchMode="exact">
+                                    <f:facet name="filter">
+                                        <p:selectOneMenu onchange="PF('varGlobalEmpreendimentos').filter()" >
+                                            <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                            <f:selectItems value="#{ListarEmpreendimentosView.processoIncubacao}" />
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                    <h:outputText value="#{empreendimentoCursor.situacaoEpt}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+
+                        <p:tab title="Membros de empreendimentos">
+                            <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento encontrado." 
+                                         value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" rows="12" paginator="true"
+                                         paginatorPosition="top" var="membroEmpreendimentoCursor"
+                                         filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}"
+                                         rowKey="#{membroEmpreendimentoCursor.idMembroEmpreendimento}"  widgetVar="varGlobalMembro">
+
+                                <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" 
+                                          sortBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" filterMatchMode="contains">
+                                    <h:outputText value="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}"/>
+                                </p:column>
+
+                                <p:column headerText="Apelido" filterBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" 
+                                          sortBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" filterMatchMode="contains">
+                                    <h:outputText value="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}"/>
+                                </p:column>
+
+                                <p:column headerText="Telefone" filterBy="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}" 
+                                          filterMatchMode="contains">
+                                    <h:outputText value="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}"/>
+                                </p:column>
+
+                                <p:column headerText="Telefone alternativo" filterBy="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}" 
+                                          filterMatchMode="contains">
+                                    <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}"/>
+                                </p:column>
+
+                                <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento}" headerText="Empreendimento" filterMatchMode="exact">
+                                    <f:facet name="filter">
+                                        <p:selectOneMenu onchange="PF('varGlobalMembro').filter()" >
+                                            <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                            <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nomeEpt}" 
+                                                           itemValue="#{ept}"/>
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                    <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+
+                        <p:tab title="Parceiros">
+                            <p:dataTable id="asdasd" emptyMessage="Nenhum parceiro encontrado." rows="12" paginator="true" paginatorPosition="top"
+                                         value="#{ListarParceirosView.listaParceiros}" var="parceiroCursor" widgetVar="varGlobalParceiros">
+
+                                <p:column headerText="Nome: " filterBy="#{parceiroCursor.nomeParceiro}" filterMatchMode="contains"
+                                          sortBy="#{parceiroCursor.nomeParceiro}" >
+                                    <h:outputText value="#{parceiroCursor.nomeParceiro}"/>
+                                </p:column>
+
+                                <p:column headerText="E-mail: " filterBy="#{parceiroCursor.emailParceiro}" filterMatchMode="contains"
+                                          sortBy="#{parceiroCursor.emailParceiro}" >
+                                    <h:outputText value="#{parceiroCursor.emailParceiro}"/>
+                                </p:column>
+
+                                <p:column headerText="Telefone: " filterBy="#{parceiroCursor.telefoneParceiro}" filterMatchMode="contains">
+                                    <h:outputText value="#{parceiroCursor.telefoneParceiro}"/>
+                                </p:column>
+
+                                <p:column headerText="Telefone alternativo: " filterBy="#{parceiroCursor.telefoneAlternativoParceiro}" 
+                                          filterMatchMode="contains">
+                                    <h:outputText value="#{parceiroCursor.telefoneAlternativoParceiro}"/>
+                                </p:column>
+                                <f:facet name="footer"/>
+                            </p:dataTable>
+                        </p:tab>
+                    </p:tabView>
+                </p:panel>
             </h:form>
         </ui:define>
 
