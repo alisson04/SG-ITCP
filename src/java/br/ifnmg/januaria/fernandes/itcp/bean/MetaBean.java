@@ -21,15 +21,15 @@ public class MetaBean implements Serializable{
         dao = new MetaDAO();
     }
     
-    public void salvarMetaBd(Meta metaSalvar) {
-        dao.salvarMeta(metaSalvar);
+    public void salvarBean(Meta metaSalvar) {
+        dao.salvarDao(metaSalvar);
     }
     
-    public List<Meta> listarTodasMetas() {
-        return dao.listarTodasMetas();
+    public List<Meta> listarBean() {
+        return dao.listarDao();
     }
     
-    public void excluirMetaBean(Meta meta){
-        dao.excluirMetaDao(meta);
+    public void excluirBean(Meta meta){
+        dao.excluirDao(meta);
     }
 }

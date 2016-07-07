@@ -36,7 +36,7 @@ public class ListarMetasView implements Serializable{
     
     public void editarView() {
         try {
-            bean.salvarMetaBd(metaSelecionada);
+            bean.salvarBean(metaSelecionada);
             metaSelecionada = null;//Volta o usuario para o estado de nulo/ Não retire
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
@@ -51,7 +51,7 @@ public class ListarMetasView implements Serializable{
     
     public void listarTodasMetas() {
         try {
-            listaMetas = bean.listarTodasMetas();
+            listaMetas = bean.listarBean();
             listaPlanos = planoAcaoBean.listarTodosPlanos();
         } catch (RuntimeException ex) {
             //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
@@ -69,7 +69,7 @@ public class ListarMetasView implements Serializable{
     }
     
     public void excluirMetaView(){
-        bean.excluirMetaBean(metaSelecionada);
+        bean.excluirBean(metaSelecionada);
         metaSelecionada = null;//Volta o usuario para o estado de nulo/ Não retire
         FacesMessage msg = new FacesMessage("Meta excluida do sistema");
         FacesContext.getCurrentInstance().addMessage(null, msg);

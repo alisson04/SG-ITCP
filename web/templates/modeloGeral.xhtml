@@ -96,7 +96,11 @@
                         </p:submenu>
 
                         <p:submenu label="Atividades" icon="atividade-iconfinder">
-                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroAtividade.xhtml?faces-redirect=true"/>
+                            <p:submenu label="Planejadas" icon="atividade-iconfinder">
+                                <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" 
+                                            action="/cadastroAtividadePlanejada.xhtml?faces-redirect=true"/>
+                            </p:submenu>
+                            
                         </p:submenu>
 
                         <p:submenu label="Metas" icon="atividade-iconfinder">

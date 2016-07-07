@@ -32,7 +32,7 @@ public class CadastroMetaView implements Serializable {
     }
 
     public void salvarMetaView() {
-        bean.salvarMetaBd(metaSalvar);
+        bean.salvarBean(metaSalvar);
         metaSendoVisualizada = true;
     }
 

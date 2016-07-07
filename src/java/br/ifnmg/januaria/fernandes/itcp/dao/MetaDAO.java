@@ -13,15 +13,15 @@ public class MetaDAO extends DaoGenerico<Meta> {
     public MetaDAO() {
     }
     
-    public void salvarMeta(Meta metaSalvar){
-        salvarGenerico(metaSalvar);
+    public void salvarDao(Meta obj){
+        salvarGenerico(obj);
     }
     
-    public List<Meta> listarTodasMetas() {
+    public List<Meta> listarDao() {
         return listarObjsGenerico("Meta");
     }
     
-    public void excluirMetaDao(Meta meta){
-        excluirGenerico(meta);
+    public void excluirDao(Meta obj){
+        excluirGenerico(obj);
     }
 }

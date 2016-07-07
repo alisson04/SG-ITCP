@@ -7,6 +7,7 @@ package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,7 +33,10 @@ import javax.validation.constraints.Size;
 @Table(name = "Meta")
 @NamedQueries({
     @NamedQuery(name = "Meta.findAll", query = "SELECT m FROM Meta m")})
-public class Meta implements Serializable {
+public class Meta implements Serializable, EntityConverter {
+
+    @OneToMany(mappedBy = "meta")
+    private List<AtividadePlanejada> atividadePlanejadaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -76,6 +81,11 @@ public class Meta implements Serializable {
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.descricao = descricao;
+    }
+    
+    @Override
+    public Integer getIdConverter(){
+        return idMeta;
     }
 
     public Integer getIdMeta() {
@@ -149,6 +159,14 @@ public class Meta implements Serializable {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Meta[ idMeta=" + idMeta + " ]";
+    }
+
+    public List<AtividadePlanejada> getAtividadePlanejadaList() {
+        return atividadePlanejadaList;
+    }
+
+    public void setAtividadePlanejadaList(List<AtividadePlanejada> atividadePlanejadaList) {
+        this.atividadePlanejadaList = atividadePlanejadaList;
     }
     
 }

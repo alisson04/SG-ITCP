@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/templates/modeloGeral.xhtml">
+        <ui:define name="conteudo">
+            <h:form id="frmCadastro">
+                <p:focus context="frmCadastro" /> <!-- Grifa os campos -->
+
+                <p:panel id="panel" header="Cadastro de atividade planejada (* Campos obrigatórios)" styleClass="corPanel"
+                         rendered="#{CadastroAtividadePlanejadaView.objetoFoiCadastrado == 'false'}">
+                    <h:panelGrid id="grid" style="margin-top:20px" columns="3">
+                        <p:outputLabel for="nome" value="Nome: " />
+                        <p:inputText id="nome" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.nome}" required="true" 
+                                     requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
+                        <p:message for="nome" />
+                        
+                        <p:outputLabel for="descricao" value="Descrição: " />
+                        <p:inputText id="descricao" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.descricao}" required="true" 
+                                     requiredMessage="O campo Descrição é obrigatório." size="57" maxlength="45"/>
+                        <p:message for="descricao" />
+
+                        <p:outputLabel for="meta" value="Meta: "/>
+                            <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
+                                             value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.meta}" style="width:662px" converter="generic">
+                                <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{CadastroAtividadePlanejadaView.listaMetas}" var="obj" itemLabel="#{obj.nome}" 
+                                                   itemValue="#{obj}"/>
+                            </p:selectOneMenu>
+                            <p:message for="meta"/>
+                        
+                        <p:outputLabel for="dataInicio" value="Data início:" />
+                        <p:calendar id="dataInicio" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.dataInicio}" showOn="button" 
+                                    pattern="dd-MM-yyyy" size="8" required="true" requiredMessage="O campo Data início é obrigatório."
+                                    mask="true" locale="pt"/>
+                        <p:message for="dataInicio" />
+                        
+                        <p:outputLabel for="dataFim" value="Data fim:" />
+                        <p:calendar id="dataFim" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.dataFim}" showOn="button" 
+                                    pattern="dd-MM-yyyy"
+                                    size="8" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                        <p:message for="dataFim" />
+                    </h:panelGrid>
+
+                    <p:separator />
+                    
+                    <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroAtividadePlanejadaView.salvarView()}" 
+                                     update='frmCadastro' icon="Save16-iconfinder">
+                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                    </p:confirmDialog>
+
+                    <p:blockUI block="panel" trigger="btnSalvar">
+                        CARREGANDO<br />
+                        <p:graphicImage name="icons/LoadingBar.gif"/>
+                    </p:blockUI>
+                </p:panel>
+
+                <!-- O painel abaixo so e renderizado apos o membro do empreendimento ser salvo-->
+                <p:panel id="painelObjSalvo" styleClass="corPanel" header="Informações salvas com sucesso" 
+                         rendered="#{CadastroAtividadePlanejadaView.objetoFoiCadastrado == 'true'}">
+                    <p:panelGrid columns="2" >
+                        <p:outputLabel value="Nome: " />
+                        <p:outputLabel value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.nome}" />
+                        
+                        <p:outputLabel value="Descrição: " />
+                        <p:outputLabel value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.descricao}" />
+
+                        <p:outputLabel value="Data de início: " />
+                        <p:outputLabel value="#{CadastroAtividadePlanejadaView.conveteData(CadastroAtividadePlanejadaView.atividadeCadastrar.dataInicio)}" />
+
+                        <p:outputLabel value="Data de fim: " />
+                        <p:outputLabel value="#{CadastroAtividadePlanejadaView.conveteData(CadastroAtividadePlanejadaView.atividadeCadastrar.dataFim)}"  />
+
+                        <p:outputLabel value="Meta: " />
+                        <p:outputLabel value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.meta.nome}" />
+                    </p:panelGrid>
+                    <p:separator />
+                    <p:commandButton value="Listar atividades planejadas" icon="find-iconfinder" 
+                                     action="/listarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
