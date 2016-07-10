@@ -9,16 +9,15 @@ import java.util.List;
  * @author alisson
  */
 public class AtividadeExecutadaDAO extends DaoGenerico<AtividadeExecutada>{
-    public void TestaAtividade(){
-        AtividadeExecutada at = new AtividadeExecutada();
-        salvarGenerico(at);
+    public void salvarDao(AtividadeExecutada obj){
+        salvarGenerico(obj);
     }
     
-    public void salvarEpt(AtividadeExecutada atividadeSalvar){
-        salvarGenerico(atividadeSalvar);
-    }
-    
-    public List<AtividadeExecutada> listarTodosParceiros() {
+    public List<AtividadeExecutada> listarDao() {
         return listarObjsGenerico("AtividadeExecutada");
+    }
+    
+    public void excluirDao(AtividadeExecutada obj){
+        excluirGenerico(obj);
     }
 }

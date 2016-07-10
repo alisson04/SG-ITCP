@@ -38,8 +38,8 @@ public class ListarMembrosEptsView implements Serializable {
     public void ListarMembrosEpts() {
         System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
         try {
-            listaEmpreendimentos = empreendimentoBean.listarTodosEptsBean();
-            listaMembrosEmpreendimentos = bean.listarTodosMembrosEpts();
+            listaEmpreendimentos = empreendimentoBean.listarBean();
+            listaMembrosEmpreendimentos = bean.listarBean();
             
         } catch (RuntimeException ex) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -49,7 +49,7 @@ public class ListarMembrosEptsView implements Serializable {
     }
     
     public void excluirMembroView(){
-        bean.excluirMembroBean(membroEmpreendimentoSelecionado);
+        bean.excluirBean(membroEmpreendimentoSelecionado);
         membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
         FacesMessage msg = new FacesMessage("Exclusão realizada com sucesso!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -57,7 +57,7 @@ public class ListarMembrosEptsView implements Serializable {
     
     public void editarView() {
         try {
-            bean.salvarMembroEpt(membroEmpreendimentoSelecionado);
+            bean.salvarBean(membroEmpreendimentoSelecionado);
             membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarDlgEditar').hide()");
@@ -78,12 +78,6 @@ public class ListarMembrosEptsView implements Serializable {
         } else {
             return "";
         }
-    }
-
-    public void onRowSelect(SelectEvent event) {
-        System.out.println("BEAN(ListarEmpreendimentosView): onRowSelect: ");
-        FacesMessage msg = new FacesMessage("Membro de empreendimento selecionado!");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     //SETS E GETS

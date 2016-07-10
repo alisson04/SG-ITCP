@@ -21,15 +21,15 @@ public class EmpreendimentoBean implements Serializable {
         dao = new EmpreendimentoDAO();
     }
 
-    public void salvarEptBean(Empreendimento ept) {
+    public void salvarBean(Empreendimento ept) {
         dao.salvarEpt(ept);
     }
     
-    public void excluirEptBean(Empreendimento ept){
+    public void excluirBean(Empreendimento ept){
         dao.excluirEptDao(ept);
     }
     
-    public List<Empreendimento> listarTodosEptsBean() {
+    public List<Empreendimento> listarBean() {
         return dao.listarTodosEptsDao();
     }
     

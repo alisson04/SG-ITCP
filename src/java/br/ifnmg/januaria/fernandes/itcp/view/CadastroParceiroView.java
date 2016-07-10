@@ -23,7 +23,7 @@ public class CadastroParceiroView implements Serializable {
     private boolean parceiroSendoVisualizado;
     
     public void salvarParceiroView() {
-        parceiroBean.salvarParceiroBd(parceiroSalvar);
+        parceiroBean.salvarBean(parceiroSalvar);
         parceiroSendoVisualizado = true;
     }
 

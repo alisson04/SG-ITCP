@@ -7,6 +7,7 @@ package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,6 +31,13 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "AtividadeExecutada.findAll", query = "SELECT a FROM AtividadeExecutada a")})
 public class AtividadeExecutada implements Serializable {
+
+    @OneToMany(mappedBy = "atividadeExecutada")
+    private List<AtividadeUsuario> atividadeUsuarioList;
+    @OneToMany(mappedBy = "atividadeExecutada")
+    private List<AtividadeParceiro> atividadeParceiroList;
+    @OneToMany(mappedBy = "atividadeExecutada")
+    private List<AtividadeExecutadaPlanejada> atividadeExecutadaPlanejadaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -130,6 +139,30 @@ public class AtividadeExecutada implements Serializable {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.AtividadeExecutada[ idAtividade=" + idAtividade + " ]";
+    }
+
+    public List<AtividadeUsuario> getAtividadeUsuarioList() {
+        return atividadeUsuarioList;
+    }
+
+    public void setAtividadeUsuarioList(List<AtividadeUsuario> atividadeUsuarioList) {
+        this.atividadeUsuarioList = atividadeUsuarioList;
+    }
+
+    public List<AtividadeParceiro> getAtividadeParceiroList() {
+        return atividadeParceiroList;
+    }
+
+    public void setAtividadeParceiroList(List<AtividadeParceiro> atividadeParceiroList) {
+        this.atividadeParceiroList = atividadeParceiroList;
+    }
+
+    public List<AtividadeExecutadaPlanejada> getAtividadeExecutadaPlanejadaList() {
+        return atividadeExecutadaPlanejadaList;
+    }
+
+    public void setAtividadeExecutadaPlanejadaList(List<AtividadeExecutadaPlanejada> atividadeExecutadaPlanejadaList) {
+        this.atividadeExecutadaPlanejadaList = atividadeExecutadaPlanejadaList;
     }
     
 }

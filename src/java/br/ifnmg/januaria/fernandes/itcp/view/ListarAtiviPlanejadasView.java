@@ -84,11 +84,6 @@ public class ListarAtiviPlanejadasView implements Serializable {
             return "";
         }
     }
-
-    public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Atividade selecionada!");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
     
     //SETS E GETS
 

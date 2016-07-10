@@ -74,11 +74,6 @@ public class ListarMetasView implements Serializable{
         FacesMessage msg = new FacesMessage("Meta excluida do sistema");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
-    public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Meta " + metaSelecionada.getNome()+ " selecionada!");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
 
     public Meta getMetaSelecionada() {
         return metaSelecionada;

@@ -21,15 +21,15 @@ public class ParceiroBean implements Serializable{
         dao = new ParceiroDAO();
     }
     
-    public void salvarParceiroBd(Parceiro parceiroSalvar) {
+    public void salvarBean(Parceiro parceiroSalvar) {
         dao.salvarEpt(parceiroSalvar);
     }
     
-    public List<Parceiro> listarTodosParceiros() {
+    public List<Parceiro> listarBean() {
         return dao.listarTodosParceiros();
     }
     
-    public void excluirParceiroBean(Parceiro parceiro){
+    public void excluirBean(Parceiro parceiro){
         dao.excluirParceiroDao(parceiro);
     }
 }

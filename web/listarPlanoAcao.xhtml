@@ -23,8 +23,7 @@
                                  selectionMode="single" selection="#{ListarPlanoAcaoView.planoAcaoSelecionado}" paginatorPosition="top"
                                  rowKey="#{planoAcaoCursor.idPlanoAcao}"  widgetVar="varGlobal" rows="12" paginator="true" >
 
-                        <p:ajax event="rowSelect" listener="#{ListarPlanoAcaoView.onRowSelect}" 
-                                update=":frmListagemPlanosAcao"/>
+                        <p:ajax event="rowSelect" update=":frmListagemPlanosAcao"/>
 
                         <p:column headerText="Nome" filterBy="#{planoAcaoCursor.descricao}" filterMatchMode="contains">
                             <h:outputText value="#{planoAcaoCursor.nomePlano}"/>

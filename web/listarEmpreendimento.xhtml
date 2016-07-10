@@ -23,7 +23,7 @@
                                  selection="#{ListarEmpreendimentosView.empreendimentoSelecionado}" rowKey="#{empreendimentoCursor.idEpt}"
                                  paginatorPosition="top">
 
-                        <p:ajax event="rowSelect" listener="#{ListarEmpreendimentosView.onRowSelect}" update=":frmListagemEmpreendimentos" />
+                        <p:ajax event="rowSelect" update=":frmListagemEmpreendimentos" />
 
                         <p:column headerText="Nome" filterBy="#{empreendimentoCursor.nomeEpt}" 
                                   sortBy="#{empreendimentoCursor.nomeEpt}" filterMatchMode="contains">

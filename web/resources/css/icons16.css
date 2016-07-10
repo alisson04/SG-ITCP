@@ -92,3 +92,11 @@
 .EditBlue16-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/EditBlue16.png") !important;
 }
+
+.List16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/List16.png") !important;
+}
+
+.ListBlue16-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons16/ListBlue16.png") !important;
+}

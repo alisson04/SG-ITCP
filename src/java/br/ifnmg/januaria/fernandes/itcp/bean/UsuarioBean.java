@@ -21,15 +21,15 @@ public class UsuarioBean implements Serializable{
         dao = new UsuarioDAO();
     }
     
-    public void salvarUserBean(Usuario user){
+    public void salvarBean(Usuario user){
         dao.salvarUsr(user);
     }
     
-    public void excluirUsrBean(Usuario usr){
+    public void excluirBean(Usuario usr){
         dao.excluirUsrDao(usr);
     }
     
-    public List<Usuario> listarTodosUsuariosBean() {
+    public List<Usuario> listarBean() {
         return dao.listarTodosUsuarios();
     }
     

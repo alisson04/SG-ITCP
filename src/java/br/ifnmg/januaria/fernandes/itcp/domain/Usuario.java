@@ -7,6 +7,7 @@ package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +31,10 @@ import javax.validation.constraints.Size;
 @Table(name = "Usuario")
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, EntityConverter {
+
+    @OneToMany(mappedBy = "usuario")
+    private List<AtividadeUsuario> atividadeUsuarioList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -128,6 +133,11 @@ public class Usuario implements Serializable {
         this.enderecoUsuario = enderecoUsuario;
     }
 
+    @Override
+    public Integer getIdConverter(){
+        return idUsuario;
+    }
+    
     public Integer getIdUsuario() {
         return idUsuario;
     }
@@ -271,6 +281,14 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Usuario[ idUsuario=" + idUsuario + " ]";
+    }
+
+    public List<AtividadeUsuario> getAtividadeUsuarioList() {
+        return atividadeUsuarioList;
+    }
+
+    public void setAtividadeUsuarioList(List<AtividadeUsuario> atividadeUsuarioList) {
+        this.atividadeUsuarioList = atividadeUsuarioList;
     }
     
 }

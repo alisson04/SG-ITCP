@@ -30,7 +30,7 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
     
     
     public CadastroMembroEmpreendimentoView() {
-        listaEpts = empreendimentoBean.listarTodosEptsBean();        
+        listaEpts = empreendimentoBean.listarBean();        
     }
     
     public String conveteData(Date data) {
@@ -43,8 +43,8 @@ public class CadastroMembroEmpreendimentoView implements Serializable {
     }
 
     //Métodos
-    public void salvarMembroEpt() {
-        membroEmpreendimentoBean.salvarMembroEpt(membroEptCadastrado);
+    public void salvarView() {
+        membroEmpreendimentoBean.salvarBean(membroEptCadastrado);
         membroEptSendoVisualizado = true;
     }
 

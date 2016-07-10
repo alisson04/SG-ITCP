@@ -55,7 +55,7 @@ public class ListarEmpreendimentosView implements Serializable {
     public void listarTodosEmpreendimentos() {
         System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
         try {
-            listaEmpreendimentos = bean.listarTodosEptsBean();
+            listaEmpreendimentos = bean.listarBean();
         } catch (RuntimeException ex) {
             System.out.println("RuntimeException: " + ex);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -66,7 +66,7 @@ public class ListarEmpreendimentosView implements Serializable {
 
     public void editarPlanoView() {
         try {
-            bean.salvarEptBean(empreendimentoSelecionado);
+            bean.salvarBean(empreendimentoSelecionado);
             empreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
@@ -81,15 +81,9 @@ public class ListarEmpreendimentosView implements Serializable {
     }
 
     public void excluirEptView() {
-        bean.excluirEptBean(empreendimentoSelecionado);
+        bean.excluirBean(empreendimentoSelecionado);
         empreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
         FacesMessage msg = new FacesMessage("Empreendimento excluido do sistema");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-
-    public void onRowSelect(SelectEvent event) {
-        System.out.println("BEAN(ListarEmpreendimentosView): onRowSelect: ");
-        FacesMessage msg = new FacesMessage("Empreendimento " + empreendimentoSelecionado.getNomeFantasiaEpt() + " selecionado!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 

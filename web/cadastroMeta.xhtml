@@ -15,37 +15,36 @@
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
                         <p:outputLabel for="nome" value="Nome: " />
                         <p:inputText id="nome" value="#{CadastroMetaView.metaSalvar.nome}" required="true" 
-                                     requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
+                                     requiredMessage="O campo nome é obrigatório." size="48" maxlength="45"/>
                         <p:message for="nome" />
                         
                         <p:outputLabel for="descricao" value="Descrição: " />
                         <p:inputText id="descricao" value="#{CadastroMetaView.metaSalvar.descricao}" required="true" 
-                                     requiredMessage="O campo Descrição é obrigatório." size="57" maxlength="45"/>
+                                     requiredMessage="O campo descrição é obrigatório." size="48" maxlength="45"/>
                         <p:message for="descricao" />
+                        
+                        <p:outputLabel for="dataInicio" value="Data início:" />
+                        <p:calendar id="dataInicio" value="#{CadastroMetaView.metaSalvar.dataInicio}" 
+                                    pattern="dd-MM-yyyy" size="48" required="true" requiredMessage="O campo data início é obrigatório."
+                                    mask="true" locale="pt"/>
+                        <p:message for="dataInicio" />
+                        
+                        <p:outputLabel for="dataFim" value="Data fim:" />
+                        <p:calendar id="dataFim" value="#{CadastroMetaView.metaSalvar.dataFim}" pattern="dd-MM-yyyy"
+                                    size="48" required="true" requiredMessage="O campo data fim é obrigatório." mask="true" locale="pt"/>
+                        <p:message for="dataFim" />
 
                         <p:outputLabel for="planoAcao" value="Plano de ação: "/>
                             <p:selectOneMenu id="planoAcao" required="true" requiredMessage="O plano de ação é obrigatório."
-                                             value="#{CadastroMetaView.metaSalvar.planoAcao}" style="width:662px" converter="generic">
+                                             value="#{CadastroMetaView.metaSalvar.planoAcao}" style="width:465px" converter="generic">
                                 <f:selectItem itemLabel="Selecione o plano de ação" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{CadastroMetaView.listaPlanosAcao}" var="plano" itemLabel="#{plano.nomePlano}" 
                                                    itemValue="#{plano}"/>
                             </p:selectOneMenu>
                             <p:message for="planoAcao"/>
-                        
-                        <p:outputLabel for="dataInicio" value="Data início:" />
-                        <p:calendar id="dataInicio" value="#{CadastroMetaView.metaSalvar.dataInicio}" showOn="button" 
-                                    pattern="dd-MM-yyyy" size="8" required="true" requiredMessage="O campo Data início é obrigatório."
-                                    mask="true" locale="pt"/>
-                        <p:message for="dataInicio" />
-                        
-                        <p:outputLabel for="dataFim" value="Data fim:" />
-                        <p:calendar id="dataFim" value="#{CadastroMetaView.metaSalvar.dataFim}" showOn="button" pattern="dd-MM-yyyy"
-                                    size="8" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
-                        <p:message for="dataFim" />
                     </h:panelGrid>
 
                     <p:separator />
-                    
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroMetaView.salvarMetaView()}" 
                                      update='frmCadastroMeta' icon="Save16-iconfinder">
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
@@ -81,7 +80,7 @@
                         <p:outputLabel value="#{CadastroMetaView.metaSalvar.planoAcao.nomePlano}" />
                     </p:panelGrid>
                     <p:separator />
-                    <p:commandButton value="Listar metas" icon="find-iconfinder" action="/listarMetas.xhtml?faces-redirect=true"/>
+                    <p:commandButton value="Listar metas" icon="List16-iconfinder" action="/listarMetas.xhtml?faces-redirect=true"/>
                 </p:panel>
             </h:form>
         </ui:define>

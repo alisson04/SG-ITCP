@@ -12,15 +12,15 @@ import javax.validation.ConstraintViolationException;
  */
 public class MembroEmpreendimentoDAO extends DaoGenerico<MembroEmpreendimento>{
         
-    public void salvarMembroEpt(MembroEmpreendimento membroEpt){
+    public void salvarDao(MembroEmpreendimento membroEpt){
         salvarGenerico(membroEpt);
     } 
     
-    public List<MembroEmpreendimento> listarTodosMembrosEmpreendimentos() {
+    public List<MembroEmpreendimento> listarDao() {
         return listarObjsGenerico("MembroEmpreendimento");
     }
     
-    public void excluirMembroDao(MembroEmpreendimento membro){
+    public void excluirDao(MembroEmpreendimento membro){
         excluirGenerico(membro);
     }
 }

@@ -23,17 +23,17 @@ public class MembroEmpreendimentoBean implements Serializable{
     public MembroEmpreendimentoBean() {
     }
     
-    public void salvarMembroEpt(MembroEmpreendimento membroEpt){
-        dao.salvarMembroEpt(membroEpt);
+    public void salvarBean(MembroEmpreendimento membroEpt){
+        dao.salvarDao(membroEpt);
     }
     
-    public void excluirMembroBean(MembroEmpreendimento membroEpt){
-        dao.excluirMembroDao(membroEpt);
+    public void excluirBean(MembroEmpreendimento membroEpt){
+        dao.excluirDao(membroEpt);
     }
     
-    public List<MembroEmpreendimento> listarTodosMembrosEpts() {
+    public List<MembroEmpreendimento> listarBean() {
         System.out.println("BEAN(listarTodosMembrosEmpreendimentos): listarTodosMembrosEmpreendimentos: ");
-        listaMembroEmpreendimentos = dao.listarTodosMembrosEmpreendimentos();
+        listaMembroEmpreendimentos = dao.listarDao();
         return listaMembroEmpreendimentos;
     }
 }

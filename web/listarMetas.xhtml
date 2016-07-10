@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+l<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -24,7 +24,7 @@
                                  selectionMode="single" selection="#{ListarMetasView.metaSelecionada}" rowKey="#{metaCursor.idMeta}"
                                  var="metaCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
-                        <p:ajax event="rowSelect" listener="#{ListarMetasView.onRowSelect}" update=":frmListagem"/>
+                        <p:ajax event="rowSelect" update=":frmListagem"/>
 
                         <p:column headerText="Nome" filterBy="#{metaCursor.nome}" sortBy="#{metaCursor.nome}" filterMatchMode="contains">
                             <h:outputText value="#{metaCursor.nome}"/>

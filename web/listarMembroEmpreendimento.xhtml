@@ -24,8 +24,7 @@
                                  rowKey="#{membroEmpreendimentoCursor.idMembroEmpreendimento}" var="membroEmpreendimentoCursor" 
                                  widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top" >
 
-                        <p:ajax event="rowSelect" listener="#{ListarMembrosEptsView.onRowSelect}" 
-                                update=":frmListagemMembrosEpts"/>
+                        <p:ajax event="rowSelect" update=":frmListagemMembrosEpts"/>
 
                         <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" 
                                   sortBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" filterMatchMode="contains">

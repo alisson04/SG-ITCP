@@ -9,7 +9,6 @@ import java.util.List;
  * @author alisson
  */
 public class AtividadePlanejadaDAO extends DaoGenerico<AtividadePlanejada>{
-    
     public void salvarDao(AtividadePlanejada obj){
         salvarGenerico(obj);
     }

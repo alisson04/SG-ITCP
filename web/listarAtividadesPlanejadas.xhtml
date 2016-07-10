@@ -24,7 +24,7 @@
                                  selectionMode="single" selection="#{ListarAtiviPlanejadasView.objSelecionado}" rowKey="#{objCursor.id}"
                                  var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
-                        <p:ajax event="rowSelect" listener="#{ListarAtiviPlanejadasView.onRowSelect}" update=":frmListagem"/>
+                        <p:ajax event="rowSelect" update=":frmListagem"/>
 
                         <p:column headerText="Nome" filterBy="#{objCursor.nome}" sortBy="#{objCursor.nome}" filterMatchMode="contains">
                             <h:outputText value="#{objCursor.nome}"/>

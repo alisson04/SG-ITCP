@@ -37,7 +37,7 @@ public class ListarPlanoAcaoView implements Serializable {
 
     public void ListarPlanosAcao() {
         try {
-            listaEmpreendimentos = empreendimentoBean.listarTodosEptsBean();
+            listaEmpreendimentos = empreendimentoBean.listarBean();
             listaPlanoAcao = bean.listarTodosPlanos();
         } catch (RuntimeException ex) {
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
@@ -72,11 +72,6 @@ public class ListarPlanoAcaoView implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Erro de exceção:", ex.getMessage()));
         }
-    }
-
-    public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Plano de ação selecionado!");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public String conveteData(Date data) {

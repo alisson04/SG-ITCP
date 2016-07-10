@@ -21,15 +21,15 @@ public class AtividadePlanejadaBean implements Serializable{
     public AtividadePlanejadaBean(){
     }
     
-    public void salvarBean(AtividadePlanejada metaSalvar) {
-        dao.salvarDao(metaSalvar);
+    public void salvarBean(AtividadePlanejada obj) {
+        dao.salvarDao(obj);
     }
     
     public List<AtividadePlanejada> listarBean() {
         return dao.listarDao();
     }
     
-    public void excluirBean(AtividadePlanejada meta){
-        dao.excluirDao(meta);
+    public void excluirBean(AtividadePlanejada obj){
+        dao.excluirDao(obj);
     }
 }

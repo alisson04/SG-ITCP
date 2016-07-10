@@ -36,16 +36,11 @@ public class ListarUsuariosView implements Serializable {
     }
 
     public void ListarTodosUsers() {
-        listaUsuarios = bean.listarTodosUsuariosBean();
-    }
-
-    public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Usuário " + usuarioSelecionado.getNomeUsuario() + " selecionado!");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        listaUsuarios = bean.listarBean();
     }
     
     public void excluirUsrView(){
-        bean.excluirUsrBean(usuarioSelecionado);
+        bean.excluirBean(usuarioSelecionado);
         usuarioSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
         FacesMessage msg = new FacesMessage("Usuário excluido do sistema");
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -73,12 +68,12 @@ public class ListarUsuariosView implements Serializable {
     public void ativarDesativarUsrView() {
         if (usuarioSelecionado.getStatusSistemaUsuario().equals("Ativo")) {
             usuarioSelecionado.setStatusSistemaUsuario("Desativado");
-            bean.salvarUserBean(usuarioSelecionado);
+            bean.salvarBean(usuarioSelecionado);
             FacesMessage msg = new FacesMessage("O usuário foi desativado");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } else {
             usuarioSelecionado.setStatusSistemaUsuario("Ativo");
-            bean.salvarUserBean(usuarioSelecionado);
+            bean.salvarBean(usuarioSelecionado);
             FacesMessage msg = new FacesMessage("O usuário foi ativado");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }

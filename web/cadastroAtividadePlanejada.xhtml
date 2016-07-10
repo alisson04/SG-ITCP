@@ -15,38 +15,37 @@
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3">
                         <p:outputLabel for="nome" value="Nome: " />
                         <p:inputText id="nome" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.nome}" required="true" 
-                                     requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
+                                     requiredMessage="O campo nome é obrigatório." size="48" maxlength="45"/>
                         <p:message for="nome" />
                         
                         <p:outputLabel for="descricao" value="Descrição: " />
                         <p:inputText id="descricao" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.descricao}" required="true" 
-                                     requiredMessage="O campo Descrição é obrigatório." size="57" maxlength="45"/>
+                                     requiredMessage="O campo descrição é obrigatório." size="48" maxlength="45"/>
                         <p:message for="descricao" />
+                        
+                        <p:outputLabel for="dataInicio" value="Data início:" />
+                        <p:calendar id="dataInicio" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.dataInicio}" 
+                                    pattern="dd-MM-yyyy" size="48" required="true" requiredMessage="O campo Data início é obrigatório."
+                                    mask="true" locale="pt"/>
+                        <p:message for="dataInicio" />
+                        
+                        <p:outputLabel for="dataFim" value="Data fim:" />
+                        <p:calendar id="dataFim" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.dataFim}" pattern="dd-MM-yyyy"
+                                    size="48" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                        <p:message for="dataFim" />
 
                         <p:outputLabel for="meta" value="Meta: "/>
-                            <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
-                                             value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.meta}" style="width:662px" converter="generic">
+                            <p:selectOneMenu id="meta" required="true" requiredMessage="O campo meta é obrigatório."
+                                             value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.meta}" style="width:465px" 
+                                             converter="generic">
                                 <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{CadastroAtividadePlanejadaView.listaMetas}" var="obj" itemLabel="#{obj.nome}" 
                                                    itemValue="#{obj}"/>
                             </p:selectOneMenu>
                             <p:message for="meta"/>
-                        
-                        <p:outputLabel for="dataInicio" value="Data início:" />
-                        <p:calendar id="dataInicio" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.dataInicio}" showOn="button" 
-                                    pattern="dd-MM-yyyy" size="8" required="true" requiredMessage="O campo Data início é obrigatório."
-                                    mask="true" locale="pt"/>
-                        <p:message for="dataInicio" />
-                        
-                        <p:outputLabel for="dataFim" value="Data fim:" />
-                        <p:calendar id="dataFim" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.dataFim}" showOn="button" 
-                                    pattern="dd-MM-yyyy"
-                                    size="8" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
-                        <p:message for="dataFim" />
                     </h:panelGrid>
 
                     <p:separator />
-                    
                     <p:commandButton id="btnSalvar" value="Salvar" action="#{CadastroAtividadePlanejadaView.salvarView()}" 
                                      update='frmCadastro' icon="Save16-iconfinder">
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
@@ -82,7 +81,7 @@
                         <p:outputLabel value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.meta.nome}" />
                     </p:panelGrid>
                     <p:separator />
-                    <p:commandButton value="Listar atividades planejadas" icon="find-iconfinder" 
+                    <p:commandButton value="Listar atividades planejadas" icon="List16-iconfinder" 
                                      action="/listarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
                 </p:panel>
             </h:form>

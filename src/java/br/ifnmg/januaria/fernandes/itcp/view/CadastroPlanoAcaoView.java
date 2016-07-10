@@ -28,7 +28,7 @@ public class CadastroPlanoAcaoView implements Serializable{
     private Date dataInicio;
     
     public CadastroPlanoAcaoView(){
-        listaEpts = empreendimentoBean.listarTodosEptsBean();
+        listaEpts = empreendimentoBean.listarBean();
     }
     
     public void salvarPlanoAcao() {

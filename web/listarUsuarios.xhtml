@@ -21,7 +21,7 @@
                                  selection="#{ListarUsuariosView.usuarioSelecionado}" rowKey="#{usuarioCursor.idUsuario}" var="usuarioCursor" 
                                  widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
-                        <p:ajax event="rowSelect" listener="#{ListarUsuariosView.onRowSelect}" update=":frmListagemUsuarios"/>
+                        <p:ajax event="rowSelect" update=":frmListagemUsuarios"/>
 
                         <p:column headerText="Nome" filterBy="#{usuarioCursor.nomeUsuario}" 
                                   sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">

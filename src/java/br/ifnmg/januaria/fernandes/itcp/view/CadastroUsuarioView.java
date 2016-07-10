@@ -60,7 +60,7 @@ public class CadastroUsuarioView extends GeraSenhaAleatoria implements Serializa
             //CRIPTOGRAFA A SENHA ALEATORIA
             usuarioUsoGeral.setSenhaUsuario(DigestUtils.md5Hex(usuarioUsoGeral.getSenhaUsuario()));
 
-            bean.salvarUserBean(usuarioUsoGeral);
+            bean.salvarBean(usuarioUsoGeral);
             usrSendoVisualizado = true;
             //telefoneAlternativoUsuario = "";//tira a informação apos o salvamento
 

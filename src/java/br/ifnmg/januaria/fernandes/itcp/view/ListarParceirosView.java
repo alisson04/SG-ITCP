@@ -33,7 +33,7 @@ public class ListarParceirosView {
     public void listarTodosParceiros() {
         System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
         try {
-            listaParceiros = bean.listarTodosParceiros();
+            listaParceiros = bean.listarBean();
         } catch (RuntimeException ex) {
             //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
             System.out.println("VIEW(listarTodosParceiros): Erro ao Carregar lista de Parceiros: " + ex);
@@ -42,7 +42,7 @@ public class ListarParceirosView {
     
     public void editarView() {
         try {
-            bean.salvarParceiroBd(parceiroSelecionado);
+            bean.salvarBean(parceiroSelecionado);
             parceiroSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
@@ -57,14 +57,9 @@ public class ListarParceirosView {
     }
     
     public void excluirParceiroView(){
-        bean.excluirParceiroBean(parceiroSelecionado);
+        bean.excluirBean(parceiroSelecionado);
         parceiroSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
         FacesMessage msg = new FacesMessage("Parceiro excluido com sucesso!");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-    
-    public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Parceiro selecionado!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 

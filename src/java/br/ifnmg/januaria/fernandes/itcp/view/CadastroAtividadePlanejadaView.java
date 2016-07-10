@@ -33,6 +33,12 @@ public class CadastroAtividadePlanejadaView implements Serializable {
     }
 
     public void salvarView() {
+        System.out.println("T" + atividadeCadastrar.getNome());
+        System.out.println("T" + atividadeCadastrar.getDescricao());
+        System.out.println("T" + atividadeCadastrar.getDataFim());
+        System.out.println("T" + atividadeCadastrar.getDataInicio());
+        System.out.println("T" + atividadeCadastrar.getId());
+        System.out.println("T" + atividadeCadastrar.getMeta().getNome());
         bean.salvarBean(atividadeCadastrar);
         objetoFoiCadastrado = true;
     }
