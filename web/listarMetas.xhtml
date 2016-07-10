@@ -18,7 +18,6 @@ l<?xml version="1.0" encoding="UTF-8" ?>
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
 
                 <p:panel styleClass="corPanel" header="Metas no sistema:" >
-
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." 
                                  value="#{ListarMetasView.listaMetas}" filteredValue="#{ListarMetasView.listaMetasFiltradas}" 
                                  selectionMode="single" selection="#{ListarMetasView.metaSelecionada}" rowKey="#{metaCursor.idMeta}"
@@ -100,7 +99,7 @@ l<?xml version="1.0" encoding="UTF-8" ?>
             </h:form>
 
             <p:dialog id="dlgEditar" header="Editar meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" closable="false">
+                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
@@ -141,7 +140,7 @@ l<?xml version="1.0" encoding="UTF-8" ?>
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
 
-                        <p:commandButton value="Cancelar edição" type="button" icon="Cancel16-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cancel16-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
 
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />

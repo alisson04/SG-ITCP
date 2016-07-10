@@ -21,16 +21,16 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
     public UsuarioDAO() {
 
     }
-    
+
     public List<Usuario> listarTodosUsuarios() {
         return listarObjsGenerico("Usuario");
     }
-    
-    public void salvarUsr(Usuario usr){
+
+    public void salvarUsr(Usuario usr) {
         salvarGenerico(usr);
     }
-    
-    public void excluirUsrDao(Usuario usr){
+
+    public void excluirUsrDao(Usuario usr) {
         excluirGenerico(usr);
     }
 
@@ -74,32 +74,25 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         EntityManager em = emc.gerarEntityManager();
         Usuario usuario;
         List<Usuario> listaObjs;
-        try {
-            em.getTransaction().begin();
+        em.getTransaction().begin();
 
-            Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.emailUsuario = :emailUsuario AND u.senhaUsuario = :senhaUsuario");
-            consulta.setParameter("emailUsuario", emailUsuario);
-            consulta.setParameter("senhaUsuario", senhaUsuario);
-            listaObjs = consulta.getResultList();//Pega a lista de objs
-            System.out.println("Numero de users encontrados: " + listaObjs.size());
-            if (listaObjs.size() > 0 && listaObjs.size() < 2) {
-                System.out.println("NUM: " + listaObjs.size());
-                System.out.println("EMAIL: " + listaObjs.get(0).getEmailUsuario());
-                usuario = listaObjs.get(0);
-                System.out.println("NUM: " + listaObjs.size());
-                System.out.println("DAO(logar): SENHA: " + usuario.getSenhaUsuario());
-                System.out.println("DAO(logar): EMAIL: " + usuario.getEmailUsuario());
-                return usuario;
-            } else {
-                System.out.println("dfsfsdf sdf : ");
-                usuario = null;
-                return usuario;
-            }
-        } catch (Exception e) {
-            
-            throw new RuntimeException("DAO(logar): Erro ao logar", e);
-        } finally {
-            em.close();
+        Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.emailUsuario = :emailUsuario AND u.senhaUsuario = :senhaUsuario");
+        consulta.setParameter("emailUsuario", emailUsuario);
+        consulta.setParameter("senhaUsuario", senhaUsuario);
+        listaObjs = consulta.getResultList();//Pega a lista de objs
+        System.out.println("Numero de users encontrados: " + listaObjs.size());
+        if (listaObjs.size() > 0 && listaObjs.size() < 2) {
+            System.out.println("NUM: " + listaObjs.size());
+            System.out.println("EMAIL: " + listaObjs.get(0).getEmailUsuario());
+            usuario = listaObjs.get(0);
+            System.out.println("NUM: " + listaObjs.size());
+            System.out.println("DAO(logar): SENHA: " + usuario.getSenhaUsuario());
+            System.out.println("DAO(logar): EMAIL: " + usuario.getEmailUsuario());
+            return usuario;
+        } else {
+            System.out.println("dfsfsdf sdf : ");
+            usuario = null;
+            return usuario;
         }
     }
 }

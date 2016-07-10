@@ -116,7 +116,7 @@
             </h:form>
 
             <p:dialog id="dlgEditar" header="Editar membro de empreedndimento" widgetVar="wVarDlgEditar" showEffect="fade" hideEffect="fade" 
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" closable="false">
+                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
@@ -191,7 +191,7 @@
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
 
-                        <p:commandButton value="Cancelar edição" type="button" icon="Cancel16-iconfinder" onclick="PF('wVarDlgEditar').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cancel16-iconfinder" onclick="PF('wVarDlgEditar').hide()" />
 
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />
