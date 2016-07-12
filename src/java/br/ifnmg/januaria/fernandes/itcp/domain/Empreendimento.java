@@ -7,7 +7,6 @@ package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,9 +31,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Empreendimento.findAll", query = "SELECT e FROM Empreendimento e")})
 public class Empreendimento implements Serializable, EntityConverter {
 
-    @OneToMany(mappedBy = "empreendimento")
-    private List<MembroEmpreendimento> membroEmpreendimentoList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,11 +40,12 @@ public class Empreendimento implements Serializable, EntityConverter {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nomeEpt")
-    private String nomeEpt;
+    @Column(name = "nome")
+    private String nome;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 45)
-    @Column(name = "emailEpt")
-    private String emailEpt;
+    @Column(name = "email")
+    private String email;
     @Size(max = 45)
     @Column(name = "telefoneEpt")
     private String telefoneEpt;
@@ -75,11 +71,9 @@ public class Empreendimento implements Serializable, EntityConverter {
     @Column(name = "dataIncubacaoEpt")
     @Temporal(TemporalType.DATE)
     private Date dataIncubacaoEpt;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "nomeFantasiaEpt")
-    private String nomeFantasiaEpt;
+    @Size(max = 45)
+    @Column(name = "razaoSocial")
+    private String razaoSocial;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -99,8 +93,6 @@ public class Empreendimento implements Serializable, EntityConverter {
     @Size(max = 45)
     @Column(name = "faturamentoMedioAnualEmp")
     private String faturamentoMedioAnualEmp;
-    @OneToMany(mappedBy = "empreendimento")
-    private List<PlanoAcao> planoAcaoList;
 
     public Empreendimento() {
     }
@@ -109,12 +101,11 @@ public class Empreendimento implements Serializable, EntityConverter {
         this.idEpt = idEpt;
     }
 
-    public Empreendimento(Integer idEpt, String nomeEpt, String enderecoEpt, String situacaoEpt, String nomeFantasiaEpt, String tipoEpt, String atividadeExercidaEpt) {
+    public Empreendimento(Integer idEpt, String nome, String enderecoEpt, String situacaoEpt, String tipoEpt, String atividadeExercidaEpt) {
         this.idEpt = idEpt;
-        this.nomeEpt = nomeEpt;
+        this.nome = nome;
         this.enderecoEpt = enderecoEpt;
         this.situacaoEpt = situacaoEpt;
-        this.nomeFantasiaEpt = nomeFantasiaEpt;
         this.tipoEpt = tipoEpt;
         this.atividadeExercidaEpt = atividadeExercidaEpt;
     }
@@ -132,20 +123,20 @@ public class Empreendimento implements Serializable, EntityConverter {
         this.idEpt = idEpt;
     }
 
-    public String getNomeEpt() {
-        return nomeEpt;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeEpt(String nomeEpt) {
-        this.nomeEpt = nomeEpt;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getEmailEpt() {
-        return emailEpt;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailEpt(String emailEpt) {
-        this.emailEpt = emailEpt;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getTelefoneEpt() {
@@ -204,12 +195,12 @@ public class Empreendimento implements Serializable, EntityConverter {
         this.dataIncubacaoEpt = dataIncubacaoEpt;
     }
 
-    public String getNomeFantasiaEpt() {
-        return nomeFantasiaEpt;
+    public String getRazaoSocial() {
+        return razaoSocial;
     }
 
-    public void setNomeFantasiaEpt(String nomeFantasiaEpt) {
-        this.nomeFantasiaEpt = nomeFantasiaEpt;
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
     public String getTipoEpt() {
@@ -252,14 +243,6 @@ public class Empreendimento implements Serializable, EntityConverter {
         this.faturamentoMedioAnualEmp = faturamentoMedioAnualEmp;
     }
 
-    public List<PlanoAcao> getPlanoAcaoList() {
-        return planoAcaoList;
-    }
-
-    public void setPlanoAcaoList(List<PlanoAcao> planoAcaoList) {
-        this.planoAcaoList = planoAcaoList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -283,14 +266,6 @@ public class Empreendimento implements Serializable, EntityConverter {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento[ idEpt=" + idEpt + " ]";
-    }
-
-    public List<MembroEmpreendimento> getMembroEmpreendimentoList() {
-        return membroEmpreendimentoList;
-    }
-
-    public void setMembroEmpreendimentoList(List<MembroEmpreendimento> membroEmpreendimentoList) {
-        this.membroEmpreendimentoList = membroEmpreendimentoList;
     }
     
 }

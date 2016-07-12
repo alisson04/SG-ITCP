@@ -100,24 +100,24 @@
                 </p:panel>
             </h:form>
 
-            <p:dialog id="dlgEditar" header="Editar atividade " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" >
+            <p:dialog id="dlgEditar" header="Editar atividade " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
+                      styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" style="text-align:right;">
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
                             <p:inputText id="nome" value="#{ListarAtiviPlanejadasView.objSelecionado.nome}" required="true" 
-                                         requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
+                                         requiredMessage="O campo Nome é obrigatório." size="48" maxlength="45"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="descricao" value="Descrição: " />
                             <p:inputText id="descricao" value="#{ListarAtiviPlanejadasView.objSelecionado.descricao}" required="true" 
-                                         requiredMessage="O campo Descrição é obrigatório." size="57" maxlength="45"/>
+                                         requiredMessage="O campo Descrição é obrigatório." size="48" maxlength="45"/>
                             <p:message for="descricao" />
 
                             <p:outputLabel for="meta" value="Meta: "/>
                             <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
-                                             value="#{ListarAtiviPlanejadasView.objSelecionado.meta}" style="width:662px" converter="generic">
+                                             value="#{ListarAtiviPlanejadasView.objSelecionado.meta}" style="width:465px" converter="generic">
                                 <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarAtiviPlanejadasView.listaSelectOneMenu}" var="obj" itemLabel="#{obj.nome}" 
                                                itemValue="#{obj}"/>
@@ -125,15 +125,14 @@
                             <p:message for="meta"/>
 
                             <p:outputLabel for="dataInicio" value="Data início:" />
-                            <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSelecionado.dataInicio}" showOn="button" 
-                                        pattern="dd-MM-yyyy" size="8" required="true" requiredMessage="O campo Data início é obrigatório."
+                            <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSelecionado.dataInicio}"
+                                        pattern="dd-MM-yyyy" size="48" required="true" requiredMessage="O campo Data início é obrigatório."
                                         mask="true" locale="pt"/>
                             <p:message for="dataInicio" />
 
                             <p:outputLabel for="dataFim" value="Data fim:" />
-                            <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSelecionado.dataFim}" showOn="button" 
-                                        pattern="dd-MM-yyyy"
-                                        size="8" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                            <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSelecionado.dataFim}" pattern="dd-MM-yyyy"
+                                        size="48" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
                             <p:message for="dataFim" />
                         </h:panelGrid>
 

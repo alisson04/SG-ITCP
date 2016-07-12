@@ -14,12 +14,12 @@
         <link rel="stylesheet" href="/resources/css/icons16.css"/>
         <h:outputStylesheet library="css" name="icons32.css" />
         <link rel="stylesheet" href="/resources/css/icons32.css"/>
-        
+
         <link type="text/css" rel="stylesheet" href="dot-luv/skin.css"/>
     </h:head>
     <h:form>
         <p:graphicImage name="fotos/IfnmgNatureClara1920.jpg" width="100%" height="50%" />
-        
+
         <p:dialog header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" resizable="false">
             <p:growl id="growl" showDetail="true" sticky="true" showSummary="false"/>
             <h:panelGrid id="panelLogin" columns="2" cellpadding="5" style="ui-widget">
@@ -32,7 +32,8 @@
                 <p:password id="senhaUsr" value="#{loginView.usuarioLogado.senhaUsuario}"
                             required="true" requiredMessage="Insira uma senha!" />
             </h:panelGrid>
-            <p:commandButton value="Acessar" action="#{loginView.logar()}" update="growl" icon="Padlock32-iconfinder" style="ui-button"/>
+            <p:commandButton value="Acessar" action="#{loginView.logar()}" update="growl" icon="Add24-iconfinder" style="ui-button"
+                             styleClass="ui-button-text"/>
         </p:dialog>
     </h:form>
 </html>

@@ -25,19 +25,19 @@
 
                         <p:ajax event="rowSelect" update=":frmListagemEmpreendimentos" />
 
-                        <p:column headerText="Nome" filterBy="#{empreendimentoCursor.nomeEpt}" 
-                                  sortBy="#{empreendimentoCursor.nomeEpt}" filterMatchMode="contains">
-                            <h:outputText value="#{empreendimentoCursor.nomeEpt}"/>
+                        <p:column headerText="Nome" filterBy="#{empreendimentoCursor.nome}" 
+                                  sortBy="#{empreendimentoCursor.nome}" filterMatchMode="contains">
+                            <h:outputText value="#{empreendimentoCursor.nome}"/>
                         </p:column>
 
-                        <p:column headerText="Nome fantasia" filterBy="#{empreendimentoCursor.nomeFantasiaEpt}" 
-                                  sortBy="#{empreendimentoCursor.nomeFantasiaEpt}" filterMatchMode="contains">
-                            <h:outputText value="#{empreendimentoCursor.nomeFantasiaEpt}"/>
+                        <p:column headerText="Razão social" filterBy="#{empreendimentoCursor.razaoSocial}" 
+                                  sortBy="#{empreendimentoCursor.razaoSocial}" filterMatchMode="contains">
+                            <h:outputText value="#{empreendimentoCursor.razaoSocial}"/>
                         </p:column>
 
-                        <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.emailEpt}" 
-                                  sortBy="#{empreendimentoCursor.emailEpt}" filterMatchMode="contains">
-                            <h:outputText value="#{empreendimentoCursor.emailEpt}"/>
+                        <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.email}" 
+                                  sortBy="#{empreendimentoCursor.email}" filterMatchMode="contains">
+                            <h:outputText value="#{empreendimentoCursor.email}"/>
                         </p:column>
 
                         <p:column filterBy="#{empreendimentoCursor.situacaoEpt}" headerText="Processo de Incubação" filterMatchMode="exact">
@@ -54,10 +54,10 @@
                             <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" update=":frmListagemEmpreendimentos:carDetail" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}"/>
-                            <p:commandButton id="btnEditarEpt" value="Editar" icon="Pencil16-iconfinder" update=":frmEdicaoEpt"
+                            <p:commandButton id="btnEditarEpt" value="Editar" icon="Add24-iconfinder" update=":frmEdicaoEpt"
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" process="dtListagemEmpreendimentos"
                                              oncomplete="PF('wVarEditarDialog').show()"/>
-                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagemEmpreendimentos"
+                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Add24-iconfinder" update=":frmListagemEmpreendimentos"
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" 
                                              actionListener="#{ListarEmpreendimentosView.excluirEptView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
@@ -81,20 +81,20 @@
                               resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
-                                <p:outputLabel value="Razão social: " />
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.nomeEpt}" />
-                                <p:outputLabel value="Nome fantasia" />
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.nomeFantasiaEpt}" />
+                                <p:outputLabel value="Nome:" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.nome}" />
                                 <p:outputLabel value="E-mail: " />  
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.emailEpt}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.email}" />
+                                <p:outputLabel value="Razão social: " />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.razaoSocial}" />
+                                <p:outputLabel value="CNPJ: "/>
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.cnpjEpt}" />
                                 <p:outputLabel value="Endereço: "/>
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.enderecoEpt}" />
                                 <p:outputLabel value="Telefone: " />
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.telefoneEpt}" />
                                 <p:outputLabel value="Telefone alternativo: " />
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.telefoneAlternativoEpt}" />
-                                <p:outputLabel value="CNPJ: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.cnpjEpt}" />
                                 <p:outputLabel value="Data de criação do empreendimento: "/>
                                 <h:outputText value="#{ListarEmpreendimentosView.conveteData(ListarEmpreendimentosView.empreendimentoSelecionado.dataCriacaoEpt)}" />
                                 <p:outputLabel value="Data de início da incubação: "/>
@@ -118,23 +118,27 @@
             </h:form>
 
             <p:dialog id="dlgEditarEpt" header="Editar empreendimento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" >
+                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" style="text-align:right;">
                 <h:form id="frmEdicaoEpt">
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
-                            <p:outputLabel for="nome" value="Razão social: " />
-                            <p:inputText id="nome" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.nomeEpt}" required="true"
-                                         requiredMessage="O campo Razão social é obrigatório." size="57" maxlength="45"/>
-                            <p:message for="nome" />
-
-                            <p:outputLabel for="nomeFantasia" value="Nome fantasia" />
-                            <p:inputText id="nomeFantasia" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.nomeFantasiaEpt}" 
+                            <p:outputLabel for="nomeFantasia" value="Nome: " />
+                            <p:inputText id="nomeFantasia" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.nome}" 
                                          required="true" requiredMessage="O campo Nome fantasia é obrigatório." size="57" maxlength="45"/>
                             <p:message for="nomeFantasia" />
 
                             <p:outputLabel for="e-mail" value="E-mail: " />  
-                            <p:inputText id="e-mail" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.emailEpt}" size="57" maxlength="45"/>
+                            <p:inputText id="e-mail" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.email}" size="57" maxlength="45"/>
                             <p:message for="e-mail" />
+                            
+                            <p:outputLabel for="razaoSocial" value="Razão social: " />
+                            <p:inputText id="razaoSocial" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.razaoSocial}" size="57" maxlength="45"/>
+                            <p:message for="razaoSocial" />
+
+                            <p:outputLabel for="cnpj" value="CNPJ: "/>
+                            <p:inputMask id="cnpj" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.cnpjEpt}"
+                                         mask="99.999.999/9999-99" size="57" maxlength="18"/>
+                            <p:message for="cnpj" />
 
                             <p:outputLabel for="endereco" value="Endereço: "/>
                             <p:inputText id="endereco" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.enderecoEpt}" size="57" 
@@ -150,11 +154,6 @@
                             <p:inputMask id="telefoneAlternativo" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.telefoneAlternativoEpt}" 
                                          mask="(99) 9999-9999?9" size="57"/>
                             <p:message for="telefoneAlternativo" />
-
-                            <p:outputLabel for="cnpj" value="CNPJ: "/>
-                            <p:inputMask id="cnpj" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.cnpjEpt}"
-                                         mask="99.999.999/9999-99" size="57" maxlength="18"/>
-                            <p:message for="cnpj" />
 
                             <p:outputLabel for="dataCriacao" value="Data de criação do empreendimento: "/>
                             <p:calendar id="dataCriacao" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.dataCriacaoEpt}" showOn="button" 

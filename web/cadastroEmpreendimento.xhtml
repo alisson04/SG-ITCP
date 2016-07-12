@@ -16,18 +16,22 @@
 
                     <h:panelGrid id="grid" style="margin-top:20px" columns="3" >
 
-                        <p:outputLabel for="nomeFantasia" value="Nome fantasia: " />
-                        <p:inputText id="nomeFantasia" value="#{CadastroEmpreendimentoView.eptCadastrado.nomeFantasiaEpt}" 
+                        <p:outputLabel for="nome" value="Nome: " />
+                        <p:inputText id="nome" value="#{CadastroEmpreendimentoView.eptCadastrado.nome}" 
                                      required="true" requiredMessage="O campo nome fantasia é obrigatório." size="48" maxlength="45"/>
-                        <p:message for="nomeFantasia" />
-                        
-                        <p:outputLabel for="nome" value="Razão social: " />
-                        <p:inputText id="nome" value="#{CadastroEmpreendimentoView.eptCadastrado.nomeEpt}" required="true"
-                                     requiredMessage="O campo razão social é obrigatório." size="48" maxlength="45"/>
                         <p:message for="nome" />
+                        
+                        <p:outputLabel for="razaoSocial" value="Razão social: " />
+                        <p:inputText id="razaoSocial" value="#{CadastroEmpreendimentoView.eptCadastrado.razaoSocial}" size="48" maxlength="45"/>
+                        <p:message for="razaoSocial" />
+
+                        <p:outputLabel for="cnpj" value="CNPJ: "/>
+                        <p:inputMask id="cnpj" value="#{CadastroEmpreendimentoView.eptCadastrado.cnpjEpt}"
+                                     mask="99.999.999/9999-99" size="48" maxlength="18"/>
+                        <p:message for="cnpj" />
 
                         <p:outputLabel for="e-mail" value="E-mail: " />  
-                        <p:inputText id="e-mail" value="#{CadastroEmpreendimentoView.eptCadastrado.emailEpt}" size="48" maxlength="45"/>
+                        <p:inputText id="e-mail" value="#{CadastroEmpreendimentoView.eptCadastrado.email}" size="48" maxlength="45"/>
                         <p:message for="e-mail" />
 
                         <p:outputLabel for="endereco" value="Endereço: "/>
@@ -44,11 +48,6 @@
                         <p:inputMask id="telefoneAlternativo" value="#{CadastroEmpreendimentoView.eptCadastrado.telefoneAlternativoEpt}" 
                                      mask="(99) 9999-9999?9" size="48"/>
                         <p:message for="telefoneAlternativo" />
-
-                        <p:outputLabel for="cnpj" value="CNPJ: "/>
-                        <p:inputMask id="cnpj" value="#{CadastroEmpreendimentoView.eptCadastrado.cnpjEpt}"
-                                     mask="99.999.999/9999-99" size="48" maxlength="18"/>
-                        <p:message for="cnpj" />
 
                         <p:outputLabel for="dataCriacao" value="Data de criação do empreendimento: "/>
                         <p:calendar id="dataCriacao" value="#{CadastroEmpreendimentoView.eptCadastrado.dataCriacaoEpt}" 
@@ -116,14 +115,14 @@
                 <p:panel id="painelUsuarioSalvo" styleClass="corPanel" header="Informações salvas com sucesso" 
                          rendered="#{CadastroEmpreendimentoView.eptSendoVisualizado == 'true'}">
                     <p:panelGrid columns="2" >
-                        <p:outputLabel value="Nome fantasia: " />
-                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.nomeFantasiaEpt}" />
+                        <p:outputLabel value="Nome: " />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.nome}" />
                         
                         <p:outputLabel value="Razão social: " />
-                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.nomeEpt}" />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.razaoSocial}" />
 
                         <p:outputLabel value="E-mail: " />
-                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.emailEpt}" />
+                        <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.email}" />
 
                         <p:outputLabel value="Endereço: " />
                         <p:outputLabel value="#{CadastroEmpreendimentoView.eptCadastrado.enderecoEpt}" />
