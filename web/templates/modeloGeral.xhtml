@@ -5,6 +5,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:composite="http://java.sun.com/jsf/composite">
 
     <ui:insert name="metadata" />
 
@@ -18,6 +19,8 @@
 
         <h:outputStylesheet library="css" name="icons16.css" />
         <link rel="stylesheet" href="/resources/css/icons16.css"/>
+        <h:outputStylesheet library="css" name="icons24.css" />
+        <link rel="stylesheet" href="/resources/css/icons24.css"/>
         <h:outputStylesheet library="css" name="icons32.css" />
         <link rel="stylesheet" href="/resources/css/icons32.css"/>
         <h:outputStylesheet library="css" name="icons128.css" />
@@ -64,68 +67,38 @@
                 <h:form id="frmModeloGeral">
                     <p:graphicImage name="fotos/IfnmgTopoMenor.jpg" width="100%" height="50%" />
 
-                    <p:megaMenu  style="margin-top:20px">
-                        <p:submenu label="TV" icon="Add24-iconfinder">
-                            <p:column>
-                                <p:submenu label="TV.1">
-                                    <p:menuitem value="TV.1.1" url="#" />
-                                </p:submenu>
-                            </p:column>
-                        </p:submenu>
-                    </p:megaMenu>
-
                     <!--<p:graphicImage library="imagens" name="3.png" width="100%" />-->
-                    <p:menubar style="ui-button">
-                        <p:menuitem value="Início" icon="Add24-iconfinder" 
+                    <p:menubar style="ui-button" styleClass="textoMenuPrincipal">
+                        <p:menuitem value="Início" icon="Home24-iconfinder" 
                                     action="/inicio.xhtml?faces-redirect=true" style="ui-widget"/>
 
-                        <p:submenu label="Usuários" icon="Add24-iconfinder"  style="ui-widget">
-                            <p:menuitem value=" Cadastrar" icon="addVerde16-iconfinder" action="/cadastroUsuario.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarUsuarios.xhtml?faces-redirect=true"/>
-                        </p:submenu>
+                        <p:menuitem value="Usuários" icon="Users24-iconfinder" action="/listarUsuarios.xhtml?faces-redirect=true"/>
 
-                        <p:menuitem value="Empreendimentos" icon="empreendimento-iconfinder" 
+                        <p:menuitem value="Empreendimentos" icon="Mala24-iconfinder" 
                                     action="/listarEmpreendimento.xhtml?faces-redirect=true" />
-                        
-                        <p:submenu label="Membros de empreendimentos" icon="membroEpt-iconfinder" >
-                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroMembroEmpreendimento.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarMembroEmpreendimento.xhtml?faces-redirect=true" />                            
-                        </p:submenu>
 
-                        <p:submenu label="Parceiros" icon="parceiros-iconfinder">
-                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroParceiro.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarParceiros.xhtml?faces-redirect=true"/>
-                        </p:submenu>
+                        <p:menuitem value="Membros de empreendimentos" icon="MembroEpt24-iconfinder" 
+                                    action="/listarMembroEmpreendimento.xhtml?faces-redirect=true" />                            
 
-                        <p:submenu label="Planos de ação" icon="planoAcao-iconfinder">
-                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroPlanoAcao.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
-                        </p:submenu>
+                        <p:menuitem value="Parceiros" icon="Parceria24-iconfinder" action="/listarParceiros.xhtml?faces-redirect=true"/>
 
-                        <p:submenu label="Metas" icon="atividade-iconfinder">
-                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroMeta.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarMetas.xhtml?faces-redirect=true"/>
-                        </p:submenu>
+                        <p:submenu label="Planos de ação" icon="Grafico24-iconfinder">
+                            <p:menuitem value="Planos de ação" icon="Grafico24-iconfinder" action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
 
-                        <p:submenu label="Atividades" icon="atividade-iconfinder">
-                            <p:submenu label="Planejadas" icon="atividade-iconfinder">
-                                <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" 
-                                            action="/cadastroAtividadePlanejada.xhtml?faces-redirect=true"/>
-                                <p:menuitem value="Listar" icon="List16-iconfinder" 
+                            <p:menuitem value="Metas" icon="Target24-iconfinder" action="/listarMetas.xhtml?faces-redirect=true" />
+
+                            <p:submenu label="Atividades" icon="Atividade24-iconfinder">
+                                <p:menuitem value="Planejadas" icon="Ideia24-iconfinder" 
                                             action="/listarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
+
+                                <p:submenu label="Executadas" icon="Aceito24-iconfinder">
+                                </p:submenu>                            
                             </p:submenu>
-
-                            <p:submenu label="Executadas" icon="atividade-iconfinder">
-                                <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" 
-                                            action="/cadastroAtividadeExecutada.xhtml?faces-redirect=true"/>
-                                <p:menuitem value="Listar" icon="List16-iconfinder" 
-                                            action="/listarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
-                            </p:submenu>                            
                         </p:submenu>
 
-                        <p:menuitem value="Lista de contatos" action="/listaContatos.xhtml?faces-redirect=true" icon="Telefone-iconfinder16"/>
+                        <p:menuitem value="Lista de contatos" icon="PhoneList24-iconfinder" action="/listaContatos.xhtml?faces-redirect=true" />
 
-                        <f:facet name="options">
+                        <f:facet name="options" >
                             <p:commandButton id="btnMinhaConta" type="push" title="Minha conta" style="ui-button"
                                              icon="profile-iconfinder" />
 

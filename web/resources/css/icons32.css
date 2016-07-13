@@ -20,14 +20,6 @@
     background-position: 0px 0px;
 }
 
-.Add24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons32/Add24.png") !important;
-    background-position: 0px 0px;
-    height: 24px;
-    width: 24px;
-    margin-left: -5px;
-}
-
 .atualizarUser-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AtualizarUser16.png") !important;
 }

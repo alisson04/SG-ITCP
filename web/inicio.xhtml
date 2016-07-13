@@ -8,12 +8,6 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmCadastro" >
-
-                <p:commandButton value="testaA" actionListener="#{ListarPlanoAcaoView.testaA()}"  />
-                <p:commandButton value="testaA" actionListener="#{ListarPlanoAcaoView.testaD()}"  />
-                <p:commandButton value="testaA" actionListener="#{ListarPlanoAcaoView.testaE()}"  />
-                <p:commandButton onclick="PF('carDialog').hide()"  value="Cancelar edição" type="button" />
-
                 <p:panel id="asds">
                     <p:dialog id="diaShowUsr" header="Informações do plano" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
                               styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"

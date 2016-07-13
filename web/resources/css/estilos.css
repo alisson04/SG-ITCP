@@ -2,25 +2,23 @@
 	font-size: 20px !important;
 }
 
-.textoMenuGeral {
-	font-size: 60px !important;
+.textoMenuPrincipal .ui-widget{
+	font-size: 23px !important;
 }
 
 .ui-button {
    font-size: 20px !important;
-   height:40px;
+   align-items: center;
 }
 
 .ui-button-text{
-    margin-top: 0px;
+    margin-top: 5px;
     margin-bottom: 0px;
 }
 
 .texto-centralizado {
 	text-align: center;
 }
-
-
 
 .corPanel .ui-panel-titlebar {
     background: #8FBC8F;

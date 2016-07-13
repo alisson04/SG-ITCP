@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="/resources/css/estilos.css"/>
         <h:outputStylesheet library="css" name="icons16.css" />
         <link rel="stylesheet" href="/resources/css/icons16.css"/>
+        <h:outputStylesheet library="css" name="icons24.css" />
+        <link rel="stylesheet" href="/resources/css/icons24.css"/>
         <h:outputStylesheet library="css" name="icons32.css" />
         <link rel="stylesheet" href="/resources/css/icons32.css"/>
 
@@ -32,7 +34,7 @@
                 <p:password id="senhaUsr" value="#{loginView.usuarioLogado.senhaUsuario}"
                             required="true" requiredMessage="Insira uma senha!" />
             </h:panelGrid>
-            <p:commandButton value="Acessar" action="#{loginView.logar()}" update="growl" icon="Add24-iconfinder" style="ui-button"
+            <p:commandButton value="Acessar" action="#{loginView.logar()}" update="growl" icon="Key24-iconfinder" style="ui-button"
                              styleClass="ui-button-text"/>
         </p:dialog>
     </h:form>

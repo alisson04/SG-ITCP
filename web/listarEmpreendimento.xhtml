@@ -52,24 +52,24 @@
 
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" update=":frmListagemEmpreendimentos:carDetail" 
-                                             icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
+                                             icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" />
-                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="AddVerde32-iconfinder" update=":frmEdicaoEpt"
+                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicaoEpt"
                                              process="dtListagemEmpreendimentos" oncomplete="PF('wVarEditarDialog').show()"
                                              actionListener="#{ListarEmpreendimentosView.reiniciaObj()}"/>
-                            <p:commandButton id="btnEditarEpt" value="Editar" icon="Add24-iconfinder" update=":frmEdicaoEpt"
+                            <p:commandButton id="btnEditarEpt" value="Editar" icon="Edit24-iconfinder" update=":frmEdicaoEpt"
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" 
                                              process="dtListagemEmpreendimentos" oncomplete="PF('wVarEditarDialog').show()"
                                              actionListener="#{ListarEmpreendimentosView.transfereObj()}"/>
-                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Add24-iconfinder" update=":frmListagemEmpreendimentos"
+                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" update=":frmListagemEmpreendimentos"
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" 
                                              actionListener="#{ListarEmpreendimentosView.excluirView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" icon="Alert16-iconfinder" />
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
                             </p:confirmDialog>
                         </f:facet>
                     </p:dataTable>
@@ -212,11 +212,11 @@
                     
                     <p:separator/>
                     <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarEmpreendimentosView.salvarView()}" 
-                                     icon="Save16-iconfinder" update=":frmEdicaoEpt, :frmListagemEmpreendimentos:dtListagemEmpreendimentos" >
+                                     icon="Save24-iconfinder" update=":frmEdicaoEpt, :frmListagemEmpreendimentos:dtListagemEmpreendimentos" >
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                     </p:commandButton>
 
-                    <p:commandButton value="Cancelar" type="button" icon="Cancel16-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                    <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
                 </h:form>
             </p:dialog>
         </ui:define>
