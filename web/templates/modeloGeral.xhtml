@@ -84,11 +84,6 @@
                             <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarUsuarios.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
-                        <p:submenu label="Planos de ação" icon="planoAcao-iconfinder">
-                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroPlanoAcao.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
-                        </p:submenu>
-
                         <p:submenu label="Empreendimentos" icon="empreendimento-iconfinder">
                             <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroEmpreendimento.xhtml?faces-redirect=true" /> 
                             <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarEmpreendimento.xhtml?faces-redirect=true" />
@@ -102,6 +97,16 @@
                         <p:submenu label="Parceiros" icon="parceiros-iconfinder">
                             <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroParceiro.xhtml?faces-redirect=true"/>
                             <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarParceiros.xhtml?faces-redirect=true"/>
+                        </p:submenu>
+
+                        <p:submenu label="Planos de ação" icon="planoAcao-iconfinder">
+                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroPlanoAcao.xhtml?faces-redirect=true"/>
+                            <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarPlanoAcao.xhtml?faces-redirect=true"/>
+                        </p:submenu>
+
+                        <p:submenu label="Metas" icon="atividade-iconfinder">
+                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroMeta.xhtml?faces-redirect=true"/>
+                            <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarMetas.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <p:submenu label="Atividades" icon="atividade-iconfinder">
@@ -120,11 +125,6 @@
                             </p:submenu>                            
                         </p:submenu>
 
-                        <p:submenu label="Metas" icon="atividade-iconfinder">
-                            <p:menuitem value="Cadastrar" icon="addVerde16-iconfinder" action="/cadastroMeta.xhtml?faces-redirect=true"/>
-                            <p:menuitem value="Listar" icon="List16-iconfinder" action="/listarMetas.xhtml?faces-redirect=true"/>
-                        </p:submenu>
-
                         <p:menuitem value="Lista de contatos" action="/listaContatos.xhtml?faces-redirect=true" icon="Telefone-iconfinder16"/>
 
                         <f:facet name="options">
@@ -138,7 +138,7 @@
                                 <p:menuitem value="Visualizar  conta" icon="Information16-iconfinder" oncomplete="PF('UserDia').show()"
                                             update=":frmModeloGeral:outPaMostrarUsr" />
                                 <p:menuitem value="Editar  conta" icon="Edit16-iconfinder"
-                                            actionListener="#{usuarioBean.editarUsrTela(InicioBean.usuarioLogado.idUsuario)}"/>
+                                            />
                                 <p:menuitem value="Mudar senha" icon="Key16-iconfinder" oncomplete="PF('UserDia').show()"
                                             update=":frmModeloGeral:outPaMostrarUsr" />
                                 <p:menuitem value=" Sair" icon="Exit16-iconfinder"

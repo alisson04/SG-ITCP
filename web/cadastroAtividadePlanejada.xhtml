@@ -18,31 +18,32 @@
                                      requiredMessage="O campo nome é obrigatório." size="48" maxlength="45"/>
                         <p:message for="nome" />
                         
-                        <p:outputLabel for="descricao" value="Descrição: " />
-                        <p:inputText id="descricao" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.descricao}" required="true" 
-                                     requiredMessage="O campo descrição é obrigatório." size="48" maxlength="45"/>
-                        <p:message for="descricao" />
-                        
+                        <p:outputLabel for="meta" value="Meta: "/>
+                        <p:selectOneMenu id="meta" required="true" requiredMessage="O campo meta é obrigatório."
+                                         value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.meta}" style="width:465px" 
+                                         converter="generic">
+                            <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{CadastroAtividadePlanejadaView.listaMetas}" var="obj" itemLabel="#{obj.nome}" 
+                                           itemValue="#{obj}"/>
+                        </p:selectOneMenu>
+                        <p:message for="meta"/>
+
                         <p:outputLabel for="dataInicio" value="Data início:" />
                         <p:calendar id="dataInicio" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.dataInicio}" 
                                     pattern="dd-MM-yyyy" size="48" required="true" requiredMessage="O campo Data início é obrigatório."
                                     mask="true" locale="pt"/>
                         <p:message for="dataInicio" />
-                        
+
                         <p:outputLabel for="dataFim" value="Data fim:" />
                         <p:calendar id="dataFim" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.dataFim}" pattern="dd-MM-yyyy"
                                     size="48" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
                         <p:message for="dataFim" />
 
-                        <p:outputLabel for="meta" value="Meta: "/>
-                            <p:selectOneMenu id="meta" required="true" requiredMessage="O campo meta é obrigatório."
-                                             value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.meta}" style="width:465px" 
-                                             converter="generic">
-                                <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{CadastroAtividadePlanejadaView.listaMetas}" var="obj" itemLabel="#{obj.nome}" 
-                                                   itemValue="#{obj}"/>
-                            </p:selectOneMenu>
-                            <p:message for="meta"/>
+                        <p:outputLabel for="descricao" value="Descrição: " />
+                        <p:inputTextarea id="descricao" value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.descricao}" 
+                                         rows="5" cols="48" maxlength="200"  
+                                         required="true" requiredMessage="O campo descrição é obrigatório."/>
+                        <p:message for="descricao" />
                     </h:panelGrid>
 
                     <p:separator />
@@ -67,7 +68,7 @@
                     <p:panelGrid columns="2" >
                         <p:outputLabel value="Nome: " />
                         <p:outputLabel value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.nome}" />
-                        
+
                         <p:outputLabel value="Descrição: " />
                         <p:outputLabel value="#{CadastroAtividadePlanejadaView.atividadeCadastrar.descricao}" />
 

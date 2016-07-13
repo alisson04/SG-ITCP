@@ -32,7 +32,7 @@
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AtualizarUser16.png") !important;
 }
 
-.addVerde-iconfinder{
+.AddVerde32-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AddVerde32.png") !important;
     height: 32px;
     width: 32px;

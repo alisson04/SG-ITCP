@@ -58,7 +58,7 @@
                                              oncomplete="PF('planoDialog').show()"/>
 
                             <p:commandButton id="btnExcluirPlano"  update=":frmListagemPlanosAcao" value="Excluir" icon="Cancel16-iconfinder" 
-                                             actionListener="#{ListarPlanoAcaoView.excluirPlanoView()}"
+                                             actionListener="#{ListarPlanoAcaoView.excluirView()}"
                                              disabled="#{ListarPlanoAcaoView.planoAcaoSelecionado == null}" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" icon="Alert16-iconfinder" />
                             </p:commandButton>
@@ -139,7 +139,7 @@
                         </h:panelGrid>
 
                         <p:separator />
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarPlanoAcaoView.editarPlanoView()}" 
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarPlanoAcaoView.salvarView()}" 
                                          icon="Save16-iconfinder" update=":frmEdicaoPlano, :frmListagemPlanosAcao:panelListagemPlanosAcao" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>

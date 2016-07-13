@@ -7,7 +7,6 @@ package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,9 +33,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "AtividadePlanejada.findAll", query = "SELECT a FROM AtividadePlanejada a")})
 public class AtividadePlanejada implements Serializable {
 
-    @OneToMany(mappedBy = "atividadePlanejada")
-    private List<AtividadeExecutadaPlanejada> atividadeExecutadaPlanejadaList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +46,7 @@ public class AtividadePlanejada implements Serializable {
     private String nome;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 200)
     @Column(name = "descricao")
     private String descricao;
     @Basic(optional = false)
@@ -154,14 +149,6 @@ public class AtividadePlanejada implements Serializable {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada[ id=" + id + " ]";
-    }
-
-    public List<AtividadeExecutadaPlanejada> getAtividadeExecutadaPlanejadaList() {
-        return atividadeExecutadaPlanejadaList;
-    }
-
-    public void setAtividadeExecutadaPlanejadaList(List<AtividadeExecutadaPlanejada> atividadeExecutadaPlanejadaList) {
-        this.atividadeExecutadaPlanejadaList = atividadeExecutadaPlanejadaList;
     }
     
 }

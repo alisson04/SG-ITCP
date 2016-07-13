@@ -7,6 +7,7 @@ package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,6 +32,9 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Empreendimento.findAll", query = "SELECT e FROM Empreendimento e")})
 public class Empreendimento implements Serializable, EntityConverter {
+
+    @OneToMany(mappedBy = "empreendimento")
+    private List<PlanoAcao> planoAcaoList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -266,6 +271,14 @@ public class Empreendimento implements Serializable, EntityConverter {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento[ idEpt=" + idEpt + " ]";
+    }
+
+    public List<PlanoAcao> getPlanoAcaoList() {
+        return planoAcaoList;
+    }
+
+    public void setPlanoAcaoList(List<PlanoAcao> planoAcaoList) {
+        this.planoAcaoList = planoAcaoList;
     }
     
 }

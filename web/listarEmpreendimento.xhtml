@@ -53,15 +53,18 @@
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" update=":frmListagemEmpreendimentos:carDetail" 
                                              icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}"/>
+                                             disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" />
+                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="AddVerde32-iconfinder" update=":frmEdicaoEpt"
+                                             process="dtListagemEmpreendimentos" oncomplete="PF('wVarEditarDialog').show()"
+                                             actionListener="#{ListarEmpreendimentosView.reiniciaObj()}"/>
                             <p:commandButton id="btnEditarEpt" value="Editar" icon="Add24-iconfinder" update=":frmEdicaoEpt"
-                                             disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" process="dtListagemEmpreendimentos"
-                                             oncomplete="PF('wVarEditarDialog').show()"/>
+                                             disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" 
+                                             process="dtListagemEmpreendimentos" oncomplete="PF('wVarEditarDialog').show()"
+                                             actionListener="#{ListarEmpreendimentosView.transfereObj()}"/>
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Add24-iconfinder" update=":frmListagemEmpreendimentos"
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" 
-                                             actionListener="#{ListarEmpreendimentosView.excluirEptView()}">
-                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert16-iconfinder" />
+                                             actionListener="#{ListarEmpreendimentosView.excluirView()}">
+                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" icon="Alert16-iconfinder" />
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
@@ -70,12 +73,6 @@
                             </p:confirmDialog>
                         </f:facet>
                     </p:dataTable>
-
-                    <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
-                              styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
-                              style="text-align:center;" >
-                        <h:outputText value="Edição concluida com sucesso! " />
-                    </p:dialog>
 
                     <p:dialog id="diaShowUsr" header="Informações do empreendimento" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
                               resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
@@ -117,103 +114,109 @@
                 </p:panel>
             </h:form>
 
-            <p:dialog id="dlgEditarEpt" header="Editar empreendimento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" style="text-align:right;">
+            <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
+                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
+                      style="text-align:center;" >
+                <h:outputText value="Salvo com sucesso! " />
+            </p:dialog>
+
+            <p:dialog id="dlgEditarEpt" header="Empreendimento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
+                      styleClass="corDialog" resizable="false" draggable="false"   appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicaoEpt">
-                    <p:panel id="panel" styleClass="corPanel" >
+                    <p:panel id="panel" styleClass="corPanel" style="text-align:right;">
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
                             <p:outputLabel for="nomeFantasia" value="Nome: " />
-                            <p:inputText id="nomeFantasia" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.nome}" 
-                                         required="true" requiredMessage="O campo Nome fantasia é obrigatório." size="57" maxlength="45"/>
+                            <p:inputText id="nomeFantasia" value="#{ListarEmpreendimentosView.objSalvar.nome}" 
+                                         required="true" requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                             <p:message for="nomeFantasia" />
 
                             <p:outputLabel for="e-mail" value="E-mail: " />  
-                            <p:inputText id="e-mail" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.email}" size="57" maxlength="45"/>
+                            <p:inputText id="e-mail" value="#{ListarEmpreendimentosView.objSalvar.email}" size="45" maxlength="45"/>
                             <p:message for="e-mail" />
-                            
+
                             <p:outputLabel for="razaoSocial" value="Razão social: " />
-                            <p:inputText id="razaoSocial" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.razaoSocial}" size="57" maxlength="45"/>
+                            <p:inputText id="razaoSocial" value="#{ListarEmpreendimentosView.objSalvar.razaoSocial}" size="45" maxlength="45"/>
                             <p:message for="razaoSocial" />
 
                             <p:outputLabel for="cnpj" value="CNPJ: "/>
-                            <p:inputMask id="cnpj" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.cnpjEpt}"
-                                         mask="99.999.999/9999-99" size="57" maxlength="18"/>
+                            <p:inputMask id="cnpj" value="#{ListarEmpreendimentosView.objSalvar.cnpjEpt}"
+                                         mask="99.999.999/9999-99" size="45" maxlength="18"/>
                             <p:message for="cnpj" />
 
                             <p:outputLabel for="endereco" value="Endereço: "/>
-                            <p:inputText id="endereco" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.enderecoEpt}" size="57" 
+                            <p:inputText id="endereco" value="#{ListarEmpreendimentosView.objSalvar.enderecoEpt}" size="45" 
                                          maxlength="45" required="true" requiredMessage="O campo Endereço é obrigatório."/>
                             <p:message for="endereco" />
 
                             <p:outputLabel for="telefone" value="Telefone: " />
-                            <p:inputMask id="telefone" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.telefoneEpt}" mask="(99) 9999-9999?9" 
-                                         size="57" maxlength="11"/>
+                            <p:inputMask id="telefone" value="#{ListarEmpreendimentosView.objSalvar.telefoneEpt}" mask="(99) 9999-9999?9" 
+                                         size="45" maxlength="11"/>
                             <p:message for="telefone" />
 
                             <p:outputLabel value="Telefone alternativo: " />
-                            <p:inputMask id="telefoneAlternativo" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.telefoneAlternativoEpt}" 
-                                         mask="(99) 9999-9999?9" size="57"/>
+                            <p:inputMask id="telefoneAlternativo" value="#{ListarEmpreendimentosView.objSalvar.telefoneAlternativoEpt}" 
+                                         mask="(99) 9999-9999?9" size="45"/>
                             <p:message for="telefoneAlternativo" />
 
                             <p:outputLabel for="dataCriacao" value="Data de criação do empreendimento: "/>
-                            <p:calendar id="dataCriacao" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.dataCriacaoEpt}" showOn="button" 
-                                        pattern="dd-MM-yyyy" size="8" mask="true" locale="pt"/>
+                            <p:calendar id="dataCriacao" value="#{ListarEmpreendimentosView.objSalvar.dataCriacaoEpt}"
+                                        pattern="dd/MM/yyyy" size="45" mask="true" locale="pt"/>
                             <p:message for="dataCriacao" />
 
                             <p:outputLabel for="dataIncubação" value="Data de início da incubação: "/>
-                            <p:calendar id="dataIncubação" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.dataIncubacaoEpt}" 
-                                        showOn="button" pattern="dd-MM-yyyy" size="8" mask="true" locale="pt"/>
+                            <p:calendar id="dataIncubação" value="#{ListarEmpreendimentosView.objSalvar.dataIncubacaoEpt}" 
+                                        pattern="dd/MM/yyyy" size="45" mask="true" locale="pt"/>
                             <p:message for="dataIncubação" />
 
                             <p:outputLabel for="tipoEpt" value="Tipo de empreendimento: "/>
                             <p:selectOneMenu id="tipoEpt" required="true" requiredMessage="O Tipo de empreendimento é obrigatório."
-                                             value="#{ListarEmpreendimentosView.empreendimentoSelecionado.tipoEpt}" style="width:590px">
+                                             value="#{ListarEmpreendimentosView.objSalvar.tipoEpt}" style="width:435px">
                                 <f:selectItem itemLabel="Selecione o tipo" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarEmpreendimentosView.tiposEpt}" />
                             </p:selectOneMenu>
                             <p:message for="tipoEpt"/>
 
                             <p:outputLabel for="siteEpt" value="Site do empreendimento: "/>
-                            <p:inputText id="siteEpt" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.siteEpt}" size="57" maxlength="45"/>
+                            <p:inputText id="siteEpt" value="#{ListarEmpreendimentosView.objSalvar.siteEpt}" size="45" maxlength="45"/>
                             <p:message for="siteEpt"/>
 
                             <p:outputLabel for="faturamentoMedioMensal" value="Faturamento médio mensal: "/>
-                            <p:inputText id="faturamentoMedioMensal" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.faturamentoMedioMensalEmp}" 
-                                         size="57" maxlength="45"/>
+                            <p:inputText id="faturamentoMedioMensal" value="#{ListarEmpreendimentosView.objSalvar.faturamentoMedioMensalEmp}" 
+                                         size="45" maxlength="45"/>
                             <p:message for="faturamentoMedioMensal"/>
 
                             <p:outputLabel for="faturamentoMedioAnual" value="Faturamento médio anual: "/>
-                            <p:inputText id="faturamentoMedioAnual" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.faturamentoMedioAnualEmp}" 
-                                         size="57" maxlength="45"/>
+                            <p:inputText id="faturamentoMedioAnual" value="#{ListarEmpreendimentosView.objSalvar.faturamentoMedioAnualEmp}" 
+                                         size="45" maxlength="45"/>
                             <p:message for="faturamentoMedioAnual"/>
 
                             <p:outputLabel for="atividadeExercida" value="Atividades exercidas: "/>
-                            <p:inputText id="atividadeExercida" value="#{ListarEmpreendimentosView.empreendimentoSelecionado.atividadeExercidaEpt}" 
-                                         size="57" maxlength="45" required="true" requiredMessage="O campo de Atividades exercidas é obrigatório."/>
+                            <p:inputText id="atividadeExercida" value="#{ListarEmpreendimentosView.objSalvar.atividadeExercidaEpt}" 
+                                         size="45" maxlength="45" required="true" requiredMessage="O campo de Atividades exercidas é obrigatório."/>
                             <p:message for="atividadeExercida"/>
 
                             <p:outputLabel for="situacaoEpt" value="Processo de Incubação: "/>
                             <p:selectOneMenu id="situacaoEpt" required="true" requiredMessage="O Processo de incubação é obrigatório."
-                                             value="#{ListarEmpreendimentosView.empreendimentoSelecionado.situacaoEpt}" style="width:590px">
+                                             value="#{ListarEmpreendimentosView.objSalvar.situacaoEpt}" style="width:435px">
                                 <f:selectItem itemLabel="Selecione a situação" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarEmpreendimentosView.situacaoEpt}" />
                             </p:selectOneMenu>
                             <p:message for="situacaoEpt"/>
                         </h:panelGrid>
 
-                        <p:separator />
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarPlanoAcaoView.editarPlanoView()}" 
-                                         icon="Save16-iconfinder" update=":frmEdicaoEpt, :frmListagemEmpreendimentos:dtListagemEmpreendimentos" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
-                        </p:commandButton>
-
-                        <p:commandButton value="Cancelar" type="button" icon="Cancel16-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
-
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />
                             <p:graphicImage name="icons/LoadingBar.gif"/>
                         </p:blockUI>
                     </p:panel>
+                    
+                    <p:separator/>
+                    <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarEmpreendimentosView.salvarView()}" 
+                                     icon="Save16-iconfinder" update=":frmEdicaoEpt, :frmListagemEmpreendimentos:dtListagemEmpreendimentos" >
+                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Cancelar" type="button" icon="Cancel16-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
                 </h:form>
             </p:dialog>
         </ui:define>

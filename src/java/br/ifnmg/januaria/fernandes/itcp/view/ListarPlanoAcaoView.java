@@ -44,7 +44,7 @@ public class ListarPlanoAcaoView implements Serializable {
         }
     }
 
-    public void editarPlanoView() {
+    public void salvarView() {
         try {
             bean.salvarPlanoBean(planoAcaoSelecionado);
             planoAcaoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
@@ -61,7 +61,7 @@ public class ListarPlanoAcaoView implements Serializable {
         }
     }
 
-    public void excluirPlanoView() {
+    public void excluirView() {
         try {
             bean.excluirPlanoBean(planoAcaoSelecionado);
             planoAcaoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire

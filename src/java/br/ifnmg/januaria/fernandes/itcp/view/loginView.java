@@ -46,7 +46,7 @@ public class loginView implements Serializable{
         }catch(RuntimeException | IOException ex){
             System.out.println("RuntimeException: " + ex);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Erro inesperado", "Erro ao tentar listar os empreendimentos, contate o administrador do sistema!");
+                    "Erro inesperado", "Erro grave ao tentar logar, contate o administrador do sistema!");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             return null;
         }

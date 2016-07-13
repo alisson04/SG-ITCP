@@ -23,7 +23,8 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ListarEmpreendimentosView implements Serializable {
 
-    private Empreendimento empreendimentoSelecionado;
+    private Empreendimento empreendimentoSelecionado = null;
+    private Empreendimento objSalvar = new Empreendimento();
     private List<Empreendimento> listaEmpreendimentos; //
     private List<Empreendimento> listaEmpreendimentosFiltrados;
     private String[] processoIncubacao;//para a tela de listar usuarios
@@ -51,7 +52,16 @@ public class ListarEmpreendimentosView implements Serializable {
         situacaoEpt[3] = "Desincubação";
         situacaoEpt[4] = "Desincubado";
     }
+    
+    public void transfereObj(){//Para botão de editar
+        objSalvar = empreendimentoSelecionado;
+    }
 
+    public void reiniciaObj(){//Para botão de editar
+        System.out.println("objSalvar Reiniciado ====================== ");
+        objSalvar = new Empreendimento();
+    }
+    
     public void listarTodosEmpreendimentos() {
         System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
         try {
@@ -64,10 +74,10 @@ public class ListarEmpreendimentosView implements Serializable {
         }
     }
 
-    public void editarPlanoView() {
+    public void salvarView() {
         try {
-            bean.salvarBean(empreendimentoSelecionado);
-            empreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            bean.salvarBean(objSalvar);
+            objSalvar = new Empreendimento();//Volta o usuario para o estado inicial/ Não retire
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
@@ -80,9 +90,9 @@ public class ListarEmpreendimentosView implements Serializable {
         }
     }
 
-    public void excluirEptView() {
+    public void excluirView() {
         bean.excluirBean(empreendimentoSelecionado);
-        empreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+        empreendimentoSelecionado = null;//Volta o usuario para o estado inicial/ Não retire
         FacesMessage msg = new FacesMessage("Empreendimento excluido do sistema");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
@@ -143,5 +153,13 @@ public class ListarEmpreendimentosView implements Serializable {
 
     public void setSituacaoEpt(String[] situacaoEpt) {
         this.situacaoEpt = situacaoEpt;
+    }
+
+    public Empreendimento getObjSalvar() {
+        return objSalvar;
+    }
+
+    public void setObjSalvar(Empreendimento objSalvar) {
+        this.objSalvar = objSalvar;
     }
 }
