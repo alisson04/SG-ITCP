@@ -51,12 +51,12 @@
 
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizar" process="dtListagem" update=":frmListagem:carDetail" 
-                                             icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
+                                             icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}"/>
-                            <p:commandButton id="btnEditar" value="Editar" icon="Pencil16-iconfinder" update=":frmEdicao"
+                            <p:commandButton id="btnEditar" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
                                              disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" process="dtListagem"
                                              oncomplete="PF('wVarEditarDialog').show()"/>
-                            <p:commandButton id="btnExcluir" value="Excluir" icon="Cancel16-iconfinder" update=":frmListagem"
+                            <p:commandButton id="btnExcluir" value="Excluir" icon="Cross24-iconfinder" update=":frmListagem"
                                              disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" 
                                              actionListener="#{ListarAtiviPlanejadasView.excluirView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
@@ -64,8 +64,8 @@
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
                             </p:confirmDialog>
                         </f:facet>
                     </p:dataTable>
@@ -138,11 +138,11 @@
 
                         <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAtiviPlanejadasView.editarView()}" 
-                                         icon="Save16-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
+                                         icon="BlackCheck24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cancel16-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
 
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />

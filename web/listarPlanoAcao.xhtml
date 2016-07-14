@@ -41,23 +41,23 @@
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nomeEpt}" 
+                                    <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
                                                    itemValue="#{ept}"/>
                                 </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{planoAcaoCursor.empreendimento.nomeEpt}" />
+                            <h:outputText value="#{planoAcaoCursor.empreendimento.nome}" />
                         </p:column>
 
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizarPlanoAcao" process="frmListagemPlanosAcao" update=":frmListagemPlanosAcao" 
-                                             icon="find-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" styleClass="corDialog"
+                                             icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" styleClass="corDialog"
                                              disabled="#{ListarPlanoAcaoView.planoAcaoSelecionado == null}"  style="text-align:center;" />
 
-                            <p:commandButton id="btnEditarPlano" value="Editar" icon="Pencil16-iconfinder" update=":frmEdicaoPlano"
+                            <p:commandButton id="btnEditarPlano" value="Editar" icon="Edit24-iconfinder" update=":frmEdicaoPlano"
                                              disabled="#{ListarPlanoAcaoView.planoAcaoSelecionado == null}" process="dtListagemPlanosAcao"
                                              oncomplete="PF('planoDialog').show()"/>
 
-                            <p:commandButton id="btnExcluirPlano"  update=":frmListagemPlanosAcao" value="Excluir" icon="Cancel16-iconfinder" 
+                            <p:commandButton id="btnExcluirPlano"  update=":frmListagemPlanosAcao" value="Excluir" icon="Cross24-iconfinder" 
                                              actionListener="#{ListarPlanoAcaoView.excluirView()}"
                                              disabled="#{ListarPlanoAcaoView.planoAcaoSelecionado == null}" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" icon="Alert16-iconfinder" />
@@ -65,8 +65,8 @@
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;"
                                              appendTo="@(body)">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="Cofirma16-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cancel16-iconfinder" />
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
                             </p:confirmDialog>
                         </f:facet>
                     </p:dataTable>
@@ -95,7 +95,7 @@
                                 <h:outputText value="Data de fim: " />
                                 <h:outputText value="#{ListarPlanoAcaoView.conveteData(ListarPlanoAcaoView.planoAcaoSelecionado.dataFim)}" />
                                 <h:outputText value="Empreendimento: " />
-                                <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.empreendimento.nomeEpt}" />
+                                <h:outputText value="#{ListarPlanoAcaoView.planoAcaoSelecionado.empreendimento.nome}" />
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
@@ -103,8 +103,8 @@
             </h:form>
 
             <p:dialog id="dlgEditarPlano" header="Editar plano de ação" widgetVar="planoDialog" showEffect="fade" hideEffect="fade" modal="true" 
-                      styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" style="text-align:right;"
-                <h:form id="frmEdicaoPlano">
+                      styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" style="text-align:right;">
+                <h:form id="frmEdicaoPlano" >
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
@@ -127,7 +127,7 @@
                                              value="#{ListarPlanoAcaoView.planoAcaoSelecionado.empreendimento}" style="width:500px"
                                              converter="generic">
                                 <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nomeEpt}" 
+                                <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
                                                itemValue="#{ept}"/>
                             </p:selectOneMenu>
                             <p:message for="empreendimento"/>
@@ -140,11 +140,11 @@
 
                         <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarPlanoAcaoView.salvarView()}" 
-                                         icon="Save16-iconfinder" update=":frmEdicaoPlano, :frmListagemPlanosAcao:panelListagemPlanosAcao" >
+                                         icon="Save24-iconfinder" update=":frmEdicaoPlano, :frmListagemPlanosAcao:panelListagemPlanosAcao" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cancel16-iconfinder" onclick="PF('planoDialog').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('planoDialog').hide()" />
 
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />
@@ -153,8 +153,6 @@
                     </p:panel>
                 </h:form>
             </p:dialog>
-
         </ui:define>
-
     </ui:composition>
 </html>
