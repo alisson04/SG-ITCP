@@ -8,7 +8,7 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="metadata">
             <f:metadata>
-                <f:event listener="#{ListarUsuariosView.ListarTodosUsers()}" type="preRenderView"/>
+                <f:event listener="#{ListarUsuariosView.ListarView()}" type="preRenderView"/>
             </f:metadata>
         </ui:define>
 
@@ -18,7 +18,7 @@
                 <p:panel styleClass="corPanel" header="Usuários no sistema:" >
                     <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
                                  filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" selectionMode="single" 
-                                 selection="#{ListarUsuariosView.usuarioSelecionado}" rowKey="#{usuarioCursor.idUsuario}" var="usuarioCursor" 
+                                 selection="#{ListarUsuariosView.objSelecionado}" rowKey="#{usuarioCursor.idUsuario}" var="usuarioCursor" 
                                  widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
                         <p:ajax event="rowSelect" update=":frmListagemUsuarios"/>
@@ -44,18 +44,20 @@
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizarusr" process="ListagemUsuarios" update=":frmListagemUsuarios:carDetail" 
                                              icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarUsuariosView.usuarioSelecionado == null}"/>
-                            
+                                             disabled="#{ListarUsuariosView.objSelecionado == null}"/>
+                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicao"
+                                             process="ListagemUsuarios" oncomplete="PF('wVarEditarDialog').show()"
+                                             actionListener="#{ListarUsuariosView.reiniciaObj()}"/>                            
                             <p:commandButton id="btnInativarusr" actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}"
-                                             value="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.usuarioSelecionado)}" 
-                                             icon="Refresh24-iconfinder" disabled="#{ListarUsuariosView.usuarioSelecionado == null}" 
+                                             value="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.objSelecionado)}" 
+                                             icon="Refresh24-iconfinder" disabled="#{ListarUsuariosView.objSelecionado == null}" 
                                              update=":frmListagemUsuarios" >
                                 <p:confirm header="ATENÇÃO!" message="Deseja confirmar a ação?" icon="Alert16-iconfinder"/>
                             </p:commandButton>
 
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" update=":frmListagemUsuarios"
-                                             disabled="#{ListarUsuariosView.usuarioSelecionado == null}" 
-                                             actionListener="#{ListarUsuariosView.excluirUsrView()}">
+                                             disabled="#{ListarUsuariosView.objSelecionado == null}" 
+                                             actionListener="#{ListarUsuariosView.excluirView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert16-iconfinder" />
                             </p:commandButton>
@@ -70,46 +72,140 @@
                         </f:facet>
                     </p:dataTable>
 
+                    <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
+                              styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
+                              style="text-align:center;" >
+                        <h:outputText value="Salvo com sucesso! " />
+                    </p:dialog>
+
                     <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade" header="Informações do usuário" modal="true"
                               resizable="false" draggable="false"   appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
 
                         <p:panelGrid  id="carDetail" columns="2" columnClasses="label,value" >
                             <h:outputText value="Nome: " />
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.nomeUsuario}" />
+                            <h:outputText value="#{ListarUsuariosView.objSelecionado.nomeUsuario}" />
 
                             <h:outputText value="E-mail: " />
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.emailUsuario}" />
+                            <h:outputText value="#{ListarUsuariosView.objSelecionado.emailUsuario}" />
 
                             <h:outputText value="Endereço: " />
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.enderecoUsuario}" />
+                            <h:outputText value="#{ListarUsuariosView.objSelecionado.enderecoUsuario}" />
 
                             <h:outputText value="Cargo: "/>
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.cargoUsuario}"/>
+                            <h:outputText value="#{ListarUsuariosView.objSelecionado.cargoUsuario}"/>
 
                             <h:outputText value="Telefone: " />
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.telefoneUsuario}" />
+                            <h:outputText value="#{ListarUsuariosView.objSelecionado.telefoneUsuario}" />
 
                             <h:outputText value="Telefone alternatico: " />
-                            <h:outputText value="#{ListarUsuariosView.usuarioSelecionado.telefoneAlternativoUsuario}" />
+                            <h:outputText value="#{ListarUsuariosView.objSelecionado.telefoneAlternativoUsuario}" />
 
                             <p:outputLabel value="RG: " />
-                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.rgUsuario}"/>
+                            <p:outputLabel value="#{ListarUsuariosView.objSelecionado.rgUsuario}"/>
 
                             <p:outputLabel value="CPF: " />
-                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.cpfUsuario}"/>
+                            <p:outputLabel value="#{ListarUsuariosView.objSelecionado.cpfUsuario}"/>
 
                             <p:outputLabel value="Data de nascimento: " />
-                            <p:outputLabel value="#{ListarUsuariosView.conveteData(ListarUsuariosView.usuarioSelecionado.dataNascimentoUsuario)}"/>
+                            <p:outputLabel value="#{ListarUsuariosView.conveteData(ListarUsuariosView.objSelecionado.dataNascimentoUsuario)}"/>
 
                             <p:outputLabel value="Data de entrada na ITCP: " />
-                            <p:outputLabel value="#{ListarUsuariosView.conveteData(ListarUsuariosView.usuarioSelecionado.dataEntradaUsuario)}"/>
+                            <p:outputLabel value="#{ListarUsuariosView.conveteData(ListarUsuariosView.objSelecionado.dataEntradaUsuario)}"/>
 
                             <p:outputLabel value="Sexo: " />
-                            <p:outputLabel value="#{ListarUsuariosView.usuarioSelecionado.sexoUsuario}"/>
+                            <p:outputLabel value="#{ListarUsuariosView.objSelecionado.sexoUsuario}"/>
                         </p:panelGrid>
+
                     </p:dialog>
                 </p:panel>
             </h:form>
+
+            <p:dialog id="dlgEditar" header="Usuário " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
+                      styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" style="text-align:right;">
+                <h:form id="frmEdicao">
+                    <p:panel id="panel" styleClass="corPanel" >
+                        <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
+                            <p:outputLabel for="nome" value="Nome: " />
+                            <p:inputText id="nome" value="#{ListarUsuariosView.objSalvar.nomeUsuario}" required="true"
+                                         requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
+                            <p:message for="nome"/>
+
+                            <p:outputLabel for="e-mail" value="E-mail: " />  
+                            <p:inputText id="e-mail" value="#{ListarUsuariosView.objSalvar.emailUsuario}" required="true"
+                                         requiredMessage="O e-mail é obrigatório." size="45" maxlength="50"/>
+                            <p:message for="e-mail"/>
+
+                            <p:outputLabel for="endereco" value="Endereço: "/>
+                            <p:inputText id="endereco" value="#{ListarUsuariosView.objSalvar.enderecoUsuario}" required="true"
+                                         requiredMessage="O endereco é obrigatório." size="45" maxlength="50"/>
+                            <p:message for="endereco"/>
+
+                            <p:outputLabel for="telefone" value="Telefone: " />
+                            <p:inputMask id="telefone" value="#{ListarUsuariosView.objSalvar.telefoneUsuario}"
+                                         mask="(99) ?9-9999-9999" size="45" maxlength="11" required="true"
+                                         requiredMessage="O telefone é obrigatório."/>
+                            <p:message for="telefone"/>
+
+                            <p:outputLabel value="Telefone alternativo: " />
+                            <p:inputMask id="telefoneAlternativo" value="#{ListarUsuariosView.objSalvar.telefoneAlternativoUsuario}"
+                                         mask="(99) ?9-9999-9999" size="45" maxlength="11"/>
+                            <p:message for="telefoneAlternativo"/>
+
+                            <p:outputLabel for="rg" value="RG: " />
+                            <p:inputText id="rg" value="#{ListarUsuariosView.objSalvar.rgUsuario}"
+                                         required="true" requiredMessage="O RG é obrigatório." size="45" maxlength="13"/>
+                            <p:message for="rg"/>
+
+                            <p:outputLabel for="cpf" value="CPF: " />
+                            <p:inputMask id="cpf" value="#{ListarUsuariosView.objSalvar.cpfUsuario}"
+                                         mask="999-999-999.99" required="true" size="45" maxlength="11"
+                                         requiredMessage="O campo CPF é obrigatório."/>   
+                            <p:message for="cpf"/>
+
+                            <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
+                            <p:calendar id="dataNascimento" value="#{ListarUsuariosView.objSalvar.dataNascimentoUsuario}" pattern="dd/MM/yyyy" 
+                                        size="45" mask="true" locale="pt" required="true" requiredMessage="A data de nascimento é obrigatória." />
+                            <p:message for="dataNascimento"/>
+
+                            <p:outputLabel for="dataEntrada" value="Entrada na ITCP: " />
+                            <p:calendar id="dataEntrada" value="#{ListarUsuariosView.objSalvar.dataEntradaUsuario}" pattern="dd/MM/yyyy" 
+                                        mask="true" locale="pt" size="45" required="true" requiredMessage="A data de entrada é obrigatória." />
+                            <p:message for="dataEntrada"/>
+
+                            <p:outputLabel for="cargoItcp" value="Cargo: " />
+                            <p:selectOneMenu id="cargoItcp" required="true" requiredMessage="O cargo na ITCP é obrigatório."
+                                             value="#{ListarUsuariosView.objSalvar.cargoUsuario}" style="width:435px"
+                                             rendered="#{InicioBean.usuarioLogado.cargoUsuario == 'Coordenador'}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{ListarUsuariosView.cargos}" />
+                            </p:selectOneMenu>
+                            <p:message for="cargoItcp"/>
+
+                            <p:outputLabel for="sexo" value="Sexo: "/>
+                            <p:selectOneRadio id="sexo" required="true" requiredMessage="O sexo é obrigatório."
+                                              value="#{ListarUsuariosView.objSalvar.sexoUsuario}">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
+                                <f:selectItem itemLabel="Outro" itemValue="Outro"/>
+                            </p:selectOneRadio>
+                            <p:message for="sexo" />
+                        </h:panelGrid>
+
+                        <p:separator />
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarUsuariosView.salvarView()}" 
+                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagemUsuarios:ListagemUsuarios" >
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                        </p:commandButton>
+
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+
+                        <p:blockUI block="panel" trigger="btnSalvar">
+                            CARREGANDO<br />
+                            <p:graphicImage name="icons/LoadingBar.gif"/>
+                        </p:blockUI>
+                    </p:panel>
+                </h:form>
+            </p:dialog>
         </ui:define>
     </ui:composition>
 </html>
