@@ -23,7 +23,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ListarEmpreendimentosView implements Serializable {
 
-    private Empreendimento empreendimentoSelecionado = null;
+    private Empreendimento empreendimentoSelecionado;
     private Empreendimento objSalvar = new Empreendimento();
     private List<Empreendimento> listaEmpreendimentos; //
     private List<Empreendimento> listaEmpreendimentosFiltrados;

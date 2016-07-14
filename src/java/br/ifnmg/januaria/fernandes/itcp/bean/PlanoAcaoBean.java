@@ -21,15 +21,15 @@ public class PlanoAcaoBean implements Serializable{
         dao = new PlanoAcaoDAO();
     }
     
-    public void salvarPlanoBean(PlanoAcao planoAcao) {
-        dao.salvarPlano(planoAcao);
+    public void salvarBean(PlanoAcao obj) {
+        dao.salvarPlano(obj);
     }
     
-    public void excluirPlanoBean(PlanoAcao planoAcao){
-        dao.excluirPlanoDao(planoAcao);
+    public void excluirBean(PlanoAcao obj){
+        dao.excluirPlanoDao(obj);
     }
     
-    public List<PlanoAcao> listarTodosPlanos() {
+    public List<PlanoAcao> listarBean() {
         return dao.listarTodosPlanos();
     }
     

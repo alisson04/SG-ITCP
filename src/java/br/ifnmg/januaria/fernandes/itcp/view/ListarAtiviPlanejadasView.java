@@ -26,6 +26,7 @@ import org.primefaces.event.SelectEvent;
 public class ListarAtiviPlanejadasView implements Serializable {
 
     private AtividadePlanejada objSelecionado;
+    private AtividadePlanejada objSalvar = new AtividadePlanejada();
     private List<Meta> listaSelectOneMenu;
     private List<AtividadePlanejada> listaObjs;
     private List<AtividadePlanejada> listaObjsFiltradas;
@@ -34,11 +35,20 @@ public class ListarAtiviPlanejadasView implements Serializable {
 
     public ListarAtiviPlanejadasView() {
     }
+    
+    public void transfereObj(){//Para botão de editar
+        objSalvar = objSelecionado;
+    }
 
-    public void editarView() {
+    public void reiniciaObj(){//Para botão de cadastrar
+        System.out.println("objSalvar Reiniciado ====================== ");
+        objSalvar = new AtividadePlanejada();
+    }
+
+    public void salvarView() {
         try {
-            bean.salvarBean(objSelecionado);
-            objSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            bean.salvarBean(objSalvar);
+            objSalvar = new AtividadePlanejada();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
@@ -118,5 +128,12 @@ public class ListarAtiviPlanejadasView implements Serializable {
     public void setListaObjsFiltradas(List<AtividadePlanejada> listaObjsFiltradas) {
         this.listaObjsFiltradas = listaObjsFiltradas;
     }
-    
+
+    public AtividadePlanejada getObjSalvar() {
+        return objSalvar;
+    }
+
+    public void setObjSalvar(AtividadePlanejada objSalvar) {
+        this.objSalvar = objSalvar;
+    }
 }

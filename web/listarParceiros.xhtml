@@ -48,9 +48,13 @@
                             <p:commandButton id="btnVisualizarParceiro" process="dtListagemParceiros" update=":frmListagemParceiros:carDetail" 
                                              icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()"
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}"/>
+                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicao"
+                                             process="dtListagemParceiros" oncomplete="PF('wVarEditarDialog').show()"
+                                             actionListener="#{ListarParceirosView.reiniciaObj()}"/>
                             <p:commandButton id="btnEditar" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}" process="dtListagemParceiros"
-                                             oncomplete="PF('wVarEditarDialog').show()"/>
+                                             oncomplete="PF('wVarEditarDialog').show()"
+                                             actionListener="#{ListarParceirosView.transfereObj()}"/>
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" update=":frmListagemParceiros"
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}" 
                                              actionListener="#{ListarParceirosView.excluirParceiroView()}">
@@ -67,7 +71,7 @@
                     <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
                               styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
                               style="text-align:center;" >
-                        <h:outputText value="Edição concluida com sucesso! " />
+                        <h:outputText value="Salvo com sucesso! " />
                     </p:dialog>
 
                     <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
@@ -92,44 +96,44 @@
                 </p:panel>
             </h:form>
 
-            <p:dialog id="dlgEditar" header="Editar empreendimento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
+            <p:dialog id="dlgEditar" header="Empreendimento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
                       styleClass="corDialog" resizable="false" draggable="false" modal="true"  dynamic="true" style="text-align:right;">
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarParceirosView.parceiroSelecionado.nomeParceiro}" required="true"
+                            <p:inputText id="nome" value="#{ListarParceirosView.objSalvar.nomeParceiro}" required="true"
                                          requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="e-mail" value="E-mail: " />  
-                            <p:inputText id="e-mail" value="#{ListarParceirosView.parceiroSelecionado.emailParceiro}" required="true"
+                            <p:inputText id="e-mail" value="#{ListarParceirosView.objSalvar.emailParceiro}" required="true"
                                          requiredMessage="O campo E-mail é obrigatório." size="57" maxlength="45"/>
                             <p:message for="e-mail" />
 
                             <p:outputLabel for="endereco" value="Endereço: "/>
-                            <p:inputText id="endereco" value="#{ListarParceirosView.parceiroSelecionado.enderecoParceiro}" required="true"
+                            <p:inputText id="endereco" value="#{ListarParceirosView.objSalvar.enderecoParceiro}" required="true"
                                          requiredMessage="O campo Endereço é obrigatório." size="57" maxlength="45"/>
                             <p:message for="endereco" />
 
                             <p:outputLabel for="telefone" value="Telefone: " />
-                            <p:inputMask id="telefone" value="#{ListarParceirosView.parceiroSelecionado.telefoneParceiro}" mask="(99) 9999-9999?9" 
+                            <p:inputMask id="telefone" value="#{ListarParceirosView.objSalvar.telefoneParceiro}" mask="(99) 9999-9999?9" 
                                          required="true" requiredMessage="O campo Telefone é obrigatório." size="57" maxlength="11"/>
                             <p:message for="telefone" />
 
                             <p:outputLabel value="Telefone alternativo: " />
-                            <p:inputMask id="telefoneAlternativo" value="#{ListarParceirosView.parceiroSelecionado.telefoneAlternativoParceiro}" 
+                            <p:inputMask id="telefoneAlternativo" value="#{ListarParceirosView.objSalvar.telefoneAlternativoParceiro}" 
                                          mask="(99) 9999-9999?9" size="57" maxlength="11"/>
                             <p:message for="telefoneAlternativo" />
 
                             <p:outputLabel for="tipoParceiro" value="Tipo de parceiro: "/>
-                            <p:inputText id="tipoParceiro" value="#{ListarParceirosView.parceiroSelecionado.tipoParceiro}" size="57" maxlength="45"
+                            <p:inputText id="tipoParceiro" value="#{ListarParceirosView.objSalvar.tipoParceiro}" size="57" maxlength="45"
                                          required="true" requiredMessage="O campo Tipo de parceiro é obrigatório."/>
                             <p:message for="tipoParceiro"/>
                         </h:panelGrid>
 
                         <p:separator />
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarParceirosView.editarView()}" 
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarParceirosView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagemParceiros:dtListagemParceiros" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>

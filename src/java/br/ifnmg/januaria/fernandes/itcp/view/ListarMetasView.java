@@ -15,7 +15,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -25,6 +24,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ListarMetasView implements Serializable{
     private Meta metaSelecionada;
+    private Meta objSalvar = new Meta();
     private List<PlanoAcao> listaPlanos;
     private List<Meta> listaMetas;
     private List<Meta> listaMetasFiltradas;
@@ -34,10 +34,10 @@ public class ListarMetasView implements Serializable{
     public ListarMetasView() {
     }
     
-    public void editarView() {
+    public void salvarView() {
         try {
-            bean.salvarBean(metaSelecionada);
-            metaSelecionada = null;//Volta o usuario para o estado de nulo/ Não retire
+            bean.salvarBean(objSalvar);
+            objSalvar = new Meta();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
@@ -49,10 +49,19 @@ public class ListarMetasView implements Serializable{
         }
     }
     
+    public void transfereObj(){//Para botão de editar
+        objSalvar = metaSelecionada;
+    }
+
+    public void reiniciaObj(){//Para botão de editar
+        System.out.println("objSalvar Reiniciado ====================== ");
+        objSalvar = new Meta();
+    }
+    
     public void listarView() {
         try {
             listaMetas = bean.listarBean();
-            listaPlanos = planoAcaoBean.listarTodosPlanos();
+            listaPlanos = planoAcaoBean.listarBean();
         } catch (RuntimeException ex) {
             //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Empreendimentos: " + ex);
@@ -105,5 +114,13 @@ public class ListarMetasView implements Serializable{
 
     public void setListaPlanos(List<PlanoAcao> listaPlanos) {
         this.listaPlanos = listaPlanos;
+    }
+
+    public Meta getObjSalvar() {
+        return objSalvar;
+    }
+
+    public void setObjSalvar(Meta objSalvar) {
+        this.objSalvar = objSalvar;
     }
 }

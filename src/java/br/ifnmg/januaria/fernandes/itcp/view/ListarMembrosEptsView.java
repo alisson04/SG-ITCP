@@ -15,7 +15,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -28,6 +27,7 @@ public class ListarMembrosEptsView implements Serializable {
     MembroEmpreendimentoBean bean = new MembroEmpreendimentoBean();
     EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
     private MembroEmpreendimento membroEmpreendimentoSelecionado;
+    private MembroEmpreendimento objSalvar = new MembroEmpreendimento();
     private List<MembroEmpreendimento> listaMembrosEmpreendimentos;
     private List<MembroEmpreendimento> listaMembrosEmpreendimentosFiltrados;
     private List<Empreendimento> listaEmpreendimentos;
@@ -48,6 +48,15 @@ public class ListarMembrosEptsView implements Serializable {
         }
     }
     
+    public void transfereObj(){//Para botão de editar
+        objSalvar = membroEmpreendimentoSelecionado;
+    }
+    
+    public void reiniciaObj(){//Para botão de editar
+        System.out.println("objSalvar Reiniciado ====================== ");
+        objSalvar = new MembroEmpreendimento();
+    }
+    
     public void excluirMembroView(){
         bean.excluirBean(membroEmpreendimentoSelecionado);
         membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
@@ -55,14 +64,13 @@ public class ListarMembrosEptsView implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
-    public void editarView() {
+    public void salvarView() {
         try {
-            bean.salvarBean(membroEmpreendimentoSelecionado);
-            membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            bean.salvarBean(objSalvar);
+            objSalvar = new MembroEmpreendimento();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarDlgEditar').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
-
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -113,4 +121,11 @@ public class ListarMembrosEptsView implements Serializable {
         this.listaEmpreendimentos = listaEmpreendimentos;
     }
 
+    public MembroEmpreendimento getObjSalvar() {
+        return objSalvar;
+    }
+
+    public void setObjSalvar(MembroEmpreendimento objSalvar) {
+        this.objSalvar = objSalvar;
+    }
 }

@@ -18,7 +18,6 @@
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
 
                 <p:panel styleClass="corPanel" header="Atividades planejadas no sistema:" >
-
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma atividade encontrada." value="#{ListarAtiviPlanejadasView.listaObjs}" 
                                  filteredValue="#{ListarAtiviPlanejadasView.listaObjsFiltradas}" 
                                  selectionMode="single" selection="#{ListarAtiviPlanejadasView.objSelecionado}" rowKey="#{objCursor.id}"
@@ -38,7 +37,7 @@
                             <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
                         </p:column>
 
-                        <p:column filterBy="#{objCursor.planoAcao}" headerText="Empreendimento" filterMatchMode="exact">
+                        <p:column filterBy="#{objCursor.meta}" headerText="Meta" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
@@ -53,9 +52,13 @@
                             <p:commandButton id="btnVisualizar" process="dtListagem" update=":frmListagem:carDetail" 
                                              icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}"/>
+                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicao"
+                                             process="dtListagem" oncomplete="PF('wVarEditarDialog').show()"
+                                             actionListener="#{ListarAtiviPlanejadasView.reiniciaObj()}"/>
                             <p:commandButton id="btnEditar" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
                                              disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" process="dtListagem"
-                                             oncomplete="PF('wVarEditarDialog').show()"/>
+                                             oncomplete="PF('wVarEditarDialog').show()"
+                                             actionListener="#{ListarAtiviPlanejadasView.transfereObj()}"/>
                             <p:commandButton id="btnExcluir" value="Excluir" icon="Cross24-iconfinder" update=":frmListagem"
                                              disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" 
                                              actionListener="#{ListarAtiviPlanejadasView.excluirView()}">
@@ -73,7 +76,7 @@
                     <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
                               styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
                               style="text-align:center;" >
-                        <h:outputText value="Edição concluida com sucesso! " />
+                        <h:outputText value="Salvo com sucesso! " />
                     </p:dialog>
 
                     <p:dialog id="diaShowUsr" header="Informações da atividade" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
@@ -100,24 +103,24 @@
                 </p:panel>
             </h:form>
 
-            <p:dialog id="dlgEditar" header="Editar atividade " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
+            <p:dialog id="dlgEditar" header="Atividade " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
                       styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" style="text-align:right;">
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarAtiviPlanejadasView.objSelecionado.nome}" required="true" 
+                            <p:inputText id="nome" value="#{ListarAtiviPlanejadasView.objSalvar.nome}" required="true" 
                                          requiredMessage="O campo Nome é obrigatório." size="48" maxlength="45"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputText id="descricao" value="#{ListarAtiviPlanejadasView.objSelecionado.descricao}" required="true" 
+                            <p:inputText id="descricao" value="#{ListarAtiviPlanejadasView.objSalvar.descricao}" required="true" 
                                          requiredMessage="O campo Descrição é obrigatório." size="48" maxlength="45"/>
                             <p:message for="descricao" />
 
                             <p:outputLabel for="meta" value="Meta: "/>
                             <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
-                                             value="#{ListarAtiviPlanejadasView.objSelecionado.meta}" style="width:465px" converter="generic">
+                                             value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:465px" converter="generic">
                                 <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarAtiviPlanejadasView.listaSelectOneMenu}" var="obj" itemLabel="#{obj.nome}" 
                                                itemValue="#{obj}"/>
@@ -125,20 +128,20 @@
                             <p:message for="meta"/>
 
                             <p:outputLabel for="dataInicio" value="Data início:" />
-                            <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSelecionado.dataInicio}"
+                            <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSalvar.dataInicio}"
                                         pattern="dd-MM-yyyy" size="48" required="true" requiredMessage="O campo Data início é obrigatório."
                                         mask="true" locale="pt"/>
                             <p:message for="dataInicio" />
 
                             <p:outputLabel for="dataFim" value="Data fim:" />
-                            <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSelecionado.dataFim}" pattern="dd-MM-yyyy"
+                            <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSalvar.dataFim}" pattern="dd-MM-yyyy"
                                         size="48" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
                             <p:message for="dataFim" />
                         </h:panelGrid>
 
                         <p:separator />
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAtiviPlanejadasView.editarView()}" 
-                                         icon="BlackCheck24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAtiviPlanejadasView.salvarView()}" 
+                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
 
@@ -152,6 +155,5 @@
                 </h:form>
             </p:dialog>
         </ui:define>
-
     </ui:composition>
 </html>

@@ -61,9 +61,13 @@
                             <p:commandButton id="btnVisualizarusr" process="dtListagemMembrosEpts" update=":frmListagemMembrosEpts:carDetail" 
                                              icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}"/>
-                            <p:commandButton id="btnEditarMembro" value="Editar" icon="Edit24-iconfinder" update=":frmListagemMembrosEpts"
-                                             disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" process="dtListagemMembrosEpts"
-                                             oncomplete="PF('wVarDlgEditar').show()"/>
+                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicao"
+                                             process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
+                                             actionListener="#{ListarMembrosEptsView.reiniciaObj()}"/>
+                            <p:commandButton id="btnEditarMembro" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
+                                             disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
+                                             process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
+                                             actionListener="#{ListarMembrosEptsView.transfereObj()}"/>
                             <p:commandButton id="btnExcluirMembro" value="Excluir" icon="Cross24-iconfinder" update=":frmListagemMembrosEpts"
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
                                              actionListener="#{ListarMembrosEptsView.excluirMembroView()}">
@@ -78,10 +82,9 @@
                         </f:facet>
                     </p:dataTable>
 
-                    <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
-                              styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
-                              style="text-align:center;" >
-                        <h:outputText value="Edição concluida com sucesso! " />
+                    <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" styleClass="corDialog"
+                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" style="text-align:center;" >
+                        <h:outputText value="Salvo com sucesso! " />
                     </p:dialog>
 
                     <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
@@ -115,60 +118,60 @@
                 </p:panel>
             </h:form>
 
-            <p:dialog id="dlgEditar" header="Editar membro de empreedndimento" widgetVar="wVarDlgEditar" showEffect="fade" hideEffect="fade" 
+            <p:dialog id="dlgEditar" header="Membro de empreedndimento" widgetVar="wVarDlgEditar" showEffect="fade" hideEffect="fade" 
                       styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" style="text-align:right;">
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nomeMembroEmpreendimento}" 
+                            <p:inputText id="nome" value="#{ListarMembrosEptsView.objSalvar.nomeMembroEmpreendimento}" 
                                          required="true" requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="apelido" value="Apelido: " />
-                            <p:inputText id="apelido" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.apelidoMembroEmpreendimento}" 
+                            <p:inputText id="apelido" value="#{ListarMembrosEptsView.objSalvar.apelidoMembroEmpreendimento}" 
                                          required="true" requiredMessage="O campo Apelido é obrigatório." size="57" maxlength="45"/>
                             <p:message for="apelido" />
 
                             <p:outputLabel for="nomeMae" value="Nome da mãe: " />
-                            <p:inputText id="nomeMae" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nomeMaeMembroEmpreendimento}" 
+                            <p:inputText id="nomeMae" value="#{ListarMembrosEptsView.objSalvar.nomeMaeMembroEmpreendimento}" 
                                          size="57" maxlength="45"/>
                             <p:message for="nomeMae" />
 
                             <p:outputLabel for="endereco" value="Endereco: " />
-                            <p:inputText id="endereco" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.enderecoMembroEmpreendimento}" 
+                            <p:inputText id="endereco" value="#{ListarMembrosEptsView.objSalvar.enderecoMembroEmpreendimento}" 
                                          size="57" maxlength="45"/>
                             <p:message for="endereco" />
 
                             <p:outputLabel for="rg" value="RG: " />
-                            <p:inputText id="rg" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.rgMembroEmpreendimento}" 
+                            <p:inputText id="rg" value="#{ListarMembrosEptsView.objSalvar.rgMembroEmpreendimento}" 
                                          size="57" maxlength="45"/>
                             <p:message for="rg" />
 
                             <p:outputLabel for="nis" value="NIS: " />
-                            <p:inputText id="nis" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nisMembroEmpreendimento}" 
+                            <p:inputText id="nis" value="#{ListarMembrosEptsView.objSalvar.nisMembroEmpreendimento}" 
                                          size="57" maxlength="45"/>
                             <p:message for="nis" />
 
                             <p:outputLabel for="telefone" value="Telefone: " />
-                            <p:inputMask id="telefone" value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneMembroEmpreendimento}"
+                            <p:inputMask id="telefone" value="#{ListarMembrosEptsView.objSalvar.telefoneMembroEmpreendimento}"
                                          mask="(99) 9999-9999?9" size="57" maxlength="11"/>
                             <p:message for="telefone" />
 
                             <p:outputLabel value="Telefone alternativo: " />
                             <p:inputMask id="telefoneAlternativo" mask="(99) 9999-9999?9" size="57" maxlength="11"
-                                         value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneAlternativoMembroEmpreendimento}" />
+                                         value="#{ListarMembrosEptsView.objSalvar.telefoneAlternativoMembroEmpreendimento}" />
                             <p:message for="telefoneAlternativo" />
 
                             <p:outputLabel for="dataNascimento" value="Data Nascimento: "/>
                             <p:calendar id="dataNascimento" requiredMessage="O campo data de nascimento é obrigatório." mask="true"
-                                        value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.dataNascimentoMembroEmpreendimento}"
+                                        value="#{ListarMembrosEptsView.objSalvar.dataNascimentoMembroEmpreendimento}"
                                         showOn="button" pattern="dd-MM-yyyy" size="8" required="true"  locale="pt"/>
                             <p:message for="dataNascimento" />
 
                             <p:outputLabel for="empreendimento" value="Empreendimento: "/>
                             <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório." 
-                                             value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.empreendimento}" style="width:500px" 
+                                             value="#{ListarMembrosEptsView.objSalvar.empreendimento}" style="width:500px" 
                                              converter="generic">
                                 <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
@@ -178,7 +181,7 @@
 
                             <p:outputLabel for="sexo" value="Sexo: "/>
                             <p:selectOneRadio id="sexo" required="true" requiredMessage="O campo Sexo é obrigatório."
-                                              value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.sexoMembroEmpreendimento}">
+                                              value="#{ListarMembrosEptsView.objSalvar.sexoMembroEmpreendimento}">
                                 <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
                                 <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
                             </p:selectOneRadio>
@@ -186,7 +189,7 @@
                         </h:panelGrid>
 
                         <p:separator />
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMembrosEptsView.editarView()}" 
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMembrosEptsView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagemMembrosEpts:pnlListagem" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>

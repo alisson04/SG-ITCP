@@ -15,7 +15,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -27,7 +26,8 @@ public class ListarPlanoAcaoView implements Serializable {
 
     PlanoAcaoBean bean = new PlanoAcaoBean();
     EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
-    private PlanoAcao planoAcaoSelecionado;
+    private PlanoAcao planoSelecionado;
+    private PlanoAcao objSalvar = new PlanoAcao();
     private List<PlanoAcao> listaPlanoAcao;
     private List<PlanoAcao> listaPlanoAcaoFiltrados;
     private List<Empreendimento> listaEmpreendimentos;
@@ -38,22 +38,28 @@ public class ListarPlanoAcaoView implements Serializable {
     public void ListarPlanosAcao() {
         try {
             listaEmpreendimentos = empreendimentoBean.listarBean();
-            listaPlanoAcao = bean.listarTodosPlanos();
+            listaPlanoAcao = bean.listarBean();
         } catch (RuntimeException ex) {
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
         }
     }
+    
+    public void transfereObj(){//Para botão de editar
+        objSalvar = planoSelecionado;
+    }
+
+    public void reiniciaObj(){//Para botão de cadastrar
+        System.out.println("objSalvar Reiniciado ====================== ");
+        objSalvar = new PlanoAcao();
+    }
 
     public void salvarView() {
         try {
-            bean.salvarPlanoBean(planoAcaoSelecionado);
-            planoAcaoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
-            //FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Plano de ação editado com sucesso!");
-            //RequestContext.getCurrentInstance().showMessageInDialog(message);
+            bean.salvarBean(objSalvar);
+            objSalvar = new PlanoAcao();
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('planoDialog').hide()");
+            context.execute("PF('wVarDlgEditar').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
-            
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext context = FacesContext.getCurrentInstance();
@@ -63,8 +69,8 @@ public class ListarPlanoAcaoView implements Serializable {
 
     public void excluirView() {
         try {
-            bean.excluirPlanoBean(planoAcaoSelecionado);
-            planoAcaoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            bean.excluirBean(planoSelecionado);
+            planoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
             FacesMessage msg = new FacesMessage("Plano de ação excluido com sucesso!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } catch (Exception ex) {
@@ -84,12 +90,12 @@ public class ListarPlanoAcaoView implements Serializable {
     }
 
     //SETS E GETS
-    public PlanoAcao getPlanoAcaoSelecionado() {
-        return planoAcaoSelecionado;
+    public PlanoAcao getPlanoSelecionado() {
+        return planoSelecionado;
     }
 
-    public void setPlanoAcaoSelecionado(PlanoAcao planoAcaoSelecionado) {
-        this.planoAcaoSelecionado = planoAcaoSelecionado;
+    public void setPlanoSelecionado(PlanoAcao planoSelecionado) {
+        this.planoSelecionado = planoSelecionado;
     }
 
     public List<PlanoAcao> getListaPlanoAcao() {
@@ -114,5 +120,13 @@ public class ListarPlanoAcaoView implements Serializable {
 
     public void setListaEmpreendimentos(List<Empreendimento> listaEmpreendimentos) {
         this.listaEmpreendimentos = listaEmpreendimentos;
+    }
+
+    public PlanoAcao getObjSalvar() {
+        return objSalvar;
+    }
+
+    public void setObjSalvar(PlanoAcao objSalvar) {
+        this.objSalvar = objSalvar;
     }
 }

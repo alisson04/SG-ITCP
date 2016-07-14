@@ -51,9 +51,13 @@
                             <p:commandButton id="btnVisualizarMeta" process="dtListagem" update=":frmListagem:carDetail" 
                                              icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarMetasView.metaSelecionada == null}"/>
+                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicao"
+                                             process="dtListagem" oncomplete="PF('wVarEditarDialog').show()"
+                                             actionListener="#{ListarMetasView.reiniciaObj()}"/>
                             <p:commandButton id="btnEditarEpt" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
                                              disabled="#{ListarMetasView.metaSelecionada == null}" process="dtListagem"
-                                             oncomplete="PF('wVarEditarDialog').show()"/>
+                                             oncomplete="PF('wVarEditarDialog').show()"
+                                             actionListener="#{ListarMetasView.transfereObj()}"/>
                             <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cross24-iconfinder" update=":frmListagem"
                                              disabled="#{ListarMetasView.metaSelecionada == null}" 
                                              actionListener="#{ListarMetasView.excluirView()}">
@@ -71,7 +75,7 @@
                     <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
                               styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
                               style="text-align:center;" >
-                        <h:outputText value="Edição concluida com sucesso! " />
+                        <h:outputText value="Salvo com sucesso! " />
                     </p:dialog>
 
                     <p:dialog id="diaShowUsr" header="Informações da meta" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
@@ -98,24 +102,24 @@
                 </p:panel>
             </h:form>
 
-            <p:dialog id="dlgEditar" header="Editar meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
+            <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
                       styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" style="text-align:right;">
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarMetasView.metaSelecionada.nome}" required="true" 
+                            <p:inputText id="nome" value="#{ListarMetasView.objSalvar.nome}" required="true" 
                                          requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputText id="descricao" value="#{ListarMetasView.metaSelecionada.descricao}" required="true" 
+                            <p:inputText id="descricao" value="#{ListarMetasView.objSalvar.descricao}" required="true" 
                                          requiredMessage="O campo Descrição é obrigatório." size="57" maxlength="45"/>
                             <p:message for="descricao" />
 
                             <p:outputLabel for="planoAcao" value="Plano de ação: "/>
                             <p:selectOneMenu id="planoAcao" required="true" requiredMessage="O plano de ação é obrigatório."
-                                             value="#{ListarMetasView.metaSelecionada.planoAcao}" style="width:662px" converter="generic">
+                                             value="#{ListarMetasView.objSalvar.planoAcao}" style="width:662px" converter="generic">
                                 <f:selectItem itemLabel="Selecione o plano de ação" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nomePlano}" 
                                                    itemValue="#{plano}"/>
@@ -123,19 +127,19 @@
                             <p:message for="planoAcao"/>
 
                             <p:outputLabel for="dataInicio" value="Data início:" />
-                            <p:calendar id="dataInicio" value="#{ListarMetasView.metaSelecionada.dataInicio}" showOn="button" 
+                            <p:calendar id="dataInicio" value="#{ListarMetasView.objSalvar.dataInicio}" showOn="button" 
                                         pattern="dd-MM-yyyy" size="8" required="true" requiredMessage="O campo Data início é obrigatório."
                                         mask="true" locale="pt"/>
                             <p:message for="dataInicio" />
 
                             <p:outputLabel for="dataFim" value="Data fim:" />
-                            <p:calendar id="dataFim" value="#{ListarMetasView.metaSelecionada.dataFim}" showOn="button" pattern="dd-MM-yyyy"
+                            <p:calendar id="dataFim" value="#{ListarMetasView.objSalvar.dataFim}" showOn="button" pattern="dd-MM-yyyy"
                                         size="8" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
                             <p:message for="dataFim" />
                         </h:panelGrid>
 
                         <p:separator />
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMetasView.editarView()}" 
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMetasView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>

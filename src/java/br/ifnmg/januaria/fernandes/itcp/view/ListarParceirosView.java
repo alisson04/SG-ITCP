@@ -1,7 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.ParceiroBean;
-import br.ifnmg.januaria.fernandes.itcp.dao.ParceiroDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,7 +10,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -21,6 +19,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class ListarParceirosView {
     private Parceiro parceiroSelecionado;
+    private Parceiro objSalvar = new Parceiro();
     private List<Parceiro> listaParceiros;
     private List<Parceiro> listaParceirosFiltrados;
     private ParceiroBean bean;
@@ -40,10 +39,19 @@ public class ListarParceirosView {
         }
     }
     
-    public void editarView() {
+    public void transfereObj(){//Para botão de editar
+        objSalvar = parceiroSelecionado;
+    }
+
+    public void reiniciaObj(){//Para botão de cadastrar
+        System.out.println("objSalvar Reiniciado ====================== ");
+        objSalvar = new Parceiro();
+    }
+    
+    public void salvarView() {
         try {
-            bean.salvarBean(parceiroSelecionado);
-            parceiroSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            bean.salvarBean(objSalvar);
+            objSalvar = new Parceiro();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
@@ -86,5 +94,13 @@ public class ListarParceirosView {
 
     public void setParceiroSelecionado(Parceiro parceiroSelecionado) {
         this.parceiroSelecionado = parceiroSelecionado;
+    }
+
+    public Parceiro getObjSalvar() {
+        return objSalvar;
+    }
+
+    public void setObjSalvar(Parceiro objSalvar) {
+        this.objSalvar = objSalvar;
     }
 }
