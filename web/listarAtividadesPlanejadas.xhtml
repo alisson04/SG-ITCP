@@ -86,9 +86,6 @@
                                 <h:outputText value="Nome: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.nome}" />
 
-                                <h:outputText value="Descrição: " />
-                                <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.descricao}" />
-
                                 <h:outputText value="Plano de ação: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.meta.nome}" />
 
@@ -97,6 +94,11 @@
 
                                 <h:outputText value="Data fim: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(ListarAtiviPlanejadasView.objSelecionado.dataFim)}" />
+                                
+                                <h:outputText value="Descrição: " />
+                                <p:scrollPanel mode="native" style="width:250px;height:100px">
+                                    <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.descricao}" />
+                                </p:scrollPanel>
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
@@ -104,23 +106,18 @@
             </h:form>
 
             <p:dialog id="dlgEditar" header="Atividade " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" style="text-align:right;">
+                      styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
-                        <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
+                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
                             <p:inputText id="nome" value="#{ListarAtiviPlanejadasView.objSalvar.nome}" required="true" 
-                                         requiredMessage="O campo Nome é obrigatório." size="48" maxlength="45"/>
+                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                             <p:message for="nome" />
-
-                            <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputText id="descricao" value="#{ListarAtiviPlanejadasView.objSalvar.descricao}" required="true" 
-                                         requiredMessage="O campo Descrição é obrigatório." size="48" maxlength="45"/>
-                            <p:message for="descricao" />
 
                             <p:outputLabel for="meta" value="Meta: "/>
                             <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
-                                             value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:465px" converter="generic">
+                                             value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:435px" converter="generic">
                                 <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarAtiviPlanejadasView.listaSelectOneMenu}" var="obj" itemLabel="#{obj.nome}" 
                                                itemValue="#{obj}"/>
@@ -129,14 +126,20 @@
 
                             <p:outputLabel for="dataInicio" value="Data início:" />
                             <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSalvar.dataInicio}"
-                                        pattern="dd-MM-yyyy" size="48" required="true" requiredMessage="O campo Data início é obrigatório."
+                                        pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
                                         mask="true" locale="pt"/>
                             <p:message for="dataInicio" />
 
                             <p:outputLabel for="dataFim" value="Data fim:" />
-                            <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSalvar.dataFim}" pattern="dd-MM-yyyy"
-                                        size="48" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                            <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSalvar.dataFim}" pattern="dd/MM/yyyy"
+                                        size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
                             <p:message for="dataFim" />
+                            
+                            <p:outputLabel for="descricao" value="Descrição: " />
+                            <p:inputTextarea id="descricao" value="#{ListarAtiviPlanejadasView.objSalvar.descricao}" required="true" 
+                                         requiredMessage="O campo Descrição é obrigatório." 
+                                         rows="5" cols="45" maxlength="200" autoResize="false" />
+                            <p:message for="descricao" />
                         </h:panelGrid>
 
                         <p:separator />

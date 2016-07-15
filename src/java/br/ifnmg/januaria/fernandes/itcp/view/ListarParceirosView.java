@@ -26,7 +26,6 @@ public class ListarParceirosView {
     
     public ListarParceirosView(){
         bean = new ParceiroBean();
-        parceiroSelecionado = new Parceiro();
     }
     
     public void listarTodosParceiros() {

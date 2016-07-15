@@ -40,7 +40,7 @@
                             <h:outputText value="#{empreendimentoCursor.email}"/>
                         </p:column>
 
-                        <p:column filterBy="#{empreendimentoCursor.situacaoEpt}" headerText="Processo de Incubação" filterMatchMode="exact">
+                        <p:column filterBy="#{empreendimentoCursor.situacaoEpt}" headerText="Fase de Incubação" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
@@ -106,7 +106,7 @@
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.faturamentoMedioAnualEmp}" />
                                 <p:outputLabel value="Atividades exercidas: "/>
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.atividadeExercidaEpt}" />
-                                <p:outputLabel value="Processo de Incubação: "/>
+                                <p:outputLabel value="Fase de incubação: "/>
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.situacaoEpt}" />
                             </p:panelGrid>
                         </p:outputPanel>
@@ -195,7 +195,7 @@
                                          size="45" maxlength="45" required="true" requiredMessage="O campo de Atividades exercidas é obrigatório."/>
                             <p:message for="atividadeExercida"/>
 
-                            <p:outputLabel for="situacaoEpt" value="Processo de Incubação: "/>
+                            <p:outputLabel for="situacaoEpt" value="Fase de Incubação: "/>
                             <p:selectOneMenu id="situacaoEpt" required="true" requiredMessage="O Processo de incubação é obrigatório."
                                              value="#{ListarEmpreendimentosView.objSalvar.situacaoEpt}" style="width:435px">
                                 <f:selectItem itemLabel="Selecione a situação" itemValue="" noSelectionOption="true" />

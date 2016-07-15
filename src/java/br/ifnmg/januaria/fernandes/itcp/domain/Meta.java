@@ -33,10 +33,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Meta")
 @NamedQueries({
     @NamedQuery(name = "Meta.findAll", query = "SELECT m FROM Meta m")})
-public class Meta implements Serializable, EntityConverter {
-
-    @OneToMany(mappedBy = "meta")
-    private List<AtividadePlanejada> atividadePlanejadaList;
+public class Meta implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,12 +58,14 @@ public class Meta implements Serializable, EntityConverter {
     private Date dataFim;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 200)
     @Column(name = "descricao")
     private String descricao;
     @JoinColumn(name = "idPlanoAcaoFk", referencedColumnName = "idPlanoAcao")
     @ManyToOne
     private PlanoAcao planoAcao;
+    @OneToMany(mappedBy = "meta")
+    private List<AtividadePlanejada> atividadePlanejadaList;
 
     public Meta() {
     }
@@ -81,11 +80,6 @@ public class Meta implements Serializable, EntityConverter {
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.descricao = descricao;
-    }
-    
-    @Override
-    public Integer getIdConverter(){
-        return idMeta;
     }
 
     public Integer getIdMeta() {
@@ -136,6 +130,14 @@ public class Meta implements Serializable, EntityConverter {
         this.planoAcao = planoAcao;
     }
 
+    public List<AtividadePlanejada> getAtividadePlanejadaList() {
+        return atividadePlanejadaList;
+    }
+
+    public void setAtividadePlanejadaList(List<AtividadePlanejada> atividadePlanejadaList) {
+        this.atividadePlanejadaList = atividadePlanejadaList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -159,14 +161,6 @@ public class Meta implements Serializable, EntityConverter {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Meta[ idMeta=" + idMeta + " ]";
-    }
-
-    public List<AtividadePlanejada> getAtividadePlanejadaList() {
-        return atividadePlanejadaList;
-    }
-
-    public void setAtividadePlanejadaList(List<AtividadePlanejada> atividadePlanejadaList) {
-        this.atividadePlanejadaList = atividadePlanejadaList;
     }
     
 }

@@ -80,7 +80,6 @@
 
                     <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade" header="Informações do usuário" modal="true"
                               resizable="false" draggable="false"   appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
-
                         <p:panelGrid  id="carDetail" columns="2" columnClasses="label,value" >
                             <h:outputText value="Nome: " />
                             <h:outputText value="#{ListarUsuariosView.objSelecionado.nomeUsuario}" />
@@ -121,10 +120,10 @@
             </h:form>
 
             <p:dialog id="dlgEditar" header="Usuário " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" style="text-align:right;">
+                      styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
-                        <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
+                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
                             <p:inputText id="nome" value="#{ListarUsuariosView.objSalvar.nomeUsuario}" required="true"
                                          requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>

@@ -44,9 +44,7 @@ public class MembroEmpreendimento implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nomeMembroEmpreendimento")
     private String nomeMembroEmpreendimento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "apelidoMembroEmpreendimento")
     private String apelidoMembroEmpreendimento;
     @Size(max = 45)
@@ -75,6 +73,10 @@ public class MembroEmpreendimento implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "sexoMembroEmpreendimento")
     private String sexoMembroEmpreendimento;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 45)
+    @Column(name = "email")
+    private String email;
     @JoinColumn(name = "empreendimentoFK", referencedColumnName = "idEpt")
     @ManyToOne
     private Empreendimento empreendimento;
@@ -86,10 +88,9 @@ public class MembroEmpreendimento implements Serializable {
         this.idMembroEmpreendimento = idMembroEmpreendimento;
     }
 
-    public MembroEmpreendimento(Integer idMembroEmpreendimento, String nomeMembroEmpreendimento, String apelidoMembroEmpreendimento, String sexoMembroEmpreendimento) {
+    public MembroEmpreendimento(Integer idMembroEmpreendimento, String nomeMembroEmpreendimento, String sexoMembroEmpreendimento) {
         this.idMembroEmpreendimento = idMembroEmpreendimento;
         this.nomeMembroEmpreendimento = nomeMembroEmpreendimento;
-        this.apelidoMembroEmpreendimento = apelidoMembroEmpreendimento;
         this.sexoMembroEmpreendimento = sexoMembroEmpreendimento;
     }
 
@@ -179,6 +180,14 @@ public class MembroEmpreendimento implements Serializable {
 
     public void setSexoMembroEmpreendimento(String sexoMembroEmpreendimento) {
         this.sexoMembroEmpreendimento = sexoMembroEmpreendimento;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Empreendimento getEmpreendimento() {

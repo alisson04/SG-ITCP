@@ -75,7 +75,7 @@
                     </p:dialog>
 
                     <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;">
+                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />                            
@@ -96,11 +96,11 @@
                 </p:panel>
             </h:form>
 
-            <p:dialog id="dlgEditar" header="Empreendimento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  dynamic="true" style="text-align:right;">
+            <p:dialog id="dlgEditar" header="Parceiro" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
+                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
-                        <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
+                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
                             <p:inputText id="nome" value="#{ListarParceirosView.objSalvar.nomeParceiro}" required="true"
                                          requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>

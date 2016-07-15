@@ -85,9 +85,6 @@
                                 <h:outputText value="Nome: " />
                                 <h:outputText value="#{ListarMetasView.metaSelecionada.nome}" />
 
-                                <h:outputText value="Descrição: " />
-                                <h:outputText value="#{ListarMetasView.metaSelecionada.descricao}" />
-
                                 <h:outputText value="Plano de ação: " />
                                 <h:outputText value="#{ListarMetasView.metaSelecionada.planoAcao.nomePlano}" />
 
@@ -96,6 +93,11 @@
 
                                 <h:outputText value="Data fim: " />
                                 <h:outputText value="#{ListarMetasView.conveteData(ListarMetasView.metaSelecionada.dataFim)}" />
+                                
+                                <h:outputText value="Descrição: " />
+                                <p:scrollPanel mode="native" style="width:250px;height:100px">
+                                    <h:outputText value="#{ListarMetasView.metaSelecionada.descricao}" />
+                                </p:scrollPanel>
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
@@ -103,23 +105,18 @@
             </h:form>
 
             <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
-                      styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" style="text-align:right;">
+                      styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
-                        <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
+                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
                             <p:inputText id="nome" value="#{ListarMetasView.objSalvar.nome}" required="true" 
-                                         requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
+                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                             <p:message for="nome" />
-
-                            <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputText id="descricao" value="#{ListarMetasView.objSalvar.descricao}" required="true" 
-                                         requiredMessage="O campo Descrição é obrigatório." size="57" maxlength="45"/>
-                            <p:message for="descricao" />
 
                             <p:outputLabel for="planoAcao" value="Plano de ação: "/>
                             <p:selectOneMenu id="planoAcao" required="true" requiredMessage="O plano de ação é obrigatório."
-                                             value="#{ListarMetasView.objSalvar.planoAcao}" style="width:662px" converter="generic">
+                                             value="#{ListarMetasView.objSalvar.planoAcao}" style="width:435px" converter="generic">
                                 <f:selectItem itemLabel="Selecione o plano de ação" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nomePlano}" 
                                                    itemValue="#{plano}"/>
@@ -127,15 +124,21 @@
                             <p:message for="planoAcao"/>
 
                             <p:outputLabel for="dataInicio" value="Data início:" />
-                            <p:calendar id="dataInicio" value="#{ListarMetasView.objSalvar.dataInicio}" showOn="button" 
-                                        pattern="dd-MM-yyyy" size="8" required="true" requiredMessage="O campo Data início é obrigatório."
+                            <p:calendar id="dataInicio" value="#{ListarMetasView.objSalvar.dataInicio}" 
+                                        pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
                                         mask="true" locale="pt"/>
                             <p:message for="dataInicio" />
 
                             <p:outputLabel for="dataFim" value="Data fim:" />
-                            <p:calendar id="dataFim" value="#{ListarMetasView.objSalvar.dataFim}" showOn="button" pattern="dd-MM-yyyy"
-                                        size="8" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                            <p:calendar id="dataFim" value="#{ListarMetasView.objSalvar.dataFim}" pattern="dd/MM/yyyy"
+                                        size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
                             <p:message for="dataFim" />
+                            
+                            <p:outputLabel for="descricao" value="Descrição: " />
+                            <p:inputTextarea id="descricao" value="#{ListarMetasView.objSalvar.descricao}" required="true" 
+                                         requiredMessage="O campo Descrição é obrigatório." 
+                                         rows="5" cols="45" maxlength="200" autoResize="false" />
+                            <p:message for="descricao" />
                         </h:panelGrid>
 
                         <p:separator />
