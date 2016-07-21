@@ -33,7 +33,7 @@ import javax.validation.constraints.Size;
 @Table(name = "PlanoAcao")
 @NamedQueries({
     @NamedQuery(name = "PlanoAcao.findAll", query = "SELECT p FROM PlanoAcao p")})
-public class PlanoAcao implements Serializable {
+public class PlanoAcao implements Serializable, EntityConverter   {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -80,6 +80,11 @@ public class PlanoAcao implements Serializable {
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.descricao = descricao;
+    }
+    
+    @Override
+    public Integer getIdConverter(){
+        return idPlanoAcao;
     }
 
     public Integer getIdPlanoAcao() {

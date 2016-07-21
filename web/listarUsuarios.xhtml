@@ -40,6 +40,9 @@
                             </f:facet>
                             <h:outputText value="#{usuarioCursor.cargoUsuario}" />
                         </p:column>
+                        <p:column headerText="Situação no sistema" sortBy="#{usuarioCursor.statusSistemaUsuario}" >
+                            <h:outputText value="#{usuarioCursor.statusSistemaUsuario}"/>
+                        </p:column>
 
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizarusr" process="ListagemUsuarios" update=":frmListagemUsuarios:carDetail" 
@@ -92,6 +95,9 @@
 
                             <h:outputText value="Cargo: "/>
                             <h:outputText value="#{ListarUsuariosView.objSelecionado.cargoUsuario}"/>
+                            
+                            <h:outputText value="Situação no sistema: "/>
+                            <h:outputText value="#{ListarUsuariosView.objSelecionado.statusSistemaUsuario}"/>
 
                             <h:outputText value="Telefone: " />
                             <h:outputText value="#{ListarUsuariosView.objSelecionado.telefoneUsuario}" />
@@ -158,7 +164,7 @@
                             <p:outputLabel for="cpf" value="CPF: " />
                             <p:inputMask id="cpf" value="#{ListarUsuariosView.objSalvar.cpfUsuario}"
                                          mask="999-999-999.99" required="true" size="45" maxlength="11"
-                                         requiredMessage="O campo CPF é obrigatório."/>   
+                                         requiredMessage="O CPF é obrigatório."/>   
                             <p:message for="cpf"/>
 
                             <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
@@ -189,6 +195,8 @@
                             </p:selectOneRadio>
                             <p:message for="sexo" />
                         </h:panelGrid>
+
+                        <p:outputLabel value="* Campos obrigatórios" />
 
                         <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarUsuariosView.salvarView()}" 

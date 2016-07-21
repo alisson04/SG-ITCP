@@ -28,11 +28,11 @@
                         <p:column headerText="Nome" filterBy="#{metaCursor.nome}" sortBy="#{metaCursor.nome}" filterMatchMode="contains">
                             <h:outputText value="#{metaCursor.nome}"/>
                         </p:column>
-                        <p:column headerText="Data início" filterBy="#{ListarMetasView.conveteData(metaCursor.dataInicio)}" 
+                        <p:column headerText="Prazo de início" filterBy="#{ListarMetasView.conveteData(metaCursor.dataInicio)}" 
                                   filterMatchMode="contains">
                             <h:outputText value="#{ListarMetasView.conveteData(metaCursor.dataInicio)}" />
                         </p:column>
-                        <p:column headerText="Data fim" filterBy="#{ListarMetasView.conveteData(metaCursor.dataFim)}" filterMatchMode="contains">
+                        <p:column headerText="Prazo de fim" filterBy="#{ListarMetasView.conveteData(metaCursor.dataFim)}" filterMatchMode="contains">
                             <h:outputText value="#{ListarMetasView.conveteData(metaCursor.dataFim)}" />
                         </p:column>
 
@@ -88,14 +88,14 @@
                                 <h:outputText value="Plano de ação: " />
                                 <h:outputText value="#{ListarMetasView.metaSelecionada.planoAcao.nomePlano}" />
 
-                                <h:outputText value="Data início: " />
+                                <h:outputText value="Prazo de início: " />
                                 <h:outputText value="#{ListarMetasView.conveteData(ListarMetasView.metaSelecionada.dataInicio)}" />
 
-                                <h:outputText value="Data fim: " />
+                                <h:outputText value="Prazo de fim: " />
                                 <h:outputText value="#{ListarMetasView.conveteData(ListarMetasView.metaSelecionada.dataFim)}" />
                                 
                                 <h:outputText value="Descrição: " />
-                                <p:scrollPanel mode="native" style="width:250px;height:100px">
+                                <p:scrollPanel mode="native" style="width:435px;height:100px">
                                     <h:outputText value="#{ListarMetasView.metaSelecionada.descricao}" />
                                 </p:scrollPanel>
                             </p:panelGrid>
@@ -123,13 +123,13 @@
                             </p:selectOneMenu>
                             <p:message for="planoAcao"/>
 
-                            <p:outputLabel for="dataInicio" value="Data início:" />
+                            <p:outputLabel for="dataInicio" value="Prazo de início:" />
                             <p:calendar id="dataInicio" value="#{ListarMetasView.objSalvar.dataInicio}" 
                                         pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
                                         mask="true" locale="pt"/>
                             <p:message for="dataInicio" />
 
-                            <p:outputLabel for="dataFim" value="Data fim:" />
+                            <p:outputLabel for="dataFim" value="Prazo de fim:" />
                             <p:calendar id="dataFim" value="#{ListarMetasView.objSalvar.dataFim}" pattern="dd/MM/yyyy"
                                         size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
                             <p:message for="dataFim" />
@@ -140,6 +140,8 @@
                                          rows="5" cols="45" maxlength="200" autoResize="false" />
                             <p:message for="descricao" />
                         </h:panelGrid>
+
+                        <p:outputLabel value="* Campos obrigatórios" />
 
                         <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMetasView.salvarView()}" 

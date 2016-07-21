@@ -33,7 +33,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Meta")
 @NamedQueries({
     @NamedQuery(name = "Meta.findAll", query = "SELECT m FROM Meta m")})
-public class Meta implements Serializable {
+public class Meta implements Serializable, EntityConverter {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -80,6 +80,11 @@ public class Meta implements Serializable {
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.descricao = descricao;
+    }
+    
+    @Override
+    public Integer getIdConverter(){
+        return idMeta;
     }
 
     public Integer getIdMeta() {

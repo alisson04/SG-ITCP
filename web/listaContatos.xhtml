@@ -12,7 +12,7 @@
                 <f:event listener="#{ListarEmpreendimentosView.listarTodosEmpreendimentos()}" type="preRenderView"/>
                 <f:event listener="#{ListarParceirosView.listarTodosParceiros()}" type="preRenderView"/>
                 <f:event listener="#{ListarMembrosEptsView.ListarMembrosEpts()}" type="preRenderView"/>
-                <f:event listener="#{ListarUsuariosView.ListarTodosUsers()}" type="preRenderView"/>
+                
             </f:metadata>
         </ui:define>
 
@@ -27,7 +27,7 @@
                 </p:toolbar>
                 <p:panel styleClass="corPanel" header="Lista de contatos:" >
                     <p:tabView>
-                        <p:tab title="Usuários ativos">
+                        <p:tab title="Usuários ativos" >
                             <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
                                          var="usuarioCursor" widgetVar="varGlobalUsuarios" rows="12" paginator="true" paginatorPosition="top">
                                 <p:column headerText="Nome: " filterBy="#{usuarioCursor.nomeUsuario}" 
@@ -66,14 +66,14 @@
                                          value="#{ListarEmpreendimentosView.listaEmpreendimentos}" rows="12" paginator="true" paginatorPosition="top"
                                          var="empreendimentoCursor" widgetVar="varGlobalEmpreendimentos">
 
-                                <p:column headerText="Nome fantasia:" filterBy="#{empreendimentoCursor.nomeFantasiaEpt}" 
-                                          sortBy="#{empreendimentoCursor.nomeFantasiaEpt}" filterMatchMode="contains">
-                                    <h:outputText value="#{empreendimentoCursor.nomeFantasiaEpt}"/>
+                                <p:column headerText="Nome fantasia:" filterBy="#{empreendimentoCursor.nome}" 
+                                          sortBy="#{empreendimentoCursor.nome}" filterMatchMode="contains">
+                                    <h:outputText value="#{empreendimentoCursor.nome}"/>
                                 </p:column>
 
-                                <p:column headerText="E-mail: " filterBy="#{empreendimentoCursor.emailEpt}" 
-                                          sortBy="#{empreendimentoCursor.emailEpt}" filterMatchMode="contains">
-                                    <h:outputText value="#{empreendimentoCursor.emailEpt}"/>
+                                <p:column headerText="E-mail: " filterBy="#{empreendimentoCursor.email}" 
+                                          sortBy="#{empreendimentoCursor.email}" filterMatchMode="contains">
+                                    <h:outputText value="#{empreendimentoCursor.email}"/>
                                 </p:column>
 
                                 <p:column headerText="Telefone: " filterBy="#{empreendimentoCursor.telefoneEpt}" filterMatchMode="contains">
@@ -128,11 +128,11 @@
                                     <f:facet name="filter">
                                         <p:selectOneMenu onchange="PF('varGlobalMembro').filter()" >
                                             <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                            <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nomeEpt}" 
+                                            <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
                                                            itemValue="#{ept}"/>
                                         </p:selectOneMenu>
                                     </f:facet>
-                                    <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.nomeEpt}" />
+                                    <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.nome}" />
                                 </p:column>
                             </p:dataTable>
                         </p:tab>

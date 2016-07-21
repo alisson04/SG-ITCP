@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/templates/modeloGeral.xhtml">
+        <ui:define name="conteudo" >
+            <h:form id="frmCadastro" >
+                <p:growl id="growl" sticky="true" showDetail="true"/>
+
+                <p:wizard id="wzCadastro" flowListener="#{CadastrarPlanoAcaoView.onFlowProcess}" backLabel="voltar" nextLabel="avançar">
+                    <p:tab id="personal" title="Plano de ação">
+                        <p:panel id="panel" header="Adicionar informações do plano">
+                            <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                                <p:outputLabel for="nome" value="Nome:" />
+                                <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.objSalvar.nomePlano}" required="true"
+                                             requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                                <p:message for="nome" />
+
+                                <p:outputLabel for="empreendimento" value="Empreendimento: "/>
+                                <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório."
+                                                 value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento}" style="width:435px"
+                                                 converter="generic">
+                                    <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{CadastrarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
+                                                   itemValue="#{ept}"/>
+                                </p:selectOneMenu>
+                                <p:message for="empreendimento"/>
+
+                                <p:outputLabel for="dataInicio" value="Data de início: " />
+                                <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.objSalvar.dataInicio}" pattern="dd/MM/yyyy" 
+                                            size="45" mask="true" locale="pt" required="true" requiredMessage="O campo data de início é obrigatório."/>
+                                <p:message for="dataInicio"/>
+
+                                <p:outputLabel for="dataFim" value="Data de fim: " />
+                                <p:calendar id="dataFim" value="#{CadastrarPlanoAcaoView.objSalvar.dataFim}" pattern="dd/MM/yyyy" 
+                                            size="45" mask="true" locale="pt" required="true" requiredMessage="O campo data de fim é obrigatório."/>
+                                <p:message for="dataInicio"/>
+
+                                <p:outputLabel for="descricao" value="Descrição: " />
+                                <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.objSalvar.descricao}" required="true" 
+                                                 requiredMessage="O campo Descrição é obrigatório." 
+                                                 rows="5" cols="45" maxlength="200" autoResize="false" />
+                                <p:message for="descricao" />
+
+                                <p:watermark for="nome" value="Nome completo" />
+                                <p:watermark for="dataInicio" value="Data que o plano de ação começará a ser executado" />
+                                <p:watermark for="dataFim" value="Data limite para que o plano de ação seja finalizado" />
+                                <p:watermark for="descricao" value="Uma breve descrição. (Limite de 200 caracteres)" />
+                            </h:panelGrid>
+
+                            <p:outputLabel value="* Campos obrigatórios" />
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="tabMetas" title="Metas">
+                        <p:panel header="Adicionar metas ao plano" >
+                            <p:panel >
+                                <h:panelGrid  columns="2" columnClasses="label,value" >
+                                    <h:outputText value="Nome: " />
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.nomePlano}" />  
+
+                                    <h:outputText value="Empreendimento: " />
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento.nome}" />    
+
+                                    <h:outputText value="Data de início: " />
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(CadastrarPlanoAcaoView.objSalvar.dataInicio)}" />
+
+                                    <h:outputText value="Data de fim: " />
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(CadastrarPlanoAcaoView.objSalvar.dataFim)}" />
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel styleClass="corPanel" header="Metas no sistema:" style="margin-top: 30px">
+                                <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." value="#{CadastrarPlanoAcaoView.listaSalvarMetas}"                                                                                           
+                                             var="metaCursor" widgetVar="varGlobal" 
+                                             selectionMode="single" selection="#{CadastrarPlanoAcaoView.metaSelecionada}" rowKey="#{metaCursor.nome}" >
+                                    <p:column headerText="Nome" >
+                                        <h:outputText value="#{metaCursor.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Prazo de início" >
+                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(metaCursor.dataInicio)}" />
+                                    </p:column>
+                                    <p:column headerText="Prazo de fim" >
+                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(metaCursor.dataFim)}" />
+                                    </p:column>
+                                    <p:column headerText="Descrição" >
+                                        <h:outputText value="#{metaCursor.descricao}" />
+                                    </p:column>
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicao"
+                                                         oncomplete="PF('wVarEditarDialog').show()"
+                                                         actionListener="#{CadastrarPlanoAcaoView.reiniciaObj('meta')}" />
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:panel>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="tabAtividades" title="Atividades">
+                        <p:panel header="Adicionar atividades" >
+                            <p:panel styleClass="corPanel" header="Atividades cadastradas" style="margin-top: 30px">
+                                <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada." 
+                                             value="#{CadastrarPlanoAcaoView.listaSalvarAtividades}"                                                                                           
+                                             var="atividadeCursor" widgetVar="varGlobalAtividade" selectionMode="single" 
+                                             selection="#{CadastrarPlanoAcaoView.atividadeSelecionada}" rowKey="#{atividadeCursor.nome}" >
+                                    <p:column headerText="Nome" >
+                                        <h:outputText value="#{atividadeCursor.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Prazo de início" >
+                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.dataInicio)}" />
+                                    </p:column>
+                                    <p:column headerText="Prazo de fim" >
+                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.dataFim)}" />
+                                    </p:column>
+                                    <p:column headerText="Descrição" >
+                                        <h:outputText value="#{atividadeCursor.descricao}" />
+                                    </p:column>
+                                    <p:column headerText="Meta" >
+                                        <h:outputText value="#{atividadeCursor.meta.nome}" />
+                                    </p:column>
+
+                                    <f:facet name="footer">
+                                        <p:commandButton value="Cadastrar" icon="Add24-iconfinder" oncomplete="PF('wVarEditarAtividadeDialog').show()"
+                                                         update=":frmEdicaoAtividade" actionListener="#{CadastrarPlanoAcaoView.reiniciaObj('atividade')}"/>
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:panel>
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
+                                 style="text-align:center;">
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
+                </p:confirmDialog>
+
+                <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
+                          styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" style="text-align:center;" >
+                    <h:outputText value="Salvo com sucesso! " />
+                </p:dialog>
+            </h:form>
+
+            <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
+                      styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
+                <h:form id="frmEdicao">
+                    <p:panel id="panel" styleClass="corPanel" >
+                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                            <p:outputLabel for="nome" value="Nome: " />
+                            <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.metaSalvar.nome}" required="true" 
+                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                            <p:message for="nome" />
+
+                            <p:outputLabel for="dataInicio" value="Prazo de início:" />
+                            <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.metaSalvar.dataInicio}" 
+                                        pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
+                                        mask="true" locale="pt"/>
+                            <p:message for="dataInicio" />
+
+                            <p:outputLabel for="dataFim" value="Prazo de fim:" />
+                            <p:calendar id="dataFim" value="#{CadastrarPlanoAcaoView.metaSalvar.dataFim}" pattern="dd/MM/yyyy"
+                                        size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                            <p:message for="dataFim" />
+
+                            <p:outputLabel for="descricao" value="Descrição: " />
+                            <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.metaSalvar.descricao}" required="true" 
+                                             requiredMessage="O campo Descrição é obrigatório." 
+                                             rows="5" cols="45" maxlength="200" autoResize="false" />
+                            <p:message for="descricao" />
+                        </h:panelGrid>
+
+                        <p:outputLabel value="* Campos obrigatórios" />
+
+                        <p:separator />
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{CadastrarPlanoAcaoView.adicionarMeta()}" 
+                                         icon="Save24-iconfinder" update="frmCadastro:dtListagem, frmEdicao" >
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                        </p:commandButton>
+
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                    </p:panel>
+                </h:form>
+            </p:dialog>
+            
+            <p:dialog id="dlgEditarAtividade" header="Atividade" widgetVar="wVarEditarAtividadeDialog" showEffect="fade" hideEffect="fade" modal="true"
+                      styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
+                <h:form id="frmEdicaoAtividade">
+                    <p:panel styleClass="corPanel" >
+                        <h:panelGrid style="text-align:right;" columns="3">
+                            <p:outputLabel for="nome" value="Nome: " />
+                            <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.atividadeSalvar.nome}" required="true" 
+                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                            <p:message for="nome" />
+                            
+                            <p:outputLabel for="meta" value="Meta: "/>
+                            <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
+                                             value="#{CadastrarPlanoAcaoView.atividadeSalvar.meta}" style="width:435px" converter="generic">
+                                <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{CadastrarPlanoAcaoView.listaSalvarMetas}" var="obj" itemLabel="#{obj.nome}" 
+                                               itemValue="#{obj}"/>
+                            </p:selectOneMenu>
+                            <p:message for="meta"/>
+
+                            <p:outputLabel for="dataInicio" value="Prazo de início:" />
+                            <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.atividadeSalvar.dataInicio}" 
+                                        pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
+                                        mask="true" locale="pt"/>
+                            <p:message for="dataInicio" />
+
+                            <p:outputLabel for="dataFim" value="Prazo de fim:" />
+                            <p:calendar id="dataFim" value="#{CadastrarPlanoAcaoView.atividadeSalvar.dataFim}" pattern="dd/MM/yyyy"
+                                        size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                            <p:message for="dataFim" />
+
+                            <p:outputLabel for="descricao" value="Descrição: " />
+                            <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.atividadeSalvar.descricao}" required="true" 
+                                             requiredMessage="O campo Descrição é obrigatório." 
+                                             rows="5" cols="45" maxlength="200" autoResize="false" />
+                            <p:message for="descricao" />
+                        </h:panelGrid>
+
+                        <p:outputLabel value="* Campos obrigatórios" />
+
+                        <p:separator />
+                        <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.adicionarAtividade()}" 
+                                         icon="Save24-iconfinder" update="frmCadastro:dtListagemAtividades, frmEdicaoAtividade" >
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                        </p:commandButton>
+
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                    </p:panel>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>

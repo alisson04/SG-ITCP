@@ -37,6 +37,8 @@ public class ListarUsuariosView implements Serializable {
         cargos[5] = "Bolsista - PIBED";
         cargos[6] = "Bolsista - PIBIC";
         cargos[7] = "Bolsista - PROEXT";
+        
+        listaUsuarios = bean.listarBean();
     }
 
     public void transfereObj() {//Para botão de editar

@@ -86,14 +86,14 @@
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />                            
                                 <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.nomePlano}" />
+                                <h:outputText value="Empreendimento: " />
+                                <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.empreendimento.nome}" />
                                 <h:outputText value="Data de início: " />
                                 <h:outputText value="#{ListarPlanoAcaoView.conveteData(ListarPlanoAcaoView.planoSelecionado.dataInicio)}" />
                                 <h:outputText value="Data de fim: " />
                                 <h:outputText value="#{ListarPlanoAcaoView.conveteData(ListarPlanoAcaoView.planoSelecionado.dataFim)}" />
-                                <h:outputText value="Empreendimento: " />
-                                <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.empreendimento.nome}" />
                                 <h:outputText value="Descrição: " />
-                                <p:scrollPanel mode="native" style="width:250px;height:100px">
+                                <p:scrollPanel mode="native" style="width:435px;height:100px">
                                     <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.descricao}" />
                                 </p:scrollPanel>
                             </p:panelGrid>
@@ -107,10 +107,20 @@
                 <h:form id="frmEdicaoPlano" >
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                            <p:outputLabel for="nome" value="Nome: " />
+                            <p:outputLabel for="nome" value="Nome:" />
                             <p:inputText id="nome" value="#{ListarPlanoAcaoView.objSalvar.nomePlano}" required="true"
                                          requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                             <p:message for="nome" />
+
+                            <p:outputLabel for="empreendimento" value="Empreendimento: "/>
+                            <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório."
+                                             value="#{ListarPlanoAcaoView.objSalvar.empreendimento}" style="width:435px"
+                                             converter="generic">
+                                <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
+                                               itemValue="#{ept}"/>
+                            </p:selectOneMenu>
+                            <p:message for="empreendimento"/>
 
                             <p:outputLabel for="dataInicio" value="Data de início: " />
                             <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.objSalvar.dataInicio}" pattern="dd/MM/yyyy" 
@@ -121,24 +131,18 @@
                             <p:calendar id="dataFim" value="#{ListarPlanoAcaoView.objSalvar.dataFim}" pattern="dd/MM/yyyy" 
                                         size="45" mask="true" locale="pt" required="true" requiredMessage="O campo data de fim é obrigatório."/>
                             <p:message for="dataInicio"/>
-                            
-                            <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                            <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório."
-                                             value="#{ListarPlanoAcaoView.objSalvar.empreendimento}" style="width:435px"
-                                             converter="generic">
-                                <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
-                                               itemValue="#{ept}"/>
-                            </p:selectOneMenu>
-                            <p:message for="empreendimento"/>
-                            
+
                             <p:outputLabel for="descricao" value="Descrição: " />
                             <p:inputTextarea id="descricao" value="#{ListarPlanoAcaoView.objSalvar.descricao}" required="true" 
-                                         requiredMessage="O campo Descrição é obrigatório." 
-                                         rows="5" cols="45" maxlength="200" autoResize="false" />
+                                             requiredMessage="O campo Descrição é obrigatório." 
+                                             rows="5" cols="45" maxlength="200" autoResize="false" />
                             <p:message for="descricao" />
+                            
+                            <p:watermark for="nome" value="Nome completo" />
                         </h:panelGrid>
 
+                        <p:outputLabel value="* Campos obrigatórios" />
+                        
                         <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarPlanoAcaoView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicaoPlano, :frmListagemPlanosAcao:panelListagemPlanosAcao" >

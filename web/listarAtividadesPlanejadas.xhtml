@@ -6,7 +6,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-
         <ui:define name="metadata">
             <f:metadata>
                 <f:event listener="#{ListarAtiviPlanejadasView.listarView()}" type="preRenderView"/>
@@ -85,18 +84,14 @@
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.nome}" />
-
                                 <h:outputText value="Plano de ação: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.meta.nome}" />
-
                                 <h:outputText value="Data início: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(ListarAtiviPlanejadasView.objSelecionado.dataInicio)}" />
-
                                 <h:outputText value="Data fim: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(ListarAtiviPlanejadasView.objSelecionado.dataFim)}" />
-                                
                                 <h:outputText value="Descrição: " />
-                                <p:scrollPanel mode="native" style="width:250px;height:100px">
+                                <p:scrollPanel mode="native" style="width:435px;height:100px">
                                     <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.descricao}" />
                                 </p:scrollPanel>
                             </p:panelGrid>
@@ -134,13 +129,15 @@
                             <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSalvar.dataFim}" pattern="dd/MM/yyyy"
                                         size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
                             <p:message for="dataFim" />
-                            
+
                             <p:outputLabel for="descricao" value="Descrição: " />
                             <p:inputTextarea id="descricao" value="#{ListarAtiviPlanejadasView.objSalvar.descricao}" required="true" 
-                                         requiredMessage="O campo Descrição é obrigatório." 
-                                         rows="5" cols="45" maxlength="200" autoResize="false" />
+                                             requiredMessage="O campo Descrição é obrigatório." 
+                                             rows="5" cols="45" maxlength="200" autoResize="false" />
                             <p:message for="descricao" />
                         </h:panelGrid>
+
+                        <p:outputLabel value="* Campos obrigatórios" />
 
                         <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAtiviPlanejadasView.salvarView()}" 
