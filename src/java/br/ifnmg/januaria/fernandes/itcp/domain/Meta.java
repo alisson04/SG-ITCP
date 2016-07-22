@@ -48,20 +48,13 @@ public class Meta implements Serializable, EntityConverter {
     private String nome;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "dataInicio")
+    @Column(name = "prazo")
     @Temporal(TemporalType.DATE)
-    private Date dataInicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "dataFim")
-    @Temporal(TemporalType.DATE)
-    private Date dataFim;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+    private Date prazo;
+    @Size(max = 200)
     @Column(name = "descricao")
     private String descricao;
-    @JoinColumn(name = "idPlanoAcaoFk", referencedColumnName = "idPlanoAcao")
+    @JoinColumn(name = "idPlanoAcaoFk", referencedColumnName = "id")
     @ManyToOne
     private PlanoAcao planoAcao;
     @OneToMany(mappedBy = "meta")
@@ -74,12 +67,10 @@ public class Meta implements Serializable, EntityConverter {
         this.idMeta = idMeta;
     }
 
-    public Meta(Integer idMeta, String nome, Date dataInicio, Date dataFim, String descricao) {
+    public Meta(Integer idMeta, String nome, Date prazo) {
         this.idMeta = idMeta;
         this.nome = nome;
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
-        this.descricao = descricao;
+        this.prazo = prazo;
     }
     
     @Override
@@ -103,20 +94,12 @@ public class Meta implements Serializable, EntityConverter {
         this.nome = nome;
     }
 
-    public Date getDataInicio() {
-        return dataInicio;
+    public Date getPrazo() {
+        return prazo;
     }
 
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public Date getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
+    public void setPrazo(Date prazo) {
+        this.prazo = prazo;
     }
 
     public String getDescricao() {

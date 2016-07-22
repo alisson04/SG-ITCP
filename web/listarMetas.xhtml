@@ -28,23 +28,20 @@
                         <p:column headerText="Nome" filterBy="#{metaCursor.nome}" sortBy="#{metaCursor.nome}" filterMatchMode="contains">
                             <h:outputText value="#{metaCursor.nome}"/>
                         </p:column>
-                        <p:column headerText="Prazo de início" filterBy="#{ListarMetasView.conveteData(metaCursor.dataInicio)}" 
+                        <p:column headerText="Prazo" filterBy="#{ListarMetasView.conveteData(metaCursor.prazo)}" 
                                   filterMatchMode="contains">
-                            <h:outputText value="#{ListarMetasView.conveteData(metaCursor.dataInicio)}" />
-                        </p:column>
-                        <p:column headerText="Prazo de fim" filterBy="#{ListarMetasView.conveteData(metaCursor.dataFim)}" filterMatchMode="contains">
-                            <h:outputText value="#{ListarMetasView.conveteData(metaCursor.dataFim)}" />
+                            <h:outputText value="#{ListarMetasView.conveteData(metaCursor.prazo)}" />
                         </p:column>
 
                         <p:column filterBy="#{metaCursor.planoAcao}" headerText="Empreendimento" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nomePlano}" 
+                                    <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nome}" 
                                                    itemValue="#{plano}"/>
                                 </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{metaCursor.planoAcao.nomePlano}" />
+                            <h:outputText value="#{metaCursor.planoAcao.nome}" />
                         </p:column>
 
                         <f:facet name="footer">
@@ -86,13 +83,10 @@
                                 <h:outputText value="#{ListarMetasView.metaSelecionada.nome}" />
 
                                 <h:outputText value="Plano de ação: " />
-                                <h:outputText value="#{ListarMetasView.metaSelecionada.planoAcao.nomePlano}" />
+                                <h:outputText value="#{ListarMetasView.metaSelecionada.planoAcao.nome}" />
 
                                 <h:outputText value="Prazo de início: " />
-                                <h:outputText value="#{ListarMetasView.conveteData(ListarMetasView.metaSelecionada.dataInicio)}" />
-
-                                <h:outputText value="Prazo de fim: " />
-                                <h:outputText value="#{ListarMetasView.conveteData(ListarMetasView.metaSelecionada.dataFim)}" />
+                                <h:outputText value="#{ListarMetasView.conveteData(ListarMetasView.metaSelecionada.prazo)}" />
                                 
                                 <h:outputText value="Descrição: " />
                                 <p:scrollPanel mode="native" style="width:435px;height:100px">
@@ -123,20 +117,14 @@
                             </p:selectOneMenu>
                             <p:message for="planoAcao"/>
 
-                            <p:outputLabel for="dataInicio" value="Prazo de início:" />
-                            <p:calendar id="dataInicio" value="#{ListarMetasView.objSalvar.dataInicio}" 
+                            <p:outputLabel for="dataInicio" value="Prazo:" />
+                            <p:calendar id="dataInicio" value="#{ListarMetasView.objSalvar.prazo}" 
                                         pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
                                         mask="true" locale="pt"/>
                             <p:message for="dataInicio" />
-
-                            <p:outputLabel for="dataFim" value="Prazo de fim:" />
-                            <p:calendar id="dataFim" value="#{ListarMetasView.objSalvar.dataFim}" pattern="dd/MM/yyyy"
-                                        size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
-                            <p:message for="dataFim" />
                             
                             <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputTextarea id="descricao" value="#{ListarMetasView.objSalvar.descricao}" required="true" 
-                                         requiredMessage="O campo Descrição é obrigatório." 
+                            <p:inputTextarea id="descricao" value="#{ListarMetasView.objSalvar.descricao}"
                                          rows="5" cols="45" maxlength="200" autoResize="false" />
                             <p:message for="descricao" />
                         </h:panelGrid>

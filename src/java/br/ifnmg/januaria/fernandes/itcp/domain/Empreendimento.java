@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Empreendimento")
 @NamedQueries({
     @NamedQuery(name = "Empreendimento.findAll", query = "SELECT e FROM Empreendimento e")})
-public class Empreendimento implements Serializable, EntityConverter  {
+public class Empreendimento implements Serializable, EntityConverter {
 
     @OneToMany(mappedBy = "empreendimento")
     private List<PlanoAcao> planoAcaoList;

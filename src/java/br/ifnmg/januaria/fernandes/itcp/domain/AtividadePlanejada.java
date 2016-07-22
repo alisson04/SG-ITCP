@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
 @Table(name = "AtividadePlanejada")
 @NamedQueries({
     @NamedQuery(name = "AtividadePlanejada.findAll", query = "SELECT a FROM AtividadePlanejada a")})
-public class AtividadePlanejada implements Serializable {
+public class AtividadePlanejada implements Serializable, EntityConverter {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,11 +46,6 @@ public class AtividadePlanejada implements Serializable {
     private String nome;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 200)
-    @Column(name = "descricao")
-    private String descricao;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "dataInicio")
     @Temporal(TemporalType.DATE)
     private Date dataInicio;
@@ -59,6 +54,9 @@ public class AtividadePlanejada implements Serializable {
     @Column(name = "dataFim")
     @Temporal(TemporalType.DATE)
     private Date dataFim;
+    @Size(max = 200)
+    @Column(name = "descricao")
+    private String descricao;
     @JoinColumn(name = "metafk", referencedColumnName = "idMeta")
     @ManyToOne
     private Meta meta;
@@ -70,12 +68,16 @@ public class AtividadePlanejada implements Serializable {
         this.id = id;
     }
 
-    public AtividadePlanejada(Integer id, String nome, String descricao, Date dataInicio, Date dataFim) {
+    public AtividadePlanejada(Integer id, String nome, Date dataInicio, Date dataFim) {
         this.id = id;
         this.nome = nome;
-        this.descricao = descricao;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
+    }
+    
+    @Override
+    public Integer getIdConverter(){
+        return id;
     }
 
     public Integer getId() {
@@ -94,14 +96,6 @@ public class AtividadePlanejada implements Serializable {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public Date getDataInicio() {
         return dataInicio;
     }
@@ -116,6 +110,14 @@ public class AtividadePlanejada implements Serializable {
 
     public void setDataFim(Date dataFim) {
         this.dataFim = dataFim;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public Meta getMeta() {

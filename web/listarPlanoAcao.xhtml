@@ -21,12 +21,12 @@
                     <p:dataTable id="dtListagemPlanosAcao" emptyMessage="Nenhum plano de ação encontrado." var="planoAcaoCursor"
                                  value="#{ListarPlanoAcaoView.listaPlanoAcao}" filteredValue="#{ListarPlanoAcaoView.listaPlanoAcaoFiltrados}" 
                                  selectionMode="single" selection="#{ListarPlanoAcaoView.planoSelecionado}" paginatorPosition="top"
-                                 rowKey="#{planoAcaoCursor.idPlanoAcao}"  widgetVar="varGlobal" rows="12" paginator="true" >
+                                 rowKey="#{planoAcaoCursor.id}"  widgetVar="varGlobal" rows="12" paginator="true" >
 
                         <p:ajax event="rowSelect" update=":frmListagemPlanosAcao"/>
 
                         <p:column headerText="Nome" filterBy="#{planoAcaoCursor.descricao}" filterMatchMode="contains">
-                            <h:outputText value="#{planoAcaoCursor.nomePlano}"/>
+                            <h:outputText value="#{planoAcaoCursor.nome}"/>
                         </p:column>
 
                         <p:column headerText="Data de início" filterBy="#{planoAcaoCursor.dataInicio}" filterMatchMode="contains">
@@ -85,7 +85,7 @@
                         <p:outputPanel id="carDetail">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />                            
-                                <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.nomePlano}" />
+                                <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.nome}" />
                                 <h:outputText value="Empreendimento: " />
                                 <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.empreendimento.nome}" />
                                 <h:outputText value="Data de início: " />
@@ -108,7 +108,7 @@
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome:" />
-                            <p:inputText id="nome" value="#{ListarPlanoAcaoView.objSalvar.nomePlano}" required="true"
+                            <p:inputText id="nome" value="#{ListarPlanoAcaoView.objSalvar.nome}" required="true"
                                          requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                             <p:message for="nome" />
 
@@ -133,8 +133,7 @@
                             <p:message for="dataInicio"/>
 
                             <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputTextarea id="descricao" value="#{ListarPlanoAcaoView.objSalvar.descricao}" required="true" 
-                                             requiredMessage="O campo Descrição é obrigatório." 
+                            <p:inputTextarea id="descricao" value="#{ListarPlanoAcaoView.objSalvar.descricao}"                                             
                                              rows="5" cols="45" maxlength="200" autoResize="false" />
                             <p:message for="descricao" />
                             

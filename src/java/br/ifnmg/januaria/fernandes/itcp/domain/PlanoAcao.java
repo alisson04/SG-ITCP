@@ -33,19 +33,19 @@ import javax.validation.constraints.Size;
 @Table(name = "PlanoAcao")
 @NamedQueries({
     @NamedQuery(name = "PlanoAcao.findAll", query = "SELECT p FROM PlanoAcao p")})
-public class PlanoAcao implements Serializable, EntityConverter   {
+public class PlanoAcao implements Serializable, EntityConverter {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idPlanoAcao")
-    private Integer idPlanoAcao;
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nomePlano")
-    private String nomePlano;
+    @Column(name = "nome")
+    private String nome;
     @Basic(optional = false)
     @NotNull
     @Column(name = "dataInicio")
@@ -56,51 +56,48 @@ public class PlanoAcao implements Serializable, EntityConverter   {
     @Column(name = "dataFim")
     @Temporal(TemporalType.DATE)
     private Date dataFim;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+    @Size(max = 200)
     @Column(name = "descricao")
     private String descricao;
     @OneToMany(mappedBy = "planoAcao")
     private List<Meta> metaList;
-    @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "idEpt")
+    @JoinColumn(name = "idEmpreendimento", referencedColumnName = "idEpt")
     @ManyToOne
     private Empreendimento empreendimento;
 
     public PlanoAcao() {
     }
 
-    public PlanoAcao(Integer idPlanoAcao) {
-        this.idPlanoAcao = idPlanoAcao;
+    public PlanoAcao(Integer id) {
+        this.id = id;
     }
 
-    public PlanoAcao(Integer idPlanoAcao, String nomePlano, Date dataInicio, Date dataFim, String descricao) {
-        this.idPlanoAcao = idPlanoAcao;
-        this.nomePlano = nomePlano;
+    public PlanoAcao(Integer id, String nome, Date dataInicio, Date dataFim) {
+        this.id = id;
+        this.nome = nome;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
-        this.descricao = descricao;
     }
     
     @Override
     public Integer getIdConverter(){
-        return idPlanoAcao;
+        return id;
     }
 
-    public Integer getIdPlanoAcao() {
-        return idPlanoAcao;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdPlanoAcao(Integer idPlanoAcao) {
-        this.idPlanoAcao = idPlanoAcao;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getNomePlano() {
-        return nomePlano;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomePlano(String nomePlano) {
-        this.nomePlano = nomePlano;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Date getDataInicio() {
@@ -146,7 +143,7 @@ public class PlanoAcao implements Serializable, EntityConverter   {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idPlanoAcao != null ? idPlanoAcao.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -157,7 +154,7 @@ public class PlanoAcao implements Serializable, EntityConverter   {
             return false;
         }
         PlanoAcao other = (PlanoAcao) object;
-        if ((this.idPlanoAcao == null && other.idPlanoAcao != null) || (this.idPlanoAcao != null && !this.idPlanoAcao.equals(other.idPlanoAcao))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -165,7 +162,7 @@ public class PlanoAcao implements Serializable, EntityConverter   {
 
     @Override
     public String toString() {
-        return "br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao[ idPlanoAcao=" + idPlanoAcao + " ]";
+        return "br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao[ id=" + id + " ]";
     }
     
 }

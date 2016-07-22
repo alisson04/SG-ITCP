@@ -15,7 +15,7 @@
                         <p:panel id="panel" header="Adicionar informações do plano">
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="nome" value="Nome:" />
-                                <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.objSalvar.nomePlano}" required="true"
+                                <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.objSalvar.nome}" required="true"
                                              requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                                 <p:message for="nome" />
 
@@ -40,9 +40,8 @@
                                 <p:message for="dataInicio"/>
 
                                 <p:outputLabel for="descricao" value="Descrição: " />
-                                <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.objSalvar.descricao}" required="true" 
-                                                 requiredMessage="O campo Descrição é obrigatório." 
-                                                 rows="5" cols="45" maxlength="200" autoResize="false" />
+                                <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.objSalvar.descricao}" rows="5" cols="45" 
+                                                 maxlength="200" autoResize="false" />
                                 <p:message for="descricao" />
 
                                 <p:watermark for="nome" value="Nome completo" />
@@ -60,7 +59,7 @@
                             <p:panel header="Informações do plano">
                                 <h:panelGrid  columns="2" columnClasses="label,value" >
                                     <h:outputText value="Nome: " />
-                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.nomePlano}" />  
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.nome}" />  
 
                                     <h:outputText value="Empreendimento: " />
                                     <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento.nome}" />    
@@ -78,25 +77,22 @@
                                 </h:panelGrid>
                             </p:panel>
 
-                            <p:panel styleClass="corPanel" header="Metas no sistema:" style="margin-top: 30px">
+                            <p:panel styleClass="corPanel" header="Metas no plano de ação" style="margin-top: 30px">
                                 <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." value="#{CadastrarPlanoAcaoView.listaSalvarMetas}"                                                                                           
                                              var="metaCursor" widgetVar="varGlobal" 
                                              selectionMode="single" selection="#{CadastrarPlanoAcaoView.metaSelecionada}" rowKey="#{metaCursor.idMeta}" >
                                     <p:column headerText="Nome" >
                                         <h:outputText value="#{metaCursor.nome}"/>
                                     </p:column>
-                                    <p:column headerText="Prazo de início" >
-                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(metaCursor.dataInicio)}" />
-                                    </p:column>
-                                    <p:column headerText="Prazo de fim" >
-                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(metaCursor.dataFim)}" />
+                                    <p:column headerText="Prazo" >
+                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(metaCursor.prazo)}" />
                                     </p:column>
                                     <p:column headerText="Descrição" >
                                         <h:outputText value="#{metaCursor.descricao}" />
                                     </p:column>
 
                                     <f:facet name="footer">
-                                        <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicao"
+                                        <p:commandButton id="btnCadastrar" value="Nova meta" icon="Add24-iconfinder" update=":frmEdicao"
                                                          oncomplete="PF('wVarEditarDialog').show()"
                                                          actionListener="#{CadastrarPlanoAcaoView.reiniciaObj('meta')}" />
                                     </f:facet>
@@ -129,7 +125,7 @@
                                     </p:column>
 
                                     <f:facet name="footer">
-                                        <p:commandButton value="Cadastrar" icon="Add24-iconfinder" oncomplete="PF('wVarEditarAtividadeDialog').show()"
+                                        <p:commandButton value="Nova atividade" icon="Add24-iconfinder" oncomplete="PF('wVarEditarAtividadeDialog').show()"
                                                          update=":frmEdicaoAtividade" actionListener="#{CadastrarPlanoAcaoView.reiniciaObj('atividade')}"/>
                                     </f:facet>
                                 </p:dataTable>
@@ -141,7 +137,7 @@
                             <p:panel header="Informações do plano">
                                 <h:panelGrid  columns="2" columnClasses="label,value" >
                                     <h:outputText value="Nome: " />
-                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.nomePlano}" />  
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.nome}" />  
 
                                     <h:outputText value="Empreendimento: " />
                                     <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento.nome}" />    
@@ -191,7 +187,7 @@
                         <p:separator/>
                         <p:panel style="text-align: center">
                             <p:commandButton value="Salvar tudo" icon="Add24-iconfinder" actionListener="#{CadastrarPlanoAcaoView.salvarView()}" 
-                                             style="text-align: center" update="frmCadastro" >
+                                             update="frmCadastro" >
                                 <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar tudo?" icon="Information32-iconfinder"/>
                             </p:commandButton>
                         </p:panel>
@@ -220,16 +216,11 @@
                                          requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                             <p:message for="nome" />
 
-                            <p:outputLabel for="dataInicio" value="Prazo de início:" />
-                            <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.metaSalvar.dataInicio}" 
+                            <p:outputLabel for="dataInicio" value="Prazo:" />
+                            <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.metaSalvar.prazo}" 
                                         pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
                                         mask="true" locale="pt"/>
                             <p:message for="dataInicio" />
-
-                            <p:outputLabel for="dataFim" value="Prazo de fim:" />
-                            <p:calendar id="dataFim" value="#{CadastrarPlanoAcaoView.metaSalvar.dataFim}" pattern="dd/MM/yyyy"
-                                        size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
-                            <p:message for="dataFim" />
 
                             <p:outputLabel for="descricao" value="Descrição: " />
                             <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.metaSalvar.descricao}" required="true" 

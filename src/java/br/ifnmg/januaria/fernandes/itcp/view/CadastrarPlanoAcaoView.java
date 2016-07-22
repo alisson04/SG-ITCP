@@ -160,9 +160,10 @@ public class CadastrarPlanoAcaoView implements Serializable {
 
             bean.salvarBean(objSalvar);
             objSalvar = new PlanoAcao();
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVarDlgEditar').hide()");
-            context.execute("PF('dlgEdicaoPronta').show()");
+            
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Salvo com sucesso!", "Todas as informações foram salvas com sucesso!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
