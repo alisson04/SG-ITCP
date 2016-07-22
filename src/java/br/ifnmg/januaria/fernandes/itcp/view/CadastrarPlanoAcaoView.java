@@ -44,6 +44,8 @@ public class CadastrarPlanoAcaoView implements Serializable {
     private List<Meta> listaSalvarMetas = new ArrayList();
     private List<AtividadePlanejada> listaSalvarAtividades = new ArrayList();
 
+    int contador = 0;
+
     private boolean skip;
 
     public void adicionarAtividade() {
@@ -57,10 +59,12 @@ public class CadastrarPlanoAcaoView implements Serializable {
         }
 
         if (existe == false) {
+            contador = contador + 1;
+            atividadeSalvar.setId(contador);//Atribui um ID ficticio só para ser usado na tela
             listaSalvarAtividades.add(atividadeSalvar);
             System.err.println("Tamanho das atividades: " + listaSalvarAtividades.size());
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVarEditarDialog').hide()");
+            context.execute("PF('wVarEditarAtividadeDialog').hide()");
         } else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "ERRO", "Já existe uma atividade com esse nome!");
@@ -79,6 +83,8 @@ public class CadastrarPlanoAcaoView implements Serializable {
         }
 
         if (existe == false) {
+            contador = contador + 1;
+            metaSalvar.setIdMeta(contador);//Atribui um ID ficticio só para ser usado na tela
             listaSalvarMetas.add(metaSalvar);
             System.err.println("Tamanho das metas: " + listaSalvarMetas.size());
             RequestContext context = RequestContext.getCurrentInstance();
@@ -101,7 +107,7 @@ public class CadastrarPlanoAcaoView implements Serializable {
     public void transfereObj(String obj) {//Para botão de editar
         if (obj.equals("atividade")) {
             atividadeSalvar = atividadeSelecionada;
-        }else{
+        } else {
             metaSalvar = metaSelecionada;
         }
     }
@@ -109,7 +115,7 @@ public class CadastrarPlanoAcaoView implements Serializable {
     public void reiniciaObj(String obj) {//Para botão de cadastrar
         if (obj.equals("atividade")) {
             atividadeSalvar = new AtividadePlanejada();
-        }else{
+        } else {
             metaSalvar = new Meta();
         }
     }
@@ -127,15 +133,41 @@ public class CadastrarPlanoAcaoView implements Serializable {
 
     public void salvarView() {
         try {
+
+            for (int i = 0; i < listaSalvarMetas.size(); i++) {
+                List<AtividadePlanejada> listaAuxAtividades = new ArrayList();
+                for (int x = 0; x < listaSalvarAtividades.size(); x++) {
+                    System.err.println("===============ID META: " + listaSalvarMetas.get(i).getIdMeta());
+                    System.err.println("===============ID META ATI: " + listaSalvarAtividades.get(x).getMeta().getIdMeta());
+                    if (listaSalvarMetas.get(i).getIdMeta().equals(listaSalvarAtividades.get(x).getMeta().getIdMeta())) {
+                        listaAuxAtividades.add(listaSalvarAtividades.get(x));
+                        System.err.println("IF número " + i);
+                    }
+                    System.err.println("Rodando atividade " + x);
+                }
+                listaSalvarMetas.get(i).setAtividadePlanejadaList(listaAuxAtividades);
+                System.err.println("Rodando meta " + i);
+            }
+            
+            objSalvar.setMetaList(listaSalvarMetas);//Setando a lista de metas no plano
+            
+            for (int i = 0; i < objSalvar.getMetaList().size(); i++) {//seta os IDs de metas e atividades como null
+                objSalvar.getMetaList().get(i).setIdMeta(null);
+                for (int x = 0; x < objSalvar.getMetaList().get(i).getAtividadePlanejadaList().size(); x++) {
+                    objSalvar.getMetaList().get(i).getAtividadePlanejadaList().get(x).setId(null);
+                }
+            }
+
             bean.salvarBean(objSalvar);
             objSalvar = new PlanoAcao();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarDlgEditar').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
         } catch (Exception ex) {
-            Logger.getLogger(CadastrarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Erro de exceção:", ex.getMessage()));
+            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Erro inesperado", "Erro ao tentar salvar, contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
 

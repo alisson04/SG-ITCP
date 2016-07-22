@@ -57,7 +57,7 @@
 
                     <p:tab id="tabMetas" title="Metas">
                         <p:panel header="Adicionar metas ao plano" >
-                            <p:panel >
+                            <p:panel header="Informações do plano">
                                 <h:panelGrid  columns="2" columnClasses="label,value" >
                                     <h:outputText value="Nome: " />
                                     <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.nomePlano}" />  
@@ -70,13 +70,18 @@
 
                                     <h:outputText value="Data de fim: " />
                                     <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(CadastrarPlanoAcaoView.objSalvar.dataFim)}" />
+                                    
+                                    <h:outputText value="Descrição: " />
+                                    <p:scrollPanel mode="native" style="width:435px;height:100px">
+                                        <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.descricao}" />
+                                    </p:scrollPanel>
                                 </h:panelGrid>
                             </p:panel>
 
                             <p:panel styleClass="corPanel" header="Metas no sistema:" style="margin-top: 30px">
                                 <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." value="#{CadastrarPlanoAcaoView.listaSalvarMetas}"                                                                                           
                                              var="metaCursor" widgetVar="varGlobal" 
-                                             selectionMode="single" selection="#{CadastrarPlanoAcaoView.metaSelecionada}" rowKey="#{metaCursor.nome}" >
+                                             selectionMode="single" selection="#{CadastrarPlanoAcaoView.metaSelecionada}" rowKey="#{metaCursor.idMeta}" >
                                     <p:column headerText="Nome" >
                                         <h:outputText value="#{metaCursor.nome}"/>
                                     </p:column>
@@ -129,6 +134,66 @@
                                     </f:facet>
                                 </p:dataTable>
                             </p:panel>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Confirmar">
+                        <p:panel header="Confirmar informações do plano de ação" >
+                            <p:panel header="Informações do plano">
+                                <h:panelGrid  columns="2" columnClasses="label,value" >
+                                    <h:outputText value="Nome: " />
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.nomePlano}" />  
+
+                                    <h:outputText value="Empreendimento: " />
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento.nome}" />    
+
+                                    <h:outputText value="Data de início: " />
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(CadastrarPlanoAcaoView.objSalvar.dataInicio)}" />
+
+                                    <h:outputText value="Data de fim: " />
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(CadastrarPlanoAcaoView.objSalvar.dataFim)}" />
+
+                                    <h:outputText value="Descrição: " />
+                                    <p:scrollPanel mode="native" style="width:435px;height:100px">
+                                        <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.descricao}" />
+                                    </p:scrollPanel>
+                                </h:panelGrid>
+                            </p:panel>
+                            <h:panelGrid  columns="2" columnClasses="label,value" style="text-align: center">
+                                <p:panel header="Metas do plano">
+                                    <p:dataTable emptyMessage="Nenhuma meta cadastrada." value="#{CadastrarPlanoAcaoView.listaSalvarMetas}"                                                                                           
+                                                 var="metaCursor" >
+                                        <p:column headerText="Nome" >
+                                            <h:outputText value="#{metaCursor.nome}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:panel>
+                                <p:panel header="Atividades do plano">
+                                    <p:dataTable emptyMessage="Nenhuma atividade cadastrada." 
+                                                 value="#{CadastrarPlanoAcaoView.listaSalvarAtividades}" var="atividadeCursor" >
+                                        <p:column headerText="Nome" >
+                                            <h:outputText value="#{atividadeCursor.nome}"/>
+                                        </p:column>
+                                        <p:column headerText="Meta" filterMatchMode="exact">
+                                            <f:facet name="filter">
+                                                <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                                    <f:selectItems value="#{CadastrarPlanoAcaoView.listaSalvarMetas}" var="var" 
+                                                                   itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                                </p:selectOneMenu>
+                                            </f:facet>
+                                            <h:outputText value="#{atividadeCursor.meta.nome}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:panel>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:separator/>
+                        <p:panel style="text-align: center">
+                            <p:commandButton value="Salvar tudo" icon="Add24-iconfinder" actionListener="#{CadastrarPlanoAcaoView.salvarView()}" 
+                                             style="text-align: center" update="frmCadastro" >
+                                <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar tudo?" icon="Information32-iconfinder"/>
+                            </p:commandButton>
                         </p:panel>
                     </p:tab>
                 </p:wizard>
@@ -185,7 +250,7 @@
                     </p:panel>
                 </h:form>
             </p:dialog>
-            
+
             <p:dialog id="dlgEditarAtividade" header="Atividade" widgetVar="wVarEditarAtividadeDialog" showEffect="fade" hideEffect="fade" modal="true"
                       styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicaoAtividade">
@@ -195,10 +260,10 @@
                             <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.atividadeSalvar.nome}" required="true" 
                                          requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                             <p:message for="nome" />
-                            
+
                             <p:outputLabel for="meta" value="Meta: "/>
                             <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
-                                             value="#{CadastrarPlanoAcaoView.atividadeSalvar.meta}" style="width:435px" converter="generic">
+                                             value="#{CadastrarPlanoAcaoView.atividadeSalvar.meta}" style="width:435px" converter="generic" >
                                 <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{CadastrarPlanoAcaoView.listaSalvarMetas}" var="obj" itemLabel="#{obj.nome}" 
                                                itemValue="#{obj}"/>

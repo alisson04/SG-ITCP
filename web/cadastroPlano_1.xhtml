@@ -7,11 +7,11 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo" >
+            <p:growl id="growl" sticky="true" showDetail="true"/>
             <h:form id="frmCadastro" >
-                <p:growl id="growl" sticky="true" showDetail="true"/>
 
                 <p:tabView>
-                    <p:tab id="personal" title="Plano de ação">
+                    <p:tab id="personal" title="Plano de ação" >
                         <p:panel id="panel" header="Adicionar informações do plano">
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="nome" value="Nome:" />
@@ -52,10 +52,16 @@
                             </h:panelGrid>
 
                             <p:outputLabel value="* Campos obrigatórios" />
+                            
+                            <p:separator/>
+                            <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarView()}" 
+                                         icon="Save24-iconfinder" update="frmCadastro" >
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                        </p:commandButton>
                         </p:panel>
                     </p:tab>
 
-                    <p:tab id="tabMetas" title="Metas">
+                    <p:tab id="tabMetas" title="Metas" disabled="#{CadastrarPlanoAcaoView.objSalvar.idPlanoAcao == null}">
                         <p:panel header="Adicionar metas ao plano" >
                             <p:panel >
                                 <h:panelGrid  columns="2" columnClasses="label,value" >
