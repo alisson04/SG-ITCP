@@ -120,7 +120,7 @@ public class CadastrarPlanoAcaoView implements Serializable {
         }
     }
 
-    public String onFlowProcess(FlowEvent event) {
+    /*public String onFlowProcess(FlowEvent event) {
         if (skip) {
             skip = false;   //reset in case user goes back
             System.err.println("IF===============");
@@ -129,7 +129,7 @@ public class CadastrarPlanoAcaoView implements Serializable {
             System.err.println("ELSE===============");
             return event.getNewStep();
         }
-    }
+    }**/
 
     public void salvarView() {
         try {

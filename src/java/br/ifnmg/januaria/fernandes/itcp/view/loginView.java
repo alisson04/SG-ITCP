@@ -2,6 +2,7 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MensagensBean;
+import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;
@@ -19,14 +20,9 @@ import org.primefaces.context.RequestContext;
 @ManagedBean(name = "loginView")
 @ViewScoped
 public class loginView implements Serializable{
-    private Usuario usuarioLogado;
-    private LoginBean bean;
+    private Usuario usuarioLogado = new Usuario();
+    private LoginBean bean = new LoginBean();
     MensagensBean mensagensBean;
-    
-    public loginView(){
-        bean = new LoginBean();
-        usuarioLogado = new Usuario();
-    }
     
     public String logar(){
         try{

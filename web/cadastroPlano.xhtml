@@ -10,7 +10,7 @@
             <h:form id="frmCadastro" >
                 <p:growl id="growl" sticky="true" showDetail="true"/>
 
-                <p:wizard id="wzCadastro" flowListener="#{CadastrarPlanoAcaoView.onFlowProcess}" backLabel="voltar" nextLabel="avançar">
+                <p:tabView>
                     <p:tab id="personal" title="Plano de ação">
                         <p:panel id="panel" header="Adicionar informações do plano">
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
@@ -192,7 +192,7 @@
                             </p:commandButton>
                         </p:panel>
                     </p:tab>
-                </p:wizard>
+                </p:tabView>
 
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
                                  style="text-align:center;">
