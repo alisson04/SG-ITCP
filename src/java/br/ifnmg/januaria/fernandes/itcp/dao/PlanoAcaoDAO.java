@@ -13,8 +13,8 @@ public class PlanoAcaoDAO extends DaoGenerico<PlanoAcao>{
     public PlanoAcaoDAO() {
     }
     
-    public void salvarPlano(PlanoAcao planoAcao){
-        salvarGenerico(planoAcao);
+    public PlanoAcao salvarPlano(PlanoAcao planoAcao){
+        return salvarGenerico(planoAcao);
     }
     
     public void excluirPlanoDao(PlanoAcao planoAcao){

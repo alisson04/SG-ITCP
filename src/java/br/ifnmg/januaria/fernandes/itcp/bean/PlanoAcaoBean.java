@@ -21,8 +21,8 @@ public class PlanoAcaoBean implements Serializable{
         dao = new PlanoAcaoDAO();
     }
     
-    public void salvarBean(PlanoAcao obj) {
-        dao.salvarPlano(obj);
+    public PlanoAcao salvarBean(PlanoAcao obj) {
+        return dao.salvarPlano(obj);
     }
     
     public void excluirBean(PlanoAcao obj){

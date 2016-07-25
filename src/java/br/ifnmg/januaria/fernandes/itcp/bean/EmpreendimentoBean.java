@@ -21,8 +21,8 @@ public class EmpreendimentoBean implements Serializable {
         dao = new EmpreendimentoDAO();
     }
 
-    public void salvarBean(Empreendimento ept) {
-        dao.salvarEpt(ept);
+    public Empreendimento salvarBean(Empreendimento ept) {
+        return dao.salvarEpt(ept);
     }
     
     public void excluirBean(Empreendimento ept){

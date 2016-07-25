@@ -17,8 +17,8 @@ public class EmpreendimentoDAO extends DaoGenerico<Empreendimento> {
     public EmpreendimentoDAO() {
     }
     
-    public void salvarEpt(Empreendimento ept){
-        salvarGenerico(ept);
+    public Empreendimento salvarEpt(Empreendimento ept){
+        return salvarGenerico(ept);
     }
     
     public void excluirEptDao(Empreendimento ept){

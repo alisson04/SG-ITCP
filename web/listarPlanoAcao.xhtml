@@ -25,7 +25,7 @@
 
                         <p:ajax event="rowSelect" update=":frmListagemPlanosAcao"/>
 
-                        <p:column headerText="Nome" filterBy="#{planoAcaoCursor.descricao}" filterMatchMode="contains">
+                        <p:column headerText="Nome" filterBy="#{planoAcaoCursor.nome}" filterMatchMode="contains">
                             <h:outputText value="#{planoAcaoCursor.nome}"/>
                         </p:column>
 

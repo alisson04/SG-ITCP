@@ -58,7 +58,6 @@ public class ListarEmpreendimentosView implements Serializable {
     }
 
     public void reiniciaObj(){//Para botão de editar
-        System.out.println("objSalvar Reiniciado ====================== ");
         objSalvar = new Empreendimento();
     }
     
@@ -81,7 +80,6 @@ public class ListarEmpreendimentosView implements Serializable {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
-
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 

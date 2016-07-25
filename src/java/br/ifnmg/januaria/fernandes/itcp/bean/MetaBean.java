@@ -21,8 +21,8 @@ public class MetaBean implements Serializable{
         dao = new MetaDAO();
     }
     
-    public void salvarBean(Meta metaSalvar) {
-        dao.salvarDao(metaSalvar);
+    public Meta salvarBean(Meta metaSalvar) {
+        return dao.salvarDao(metaSalvar);
     }
     
     public List<Meta> listarBean() {

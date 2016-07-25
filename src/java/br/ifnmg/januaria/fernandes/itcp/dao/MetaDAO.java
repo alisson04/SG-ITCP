@@ -13,8 +13,8 @@ public class MetaDAO extends DaoGenerico<Meta> {
     public MetaDAO() {
     }
     
-    public void salvarDao(Meta obj){
-        salvarGenerico(obj);
+    public Meta salvarDao(Meta obj){
+        return salvarGenerico(obj);
     }
     
     public List<Meta> listarDao() {

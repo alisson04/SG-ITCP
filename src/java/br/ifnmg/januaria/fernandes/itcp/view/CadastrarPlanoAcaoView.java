@@ -17,9 +17,7 @@ import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.FlowEvent;
 
 /**
  *
@@ -48,6 +46,15 @@ public class CadastrarPlanoAcaoView implements Serializable {
 
     private boolean skip;
 
+    //Construtor
+    public CadastrarPlanoAcaoView() {
+        try {
+            listaEmpreendimentos = empreendimentoBean.listarBean();
+        } catch (RuntimeException ex) {
+            System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
+        }
+    }
+
     public void adicionarAtividade() {
         boolean existe = false;
         for (int i = 0; i < listaSalvarAtividades.size(); i++) {
@@ -72,38 +79,6 @@ public class CadastrarPlanoAcaoView implements Serializable {
         }
     }
 
-    public void adicionarMeta() {
-        boolean existe = false;
-        for (int i = 0; i < listaSalvarMetas.size(); i++) {
-            if (listaSalvarMetas.get(i).getNome().equals(metaSalvar.getNome())) {
-                System.err.println("IF Tamanho das metas: " + listaSalvarMetas.size());
-                existe = true;
-                break;
-            }
-        }
-
-        if (existe == false) {
-            contador = contador + 1;
-            metaSalvar.setIdMeta(contador);//Atribui um ID ficticio só para ser usado na tela
-            listaSalvarMetas.add(metaSalvar);
-            System.err.println("Tamanho das metas: " + listaSalvarMetas.size());
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVarEditarDialog').hide()");
-        } else {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "ERRO", "Já existe uma meta com esse nome!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
-        }
-    }
-
-    public CadastrarPlanoAcaoView() {
-        try {
-            listaEmpreendimentos = empreendimentoBean.listarBean();
-        } catch (RuntimeException ex) {
-            System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
-        }
-    }
-
     public void transfereObj(String obj) {//Para botão de editar
         if (obj.equals("atividade")) {
             atividadeSalvar = atividadeSelecionada;
@@ -111,29 +86,34 @@ public class CadastrarPlanoAcaoView implements Serializable {
             metaSalvar = metaSelecionada;
         }
     }
-
-    public void reiniciaObj(String obj) {//Para botão de cadastrar
-        if (obj.equals("atividade")) {
-            atividadeSalvar = new AtividadePlanejada();
-        } else {
-            metaSalvar = new Meta();
-        }
-    }
-
-    /*public String onFlowProcess(FlowEvent event) {
-        if (skip) {
-            skip = false;   //reset in case user goes back
-            System.err.println("IF===============");
-            return "confirm";
-        } else {
-            System.err.println("ELSE===============");
-            return event.getNewStep();
-        }
-    }**/
+    
+    
 
     public void salvarView() {
         try {
+            if (objSalvar.getId() == null) {//Salvará o plano
+                objSalvar = bean.salvarBean(objSalvar);
+            } else {//Salvará
+                metaSalvar = metaBean.salvarBean(metaSalvar);
+                listaSalvarMetas.add(metaSalvar);
+                metaSalvar = new Meta();
+                System.err.println("Tamanho das metas: " + listaSalvarMetas.size());
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('wVarEditarDialog').hide()");
+            }
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Salvo com sucesso!", "As informações foram salvas com sucesso!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } catch (Exception ex) {
+            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Erro inesperado", "Erro ao tentar salvar, contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
+    }
 
+    /*public void salvarView() {
+        try {
             for (int i = 0; i < listaSalvarMetas.size(); i++) {
                 List<AtividadePlanejada> listaAuxAtividades = new ArrayList();
                 for (int x = 0; x < listaSalvarAtividades.size(); x++) {
@@ -170,8 +150,7 @@ public class CadastrarPlanoAcaoView implements Serializable {
                     "Erro inesperado", "Erro ao tentar salvar, contate o administrador do sistema!");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
-    }
-
+    }**/
     public String conveteData(Date data) {
         if (data != null) {
             SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
