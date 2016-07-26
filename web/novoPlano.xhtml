@@ -8,17 +8,11 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo" >
             <h:form id="frmCadastro" >
-                <p:growl id="growl" sticky="true" showDetail="true"/>
-
-                <p:tabView>
-                    <p:tab id="personal" title="Plano de ação">
+                <p:tabView  activeIndex="#{CadastrarPlanoAcaoView.tabview.activeIndex}">
+                    <p:tab id="personal" title="Plano de ação" >
                         <p:panel id="panel" header="Adicionar informações do plano">
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                                <p:outputLabel for="nome" value="Nome:" />
-                                <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.objSalvar.nome}" required="true"
-                                             requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
-                                <p:message for="nome" />
-
+                                
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
                                 <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório."
                                                  value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento}" style="width:435px"
@@ -28,6 +22,11 @@
                                                    itemValue="#{ept}"/>
                                 </p:selectOneMenu>
                                 <p:message for="empreendimento"/>
+                                
+                                <p:outputLabel for="nome" value="Nome:" />
+                                <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.objSalvar.nome}" required="true"
+                                             requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                                <p:message for="nome" />
 
                                 <p:outputLabel for="dataInicio" value="Data de início: " />
                                 <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.objSalvar.dataInicio}" pattern="dd/MM/yyyy" 
@@ -46,7 +45,7 @@
                             </h:panelGrid>
 
                             <p:outputLabel value="* Campos obrigatórios" />
-                            
+
                             <p:separator />
                             <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarView()}" 
                                              icon="Save24-iconfinder" update="frmCadastro" >
@@ -59,12 +58,12 @@
                         <p:panel header="Adicionar metas ao plano" >
                             <p:panel header="Informações do plano">
                                 <h:panelGrid  columns="2" columnClasses="label,value" >
-                                    <h:outputText value="Nome: " />
-                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.nome}" />  
-
                                     <h:outputText value="Empreendimento: " />
-                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento.nome}" />    
-
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento.nome}" /> 
+                                    
+                                    <h:outputText value="Nome: " />
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.nome}" />
+                                    
                                     <h:outputText value="Data de início: " />
                                     <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(CadastrarPlanoAcaoView.objSalvar.dataInicio)}" />
 
@@ -79,9 +78,10 @@
                             </p:panel>
 
                             <p:panel styleClass="corPanel" header="Metas no plano de ação" style="margin-top: 30px">
-                                <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." 
+                                <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." paginatorPosition="top"  paginator="true" 
                                              value="#{CadastrarPlanoAcaoView.objSalvar.metaList}" var="metaCursor" widgetVar="varGlobal" 
-                                             selectionMode="single" selection="#{CadastrarPlanoAcaoView.metaSelecionada}" rowKey="#{metaCursor.idMeta}" >
+                                             selectionMode="single" selection="#{CadastrarPlanoAcaoView.metaSelecionada}" 
+                                             rowKey="#{metaCursor.idMeta}" >
                                     <p:column headerText="Nome" >
                                         <h:outputText value="#{metaCursor.nome}"/>
                                     </p:column>
@@ -101,35 +101,35 @@
                         </p:panel>
                     </p:tab>
 
-                    <p:tab id="tabAtividades" title="Atividades">
-                        <p:panel header="Adicionar atividades" >
-                            <p:panel styleClass="corPanel" header="Atividades cadastradas" style="margin-top: 30px">
-                                <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada." 
-                                             value="#{CadastrarPlanoAcaoView.listaSalvarAtividades}"                                                                                           
-                                             var="atividadeCursor" widgetVar="varGlobalAtividade" selectionMode="single" 
-                                             selection="#{CadastrarPlanoAcaoView.atividadeSelecionada}" rowKey="#{atividadeCursor.nome}" >
-                                    <p:column headerText="Nome" >
-                                        <h:outputText value="#{atividadeCursor.nome}"/>
-                                    </p:column>
-                                    <p:column headerText="Prazo de início" >
-                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.dataInicio)}" />
-                                    </p:column>
-                                    <p:column headerText="Prazo de fim" >
-                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.dataFim)}" />
-                                    </p:column>
-                                    <p:column headerText="Descrição" >
-                                        <h:outputText value="#{atividadeCursor.descricao}" />
-                                    </p:column>
-                                    <p:column headerText="Meta" >
-                                        <h:outputText value="#{atividadeCursor.meta.nome}" />
-                                    </p:column>
+                    <p:tab id="tabAtividades" title="Atividades" 
+                           disabled="#{CadastrarPlanoAcaoView.objSalvar.metaList.size() == 0 || CadastrarPlanoAcaoView.objSalvar.metaList == null}" >
+                        <p:panel styleClass="corPanel" header="Atividades cadastradas" style="margin-top: 30px">
+                            <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada." 
+                                         value="#{CadastrarPlanoAcaoView.listaSalvarAtividades}" paginatorPosition="top"  paginator="true"                                                         
+                                         var="atividadeCursor" widgetVar="varGlobalAtividade" selectionMode="single" 
+                                         selection="#{CadastrarPlanoAcaoView.atividadeSelecionada}" rowKey="#{atividadeCursor.nome}" >
+                                <p:column headerText="Meta" >
+                                    <h:outputText value="#{atividadeCursor.meta.nome}" />
+                                </p:column>
+                                
+                                <p:column headerText="Nome" >
+                                    <h:outputText value="#{atividadeCursor.nome}"/>
+                                </p:column>
+                                <p:column headerText="Prazo de início" >
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.dataInicio)}" />
+                                </p:column>
+                                <p:column headerText="Prazo de fim" >
+                                    <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.dataFim)}" />
+                                </p:column>
+                                <p:column headerText="Descrição" >
+                                    <h:outputText value="#{atividadeCursor.descricao}" />
+                                </p:column>
 
-                                    <f:facet name="footer">
-                                        <p:commandButton value="Nova atividade" icon="Add24-iconfinder" 
-                                                         oncomplete="PF('wVarEditarAtividadeDialog').show()" update=":frmEdicaoAtividade" />
-                                    </f:facet>
-                                </p:dataTable>
-                            </p:panel>
+                                <f:facet name="footer">
+                                    <p:commandButton value="Nova atividade" icon="Add24-iconfinder" 
+                                                     oncomplete="PF('wVarEditarAtividadeDialog').show()" update=":frmEdicaoAtividade" />
+                                </f:facet>
+                            </p:dataTable>
                         </p:panel>
                     </p:tab>
                 </p:tabView>
@@ -163,8 +163,7 @@
                             <p:message for="dataInicio" />
 
                             <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.metaSalvar.descricao}" required="true" 
-                                             requiredMessage="O campo Descrição é obrigatório." 
+                            <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.metaSalvar.descricao}"
                                              rows="5" cols="45" maxlength="200" autoResize="false" />
                             <p:message for="descricao" />
                         </h:panelGrid>
@@ -172,7 +171,7 @@
                         <p:outputLabel value="* Campos obrigatórios" />
 
                         <p:separator />
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarView()}" 
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarMeta()}" 
                                          icon="Save24-iconfinder" update="frmCadastro, frmEdicao" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
@@ -187,19 +186,20 @@
                 <h:form id="frmEdicaoAtividade">
                     <p:panel styleClass="corPanel" >
                         <h:panelGrid style="text-align:right;" columns="3">
-                            <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.atividadeSalvar.nome}" required="true" 
-                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
-                            <p:message for="nome" />
 
                             <p:outputLabel for="meta" value="Meta: "/>
                             <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
                                              value="#{CadastrarPlanoAcaoView.atividadeSalvar.meta}" style="width:435px" converter="generic" >
                                 <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{CadastrarPlanoAcaoView.listaSalvarMetas}" var="obj" itemLabel="#{obj.nome}" 
+                                <f:selectItems value="#{CadastrarPlanoAcaoView.objSalvar.metaList}" var="obj" itemLabel="#{obj.nome}" 
                                                itemValue="#{obj}"/>
                             </p:selectOneMenu>
                             <p:message for="meta"/>
+                            
+                            <p:outputLabel for="nome" value="Nome: " />
+                            <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.atividadeSalvar.nome}" required="true" 
+                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                            <p:message for="nome" />
 
                             <p:outputLabel for="dataInicio" value="Prazo de início:" />
                             <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.atividadeSalvar.dataInicio}" 
@@ -213,8 +213,7 @@
                             <p:message for="dataFim" />
 
                             <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.atividadeSalvar.descricao}" required="true" 
-                                             requiredMessage="O campo Descrição é obrigatório." 
+                            <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.atividadeSalvar.descricao}"
                                              rows="5" cols="45" maxlength="200" autoResize="false" />
                             <p:message for="descricao" />
                         </h:panelGrid>
@@ -222,12 +221,12 @@
                         <p:outputLabel value="* Campos obrigatórios" />
 
                         <p:separator />
-                        <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.adicionarAtividade()}" 
-                                         icon="Save24-iconfinder" update="frmCadastro:dtListagemAtividades, frmEdicaoAtividade" >
+                        <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarAtividade()}" 
+                                         icon="Save24-iconfinder" update="frmCadastro, frmEdicaoAtividade" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarAtividadeDialog').hide()" />
                     </p:panel>
                 </h:form>
             </p:dialog>

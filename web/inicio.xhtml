@@ -8,9 +8,24 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmCadastro" >
-                <p:panel id="asds">
-                    
-                </p:panel>
+                <h3>On-Demand Loading</h3>
+                <p:tabView dynamic="true" cache="true">
+                    <p:tab title="Godfather Part I">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value="The story begins as Don Vito Corleone..." />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Godfather Part II">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value="Francis Ford Coppola's legendary..." />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Godfather Part III">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value="After a break of more than 15 years..." />
+                        </h:panelGrid>
+                    </p:tab>
+                </p:tabView>
             </h:form>
         </ui:define>
 

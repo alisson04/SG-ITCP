@@ -21,8 +21,8 @@ public class AtividadePlanejadaBean implements Serializable{
     public AtividadePlanejadaBean(){
     }
     
-    public void salvarBean(AtividadePlanejada obj) {
-        dao.salvarDao(obj);
+    public AtividadePlanejada salvarBean(AtividadePlanejada obj) {
+        return dao.salvarDao(obj);
     }
     
     public List<AtividadePlanejada> listarBean() {

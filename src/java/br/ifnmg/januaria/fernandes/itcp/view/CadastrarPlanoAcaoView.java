@@ -1,5 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.AtividadePlanejadaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -29,7 +31,7 @@ public class CadastrarPlanoAcaoView implements Serializable {
 
     PlanoAcaoBean bean = new PlanoAcaoBean();
     EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
-    MetaBean metaBean = new MetaBean();
+    AtividadePlanejadaBean atividadeBean = new AtividadePlanejadaBean();
 
     private PlanoAcao objSalvar = new PlanoAcao();
     private Meta metaSalvar = new Meta();
@@ -39,10 +41,9 @@ public class CadastrarPlanoAcaoView implements Serializable {
     private AtividadePlanejada atividadeSelecionada = new AtividadePlanejada();
 
     private List<Empreendimento> listaEmpreendimentos;
-    private List<Meta> listaSalvarMetas = new ArrayList();
     private List<AtividadePlanejada> listaSalvarAtividades = new ArrayList();
 
-    int contador = 0;
+    TabView tabview = new TabView();
 
     private boolean skip;
 
@@ -50,60 +51,75 @@ public class CadastrarPlanoAcaoView implements Serializable {
     public CadastrarPlanoAcaoView() {
         try {
             listaEmpreendimentos = empreendimentoBean.listarBean();
+            //tabview.setActiveIndex(0);
         } catch (RuntimeException ex) {
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
         }
     }
 
-    public void adicionarAtividade() {
-        boolean existe = false;
-        for (int i = 0; i < listaSalvarAtividades.size(); i++) {
-            if (listaSalvarAtividades.get(i).getNome().equals(atividadeSalvar.getNome())) {
-                System.err.println("IF Tamanho das atividades: " + listaSalvarAtividades.size());
-                existe = true;
-                break;
+    public void salvarAtividade() {
+        if(atividadeSalvar.getDataFim().before(atividadeSalvar.getDataInicio())){
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Erro na data", "A 'data de início' da atividade deve ser igual ou maior que sua data de fim!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }else{
+            if (atividadeSalvar.getDataInicio().after(objSalvar.getDataInicio()) || atividadeSalvar.getDataInicio().equals(objSalvar.getDataInicio())) {
+                if (atividadeSalvar.getDataFim().before(atividadeSalvar.getMeta().getPrazo())
+                    || atividadeSalvar.getDataFim().equals(atividadeSalvar.getMeta().getPrazo())) {
+                atividadeSalvar = atividadeBean.salvarBean(atividadeSalvar);
+                listaSalvarAtividades.add(atividadeSalvar);
+                atividadeSalvar = new AtividadePlanejada();
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('wVarEditarAtividadeDialog').hide()");
+                } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Erro na data", "A 'data de fim' da atividade deve ser antes ou igual ao prazo de sua meta!");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                }
+            } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Erro na data", "A 'data de fim' da atividade deve ser antes ou igual ao prazo de sua meta!");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
             }
+        }l
+    }
+
+    public void salvarMeta() {
+        List<Meta> listaSalvarMetas = objSalvar.getMetaList();
+        if (listaSalvarMetas == null) {
+            listaSalvarMetas = new ArrayList();
         }
 
-        if (existe == false) {
-            contador = contador + 1;
-            atividadeSalvar.setId(contador);//Atribui um ID ficticio só para ser usado na tela
-            listaSalvarAtividades.add(atividadeSalvar);
-            System.err.println("Tamanho das atividades: " + listaSalvarAtividades.size());
+        if (metaSalvar.getPrazo().after(objSalvar.getDataInicio()) && metaSalvar.getPrazo().before(objSalvar.getDataFim())) {
+            metaSalvar.setPlanoAcao(objSalvar);
+            listaSalvarMetas.add(metaSalvar);
+            objSalvar.setMetaList(listaSalvarMetas);
+            metaSalvar = new Meta();
+            System.err.println("Tamanho das metas: " + listaSalvarMetas.size());
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVarEditarAtividadeDialog').hide()");
+            context.execute("PF('wVarEditarDialog').hide()");
+            salvarView();
         } else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "ERRO", "Já existe uma atividade com esse nome!");
+                    "Erro na data", "O prazo da meta deve ser depois da 'data de início' e antes da 'data de fim'!");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
-
-    public void transfereObj(String obj) {//Para botão de editar
-        if (obj.equals("atividade")) {
-            atividadeSalvar = atividadeSelecionada;
-        } else {
-            metaSalvar = metaSelecionada;
-        }
-    }
-    
-    
 
     public void salvarView() {
         try {
-            if (objSalvar.getId() == null) {//Salvará o plano
+            if (objSalvar.getDataInicio().before(objSalvar.getDataFim())) {// SE A DATA DE INÍCIO É ANTES DA DATA DE FIM
                 objSalvar = bean.salvarBean(objSalvar);
-            } else {//Salvará
-                metaSalvar = metaBean.salvarBean(metaSalvar);
-                listaSalvarMetas.add(metaSalvar);
-                metaSalvar = new Meta();
-                System.err.println("Tamanho das metas: " + listaSalvarMetas.size());
-                RequestContext context = RequestContext.getCurrentInstance();
-                context.execute("PF('wVarEditarDialog').hide()");
+                System.err.println("Tamanho das metas DO PLANO: " + objSalvar.getMetaList().size());
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Salvo com sucesso!", "As informações foram salvas com sucesso!");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                tabview.setActiveIndex(1);
+            } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Erro na data", "A data de início deve ser antes da data de fim!");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
             }
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Salvo com sucesso!", "As informações foram salvas com sucesso!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -112,45 +128,6 @@ public class CadastrarPlanoAcaoView implements Serializable {
         }
     }
 
-    /*public void salvarView() {
-        try {
-            for (int i = 0; i < listaSalvarMetas.size(); i++) {
-                List<AtividadePlanejada> listaAuxAtividades = new ArrayList();
-                for (int x = 0; x < listaSalvarAtividades.size(); x++) {
-                    System.err.println("===============ID META: " + listaSalvarMetas.get(i).getIdMeta());
-                    System.err.println("===============ID META ATI: " + listaSalvarAtividades.get(x).getMeta().getIdMeta());
-                    if (listaSalvarMetas.get(i).getIdMeta().equals(listaSalvarAtividades.get(x).getMeta().getIdMeta())) {
-                        listaAuxAtividades.add(listaSalvarAtividades.get(x));
-                        System.err.println("IF número " + i);
-                    }
-                    System.err.println("Rodando atividade " + x);
-                }
-                listaSalvarMetas.get(i).setAtividadePlanejadaList(listaAuxAtividades);
-                System.err.println("Rodando meta " + i);
-            }
-            
-            objSalvar.setMetaList(listaSalvarMetas);//Setando a lista de metas no plano
-            
-            for (int i = 0; i < objSalvar.getMetaList().size(); i++) {//seta os IDs de metas e atividades como null
-                objSalvar.getMetaList().get(i).setIdMeta(null);
-                for (int x = 0; x < objSalvar.getMetaList().get(i).getAtividadePlanejadaList().size(); x++) {
-                    objSalvar.getMetaList().get(i).getAtividadePlanejadaList().get(x).setId(null);
-                }
-            }
-
-            bean.salvarBean(objSalvar);
-            objSalvar = new PlanoAcao();
-            
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Salvo com sucesso!", "Todas as informações foram salvas com sucesso!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
-        } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erro inesperado", "Erro ao tentar salvar, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
-        }
-    }**/
     public String conveteData(Date data) {
         if (data != null) {
             SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
@@ -209,14 +186,6 @@ public class CadastrarPlanoAcaoView implements Serializable {
         this.metaSelecionada = metaSelecionada;
     }
 
-    public List<Meta> getListaSalvarMetas() {
-        return listaSalvarMetas;
-    }
-
-    public void setListaSalvarMetas(List<Meta> listaSalvarMetas) {
-        this.listaSalvarMetas = listaSalvarMetas;
-    }
-
     public List<AtividadePlanejada> getListaSalvarAtividades() {
         return listaSalvarAtividades;
     }
@@ -231,5 +200,13 @@ public class CadastrarPlanoAcaoView implements Serializable {
 
     public void setAtividadeSelecionada(AtividadePlanejada atividadeSelecionada) {
         this.atividadeSelecionada = atividadeSelecionada;
+    }
+
+    public TabView getTabview() {
+        return tabview;
+    }
+
+    public void setTabview(TabView tabview) {
+        this.tabview = tabview;
     }
 }
