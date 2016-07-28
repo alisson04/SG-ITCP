@@ -48,7 +48,7 @@
                             <p:commandButton id="btnVisualizarParceiro" process="dtListagemParceiros" update=":frmListagemParceiros:carDetail" 
                                              icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()"
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}"/>
-                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicao"
+                            <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicao"
                                              process="dtListagemParceiros" oncomplete="PF('wVarEditarDialog').show()"
                                              actionListener="#{ListarParceirosView.reiniciaObj()}"/>
                             <p:commandButton id="btnEditar" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"

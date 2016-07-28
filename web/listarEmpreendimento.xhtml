@@ -54,7 +54,7 @@
                             <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" update=":frmListagemEmpreendimentos:carDetail" 
                                              icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" />
-                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicaoEpt"
+                            <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicaoEpt"
                                              process="dtListagemEmpreendimentos" oncomplete="PF('wVarEditarDialog').show()"
                                              actionListener="#{ListarEmpreendimentosView.reiniciaObj()}"/>
                             <p:commandButton id="btnEditarEpt" value="Editar" icon="Edit24-iconfinder" update=":frmEdicaoEpt"

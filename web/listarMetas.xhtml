@@ -112,7 +112,7 @@
                             <p:selectOneMenu id="planoAcao" required="true" requiredMessage="O plano de ação é obrigatório."
                                              value="#{ListarMetasView.objSalvar.planoAcao}" style="width:435px" converter="generic">
                                 <f:selectItem itemLabel="Selecione o plano de ação" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nomePlano}" 
+                                <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nome}" 
                                                    itemValue="#{plano}"/>
                             </p:selectOneMenu>
                             <p:message for="planoAcao"/>
