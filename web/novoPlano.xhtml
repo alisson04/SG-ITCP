@@ -87,6 +87,9 @@
                                              rowKey="#{metaCursor.idMeta}" >
                                     <p:ajax event="rowSelect" update="frmCadastro" />
 
+                                    <p:column headerText="ID" >
+                                        <h:outputText value="#{metaCursor.idMeta}"/>
+                                    </p:column>
                                     <p:column headerText="Nome" >
                                         <h:outputText value="#{metaCursor.nome}"/>
                                     </p:column>
@@ -119,12 +122,16 @@
                                          value="#{CadastrarPlanoAcaoView.listaSalvarAtividades}" paginatorPosition="top"  paginator="true"                                                         
                                          var="atividadeCursor" widgetVar="varGlobalAtividade" selectionMode="single" 
                                          selection="#{CadastrarPlanoAcaoView.atividadeSelecionada}" rowKey="#{atividadeCursor.nome}" >
+                                <p:ajax event="rowSelect" update="frmCadastro" />
                                 <p:column headerText="Meta" >
                                     <h:outputText value="#{atividadeCursor.meta.nome}: " />
                                     <br/>
                                     <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.meta.prazo)}" />
                                 </p:column>
 
+                                <p:column headerText="ID" >
+                                    <h:outputText value="#{atividadeCursor.id}"/>
+                                </p:column>
                                 <p:column headerText="Nome" >
                                     <h:outputText value="#{atividadeCursor.nome}"/>
                                 </p:column>
@@ -143,7 +150,7 @@
                                                      oncomplete="PF('wVarEditarAtividadeDialog').show()" update=":frmEdicaoAtividade" />
                                     <p:commandButton value="Excluir" icon="Cross24-iconfinder" update="frmCadastro"
                                                      disabled="#{CadastrarPlanoAcaoView.atividadeSelecionada == null}" 
-                                                     actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}">
+                                                     actionListener="#{CadastrarPlanoAcaoView.excluirAtividade()}">
                                         <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                                    icon="Alert16-iconfinder" />
                                     </p:commandButton>

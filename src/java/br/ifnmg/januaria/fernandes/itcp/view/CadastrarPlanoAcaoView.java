@@ -63,17 +63,21 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
     }
 
     public void excluirMeta() {
-        metaBean.excluirBean(metaSelecionada);
+        System.out.println("Número de atividades na lista: " + metaSelecionada.getAtividadePlanejadaList().size());
+        metaBean.excluirBean(metaSelecionada);//Exclui a meta do BD
         listaSalvarMetas = objSalvar.getMetaList();
-        listaSalvarMetas.remove(metaSelecionada);
-        objSalvar.setMetaList(listaSalvarMetas);
+        listaSalvarMetas.remove(metaSelecionada);//Exclui a meta da Tela
+        objSalvar.setMetaList(listaSalvarMetas);//Atualiza o plano da tela
         metaSelecionada = null;
         msgGrowDeleteGeneric();
     }
 
     public void excluirAtividade() {
+        System.out.println("ddddddddddddddddddddddd");
         atividadeBean.excluirBean(atividadeSelecionada);
+        System.out.println("ddddddddddddddddddddddd");
         listaSalvarAtividades.remove(atividadeSelecionada);
+        System.out.println("ddddddddddddddddddddddd");
         atividadeSelecionada = null;
         msgGrowDeleteGeneric();
     }
@@ -147,7 +151,7 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
     }
     
     public void onTabChange(TabChangeEvent event){//Esse método é necessário para que o "tabView" do bean esteja atualizado com o que esta na tela
-        System.out.println("////////////" + event.getTab().getId());
+        System.out.println("Usuário esta na tab: " + event.getTab().getId());
         if(event.getTab().getId().equals("tabPlano")){
             tabview.setActiveIndex(0);
         }else if(event.getTab().getId().equals("tabMetas")){
