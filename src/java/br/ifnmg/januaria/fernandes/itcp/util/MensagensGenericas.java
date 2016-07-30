@@ -9,19 +9,21 @@ import org.primefaces.context.RequestContext;
  * @author alisson
  */
 public abstract class MensagensGenericas {
-    FacesContext context = FacesContext.getCurrentInstance();
-    
+        
     public void msgGrowSaveGeneric() {
+        FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("SUCESSO!", "As informações foram salvas. "));
         RequestContext.getCurrentInstance().update("frmGrowl");
     }
     
     public void msgGrowDeleteGeneric() {
+        FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("SUCESSO!", "As informações foram excluidas. "));
         RequestContext.getCurrentInstance().update("frmGrowl");
     }
     
     public void msgGrowUpdateGeneric() {
+        FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("SUCESSO!", "As informações foram atualizadas. "));
         RequestContext.getCurrentInstance().update("frmGrowl");
     }

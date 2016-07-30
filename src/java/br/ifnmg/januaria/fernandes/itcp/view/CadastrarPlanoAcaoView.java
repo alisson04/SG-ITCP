@@ -20,6 +20,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  *
@@ -123,7 +125,7 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
         try {
             if (objSalvar.getDataInicio().before(objSalvar.getDataFim())) {// SE A DATA DE INÍCIO É ANTES DA DATA DE FIM
                 objSalvar = bean.salvarBean(objSalvar);
-                System.err.println("Tamanho das metas DO PLANO: " + objSalvar.getMetaList().size());
+                System.out.println("Tamanho das metas DO PLANO: " + objSalvar.getMetaList().size());
                 msgGrowSaveGeneric();
                 tabview.setActiveIndex(1);
             } else {
@@ -141,6 +143,17 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             return forma.format(data);
         } else {
             return "";
+        }
+    }
+    
+    public void onTabChange(TabChangeEvent event){//Esse método é necessário para que o "tabView" do bean esteja atualizado com o que esta na tela
+        System.out.println("////////////" + event.getTab().getId());
+        if(event.getTab().getId().equals("tabPlano")){
+            tabview.setActiveIndex(0);
+        }else if(event.getTab().getId().equals("tabMetas")){
+            tabview.setActiveIndex(1);
+        }else{
+            tabview.setActiveIndex(2);
         }
     }
 

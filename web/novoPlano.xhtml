@@ -8,13 +8,12 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo" >
             <h:form id="frmGrowl" >
-                <p:growl id="growl" showDetail="true" /> 
-                <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}" 
-                                              />
+                <p:growl id="growl" showDetail="true" />
             </h:form>
             <h:form id="frmCadastro" >
-                <p:tabView  activeIndex="#{CadastrarPlanoAcaoView.tabview.activeIndex}">
-                    <p:tab id="personal" title="Plano de ação" >
+                <p:tabView  id="tabGeral" activeIndex="#{CadastrarPlanoAcaoView.tabview.activeIndex}">
+                    <p:ajax event="tabChange" listener="#{CadastrarPlanoAcaoView.onTabChange}" update="frmCadastro"/>
+                    <p:tab id="tabPlano" title="Plano de ação" >
                         <p:panel id="panel" header="Adicionar informações do plano">
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
 
@@ -81,13 +80,13 @@
                                 </h:panelGrid>
                             </p:panel>
 
-                            <p:panel styleClass="corPanel" header="Metas no plano de ação" style="margin-top: 30px">
+                            <p:panel id="panelListMetas" styleClass="corPanel" header="Metas no plano de ação" style="margin-top: 30px">
                                 <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta cadastrada." paginatorPosition="top"  paginator="true" 
                                              value="#{CadastrarPlanoAcaoView.objSalvar.metaList}" var="metaCursor" widgetVar="varGlobal" 
                                              selectionMode="single" selection="#{CadastrarPlanoAcaoView.metaSelecionada}" 
                                              rowKey="#{metaCursor.idMeta}" >
-                                    <p:ajax event="rowSelect" update="frmCadastro"/>
-                                    
+                                    <p:ajax event="rowSelect" update="frmCadastro" />
+
                                     <p:column headerText="Nome" >
                                         <h:outputText value="#{metaCursor.nome}"/>
                                     </p:column>
@@ -144,10 +143,10 @@
                                                      oncomplete="PF('wVarEditarAtividadeDialog').show()" update=":frmEdicaoAtividade" />
                                     <p:commandButton value="Excluir" icon="Cross24-iconfinder" update="frmCadastro"
                                                      disabled="#{CadastrarPlanoAcaoView.atividadeSelecionada == null}" 
-                                                         actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}">
-                                            <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                                       icon="Alert16-iconfinder" />
-                                        </p:commandButton>
+                                                     actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}">
+                                        <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                                   icon="Alert16-iconfinder" />
+                                    </p:commandButton>
                                 </f:facet>
                             </p:dataTable>
                         </p:panel>
