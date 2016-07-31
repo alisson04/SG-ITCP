@@ -22,7 +22,6 @@
                                  value="#{ListarParceirosView.listaParceiros}" filteredValue="#{ListarParceirosView.listaParceirosFiltrados}" 
                                  selectionMode="single" selection="#{ListarParceirosView.parceiroSelecionado}" rowKey="#{parceiroCursor.idparceiro}" 
                                  var="parceiroCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
-
                         <p:ajax event="rowSelect" listener="#{dtSelectionView.onRowSelect}" update=":frmListagemParceiros"/>
 
                         <p:column headerText="Nome: " filterBy="#{parceiroCursor.nomeParceiro}" filterMatchMode="contains"

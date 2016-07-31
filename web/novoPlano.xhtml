@@ -82,14 +82,11 @@
 
                             <p:panel id="panelListMetas" styleClass="corPanel" header="Metas no plano de ação" style="margin-top: 30px">
                                 <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta cadastrada." paginatorPosition="top"  paginator="true" 
-                                             value="#{CadastrarPlanoAcaoView.objSalvar.metaList}" var="metaCursor" widgetVar="varGlobal" 
+                                             value="#{CadastrarPlanoAcaoView.listaSalvarMetas}" var="metaCursor" widgetVar="varGlobal" 
                                              selectionMode="single" selection="#{CadastrarPlanoAcaoView.metaSelecionada}" 
                                              rowKey="#{metaCursor.idMeta}" >
                                     <p:ajax event="rowSelect" update="frmCadastro" />
-
-                                    <p:column headerText="ID" >
-                                        <h:outputText value="#{metaCursor.idMeta}"/>
-                                    </p:column>
+                                    
                                     <p:column headerText="Nome" >
                                         <h:outputText value="#{metaCursor.nome}"/>
                                     </p:column>
@@ -103,10 +100,14 @@
                                     <f:facet name="footer">
                                         <p:commandButton id="btnCadastrar" value="Nova meta" icon="Add24-iconfinder" update=":frmEdicao"
                                                          oncomplete="PF('wVarEditarDialog').show()" />
+                                        <p:commandButton value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
+                                                     disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}"
+                                                     oncomplete="PF('wVarEditarDialog').show()" 
+                                                     actionListener="#{CadastrarPlanoAcaoView.transfereObj()}"/>
                                         <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cross24-iconfinder" update="frmCadastro"
                                                          disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}" 
                                                          actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}">
-                                            <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                            <p:confirm header="ATENÇÃO! " message="Todas as atividades dessa meta também serão excluidas, continuar?" 
                                                        icon="Alert16-iconfinder" />
                                         </p:commandButton>
                                     </f:facet>
@@ -115,8 +116,7 @@
                         </p:panel>
                     </p:tab>
 
-                    <p:tab id="tabAtividades" title="Atividades" 
-                           disabled="#{CadastrarPlanoAcaoView.objSalvar.metaList.size() == 0 || CadastrarPlanoAcaoView.objSalvar.metaList == null}" >
+                    <p:tab id="tabAtividades" title="Atividades" disabled="#{CadastrarPlanoAcaoView.listaSalvarMetas.size() == 0}" >
                         <p:panel styleClass="corPanel" header="Atividades cadastradas" style="margin-top: 30px">
                             <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada." 
                                          value="#{CadastrarPlanoAcaoView.listaSalvarAtividades}" paginatorPosition="top"  paginator="true"                                                         
@@ -129,9 +129,6 @@
                                     <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.meta.prazo)}" />
                                 </p:column>
 
-                                <p:column headerText="ID" >
-                                    <h:outputText value="#{atividadeCursor.id}"/>
-                                </p:column>
                                 <p:column headerText="Nome" >
                                     <h:outputText value="#{atividadeCursor.nome}"/>
                                 </p:column>
@@ -148,6 +145,10 @@
                                 <f:facet name="footer">
                                     <p:commandButton value="Nova atividade" icon="Add24-iconfinder" 
                                                      oncomplete="PF('wVarEditarAtividadeDialog').show()" update=":frmEdicaoAtividade" />
+                                    <p:commandButton value="Editar" icon="Edit24-iconfinder" update=":frmEdicaoAtividade"
+                                                     disabled="#{CadastrarPlanoAcaoView.atividadeSelecionada == null}"
+                                                     oncomplete="PF('wVarEditarAtividadeDialog').show()" 
+                                                     actionListener="#{CadastrarPlanoAcaoView.transfereObj()}"/>
                                     <p:commandButton value="Excluir" icon="Cross24-iconfinder" update="frmCadastro"
                                                      disabled="#{CadastrarPlanoAcaoView.atividadeSelecionada == null}" 
                                                      actionListener="#{CadastrarPlanoAcaoView.excluirAtividade()}">
@@ -217,7 +218,7 @@
                             <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
                                              value="#{CadastrarPlanoAcaoView.atividadeSalvar.meta}" style="width:435px" converter="generic" >
                                 <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{CadastrarPlanoAcaoView.objSalvar.metaList}" var="obj" 
+                                <f:selectItems value="#{CadastrarPlanoAcaoView.listaSalvarMetas}" var="obj" 
                                                itemLabel="#{obj.nome}: #{CadastrarPlanoAcaoView.conveteData(obj.prazo)}" 
                                                itemValue="#{obj}"/>
                             </p:selectOneMenu>
