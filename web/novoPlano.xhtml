@@ -86,7 +86,7 @@
                                              selectionMode="single" selection="#{CadastrarPlanoAcaoView.metaSelecionada}" 
                                              rowKey="#{metaCursor.idMeta}" >
                                     <p:ajax event="rowSelect" update="frmCadastro" />
-                                    
+
                                     <p:column headerText="Nome" >
                                         <h:outputText value="#{metaCursor.nome}"/>
                                     </p:column>
@@ -101,9 +101,9 @@
                                         <p:commandButton id="btnCadastrar" value="Nova meta" icon="Add24-iconfinder" update=":frmEdicao"
                                                          oncomplete="PF('wVarEditarDialog').show()" />
                                         <p:commandButton value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
-                                                     disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}"
-                                                     oncomplete="PF('wVarEditarDialog').show()" 
-                                                     actionListener="#{CadastrarPlanoAcaoView.transfereObj()}"/>
+                                                         disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}"
+                                                         oncomplete="PF('wVarEditarDialog').show()" 
+                                                         actionListener="#{CadastrarPlanoAcaoView.transfereObj()}"/>
                                         <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cross24-iconfinder" update="frmCadastro"
                                                          disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}" 
                                                          actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}">

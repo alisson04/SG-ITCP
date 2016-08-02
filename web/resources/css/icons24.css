@@ -54,13 +54,6 @@
     background-position: 0px 0x;
 }
 
-.Users24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Users24.png") !important;
-    height: 24px;
-    width: 34px;
-    background-position: 0px 0x;
-}
-
 .Mala24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Mala24.png") !important;
     height: 24px;
@@ -75,13 +68,6 @@
     background-position: 0px 0x;
 }
 
-.PhoneList24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/PhoneList24.png") !important;
-    height: 24px;
-    width: 34px;
-    background-position: 0px 0x;
-}
-
 .Grafico24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Grafico24.png") !important;
     height: 24px;
@@ -89,8 +75,29 @@
     background-position: 0px 0x;
 }
 
+.PhoneList24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/PhoneList24.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Pdf24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Pdf24.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
 .Parceria24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Parceria24.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Users24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Users24.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;
@@ -133,6 +140,13 @@
 
 .Save24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Save.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Xls24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Xls24.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;

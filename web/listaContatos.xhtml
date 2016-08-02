@@ -12,7 +12,7 @@
                 <f:event listener="#{ListarEmpreendimentosView.listarTodosEmpreendimentos()}" type="preRenderView"/>
                 <f:event listener="#{ListarParceirosView.listarTodosParceiros()}" type="preRenderView"/>
                 <f:event listener="#{ListarMembrosEptsView.ListarMembrosEpts()}" type="preRenderView"/>
-                
+
             </f:metadata>
         </ui:define>
 
@@ -29,7 +29,24 @@
                     <p:tabView>
                         <p:tab title="Usuários ativos" >
                             <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
-                                         var="usuarioCursor" widgetVar="varGlobalUsuarios" rows="12" paginator="true" paginatorPosition="top">
+                                         rows="12" paginator="true" paginatorPosition="top" var="usuarioCursor" widgetVar="varGlobalUsuarios" >
+                                <f:facet name="footer" >
+                                    <h:commandLink id="pdfUsr">
+                                        <p:graphicImage name="icons24/Pdf24.png" width="24"/>
+                                        <p:dataExporter type="pdf" target="ListagemUsuarios" fileName="Metas" encoding="ISO-8859-1" />
+                                    </h:commandLink>
+                                    
+                                    <p:spacer height="20px"/>
+
+                                    <h:commandLink id="xlsUsr">
+                                        <p:graphicImage name="icons24/Xls24.png" width="24"/>
+                                        <p:dataExporter type="xls" target="ListagemUsuarios" fileName="Metas" />
+                                    </h:commandLink>
+                                    
+                                    <p:tooltip for="pdfUsr" value="Exportar para PDF" />
+                                    <p:tooltip for="xlsUsr" value="Exportar para Excel" />
+                                </f:facet>
+
                                 <p:column headerText="Nome: " filterBy="#{usuarioCursor.nomeUsuario}" 
                                           sortBy="#{usuarioCursor.nomeUsuario}" filterMatchMode="contains">
                                     <h:outputText value="#{usuarioCursor.nomeUsuario}"/>
@@ -65,6 +82,23 @@
                             <p:dataTable id="dtContatosEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." 
                                          value="#{ListarEmpreendimentosView.listaEmpreendimentos}" rows="12" paginator="true" paginatorPosition="top"
                                          var="empreendimentoCursor" widgetVar="varGlobalEmpreendimentos">
+                                
+                                <f:facet name="footer" >
+                                    <h:commandLink id="pdfEpt">
+                                        <p:graphicImage name="icons24/Pdf24.png" width="24"/>
+                                        <p:dataExporter type="pdf" target="dtContatosEmpreendimentos" fileName="Metas" encoding="ISO-8859-1" />
+                                    </h:commandLink>
+                                    
+                                    <p:spacer height="20px"/>
+
+                                    <h:commandLink id="xlsEpt">
+                                        <p:graphicImage name="icons24/Xls24.png" width="24"/>
+                                        <p:dataExporter type="xls" target="dtContatosEmpreendimentos" fileName="Metas" />
+                                    </h:commandLink>
+                                    
+                                    <p:tooltip for="pdfEpt" value="Exportar para PDF" />
+                                    <p:tooltip for="xlsEpt" value="Exportar para Excel" />
+                                </f:facet>
 
                                 <p:column headerText="Nome fantasia:" filterBy="#{empreendimentoCursor.nome}" 
                                           sortBy="#{empreendimentoCursor.nome}" filterMatchMode="contains">
@@ -103,6 +137,23 @@
                                          paginatorPosition="top" var="membroEmpreendimentoCursor"
                                          filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}"
                                          rowKey="#{membroEmpreendimentoCursor.idMembroEmpreendimento}"  widgetVar="varGlobalMembro">
+                                
+                                <f:facet name="footer" >
+                                    <h:commandLink id="pdfMep">
+                                        <p:graphicImage name="icons24/Pdf24.png" width="24"/>
+                                        <p:dataExporter type="pdf" target="dtListagemMembrosEpts" fileName="Metas" encoding="ISO-8859-1" />
+                                    </h:commandLink>
+                                    
+                                    <p:spacer height="20px"/>
+
+                                    <h:commandLink id="xlsMep">
+                                        <p:graphicImage name="icons24/Xls24.png" width="24"/>
+                                        <p:dataExporter type="xls" target="dtListagemMembrosEpts" fileName="Metas" />
+                                    </h:commandLink>
+                                    
+                                    <p:tooltip for="pdfMep" value="Exportar para PDF" />
+                                    <p:tooltip for="xlsMep" value="Exportar para Excel" />
+                                </f:facet>
 
                                 <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" 
                                           sortBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" filterMatchMode="contains">
@@ -138,8 +189,25 @@
                         </p:tab>
 
                         <p:tab title="Parceiros">
-                            <p:dataTable id="asdasd" emptyMessage="Nenhum parceiro encontrado." rows="12" paginator="true" paginatorPosition="top"
+                            <p:dataTable id="dtParceiros" emptyMessage="Nenhum parceiro encontrado." rows="12" paginator="true" paginatorPosition="top"
                                          value="#{ListarParceirosView.listaParceiros}" var="parceiroCursor" widgetVar="varGlobalParceiros">
+                                
+                                <f:facet name="footer" >
+                                    <h:commandLink id="pdfPar">
+                                        <p:graphicImage name="icons24/Pdf24.png" width="24"/>
+                                        <p:dataExporter type="pdf" target="dtParceiros" fileName="Metas" encoding="ISO-8859-1" />
+                                    </h:commandLink>
+                                    
+                                    <p:spacer height="20px"/>
+
+                                    <h:commandLink id="xlsPar">
+                                        <p:graphicImage name="icons24/Xls24.png" width="24"/>
+                                        <p:dataExporter type="xls" target="dtParceiros" fileName="Metas" />
+                                    </h:commandLink>
+                                    
+                                    <p:tooltip for="pdfPar" value="Exportar para PDF" />
+                                    <p:tooltip for="xlsPar" value="Exportar para Excel" />
+                                </f:facet>
 
                                 <p:column headerText="Nome: " filterBy="#{parceiroCursor.nomeParceiro}" filterMatchMode="contains"
                                           sortBy="#{parceiroCursor.nomeParceiro}" >
