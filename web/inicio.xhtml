@@ -7,23 +7,32 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
+            <style type="text/css">
+                .AlturaLinhas {
+                    width: 700px;
+                }
+            </style>
+
             <h:form id="frmCadastro" >
-                <h3>On-Demand Loading</h3>
                 <p:tabView dynamic="true" cache="true">
-                    <p:tab title="Godfather Part I">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="The story begins as Don Vito Corleone..." />
+                    <p:tab title="Calendário de atividades da incubadora">
+                        <h:panelGrid columnClasses="AlturaLinhas" >
+                            <p:schedule id="schedule" value="#{inicioView.eventModel}" widgetVar="myschedule" timeZone="GMT+2" locale="pt">
+                                <p:ajax event="eventSelect" listener="#{inicioView.onEventSelect}" update="eventDetails" 
+                                        oncomplete="PF('eventDialog').show();" />
+                            </p:schedule>
                         </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="Godfather Part II">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="Godfather Part III">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
+
+                        <p:dialog widgetVar="eventDialog" header="Detalhes da atividade" showEffect="clip" hideEffect="clip" >
+                            <h:panelGrid id="eventDetails" columns="2">
+                                <h:outputText value="Nome: " />
+                                <h:outputText value="#{inicioView.event.title}" />
+                                <h:outputText value="Data de início: " />
+                                <h:outputText value="#{inicioView.conveteData(inicioView.event.startDate)}" />
+                                <h:outputText value="Data de fim: " />
+                                <h:outputText value="#{inicioView.conveteData(inicioView.event.endDate)}" />
+                            </h:panelGrid>
+                        </p:dialog>
                     </p:tab>
                 </p:tabView>
             </h:form>
