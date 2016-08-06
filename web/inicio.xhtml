@@ -34,7 +34,28 @@
                             </h:panelGrid>
                         </p:dialog>
                     </p:tab>
+
+                    <p:tab title="Calendário de atividades da incubadora">
+                        <p:growl id="growlTime" showSummary="true" showDetail="true" autoUpdate="true"/> 
+                        <p:timeline id="timeline" value="#{inicioView.model}" height="350px" 
+                                    selectable="#{inicioView.selectable}" 
+                                    zoomable="#{inicioView.zoomable}" 
+                                    moveable="#{inicioView.moveable}" 
+                                    stackEvents="#{inicioView.stackEvents}" 
+                                    axisOnTop="#{inicioView.axisOnTop}"              
+                                    eventStyle="#{inicioView.eventStyle}" 
+                                    showCurrentTime="#{inicioView.showCurrentTime}" 
+                                    showNavigation="#{inicioView.showNavigation}" 
+                                    locale="pt"> 
+
+                            <p:ajax event="select" listener="#{inicioView.onSelect}"/>  
+
+                        </p:timeline>
+
+                    </p:tab>
                 </p:tabView>
+
+
             </h:form>
         </ui:define>
 
