@@ -74,18 +74,39 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
     }
 
     //Lista todos os objetos de uma classe no BD filtrados por um parametro
-    public List<TipoClasse> listarObjsFiltradosGenerico(String classe, String atributoDaClasse, String parametroDeComparacao) {
+    public List<TipoClasse> listarObjsFiltradosGenerico(String classe, String atributoClasse, String paramComparacao) {
         em = gerarEntityManager();
         List<TipoClasse> listaObjsFiltrados;
         listaObjsFiltrados = new ArrayList<>();
 
         try {
             em.getTransaction().begin();
-            Query consulta = em.createQuery("SELECT o FROM " + classe + " o WHERE o." + atributoDaClasse + " = :" + parametroDeComparacao);
-            consulta.setParameter(parametroDeComparacao, parametroDeComparacao);
+            Query consulta = em.createQuery("SELECT o FROM " + classe + " o WHERE o." + atributoClasse + " = :paramComparacao");
+            consulta.setParameter("paramComparacao", paramComparacao);
 
             listaObjsFiltrados = consulta.getResultList();//Pega a lista de usuarios
-            System.out.println("__________DAO(listarUsrAtivos): Numero de usuarios " + parametroDeComparacao + " na lista: " + listaObjsFiltrados.size());
+            System.out.println("__________DAO(listarUsrAtivos): Numero de usuarios " + paramComparacao + " na lista: " + listaObjsFiltrados.size());
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("__________DAO(listarObjsFiltradosGenerico): Erro ao buscar objetos filtrados: " + e);
+        } finally {
+            em.close();
+        }
+        return listaObjsFiltrados;
+    }
+    
+    public List<TipoClasse> listarObjsFiltradosIntGenerico(String classe, String atributoDaClasse, int paramComparacao) {
+        em = gerarEntityManager();
+        List<TipoClasse> listaObjsFiltrados;
+        listaObjsFiltrados = new ArrayList<>();
+
+        try {
+            em.getTransaction().begin();
+            Query consulta = em.createQuery("SELECT o FROM " + classe + " o WHERE o." + atributoDaClasse + " = :paramComparacao");
+            consulta.setParameter("paramComparacao", paramComparacao);
+
+            listaObjsFiltrados = consulta.getResultList();//Pega a lista de usuarios
+            System.out.println("__________DAO(listarUsrAtivos): Numero de usuarios " + paramComparacao + " na lista: " + listaObjsFiltrados.size());
         } catch (Exception e) {
             em.getTransaction().rollback();
             System.out.println("__________DAO(listarObjsFiltradosGenerico): Erro ao buscar objetos filtrados: " + e);

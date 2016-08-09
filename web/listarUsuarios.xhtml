@@ -6,12 +6,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-        <ui:define name="metadata">
-            <f:metadata>
-                <f:event listener="#{ListarUsuariosView.ListarView()}" type="preRenderView"/>
-            </f:metadata>
-        </ui:define>
-
         <ui:define name="conteudo">
             <h:form id="frmListagemUsuarios" >
                 <p:growl id="msgs" showDetail="true" showSummary="false"/>
@@ -120,7 +114,6 @@
                             <p:outputLabel value="Sexo: " />
                             <p:outputLabel value="#{ListarUsuariosView.objSelecionado.sexoUsuario}"/>
                         </p:panelGrid>
-
                     </p:dialog>
                 </p:panel>
             </h:form>

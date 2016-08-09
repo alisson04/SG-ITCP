@@ -92,17 +92,6 @@ public class ListarUsuariosView implements Serializable {
         return senhaAleatoria;
     }
 
-    public void ListarView() {
-        try {
-            listaUsuarios = bean.listarBean();
-        } catch (RuntimeException ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erro inesperado", "Erro ao tentar listar, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
-        }
-    }
-
     public void excluirView() {
         try {
             bean.excluirBean(objSelecionado);

@@ -12,6 +12,13 @@
     background-position: 0px 0x;
 }
 
+.Clock22-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Clock22.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
 .Cross24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Cross.png") !important;
     height: 24px;
@@ -140,6 +147,15 @@
 
 .Save24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Save.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+
+
+.SimpleClock22-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/SimpleClock22.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;

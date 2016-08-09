@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,6 +34,9 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable, EntityConverter {
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private HorarioTrabalho horarioTrabalho;
 
     @OneToMany(mappedBy = "usuario")
     private List<AtividadeUsuario> atividadeUsuarioList;
@@ -290,5 +295,12 @@ public class Usuario implements Serializable, EntityConverter {
     public void setAtividadeUsuarioList(List<AtividadeUsuario> atividadeUsuarioList) {
         this.atividadeUsuarioList = atividadeUsuarioList;
     }
-    
+
+    public HorarioTrabalho getHorarioTrabalho() {
+        return horarioTrabalho;
+    }
+
+    public void setHorarioTrabalho(HorarioTrabalho horarioTrabalho) {
+        this.horarioTrabalho = horarioTrabalho;
+    }    
 }

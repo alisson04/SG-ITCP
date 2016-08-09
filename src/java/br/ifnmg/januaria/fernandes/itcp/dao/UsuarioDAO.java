@@ -50,25 +50,36 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         return usr;
     }
 
-    public Usuario buscarPorCodigo(Usuario user) {
-        EntityManager em = emc.gerarEntityManager();
-        Usuario usuario = null;
-
-        try {
-            em.getTransaction().begin();
-            Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario");
-            consulta.setParameter("idUsuario", user.getIdUsuario()); // O primeiro "id" é do Domain.Usuario; o segundo do que foi criado nesse metodo
-            usuario = (Usuario) consulta.getSingleResult();
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao buscar por codigo", e);
-        } finally {
-            em.close();
+    public Usuario buscarPorCodigo(Usuario usr) {
+        List<Usuario> listaUsrs;
+        
+        listaUsrs = listarObjsFiltradosIntGenerico("Usuario", "idUsuario", usr.getIdUsuario());
+        
+        if (listaUsrs.size() > 0) {
+            usr = listaUsrs.get(0);
+            System.out.println("NUM: " + listaUsrs.size());
+        } else {
+            usr = null;
+            System.out.println("NUM: ");
         }
-        return usuario;
+        return usr;
     }
 
     /*
-    @NamedQuery(name = "Usuario.buscarPorCargo", query = "SELECT u FROM Usuario u WHERE u.cargoUsuario = :cargoUsuario")})
+        List<Usuario> listaUsuarios;
+        Usuario usr;
+
+        listaUsuarios = listarObjsFiltradosIntGenerico("Usuario", "idUsuario", user.getIdUsuario());
+        if (listaUsuarios.size() > 0) {
+            usr = listaUsuarios.get(0);
+            System.out.println("NUM: " + listaUsuarios.size());
+        } else {
+            usr = null;
+            System.out.println("NUM: ");
+        }
+
+        return usr;
+    
     **/
     public Usuario logar(String emailUsuario, String senhaUsuario) {
         EntityManager em = emc.gerarEntityManager();
