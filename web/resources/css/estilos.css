@@ -29,3 +29,7 @@
     background: #8FBC8F;
     color:#000000;
 }
+
+.semBorda tr, .semBorda td {
+	border: none !important;
+}

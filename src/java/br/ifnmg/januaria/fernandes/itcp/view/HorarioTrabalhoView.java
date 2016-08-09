@@ -15,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -50,58 +51,86 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
     //METODOS
     public void salvar() {
         if (verificaHorario()) {
-            UsuarioBean u = new UsuarioBean();
-            u.buscarPorCodigoBean(usrLogado);
-//bean.salvarBean(obj);
+            bean.salvarBean(obj);
+            listaHorarios = bean.listarBean();
+            msgGrowSaveGeneric();
         } else {
-            msgPanelErro("Verifique os horários", "O horário de 'iníco' deve ser antes do horário de 'fim'!");
+            msgPanelErro("Erro", "Verifique a coerência dos horários e tente novamente!");
         }
-
     }
 
     public boolean verificaHorario() {
         boolean aux = true;
 
-        if (obj.getDomIni() != null && obj.getDomFim() != null) {
+        //COERENCIA DOS HORÁRIOS
+        if (obj.getDomIni() != null && obj.getDomFim() != null) {//AMBOS PREENCHIDOS
             if (obj.getDomIni().after(obj.getDomFim())) {
                 aux = false;
             }
+        } else if (obj.getDomIni() == null && obj.getDomFim() == null) {//AMBOS VAZIOS
+
+        } else {
+            aux = false;
         }
 
         if (obj.getSegIni() != null && obj.getSegFim() != null) {
             if (obj.getSegIni().after(obj.getSegFim())) {
                 aux = false;
             }
+        } else if (obj.getSegIni() == null && obj.getSegFim() == null) {//AMBOS VAZIOS
+
+        } else {
+            aux = false;
         }
 
         if (obj.getTerIni() != null && obj.getTerFim() != null) {
             if (obj.getTerIni().after(obj.getTerFim())) {
                 aux = false;
             }
+        } else if (obj.getTerIni() == null && obj.getTerFim() == null) {//AMBOS VAZIOS
+
+        } else {
+            aux = false;
         }
 
         if (obj.getQuaIni() != null && obj.getQuaFim() != null) {
             if (obj.getQuaIni().after(obj.getQuaFim())) {
                 aux = false;
             }
+        } else if (obj.getQuaIni() == null && obj.getQuaFim() == null) {//AMBOS VAZIOS
+
+        } else {
+            aux = false;
         }
 
         if (obj.getQuiIni() != null && obj.getQuiFim() != null) {
             if (obj.getQuiIni().after(obj.getQuiFim())) {
                 aux = false;
             }
+        } else if (obj.getQuiIni() == null && obj.getQuiFim() == null) {//AMBOS VAZIOS
+
+        } else {
+            aux = false;
         }
 
         if (obj.getSexIni() != null && obj.getSexFim() != null) {
             if (obj.getSexIni().after(obj.getSexFim())) {
                 aux = false;
             }
+        } else if (obj.getSexIni() == null && obj.getSexFim() == null) {//AMBOS VAZIOS
+
+        } else {
+            aux = false;
         }
 
         if (obj.getSabIni() != null && obj.getSabFim() != null) {
             if (obj.getSabIni().after(obj.getSabFim())) {
                 aux = false;
             }
+        } else if (obj.getSabIni() == null && obj.getSabFim() == null) {//AMBOS VAZIOS
+
+        } else {
+            aux = false;
         }
 
         return aux;

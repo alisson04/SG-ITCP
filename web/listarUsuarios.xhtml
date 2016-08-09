@@ -11,9 +11,9 @@
                 <p:growl id="msgs" showDetail="true" showSummary="false"/>
                 <p:panel styleClass="corPanel" header="Usuários no sistema:" >
                     <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
-                                 filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" selectionMode="single" 
-                                 selection="#{ListarUsuariosView.objSelecionado}" rowKey="#{usuarioCursor.idUsuario}" var="usuarioCursor" 
-                                 widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                                 filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" selectionMode="single"
+                                 selection="#{ListarUsuariosView.objSelecionado}" rowKey="#{usuarioCursor.idUsuario}"
+                                 var="usuarioCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
                         <p:ajax event="rowSelect" update=":frmListagemUsuarios"/>
 
