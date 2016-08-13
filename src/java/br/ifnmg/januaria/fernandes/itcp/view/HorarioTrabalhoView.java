@@ -1,13 +1,12 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.HorarioTrabalhoBean;
-import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.HorarioTrabalho;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -15,7 +14,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -31,6 +29,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
     private HorarioTrabalhoBean bean = new HorarioTrabalhoBean();
     private List<HorarioTrabalho> listaHorarios;
     private List<HorarioTrabalho> listaHorariosFiltrados;
+    private Date totalHoras = new Date();
 
     //CONSTRUTOR
     public HorarioTrabalhoView() {
@@ -41,21 +40,59 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
         HttpSession session = (HttpSession) request.getSession();
         usrLogado = (Usuario) session.getAttribute("USUARIOLogado");
 
+        totalHoras.setTime(0);
+
         obj = bean.buscaHorarioBean(usrLogado);
+        System.out.println("ID LOGADO: " + usrLogado.getIdUsuario());
         if (obj == null) {
+            System.out.println("OBJ é NULL");
             obj = new HorarioTrabalho();
             obj.setUsuario(usrLogado);
+        } else {
+            verificaHorario();
         }
     }
 
     //METODOS
     public void salvar() {
         if (verificaHorario()) {
-            bean.salvarBean(obj);
-            listaHorarios = bean.listarBean();
-            msgGrowSaveGeneric();
+            if (!(totalHoras.getTime() > 201600000)) {
+                obj.setHorasSemana((int) (long) totalHoras.getTime());
+                obj = bean.salvarBean(obj);
+                listaHorarios = bean.listarBean();
+                msgGrowSaveGeneric();
+            } else {
+                msgPanelErro("Erro", "A jornada de trabalho não pode ser maior que 56 horas semanais!");
+            }
         } else {
             msgPanelErro("Erro", "Verifique a coerência dos horários e tente novamente!");
+        }
+    }
+
+    public String geraHoras(HorarioTrabalho ht) {
+        if (ht.getHorasSemana() != null) {
+            int segundos = (int) Math.floor(ht.getHorasSemana() / 1000);
+            int minutos = (segundos / 60);
+            int horas = minutos / 60;
+            int minutosRestantes = minutos % 60;
+
+            if (minutosRestantes == 0
+                    || minutosRestantes == 1
+                    || minutosRestantes == 2
+                    || minutosRestantes == 3
+                    || minutosRestantes == 4
+                    || minutosRestantes == 5
+                    || minutosRestantes == 6
+                    || minutosRestantes == 7
+                    || minutosRestantes == 8
+                    || minutosRestantes == 9) {
+                return (horas + ":0" + minutosRestantes);
+            }else{
+                return (horas + ":" + minutosRestantes);
+            }
+
+        } else {
+            return "Não inserido";
         }
     }
 
@@ -64,9 +101,11 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
 
         //COERENCIA DOS HORÁRIOS
         if (obj.getDomIni() != null && obj.getDomFim() != null) {//AMBOS PREENCHIDOS
+            totalHoras.setTime(totalHoras.getTime() + (obj.getDomFim().getTime() - obj.getDomIni().getTime()));
             if (obj.getDomIni().after(obj.getDomFim())) {
                 aux = false;
             }
+            totalHoras.setTime(obj.getDomFim().getTime() - obj.getDomIni().getTime());
         } else if (obj.getDomIni() == null && obj.getDomFim() == null) {//AMBOS VAZIOS
 
         } else {
@@ -77,6 +116,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
             if (obj.getSegIni().after(obj.getSegFim())) {
                 aux = false;
             }
+            totalHoras.setTime(totalHoras.getTime() + (obj.getSegFim().getTime() - obj.getSegIni().getTime()));
         } else if (obj.getSegIni() == null && obj.getSegFim() == null) {//AMBOS VAZIOS
 
         } else {
@@ -87,6 +127,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
             if (obj.getTerIni().after(obj.getTerFim())) {
                 aux = false;
             }
+            totalHoras.setTime(totalHoras.getTime() + (obj.getTerFim().getTime() - obj.getTerIni().getTime()));
         } else if (obj.getTerIni() == null && obj.getTerFim() == null) {//AMBOS VAZIOS
 
         } else {
@@ -97,6 +138,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
             if (obj.getQuaIni().after(obj.getQuaFim())) {
                 aux = false;
             }
+            totalHoras.setTime(totalHoras.getTime() + (obj.getQuaFim().getTime() - obj.getQuaIni().getTime()));
         } else if (obj.getQuaIni() == null && obj.getQuaFim() == null) {//AMBOS VAZIOS
 
         } else {
@@ -107,6 +149,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
             if (obj.getQuiIni().after(obj.getQuiFim())) {
                 aux = false;
             }
+            totalHoras.setTime(totalHoras.getTime() + (obj.getQuiFim().getTime() - obj.getQuiIni().getTime()));
         } else if (obj.getQuiIni() == null && obj.getQuiFim() == null) {//AMBOS VAZIOS
 
         } else {
@@ -117,6 +160,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
             if (obj.getSexIni().after(obj.getSexFim())) {
                 aux = false;
             }
+            totalHoras.setTime(totalHoras.getTime() + (obj.getSexFim().getTime() - obj.getSexIni().getTime()));
         } else if (obj.getSexIni() == null && obj.getSexFim() == null) {//AMBOS VAZIOS
 
         } else {
@@ -127,6 +171,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
             if (obj.getSabIni().after(obj.getSabFim())) {
                 aux = false;
             }
+            totalHoras.setTime(totalHoras.getTime() + (obj.getSabFim().getTime() - obj.getSabIni().getTime()));
         } else if (obj.getSabIni() == null && obj.getSabFim() == null) {//AMBOS VAZIOS
 
         } else {
@@ -192,5 +237,13 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
 
     public void setListaHorariosFiltrados(List<HorarioTrabalho> listaHorariosFiltrados) {
         this.listaHorariosFiltrados = listaHorariosFiltrados;
+    }
+
+    public Date getTotalHoras() {
+        return totalHoras;
+    }
+
+    public void setTotalHoras(Date totalHoras) {
+        this.totalHoras = totalHoras;
     }
 }

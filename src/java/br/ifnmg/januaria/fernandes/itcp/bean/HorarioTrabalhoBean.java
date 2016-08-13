@@ -22,8 +22,8 @@ public class HorarioTrabalhoBean implements Serializable{
         dao = new HorarioTrabalhoDAO();
     }
     
-    public void salvarBean(HorarioTrabalho obj) {
-        dao.salvarHorario(obj);
+    public HorarioTrabalho salvarBean(HorarioTrabalho obj) {
+        return dao.salvarHorario(obj);
     }
     
     public List<HorarioTrabalho> listarBean() {

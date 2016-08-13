@@ -14,8 +14,8 @@ public class HorarioTrabalhoDAO extends DaoGenerico<HorarioTrabalho> {
     public HorarioTrabalhoDAO() {
     }
     
-    public void salvarHorario(HorarioTrabalho obj){
-        salvarGenerico(obj);
+    public HorarioTrabalho salvarHorario(HorarioTrabalho obj){
+        return salvarGenerico(obj);
     }
     
     public List<HorarioTrabalho> listarTodosHorarios() {
