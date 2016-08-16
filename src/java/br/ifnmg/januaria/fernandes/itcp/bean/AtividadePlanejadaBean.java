@@ -1,8 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.bean;
 
-import br.ifnmg.januaria.fernandes.itcp.dao.AtividadeExecutadaDAO;
 import br.ifnmg.januaria.fernandes.itcp.dao.AtividadePlanejadaDAO;
-import br.ifnmg.januaria.fernandes.itcp.domain.AtividadeExecutada;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
 import java.io.Serializable;
 import java.util.List;

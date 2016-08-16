@@ -92,7 +92,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
             }
 
         } else {
-            return "Não inserido";
+            return "0";
         }
     }
 

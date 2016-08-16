@@ -13,10 +13,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>SIGITEC - Modelo Global</title>
 
-        <!--<style type="text/css">
-            .ui-layout-unit-content{background-image:url('#{request.contextPath}/resources/fotos/IfnmgNatureClara1920.jpg');}
-        </style>-->
-
         <h:outputStylesheet library="css" name="icons16.css" />
         <link rel="stylesheet" href="/resources/css/icons16.css"/>
         <h:outputStylesheet library="css" name="icons24.css" />
@@ -58,17 +54,24 @@
     </script>
 
     <h:body>
-        <!-- 
-        <p:growl id="msgGlobal" sticky="true" />
-        -->
         <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="100" >
+                <p:graphicImage name="fotos/IfnmgTopoMenor.jpg" width="100%" height="100%" styleClass="semMargin"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="40" resizable="false" closable="false" collapsible="false" >
+                <p:outputPanel style="text-align:center;" >
+                    <h:outputText value="Todos os direitos reservados ao IFNMG - Campus Januária" />
+                </p:outputPanel>
+            </p:layoutUnit>
 
             <p:layoutUnit position="center">
-                <h:form id="frmModeloGeral">
-                    <p:graphicImage name="fotos/IfnmgTopoMenor.jpg" width="100%" height="50%" />
+                <h:form id="frmGrowl" >
+                    <p:growl id="growl" showDetail="true" />
+                </h:form>
 
-                    <!--<p:graphicImage library="imagens" name="3.png" width="100%" />-->
-                    <p:menubar style="ui-button" styleClass="textoMenuPrincipal">
+                <h:form id="frmModeloGeral">
+                    <p:menubar style="ui-button" styleClass="textoMenuPrincipal semMargin">
                         <p:menuitem value="Início" icon="Home24-iconfinder" 
                                     action="/inicio.xhtml?faces-redirect=true" style="ui-widget"/>
 
@@ -98,9 +101,6 @@
                         <f:facet name="options" >
                             <p:commandButton id="btnMinhaConta" type="push" title="Minha conta" style="ui-button"
                                              icon="profile-iconfinder" />
-
-                            <!--<p:commandButton title="Minha conta" value="teste" style="height: 60px;"
-                                             icon="padlock-iconfinder" />-->
 
                             <p:slideMenu overlay="true" trigger="btnMinhaConta" my="left top" at="left bottom" >
                                 <p:menuitem value="Visualizar  conta" icon="Information16-iconfinder" oncomplete="PF('UserDia').show()"
@@ -163,18 +163,9 @@
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
-                    <!--
-                    <p:commandButton value="cabecalho"  icon="Find128-iconfinder" style="ui-button"/>
-                    <p:commandButton type="push" title="Editar cabeçalho" icon="Find128-iconfinder" style="ui-button" />
-                    -->
                 </h:form>
 
                 <ui:insert name="conteudo" />
-            </p:layoutUnit>
-            <p:layoutUnit position="south" size="40" resizable="false" closable="false" collapsible="false" >
-                <p:outputPanel style="text-align:center;" >
-                    <h:outputText value="Todos os direitos reservados ao IFNMG - Campus Januária" />
-                </p:outputPanel>
             </p:layoutUnit>
         </p:layout>
     </h:body>

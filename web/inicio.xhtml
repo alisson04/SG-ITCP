@@ -6,16 +6,13 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
+
         <ui:define name="conteudo">
             <style type="text/css">
                 .AlturaLinhas {
                     width: 700px;
                 }
             </style>
-
-            <h:form id="frmGrowl" >
-                <p:growl id="growl" showDetail="true" />
-            </h:form>
 
             <h:form id="frmCadastro" >
                 <p:tabView dynamic="true" cache="true">

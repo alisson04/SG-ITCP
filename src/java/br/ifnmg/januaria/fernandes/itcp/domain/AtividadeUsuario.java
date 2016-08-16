@@ -23,7 +23,7 @@ import javax.persistence.Table;
  * @author alisson
  */
 @Entity
-@Table(name = "atividadeUsuario")
+@Table(name = "AtividadeUsuario")
 @NamedQueries({
     @NamedQuery(name = "AtividadeUsuario.findAll", query = "SELECT a FROM AtividadeUsuario a")})
 public class AtividadeUsuario implements Serializable {
@@ -34,11 +34,11 @@ public class AtividadeUsuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "atividadeFk", referencedColumnName = "idAtividade")
-    @ManyToOne
-    private AtividadeExecutada atividadeExecutada;
+    @JoinColumn(name = "atividadeFk", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private AtividadePlanejada atividadePlanejada;
     @JoinColumn(name = "usuarioFk", referencedColumnName = "idUsuario")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Usuario usuario;
 
     public AtividadeUsuario() {
@@ -56,12 +56,12 @@ public class AtividadeUsuario implements Serializable {
         this.id = id;
     }
 
-    public AtividadeExecutada getAtividadeExecutada() {
-        return atividadeExecutada;
+    public AtividadePlanejada getAtividadePlanejada() {
+        return atividadePlanejada;
     }
 
-    public void setAtividadeExecutada(AtividadeExecutada atividadeExecutada) {
-        this.atividadeExecutada = atividadeExecutada;
+    public void setAtividadePlanejada(AtividadePlanejada atividadePlanejada) {
+        this.atividadePlanejada = atividadePlanejada;
     }
 
     public Usuario getUsuario() {

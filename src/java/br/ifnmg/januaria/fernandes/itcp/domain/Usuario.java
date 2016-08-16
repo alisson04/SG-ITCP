@@ -15,6 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,6 +37,12 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable, EntityConverter {
+
+    @JoinTable(name = "VisitaEptUsuario", joinColumns = {
+        @JoinColumn(name = "idUsuarioFk", referencedColumnName = "idUsuario")}, inverseJoinColumns = {
+        @JoinColumn(name = "idVisitaEptFk", referencedColumnName = "id")})
+    @ManyToMany
+    private List<VisitaEpt> visitaEptList;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private HorarioTrabalho horarioTrabalho;
@@ -303,4 +312,12 @@ public class Usuario implements Serializable, EntityConverter {
     public void setHorarioTrabalho(HorarioTrabalho horarioTrabalho) {
         this.horarioTrabalho = horarioTrabalho;
     }    
+
+    public List<VisitaEpt> getVisitaEptList() {
+        return visitaEptList;
+    }
+
+    public void setVisitaEptList(List<VisitaEpt> visitaEptList) {
+        this.visitaEptList = visitaEptList;
+    }
 }

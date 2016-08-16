@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +33,9 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Empreendimento.findAll", query = "SELECT e FROM Empreendimento e")})
 public class Empreendimento implements Serializable, EntityConverter {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
+    private List<VisitaEpt> visitaEptList;
 
     @OneToMany(mappedBy = "empreendimento")
     private List<PlanoAcao> planoAcaoList;
@@ -290,6 +294,14 @@ public class Empreendimento implements Serializable, EntityConverter {
 
     public void setPlanoAcaoList(List<PlanoAcao> planoAcaoList) {
         this.planoAcaoList = planoAcaoList;
+    }
+
+    public List<VisitaEpt> getVisitaEptList() {
+        return visitaEptList;
+    }
+
+    public void setVisitaEptList(List<VisitaEpt> visitaEptList) {
+        this.visitaEptList = visitaEptList;
     }
     
 }

@@ -1,6 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
-import br.ifnmg.januaria.fernandes.itcp.domain.AtividadeExecutada;
+//import br.ifnmg.januaria.fernandes.itcp.domain.AtividadeExecutada;
 import java.util.List;
 
 
@@ -8,6 +8,8 @@ import java.util.List;
  *
  * @author alisson
  */
+
+/**
 public class AtividadeExecutadaDAO extends DaoGenerico<AtividadeExecutada>{
     public void salvarDao(AtividadeExecutada obj){
         salvarGenerico(obj);
@@ -21,3 +23,4 @@ public class AtividadeExecutadaDAO extends DaoGenerico<AtividadeExecutada>{
         excluirGenerico(obj);
     }
 }
+*/

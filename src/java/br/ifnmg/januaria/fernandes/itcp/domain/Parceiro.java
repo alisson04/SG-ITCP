@@ -13,6 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -29,6 +32,12 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Parceiro.findAll", query = "SELECT p FROM Parceiro p")})
 public class Parceiro implements Serializable, EntityConverter  {
+
+    @JoinTable(name = "VisitaEptParceiro", joinColumns = {
+        @JoinColumn(name = "idParceiroFk", referencedColumnName = "idparceiro")}, inverseJoinColumns = {
+        @JoinColumn(name = "idVisitaEptFk", referencedColumnName = "id")})
+    @ManyToMany
+    private List<VisitaEpt> visitaEptList;
 
     @OneToMany(mappedBy = "parceiro")
     private List<AtividadeParceiro> atividadeParceiroList;
@@ -176,6 +185,14 @@ public class Parceiro implements Serializable, EntityConverter  {
 
     public void setAtividadeParceiroList(List<AtividadeParceiro> atividadeParceiroList) {
         this.atividadeParceiroList = atividadeParceiroList;
+    }
+
+    public List<VisitaEpt> getVisitaEptList() {
+        return visitaEptList;
+    }
+
+    public void setVisitaEptList(List<VisitaEpt> visitaEptList) {
+        this.visitaEptList = visitaEptList;
     }
     
 }

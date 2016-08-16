@@ -9,21 +9,19 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -31,16 +29,10 @@ import javax.validation.constraints.Size;
  * @author alisson
  */
 @Entity
-@Table(name = "AtividadePlanejada")
+@Table(name = "VisitaEpt")
 @NamedQueries({
-    @NamedQuery(name = "AtividadePlanejada.findAll", query = "SELECT a FROM AtividadePlanejada a")})
-public class AtividadePlanejada implements Serializable, EntityConverter {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "atividadePlanejada")
-    private List<AtividadeUsuario> atividadeUsuarioList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "atividadePlanejada")
-    private List<AtividadeParceiro> atividadeParceiroList;
+    @NamedQuery(name = "VisitaEpt.findAll", query = "SELECT v FROM VisitaEpt v")})
+public class VisitaEpt implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,45 +40,37 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "nome")
     private String nome;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "dataInicio")
-    @Temporal(TemporalType.DATE)
-    private Date dataInicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "dataFim")
-    @Temporal(TemporalType.DATE)
-    private Date dataFim;
     @Size(max = 200)
     @Column(name = "descricao")
     private String descricao;
-    @JoinColumn(name = "metafk", referencedColumnName = "idMeta")
-    @ManyToOne
-    private Meta meta;
+    @Column(name = "dataInicio")
+    @Temporal(TemporalType.DATE)
+    private Date dataInicio;
+    @Column(name = "dataFim")
+    @Temporal(TemporalType.DATE)
+    private Date dataFim;
+    @Column(name = "horaInicio")
+    @Temporal(TemporalType.TIME)
+    private Date horaInicio;
+    @Column(name = "horaFim")
+    @Temporal(TemporalType.TIME)
+    private Date horaFim;
+    @ManyToMany(mappedBy = "visitaEptList")
+    private List<Usuario> usuarioList;
+    @ManyToMany(mappedBy = "visitaEptList")
+    private List<Parceiro> parceiroList;
+    @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "idEpt")
+    @ManyToOne(optional = false)
+    private Empreendimento empreendimento;
 
-    public AtividadePlanejada() {
+    public VisitaEpt() {
     }
 
-    public AtividadePlanejada(Integer id) {
+    public VisitaEpt(Integer id) {
         this.id = id;
-    }
-
-    public AtividadePlanejada(Integer id, String nome, Date dataInicio, Date dataFim) {
-        this.id = id;
-        this.nome = nome;
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
-    }
-    
-    @Override
-    public Integer getIdConverter(){
-        return id;
     }
 
     public Integer getId() {
@@ -105,6 +89,14 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
         this.nome = nome;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
     public Date getDataInicio() {
         return dataInicio;
     }
@@ -121,20 +113,44 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
         this.dataFim = dataFim;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public Date getHoraInicio() {
+        return horaInicio;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setHoraInicio(Date horaInicio) {
+        this.horaInicio = horaInicio;
     }
 
-    public Meta getMeta() {
-        return meta;
+    public Date getHoraFim() {
+        return horaFim;
     }
 
-    public void setMeta(Meta meta) {
-        this.meta = meta;
+    public void setHoraFim(Date horaFim) {
+        this.horaFim = horaFim;
+    }
+
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
+    }
+
+    public List<Parceiro> getParceiroList() {
+        return parceiroList;
+    }
+
+    public void setParceiroList(List<Parceiro> parceiroList) {
+        this.parceiroList = parceiroList;
+    }
+
+    public Empreendimento getEmpreendimento() {
+        return empreendimento;
+    }
+
+    public void setEmpreendimento(Empreendimento empreendimento) {
+        this.empreendimento = empreendimento;
     }
 
     @Override
@@ -147,10 +163,10 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AtividadePlanejada)) {
+        if (!(object instanceof VisitaEpt)) {
             return false;
         }
-        AtividadePlanejada other = (AtividadePlanejada) object;
+        VisitaEpt other = (VisitaEpt) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -159,23 +175,7 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
 
     @Override
     public String toString() {
-        return "br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada[ id=" + id + " ]";
-    }
-
-    public List<AtividadeParceiro> getAtividadeParceiroList() {
-        return atividadeParceiroList;
-    }
-
-    public void setAtividadeParceiroList(List<AtividadeParceiro> atividadeParceiroList) {
-        this.atividadeParceiroList = atividadeParceiroList;
-    }
-
-    public List<AtividadeUsuario> getAtividadeUsuarioList() {
-        return atividadeUsuarioList;
-    }
-
-    public void setAtividadeUsuarioList(List<AtividadeUsuario> atividadeUsuarioList) {
-        this.atividadeUsuarioList = atividadeUsuarioList;
+        return "br.ifnmg.januaria.fernandes.itcp.domain.VisitaEpt[ id=" + id + " ]";
     }
     
 }
