@@ -2,6 +2,7 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.ParceiroBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,15 +18,14 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean(name="ListarParceirosView")
 @ViewScoped
-public class ListarParceirosView {
+public class ListarParceirosView implements Serializable{
     private Parceiro parceiroSelecionado;
     private Parceiro objSalvar = new Parceiro();
     private List<Parceiro> listaParceiros;
     private List<Parceiro> listaParceirosFiltrados;
-    private ParceiroBean bean;
+    private ParceiroBean bean = new ParceiroBean();
     
     public ListarParceirosView(){
-        bean = new ParceiroBean();
     }
     
     public void listarTodosParceiros() {

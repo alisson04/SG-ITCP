@@ -28,6 +28,11 @@ public abstract class MensagensGenericas {
         RequestContext.getCurrentInstance().update("frmGrowl");
     }
     
+    public void msgPanelErroInesperadoGeneric(){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro inesperado", "Contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+    }
+    
     public void msgPanelErro(String title, String msg){
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, title, msg);
             RequestContext.getCurrentInstance().showMessageInDialog(message);

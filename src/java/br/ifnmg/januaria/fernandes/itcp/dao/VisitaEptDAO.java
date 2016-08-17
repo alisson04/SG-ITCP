@@ -14,7 +14,7 @@ public class VisitaEptDAO extends DaoGenerico<VisitaEpt>{
     }
     
     public List<VisitaEpt> listarDao() {
-        return listarObjsGenerico("AtividadePlanejada");
+        return listarObjsGenerico("VisitaEpt");
     }
     
     public void excluirDao(VisitaEpt obj){

@@ -7,7 +7,6 @@ package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,13 +14,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -40,28 +39,34 @@ public class VisitaEpt implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
-    @Column(name = "nome")
-    private String nome;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "objetivo")
+    private String objetivo;
     @Size(max = 200)
     @Column(name = "descricao")
     private String descricao;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "dataInicio")
     @Temporal(TemporalType.DATE)
     private Date dataInicio;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "dataFim")
     @Temporal(TemporalType.DATE)
     private Date dataFim;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "horaInicio")
     @Temporal(TemporalType.TIME)
     private Date horaInicio;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "horaFim")
     @Temporal(TemporalType.TIME)
     private Date horaFim;
-    @ManyToMany(mappedBy = "visitaEptList")
-    private List<Usuario> usuarioList;
-    @ManyToMany(mappedBy = "visitaEptList")
-    private List<Parceiro> parceiroList;
     @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "idEpt")
     @ManyToOne(optional = false)
     private Empreendimento empreendimento;
@@ -73,6 +78,15 @@ public class VisitaEpt implements Serializable {
         this.id = id;
     }
 
+    public VisitaEpt(Integer id, String objetivo, Date dataInicio, Date dataFim, Date horaInicio, Date horaFim) {
+        this.id = id;
+        this.objetivo = objetivo;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.horaInicio = horaInicio;
+        this.horaFim = horaFim;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -81,12 +95,12 @@ public class VisitaEpt implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getObjetivo() {
+        return objetivo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setObjetivo(String objetivo) {
+        this.objetivo = objetivo;
     }
 
     public String getDescricao() {
@@ -127,22 +141,6 @@ public class VisitaEpt implements Serializable {
 
     public void setHoraFim(Date horaFim) {
         this.horaFim = horaFim;
-    }
-
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
-
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
-    }
-
-    public List<Parceiro> getParceiroList() {
-        return parceiroList;
-    }
-
-    public void setParceiroList(List<Parceiro> parceiroList) {
-        this.parceiroList = parceiroList;
     }
 
     public Empreendimento getEmpreendimento() {

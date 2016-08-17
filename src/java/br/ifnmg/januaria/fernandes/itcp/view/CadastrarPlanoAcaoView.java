@@ -80,11 +80,8 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
     }
 
     public void excluirAtividade() {
-        System.out.println("ddddddddddddddddddddddd");
         atividadeBean.excluirBean(atividadeSelecionada);
-        System.out.println("ddddddddddddddddddddddd");
         listaSalvarAtividades.remove(atividadeSelecionada);
-        System.out.println("ddddddddddddddddddddddd");
         atividadeSelecionada = null;
         msgGrowDeleteGeneric();
     }
