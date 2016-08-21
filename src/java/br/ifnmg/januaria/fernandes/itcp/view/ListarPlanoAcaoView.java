@@ -33,9 +33,6 @@ public class ListarPlanoAcaoView implements Serializable {
     private List<Empreendimento> listaEmpreendimentos;
 
     public ListarPlanoAcaoView() {
-    }
-
-    public void ListarPlanosAcao() {
         try {
             listaEmpreendimentos = empreendimentoBean.listarBean();
             listaPlanoAcao = bean.listarBean();

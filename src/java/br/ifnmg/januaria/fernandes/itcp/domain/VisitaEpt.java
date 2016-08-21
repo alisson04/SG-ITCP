@@ -7,6 +7,7 @@ package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -67,6 +70,19 @@ public class VisitaEpt implements Serializable {
     @Column(name = "horaFim")
     @Temporal(TemporalType.TIME)
     private Date horaFim;
+    
+    @JoinTable(name = "VisitaEptUsuario", joinColumns = {
+        @JoinColumn(name = "idVisitaEptFk", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idUsuarioFk", referencedColumnName = "idUsuario")})
+    @ManyToMany
+    private List<Usuario> usuarioList;
+    
+    @JoinTable(name = "VisitaEptParceiro", joinColumns = {
+        @JoinColumn(name = "idVisitaEptFk", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idParceiroFk", referencedColumnName = "idparceiro")})
+    @ManyToMany
+    private List<Parceiro> parceiroList;    
+    
     @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "idEpt")
     @ManyToOne(optional = false)
     private Empreendimento empreendimento;
@@ -141,6 +157,22 @@ public class VisitaEpt implements Serializable {
 
     public void setHoraFim(Date horaFim) {
         this.horaFim = horaFim;
+    }
+
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
+    }
+
+    public List<Parceiro> getParceiroList() {
+        return parceiroList;
+    }
+
+    public void setParceiroList(List<Parceiro> parceiroList) {
+        this.parceiroList = parceiroList;
     }
 
     public Empreendimento getEmpreendimento() {

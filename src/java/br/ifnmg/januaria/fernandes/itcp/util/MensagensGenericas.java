@@ -12,19 +12,19 @@ public abstract class MensagensGenericas {
         
     public void msgGrowSaveGeneric() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("SUCESSO!", "As informações foram salvas. "));
+        context.addMessage(null, new FacesMessage("SUCESSO!", "Informações salvas. "));
         RequestContext.getCurrentInstance().update("frmGrowl");
     }
     
     public void msgGrowDeleteGeneric() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("SUCESSO!", "As informações foram excluidas. "));
+        context.addMessage(null, new FacesMessage("SUCESSO!", "Informações excluidas. "));
         RequestContext.getCurrentInstance().update("frmGrowl");
     }
     
     public void msgGrowUpdateGeneric() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("SUCESSO!", "As informações foram atualizadas. "));
+        context.addMessage(null, new FacesMessage("SUCESSO!", "Informações atualizadas. "));
         RequestContext.getCurrentInstance().update("frmGrowl");
     }
     

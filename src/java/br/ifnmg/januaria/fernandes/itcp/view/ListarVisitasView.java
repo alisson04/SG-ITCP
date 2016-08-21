@@ -1,17 +1,23 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.ParceiroBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.VisitaEptBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
+import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
+import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.domain.VisitaEpt;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -28,14 +34,30 @@ public class ListarVisitasView extends MensagensGenericas implements Serializabl
     private VisitaEptBean bean = new VisitaEptBean();
     private EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
     private List<Empreendimento> listaEmpreendimentos;
+    
+    private DualListModel<Usuario> usuariosPickList;
+    private UsuarioBean usuarioBean = new UsuarioBean();
+    
+    private DualListModel<Parceiro> parceirosPickList;
+    private ParceiroBean parceiroBean = new ParceiroBean();
 
     public ListarVisitasView() {
         try {
             listaEmpreendimentos = empreendimentoBean.listarBean();
             listaVisitasEpt = bean.listarBean();
+
+            //PickList Usuario
+            List<Usuario> listaUsuarios = usuarioBean.listarBean();
+            List<Usuario> usuariosSelecionados = new ArrayList<Usuario>();
+            usuariosPickList = new DualListModel<Usuario>(listaUsuarios, usuariosSelecionados);
+            
+            //PickList Parceiro
+            List<Parceiro> listaParceiros = parceiroBean.listarBean();
+            List<Parceiro> parceirosSelecionados = new ArrayList<Parceiro>();
+            parceirosPickList = new DualListModel<Parceiro>(listaParceiros, parceirosSelecionados);
+            
         } catch (RuntimeException ex) {
-            //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
-            System.out.println("VIEW(listarTodosParceiros): Erro ao Carregar lista de Parceiros: " + ex);
+            msgPanelErroInesperadoGeneric();
         }
     }
 
@@ -50,11 +72,15 @@ public class ListarVisitasView extends MensagensGenericas implements Serializabl
 
     public void salvarView() {
         try {
-            bean.salvarBean(objSalvar);
+            objSalvar.setUsuarioList(usuariosPickList.getTarget());
+            objSalvar.setParceiroList(parceirosPickList.getTarget());;
+            objSalvar = bean.salvarBean(objSalvar);
+
             objSalvar = new VisitaEpt();
+            listaVisitasEpt = bean.listarBean();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
-            context.execute("PF('dlgEdicaoPronta').show()");
+            msgGrowSaveGeneric();
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             msgPanelErroInesperadoGeneric();
@@ -111,5 +137,21 @@ public class ListarVisitasView extends MensagensGenericas implements Serializabl
 
     public void setListaEmpreendimentos(List<Empreendimento> listaEmpreendimentos) {
         this.listaEmpreendimentos = listaEmpreendimentos;
+    }
+
+    public DualListModel<Usuario> getUsuariosPickList() {
+        return usuariosPickList;
+    }
+
+    public void setUsuariosPickList(DualListModel<Usuario> usuariosPickList) {
+        this.usuariosPickList = usuariosPickList;
+    }
+
+    public DualListModel<Parceiro> getParceirosPickList() {
+        return parceirosPickList;
+    }
+
+    public void setParceirosPickList(DualListModel<Parceiro> parceirosPickList) {
+        this.parceirosPickList = parceirosPickList;
     }
 }

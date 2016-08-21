@@ -33,10 +33,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Parceiro.findAll", query = "SELECT p FROM Parceiro p")})
 public class Parceiro implements Serializable, EntityConverter  {
 
-    @JoinTable(name = "VisitaEptParceiro", joinColumns = {
-        @JoinColumn(name = "idParceiroFk", referencedColumnName = "idparceiro")}, inverseJoinColumns = {
-        @JoinColumn(name = "idVisitaEptFk", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "parceiroList")
     private List<VisitaEpt> visitaEptList;
 
     @OneToMany(mappedBy = "parceiro")

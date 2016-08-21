@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,8 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,18 +29,6 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable, EntityConverter {
-
-    @JoinTable(name = "VisitaEptUsuario", joinColumns = {
-        @JoinColumn(name = "idUsuarioFk", referencedColumnName = "idUsuario")}, inverseJoinColumns = {
-        @JoinColumn(name = "idVisitaEptFk", referencedColumnName = "id")})
-    @ManyToMany
-    private List<VisitaEpt> visitaEptList;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private HorarioTrabalho horarioTrabalho;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<AtividadeUsuario> atividadeUsuarioList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -76,7 +56,7 @@ public class Usuario implements Serializable, EntityConverter {
     @Size(min = 1, max = 45)
     @Column(name = "telefoneUsuario")
     private String telefoneUsuario;
-    @Basic(optional = false)
+    @Size(max = 45)
     @Column(name = "telefoneAlternativoUsuario")
     private String telefoneAlternativoUsuario;
     @Basic(optional = false)
@@ -122,6 +102,9 @@ public class Usuario implements Serializable, EntityConverter {
     @Size(min = 1, max = 45)
     @Column(name = "enderecoUsuario")
     private String enderecoUsuario;
+    
+    @ManyToMany(mappedBy = "usuarioList")
+    private List<VisitaEpt> visitaEptList;
 
     public Usuario() {
     }
@@ -130,13 +113,12 @@ public class Usuario implements Serializable, EntityConverter {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idUsuario, String nomeUsuario, String emailUsuario, String senhaUsuario, String telefoneUsuario, String telefoneAlternativoUsuario, Date dataNascimentoUsuario, String rgUsuario, String cpfUsuario, String cargoUsuario, Date dataEntradaUsuario, String sexoUsuario, String statusSistemaUsuario, String enderecoUsuario) {
+    public Usuario(Integer idUsuario, String nomeUsuario, String emailUsuario, String senhaUsuario, String telefoneUsuario, Date dataNascimentoUsuario, String rgUsuario, String cpfUsuario, String cargoUsuario, Date dataEntradaUsuario, String sexoUsuario, String statusSistemaUsuario, String enderecoUsuario) {
         this.idUsuario = idUsuario;
         this.nomeUsuario = nomeUsuario;
         this.emailUsuario = emailUsuario;
         this.senhaUsuario = senhaUsuario;
         this.telefoneUsuario = telefoneUsuario;
-        this.telefoneAlternativoUsuario = telefoneAlternativoUsuario;
         this.dataNascimentoUsuario = dataNascimentoUsuario;
         this.rgUsuario = rgUsuario;
         this.cpfUsuario = cpfUsuario;
@@ -146,12 +128,12 @@ public class Usuario implements Serializable, EntityConverter {
         this.statusSistemaUsuario = statusSistemaUsuario;
         this.enderecoUsuario = enderecoUsuario;
     }
-
+    
     @Override
     public Integer getIdConverter(){
         return idUsuario;
     }
-    
+
     public Integer getIdUsuario() {
         return idUsuario;
     }
@@ -272,6 +254,14 @@ public class Usuario implements Serializable, EntityConverter {
         this.enderecoUsuario = enderecoUsuario;
     }
 
+    public List<VisitaEpt> getVisitaEptList() {
+        return visitaEptList;
+    }
+
+    public void setVisitaEptList(List<VisitaEpt> visitaEptList) {
+        this.visitaEptList = visitaEptList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -296,28 +286,5 @@ public class Usuario implements Serializable, EntityConverter {
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Usuario[ idUsuario=" + idUsuario + " ]";
     }
-
-    public List<AtividadeUsuario> getAtividadeUsuarioList() {
-        return atividadeUsuarioList;
-    }
-
-    public void setAtividadeUsuarioList(List<AtividadeUsuario> atividadeUsuarioList) {
-        this.atividadeUsuarioList = atividadeUsuarioList;
-    }
-
-    public HorarioTrabalho getHorarioTrabalho() {
-        return horarioTrabalho;
-    }
-
-    public void setHorarioTrabalho(HorarioTrabalho horarioTrabalho) {
-        this.horarioTrabalho = horarioTrabalho;
-    }    
-
-    public List<VisitaEpt> getVisitaEptList() {
-        return visitaEptList;
-    }
-
-    public void setVisitaEptList(List<VisitaEpt> visitaEptList) {
-        this.visitaEptList = visitaEptList;
-    }
+    
 }
