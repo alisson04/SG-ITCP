@@ -33,6 +33,12 @@ public abstract class MensagensGenericas {
             RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
     
+    public void msgGrow(String title, String msg) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(title, msg));
+        RequestContext.getCurrentInstance().update("frmGrowl");
+    }
+    
     public void msgPanelErro(String title, String msg){
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, title, msg);
             RequestContext.getCurrentInstance().showMessageInDialog(message);
