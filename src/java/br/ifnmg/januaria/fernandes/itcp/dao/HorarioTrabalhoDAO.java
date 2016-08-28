@@ -26,7 +26,7 @@ public class HorarioTrabalhoDAO extends DaoGenerico<HorarioTrabalho> {
         List<HorarioTrabalho> listaHorarios;
         HorarioTrabalho horarioAux;
         
-        listaHorarios = listarObjsFiltradosIntGenerico("HorarioTrabalho", "usuario.idUsuario", usr.getIdUsuario());
+        listaHorarios = listarObjsFiltradosIntGenerico("HorarioTrabalho", "usuario.id", usr.getId());
         if (listaHorarios.size() > 0) {
             horarioAux = listaHorarios.get(0);
             System.out.println("NUM: " + listaHorarios.size());

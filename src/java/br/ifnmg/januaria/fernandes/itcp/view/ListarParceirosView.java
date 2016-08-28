@@ -26,9 +26,6 @@ public class ListarParceirosView implements Serializable{
     private ParceiroBean bean = new ParceiroBean();
     
     public ListarParceirosView(){
-    }
-    
-    public void listarTodosParceiros() {
         System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
         try {
             listaParceiros = bean.listarBean();

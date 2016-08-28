@@ -43,11 +43,12 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
         totalHoras.setTime(0);
 
         obj = bean.buscaHorarioBean(usrLogado);
-        System.out.println("ID LOGADO: " + usrLogado.getIdUsuario());
+        System.out.println("ID LOGADO: " + usrLogado.getId());
         if (obj == null) {
             System.out.println("OBJ é NULL");
             obj = new HorarioTrabalho();
             obj.setUsuario(usrLogado);
+            obj.setIdUsuarioFk(usrLogado.getId());
         } else {
             verificaHorario();
         }

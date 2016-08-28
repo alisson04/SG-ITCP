@@ -26,11 +26,11 @@
             <h:panelGrid id="panelLogin" columns="2" cellpadding="5" style="ui-widget">
 
                 <p:outputLabel for="emailUsr" value="E-mail: " />
-                <p:inputText id="emailUsr" value="#{loginView.usuarioLogado.emailUsuario}"
+                <p:inputText id="emailUsr" value="#{loginView.usuarioLogado.email}"
                              required="true" requiredMessage="Insira um e-mail!"/>
 
                 <p:outputLabel for="senhaUsr" value="Senha: " />
-                <p:password id="senhaUsr" value="#{loginView.usuarioLogado.senhaUsuario}"
+                <p:password id="senhaUsr" value="#{loginView.usuarioLogado.senha}"
                             required="true" requiredMessage="Insira uma senha!" />
             </h:panelGrid>
             <p:commandButton value="Acessar" action="#{loginView.logar()}" update="growl" icon="Key24-iconfinder" style="ui-button"

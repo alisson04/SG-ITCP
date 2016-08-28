@@ -51,16 +51,14 @@ public class ListarUsuariosView implements Serializable {
 
     public void salvarView() {
         try {
-            if ((bean.buscarPorEmailBean(objSalvar.getEmailUsuario()) == null)) {
-                // SETA A DATA DE SAIDA
-                objSalvar.setDataSaidaUsuario(null);
+            if ((bean.buscarPorEmailBean(objSalvar.getEmail()) == null)) {
                 //SETA O STATUS
-                objSalvar.setStatusSistemaUsuario("Ativo");
+                objSalvar.setStatusSistema("Ativo");
                 //GERA A SENHA ALEATORIA
-                objSalvar.setSenhaUsuario(gerarSenhaAleatoria());
-                bean.enviarEmail(objSalvar.getEmailUsuario(), "Sistema Sigitec", "Sua senha é: " + objSalvar.getSenhaUsuario());
+                objSalvar.setSenha(gerarSenhaAleatoria());
+                bean.enviarEmail(objSalvar.getEmail(), "Sistema Sigitec", "Sua senha é: " + objSalvar.getSenha());
                 //CRIPTOGRAFA A SENHA ALEATORIA
-                objSalvar.setSenhaUsuario(DigestUtils.md5Hex(objSalvar.getSenhaUsuario()));
+                objSalvar.setSenha(DigestUtils.md5Hex(objSalvar.getSenha()));
                 bean.salvarBean(objSalvar);
                 objSalvar = new Usuario();
                 RequestContext context = RequestContext.getCurrentInstance();
@@ -118,7 +116,7 @@ public class ListarUsuariosView implements Serializable {
     public String btAtivarDesativarUser(Usuario userAtivarDesativar) {
         if (userAtivarDesativar == null) {
             return "Ativar ou desativar";
-        } else if (userAtivarDesativar.getStatusSistemaUsuario().equals("Ativo")) {
+        } else if (userAtivarDesativar.getStatusSistema().equals("Ativo")) {
             return "Desativar";
         } else {
             return "Ativar";
@@ -126,13 +124,13 @@ public class ListarUsuariosView implements Serializable {
     }
 
     public void ativarDesativarUsrView() {
-        if (objSelecionado.getStatusSistemaUsuario().equals("Ativo")) {
-            objSelecionado.setStatusSistemaUsuario("Desativado");
+        if (objSelecionado.getStatusSistema().equals("Ativo")) {
+            objSelecionado.setStatusSistema("Desativado");
             bean.salvarBean(objSelecionado);
             FacesMessage msg = new FacesMessage("O usuário foi desativado");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } else {
-            objSelecionado.setStatusSistemaUsuario("Ativo");
+            objSelecionado.setStatusSistema("Ativo");
             bean.salvarBean(objSelecionado);
             FacesMessage msg = new FacesMessage("O usuário foi ativado");
             FacesContext.getCurrentInstance().addMessage(null, msg);

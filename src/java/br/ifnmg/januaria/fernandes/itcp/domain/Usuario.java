@@ -1,19 +1,24 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,244 +33,262 @@ import javax.validation.constraints.Size;
 @Table(name = "Usuario")
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
-public class Usuario implements Serializable, EntityConverter {
+public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idUsuario")
-    private Integer idUsuario;
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nomeUsuario")
-    private String nomeUsuario;
+    @Column(name = "nome")
+    private String nome;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "emailUsuario")
-    private String emailUsuario;
+    @Column(name = "email")
+    private String email;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "senhaUsuario")
-    private String senhaUsuario;
+    @Column(name = "senha")
+    private String senha;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "telefoneUsuario")
-    private String telefoneUsuario;
+    @Column(name = "telefone")
+    private String telefone;
     @Size(max = 45)
-    @Column(name = "telefoneAlternativoUsuario")
-    private String telefoneAlternativoUsuario;
+    @Column(name = "telefoneAlternativo")
+    private String telefoneAlternativo;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "dataNascimentoUsuario")
+    @Column(name = "dataNascimento")
     @Temporal(TemporalType.DATE)
-    private Date dataNascimentoUsuario;
+    private Date dataNascimento;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "rgUsuario")
-    private String rgUsuario;
+    @Column(name = "rg")
+    private String rg;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "cpfUsuario")
-    private String cpfUsuario;
+    @Column(name = "cpf")
+    private String cpf;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "cargoUsuario")
-    private String cargoUsuario;
+    @Column(name = "cargo")
+    private String cargo;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "dataEntradaUsuario")
+    @Column(name = "dataEntrada")
     @Temporal(TemporalType.DATE)
-    private Date dataEntradaUsuario;
-    @Column(name = "dataSaidaUsuario")
+    private Date dataEntrada;
+    @Column(name = "dataSaida")
     @Temporal(TemporalType.DATE)
-    private Date dataSaidaUsuario;
+    private Date dataSaida;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "sexoUsuario")
-    private String sexoUsuario;
+    @Column(name = "sexo")
+    private String sexo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "statusSistemaUsuario")
-    private String statusSistemaUsuario;
+    @Column(name = "statusSistema")
+    private String statusSistema;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "enderecoUsuario")
-    private String enderecoUsuario;
+    @Column(name = "endereco")
+    private String endereco;
     
     @ManyToMany(mappedBy = "usuarioList")
-    private List<VisitaEpt> visitaEptList;
+    private List<AcompanhamentoEpt> acompanhamentoEptList;
+    
+    @ManyToMany(mappedBy = "usuarioList")
+    private List<AtividadePlanejada> atividadePlanejadaList;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private HorarioTrabalho horarioTrabalho;
 
     public Usuario() {
     }
 
-    public Usuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
+    public Usuario(Integer id) {
+        this.id = id;
     }
 
-    public Usuario(Integer idUsuario, String nomeUsuario, String emailUsuario, String senhaUsuario, String telefoneUsuario, Date dataNascimentoUsuario, String rgUsuario, String cpfUsuario, String cargoUsuario, Date dataEntradaUsuario, String sexoUsuario, String statusSistemaUsuario, String enderecoUsuario) {
-        this.idUsuario = idUsuario;
-        this.nomeUsuario = nomeUsuario;
-        this.emailUsuario = emailUsuario;
-        this.senhaUsuario = senhaUsuario;
-        this.telefoneUsuario = telefoneUsuario;
-        this.dataNascimentoUsuario = dataNascimentoUsuario;
-        this.rgUsuario = rgUsuario;
-        this.cpfUsuario = cpfUsuario;
-        this.cargoUsuario = cargoUsuario;
-        this.dataEntradaUsuario = dataEntradaUsuario;
-        this.sexoUsuario = sexoUsuario;
-        this.statusSistemaUsuario = statusSistemaUsuario;
-        this.enderecoUsuario = enderecoUsuario;
-    }
-    
-    @Override
-    public Integer getIdConverter(){
-        return idUsuario;
+    public Usuario(Integer id, String nome, String email, String senha, String telefone, Date dataNascimento, String rg, String cpf, String cargo, Date dataEntrada, String sexo, String statusSistema, String endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.telefone = telefone;
+        this.dataNascimento = dataNascimento;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.cargo = cargo;
+        this.dataEntrada = dataEntrada;
+        this.sexo = sexo;
+        this.statusSistema = statusSistema;
+        this.endereco = endereco;
     }
 
-    public Integer getIdUsuario() {
-        return idUsuario;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getNomeUsuario() {
-        return nomeUsuario;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getEmailUsuario() {
-        return emailUsuario;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailUsuario(String emailUsuario) {
-        this.emailUsuario = emailUsuario;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getSenhaUsuario() {
-        return senhaUsuario;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setSenhaUsuario(String senhaUsuario) {
-        this.senhaUsuario = senhaUsuario;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    public String getTelefoneUsuario() {
-        return telefoneUsuario;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setTelefoneUsuario(String telefoneUsuario) {
-        this.telefoneUsuario = telefoneUsuario;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public String getTelefoneAlternativoUsuario() {
-        return telefoneAlternativoUsuario;
+    public String getTelefoneAlternativo() {
+        return telefoneAlternativo;
     }
 
-    public void setTelefoneAlternativoUsuario(String telefoneAlternativoUsuario) {
-        this.telefoneAlternativoUsuario = telefoneAlternativoUsuario;
+    public void setTelefoneAlternativo(String telefoneAlternativo) {
+        this.telefoneAlternativo = telefoneAlternativo;
     }
 
-    public Date getDataNascimentoUsuario() {
-        return dataNascimentoUsuario;
+    public Date getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setDataNascimentoUsuario(Date dataNascimentoUsuario) {
-        this.dataNascimentoUsuario = dataNascimentoUsuario;
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
-    public String getRgUsuario() {
-        return rgUsuario;
+    public String getRg() {
+        return rg;
     }
 
-    public void setRgUsuario(String rgUsuario) {
-        this.rgUsuario = rgUsuario;
+    public void setRg(String rg) {
+        this.rg = rg;
     }
 
-    public String getCpfUsuario() {
-        return cpfUsuario;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCpfUsuario(String cpfUsuario) {
-        this.cpfUsuario = cpfUsuario;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public String getCargoUsuario() {
-        return cargoUsuario;
+    public String getCargo() {
+        return cargo;
     }
 
-    public void setCargoUsuario(String cargoUsuario) {
-        this.cargoUsuario = cargoUsuario;
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
-    public Date getDataEntradaUsuario() {
-        return dataEntradaUsuario;
+    public Date getDataEntrada() {
+        return dataEntrada;
     }
 
-    public void setDataEntradaUsuario(Date dataEntradaUsuario) {
-        this.dataEntradaUsuario = dataEntradaUsuario;
+    public void setDataEntrada(Date dataEntrada) {
+        this.dataEntrada = dataEntrada;
     }
 
-    public Date getDataSaidaUsuario() {
-        return dataSaidaUsuario;
+    public Date getDataSaida() {
+        return dataSaida;
     }
 
-    public void setDataSaidaUsuario(Date dataSaidaUsuario) {
-        this.dataSaidaUsuario = dataSaidaUsuario;
+    public void setDataSaida(Date dataSaida) {
+        this.dataSaida = dataSaida;
     }
 
-    public String getSexoUsuario() {
-        return sexoUsuario;
+    public String getSexo() {
+        return sexo;
     }
 
-    public void setSexoUsuario(String sexoUsuario) {
-        this.sexoUsuario = sexoUsuario;
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
-    public String getStatusSistemaUsuario() {
-        return statusSistemaUsuario;
+    public String getStatusSistema() {
+        return statusSistema;
     }
 
-    public void setStatusSistemaUsuario(String statusSistemaUsuario) {
-        this.statusSistemaUsuario = statusSistemaUsuario;
+    public void setStatusSistema(String statusSistema) {
+        this.statusSistema = statusSistema;
     }
 
-    public String getEnderecoUsuario() {
-        return enderecoUsuario;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setEnderecoUsuario(String enderecoUsuario) {
-        this.enderecoUsuario = enderecoUsuario;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
-    public List<VisitaEpt> getVisitaEptList() {
-        return visitaEptList;
+    public List<AcompanhamentoEpt> getAcompanhamentoEptList() {
+        return acompanhamentoEptList;
     }
 
-    public void setVisitaEptList(List<VisitaEpt> visitaEptList) {
-        this.visitaEptList = visitaEptList;
+    public void setAcompanhamentoEptList(List<AcompanhamentoEpt> acompanhamentoEptList) {
+        this.acompanhamentoEptList = acompanhamentoEptList;
+    }
+
+    public List<AtividadePlanejada> getAtividadePlanejadaList() {
+        return atividadePlanejadaList;
+    }
+
+    public void setAtividadePlanejadaList(List<AtividadePlanejada> atividadePlanejadaList) {
+        this.atividadePlanejadaList = atividadePlanejadaList;
+    }
+
+    public HorarioTrabalho getHorarioTrabalho() {
+        return horarioTrabalho;
+    }
+
+    public void setHorarioTrabalho(HorarioTrabalho horarioTrabalho) {
+        this.horarioTrabalho = horarioTrabalho;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -276,7 +299,7 @@ public class Usuario implements Serializable, EntityConverter {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -284,7 +307,7 @@ public class Usuario implements Serializable, EntityConverter {
 
     @Override
     public String toString() {
-        return "br.ifnmg.januaria.fernandes.itcp.domain.Usuario[ idUsuario=" + idUsuario + " ]";
+        return "br.ifnmg.januaria.fernandes.itcp.domain.Usuario[ id=" + id + " ]";
     }
     
 }

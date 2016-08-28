@@ -3,11 +3,11 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.ParceiroBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
-import br.ifnmg.januaria.fernandes.itcp.bean.VisitaEptBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.AcompanhamentoEptBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
-import br.ifnmg.januaria.fernandes.itcp.domain.VisitaEpt;
+import br.ifnmg.januaria.fernandes.itcp.domain.AcompanhamentoEpt;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,15 +25,15 @@ import org.primefaces.model.DualListModel;
  *
  * @author alisson
  */
-@ManagedBean(name = "ListarVisitasView")
+@ManagedBean(name = "ListarAcompanhamentosView")
 @ViewScoped
-public class ListarVisitasView extends MensagensGenericas implements Serializable {
+public class ListarAcompanhamentosView extends MensagensGenericas implements Serializable {
 
-    private VisitaEpt objSelecionado;
-    private VisitaEpt objSalvar;
-    private List<VisitaEpt> listaVisitasEpt;
-    private List<VisitaEpt> listaParceirosFiltrados;
-    private VisitaEptBean bean;
+    private AcompanhamentoEpt objSelecionado;
+    private AcompanhamentoEpt objSalvar;
+    private List<AcompanhamentoEpt> listaAcompanhamentosEpt;
+    private List<AcompanhamentoEpt> listaAcompanhamentosFiltrados;
+    private AcompanhamentoEptBean bean;
     private EmpreendimentoBean empreendimentoBean;
     private List<Empreendimento> listaEmpreendimentos;
 
@@ -51,10 +51,10 @@ public class ListarVisitasView extends MensagensGenericas implements Serializabl
     private List<Parceiro> parceirosSelecionados;
     private DualListModel<Parceiro> parceirosPickList;
 
-    public ListarVisitasView() {
+    public ListarAcompanhamentosView() {
         try {
-            objSalvar = new VisitaEpt();
-            bean = new VisitaEptBean();
+            objSalvar = new AcompanhamentoEpt();
+            bean = new AcompanhamentoEptBean();
             empreendimentoBean = new EmpreendimentoBean();
 
             usuarioBean = new UsuarioBean();
@@ -68,37 +68,43 @@ public class ListarVisitasView extends MensagensGenericas implements Serializabl
             parceirosPickList = new DualListModel<Parceiro>(parceiros, parceirosSelecionados);
 
             listaEmpreendimentos = empreendimentoBean.listarBean();
-            listaVisitasEpt = bean.listarBean();
+            listaAcompanhamentosEpt = bean.listarBean();
         } catch (RuntimeException ex) {
             msgPanelErroInesperadoGeneric();
+            System.out.println("Erro Inesperado no construtor: " + ex);
         }
     }
 
     public void transfereObj() {//Para botão de editar
-        tabview.setActiveIndex(0);
-        objSalvar = objSelecionado;
-        usuarios = usuarioBean.listarBean();
-        parceiros = parceiroBean.listarBean();
+        try {
+            tabview.setActiveIndex(0);
+            objSalvar = objSelecionado;
 
-        usuariosPickList.setSource(usuarios);
-        parceirosPickList.setSource(parceiros);
+            usuarios = usuarioBean.listarBean();
+            parceiros = parceiroBean.listarBean();
 
-        //PARCEIRO PICK LIST
-        if (objSalvar.getParceiroList().size() > 0) {
-            parceirosPickList.setTarget(objSalvar.getParceiroList());
-            parceiros.removeAll(objSalvar.getParceiroList());
-        } else {
-            parceirosSelecionados = new ArrayList<Parceiro>();
-            parceirosPickList.setTarget(parceirosSelecionados);
-        }
+            usuariosPickList.setSource(usuarios);
+            parceirosPickList.setSource(parceiros);
 
-        //USUARIO PICK LIST
-        if (objSalvar.getUsuarioList().size() > 0) {
-            usuariosPickList.setTarget(objSalvar.getUsuarioList());
-            usuarios.removeAll(objSalvar.getUsuarioList());
-        } else {
-            usuariosSelecionados = new ArrayList<Usuario>();
-            usuariosPickList.setTarget(usuariosSelecionados);
+            //PARCEIRO PICK LIST
+            if (objSalvar.getParceiroList().size() > 0) {
+                parceirosPickList.setTarget(objSalvar.getParceiroList());
+                parceiros.removeAll(objSalvar.getParceiroList());
+            } else {
+                parceirosSelecionados = new ArrayList<Parceiro>();
+                parceirosPickList.setTarget(parceirosSelecionados);
+            }
+
+            //USUARIO PICK LIST
+            if (objSalvar.getUsuarioList().size() > 0) {
+                usuariosPickList.setTarget(objSalvar.getUsuarioList());
+                usuarios.removeAll(objSalvar.getUsuarioList());
+            } else {
+                usuariosSelecionados = new ArrayList<Usuario>();
+                usuariosPickList.setTarget(usuariosSelecionados);
+            }
+        } catch (Exception ex) {
+            System.out.println("ERRO AO TRANSFERIR OBJ: " + ex);
         }
     }
 
@@ -116,7 +122,7 @@ public class ListarVisitasView extends MensagensGenericas implements Serializabl
         parceirosSelecionados = new ArrayList<Parceiro>();
         parceirosPickList.setTarget(parceirosSelecionados);
 
-        objSalvar = new VisitaEpt();
+        objSalvar = new AcompanhamentoEpt();
         tabview.setActiveIndex(0);
     }
 
@@ -133,8 +139,8 @@ public class ListarVisitasView extends MensagensGenericas implements Serializabl
             usuariosPickList = new DualListModel<Usuario>(usuarios, usuariosSelecionados);
             parceirosPickList = new DualListModel<Parceiro>(parceiros, parceirosSelecionados);
 
-            objSalvar = new VisitaEpt();
-            listaVisitasEpt = bean.listarBean();
+            objSalvar = new AcompanhamentoEpt();
+            listaAcompanhamentosEpt = bean.listarBean();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
             msgGrowSaveGeneric();
@@ -167,36 +173,36 @@ public class ListarVisitasView extends MensagensGenericas implements Serializabl
     }
 
     //SETS E GETS
-    public VisitaEpt getObjSelecionado() {
+    public AcompanhamentoEpt getObjSelecionado() {
         return objSelecionado;
     }
 
-    public void setObjSelecionado(VisitaEpt objSelecionado) {
+    public void setObjSelecionado(AcompanhamentoEpt objSelecionado) {
         this.objSelecionado = objSelecionado;
     }
 
-    public VisitaEpt getObjSalvar() {
+    public AcompanhamentoEpt getObjSalvar() {
         return objSalvar;
     }
 
-    public void setObjSalvar(VisitaEpt objSalvar) {
+    public void setObjSalvar(AcompanhamentoEpt objSalvar) {
         this.objSalvar = objSalvar;
     }
 
-    public List<VisitaEpt> getListaVisitasEpt() {
-        return listaVisitasEpt;
+    public List<AcompanhamentoEpt> getListaAcompanhamentosEpt() {
+        return listaAcompanhamentosEpt;
     }
 
-    public void setListaVisitasEpt(List<VisitaEpt> listaVisitasEpt) {
-        this.listaVisitasEpt = listaVisitasEpt;
+    public void setListaAcompanhamentosEpt(List<AcompanhamentoEpt> listaAcompanhamentosEpt) {
+        this.listaAcompanhamentosEpt = listaAcompanhamentosEpt;
     }
 
-    public List<VisitaEpt> getListaParceirosFiltrados() {
-        return listaParceirosFiltrados;
+    public List<AcompanhamentoEpt> getListaAcompanhamentosFiltrados() {
+        return listaAcompanhamentosFiltrados;
     }
 
-    public void setListaParceirosFiltrados(List<VisitaEpt> listaParceirosFiltrados) {
-        this.listaParceirosFiltrados = listaParceirosFiltrados;
+    public void setListaAcompanhamentosFiltrados(List<AcompanhamentoEpt> listaAcompanhamentosFiltrados) {
+        this.listaAcompanhamentosFiltrados = listaAcompanhamentosFiltrados;
     }
 
     public List<Empreendimento> getListaEmpreendimentos() {

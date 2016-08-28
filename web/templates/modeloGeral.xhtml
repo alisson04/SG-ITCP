@@ -96,7 +96,8 @@
                                         action="/listarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
                         </p:submenu>
                         
-                        <p:menuitem value="Visitas" icon="Parceria24-iconfinder" action="/listarVisitasEpt.xhtml?faces-redirect=true"/>
+                        <p:menuitem value="Acompanhamentos" icon="Parceria24-iconfinder" 
+                                    action="/listarAcompanhamentosEpt.xhtml?faces-redirect=true"/>
 
                         <p:menuitem value="Lista de contatos" icon="PhoneList24-iconfinder" action="/listaContatos.xhtml?faces-redirect=true" />
 
@@ -122,37 +123,37 @@
                         <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />
-                                <h:outputText value="#{InicioBean.usuarioLogado.nomeUsuario}" />
+                                <h:outputText value="#{InicioBean.usuarioLogado.nome}" />
 
                                 <h:outputText value="E-mail: " />
-                                <h:outputText value="#{InicioBean.usuarioLogado.emailUsuario}" />
+                                <h:outputText value="#{InicioBean.usuarioLogado.email}" />
 
                                 <h:outputText value="Endereço: " />
-                                <h:outputText value="#{InicioBean.usuarioLogado.enderecoUsuario}" />
+                                <h:outputText value="#{InicioBean.usuarioLogado.endereco}" />
 
                                 <h:outputText value="Cargo: "/>
-                                <h:outputText value="#{InicioBean.usuarioLogado.cargoUsuario}"/>
+                                <h:outputText value="#{InicioBean.usuarioLogado.cargo}"/>
 
                                 <h:outputText value="Telefone: " />
-                                <h:outputText value="#{InicioBean.usuarioLogado.telefoneUsuario}" />
+                                <h:outputText value="#{InicioBean.usuarioLogado.telefone}" />
 
                                 <h:outputText value="Telefone alternatico: " />
-                                <h:outputText value="#{InicioBean.usuarioLogado.telefoneAlternativoUsuario}" />
+                                <h:outputText value="#{InicioBean.usuarioLogado.telefoneAlternativo}" />
 
                                 <p:outputLabel value="RG: " />
-                                <p:outputLabel value="#{InicioBean.usuarioLogado.rgUsuario}"/>
+                                <p:outputLabel value="#{InicioBean.usuarioLogado.rg}"/>
 
                                 <p:outputLabel value="CPF: " />
-                                <p:outputLabel value="#{InicioBean.usuarioLogado.cpfUsuario}"/>
+                                <p:outputLabel value="#{InicioBean.usuarioLogado.cpf}"/>
 
                                 <p:outputLabel value="Data de nascimento: " />
-                                <p:outputLabel value="#{InicioBean.usuarioLogado.dataNascimentoUsuario}"/>
+                                <p:outputLabel value="#{InicioBean.usuarioLogado.dataNascimento}"/>
 
                                 <p:outputLabel value="Data de entrada na ITCP: " />
-                                <p:outputLabel value="#{InicioBean.usuarioLogado.dataEntradaUsuario}"/>
+                                <p:outputLabel value="#{InicioBean.usuarioLogado.dataEntrada}"/>
 
                                 <p:outputLabel value="Sexo: " />
-                                <p:outputLabel value="#{InicioBean.usuarioLogado.sexoUsuario}"/>
+                                <p:outputLabel value="#{InicioBean.usuarioLogado.sexo}"/>
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>

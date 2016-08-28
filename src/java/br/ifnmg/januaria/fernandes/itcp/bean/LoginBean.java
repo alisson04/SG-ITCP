@@ -33,20 +33,20 @@ public class LoginBean implements Serializable {
 
     public Usuario logar(Usuario usuarioLogado) {
             //CRIPTOGRAFA A SENHA ALEATORIA
-            usuarioLogado.setSenhaUsuario(DigestUtils.md5Hex(usuarioLogado.getSenhaUsuario()));
-            usuarioLogado = usuarioDAO.logar(usuarioLogado.getEmailUsuario(), usuarioLogado.getSenhaUsuario());
+            usuarioLogado.setSenha(DigestUtils.md5Hex(usuarioLogado.getSenha()));
+            usuarioLogado = usuarioDAO.logar(usuarioLogado.getEmail(), usuarioLogado.getSenha());
             return usuarioLogado;
     }
 
     public String sair(Usuario usuarioLogado) {
         try {
-            System.out.println("EM SAIR " + usuarioLogado.getEmailUsuario());
+            System.out.println("EM SAIR " + usuarioLogado.getEmail());
             HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
             HttpServletRequest request = (HttpServletRequest) req;
             HttpSession session = (HttpSession) request.getSession();
             usuarioLogado = (Usuario) session.getAttribute("USUARIOLogado");
 
-            System.out.println("EM SAIR " + usuarioLogado.getEmailUsuario());
+            System.out.println("EM SAIR " + usuarioLogado.getEmail());
             usuarioLogado = null;
             SessionUtil.remove("USUARIOLogado");
             FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/Login.xhtml");

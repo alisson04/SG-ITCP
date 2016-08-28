@@ -6,13 +6,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-
-        <ui:define name="metadata">
-            <f:metadata>
-                <f:event listener="#{ListarParceirosView.listarTodosParceiros()}" type="preRenderView"/>
-            </f:metadata>
-        </ui:define>
-
         <ui:define name="conteudo">
             <h:form id="frmListagemParceiros" >
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
@@ -20,27 +13,27 @@
                 <p:panel styleClass="corPanel" header="Parceiros no sistema:" >
                     <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhum parceiro encontrado." 
                                  value="#{ListarParceirosView.listaParceiros}" filteredValue="#{ListarParceirosView.listaParceirosFiltrados}" 
-                                 selectionMode="single" selection="#{ListarParceirosView.parceiroSelecionado}" rowKey="#{parceiroCursor.idparceiro}" 
+                                 selectionMode="single" selection="#{ListarParceirosView.parceiroSelecionado}" rowKey="#{parceiroCursor.id}" 
                                  var="parceiroCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
                         <p:ajax event="rowSelect" update=":frmListagemParceiros"/>
 
-                        <p:column headerText="Nome: " filterBy="#{parceiroCursor.nomeParceiro}" filterMatchMode="contains"
-                                  sortBy="#{parceiroCursor.nomeParceiro}" >
-                            <h:outputText value="#{parceiroCursor.nomeParceiro}"/>
+                        <p:column headerText="Nome: " filterBy="#{parceiroCursor.nome}" filterMatchMode="contains"
+                                  sortBy="#{parceiroCursor.nome}" >
+                            <h:outputText value="#{parceiroCursor.nome}"/>
                         </p:column>
 
-                        <p:column headerText="E-mail: " filterBy="#{parceiroCursor.emailParceiro}" filterMatchMode="contains"
-                                  sortBy="#{parceiroCursor.emailParceiro}" >
-                            <h:outputText value="#{parceiroCursor.emailParceiro}"/>
+                        <p:column headerText="E-mail: " filterBy="#{parceiroCursor.email}" filterMatchMode="contains"
+                                  sortBy="#{parceiroCursor.email}" >
+                            <h:outputText value="#{parceiroCursor.email}"/>
                         </p:column>
 
-                        <p:column headerText="Endereço: " filterBy="#{parceiroCursor.enderecoParceiro}" filterMatchMode="contains"
-                                  sortBy="#{parceiroCursor.enderecoParceiro}" >
-                            <h:outputText value="#{parceiroCursor.enderecoParceiro}"/>
+                        <p:column headerText="Endereço: " filterBy="#{parceiroCursor.endereco}" filterMatchMode="contains"
+                                  sortBy="#{parceiroCursor.endereco}" >
+                            <h:outputText value="#{parceiroCursor.endereco}"/>
                         </p:column>
 
-                        <p:column headerText="Telefone: " filterBy="#{parceiroCursor.telefoneParceiro}" filterMatchMode="contains">
-                            <h:outputText value="#{parceiroCursor.telefoneParceiro}"/>
+                        <p:column headerText="Telefone: " filterBy="#{parceiroCursor.telefone}" filterMatchMode="contains">
+                            <h:outputText value="#{parceiroCursor.telefone}"/>
                         </p:column>
 
                         <f:facet name="footer">
@@ -78,17 +71,17 @@
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />                            
-                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.nomeParceiro}" />
+                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.nome}" />
                                 <h:outputText value="E-mail: " />                            
-                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.emailParceiro}" />
+                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.email}" />
                                 <h:outputText value="Endereço: " />                            
-                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.enderecoParceiro}" />
+                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.endereco}" />
                                 <h:outputText value="Telefone: " />
-                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.telefoneParceiro}" />
+                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.telefone}" />
                                 <h:outputText value="Telefone alternativo: " />
-                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.telefoneAlternativoParceiro}" />
+                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.telefoneAlternativo}" />
                                 <h:outputText value="Tipo do parceiro: " />
-                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.tipoParceiro}" />
+                                <h:outputText value="#{ListarParceirosView.parceiroSelecionado.tipo}" />
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
@@ -101,33 +94,31 @@
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarParceirosView.objSalvar.nomeParceiro}" required="true"
+                            <p:inputText id="nome" value="#{ListarParceirosView.objSalvar.nome}" required="true"
                                          requiredMessage="O campo Nome é obrigatório." size="57" maxlength="45"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="e-mail" value="E-mail: " />  
-                            <p:inputText id="e-mail" value="#{ListarParceirosView.objSalvar.emailParceiro}" required="true"
-                                         requiredMessage="O campo E-mail é obrigatório." size="57" maxlength="45"/>
+                            <p:inputText id="e-mail" value="#{ListarParceirosView.objSalvar.email}" size="57" maxlength="45"/>
                             <p:message for="e-mail" />
 
                             <p:outputLabel for="endereco" value="Endereço: "/>
-                            <p:inputText id="endereco" value="#{ListarParceirosView.objSalvar.enderecoParceiro}" required="true"
-                                         requiredMessage="O campo Endereço é obrigatório." size="57" maxlength="45"/>
+                            <p:inputText id="endereco" value="#{ListarParceirosView.objSalvar.endereco}"
+                                         size="57" maxlength="45"/>
                             <p:message for="endereco" />
 
                             <p:outputLabel for="telefone" value="Telefone: " />
-                            <p:inputMask id="telefone" value="#{ListarParceirosView.objSalvar.telefoneParceiro}" mask="(99) 9999-9999?9" 
-                                         required="true" requiredMessage="O campo Telefone é obrigatório." size="57" maxlength="11"/>
+                            <p:inputMask id="telefone" value="#{ListarParceirosView.objSalvar.telefone}" mask="(99) 9999-9999?9" 
+                                         size="57" maxlength="11"/>
                             <p:message for="telefone" />
 
                             <p:outputLabel value="Telefone alternativo: " />
-                            <p:inputMask id="telefoneAlternativo" value="#{ListarParceirosView.objSalvar.telefoneAlternativoParceiro}" 
+                            <p:inputMask id="telefoneAlternativo" value="#{ListarParceirosView.objSalvar.telefoneAlternativo}" 
                                          mask="(99) 9999-9999?9" size="57" maxlength="11"/>
                             <p:message for="telefoneAlternativo" />
 
                             <p:outputLabel for="tipoParceiro" value="Tipo de parceiro: "/>
-                            <p:inputText id="tipoParceiro" value="#{ListarParceirosView.objSalvar.tipoParceiro}" size="57" maxlength="45"
-                                         required="true" requiredMessage="O campo Tipo de parceiro é obrigatório."/>
+                            <p:inputText id="tipoParceiro" value="#{ListarParceirosView.objSalvar.tipo}" size="57" maxlength="45"/>
                             <p:message for="tipoParceiro"/>
                         </h:panelGrid>
 

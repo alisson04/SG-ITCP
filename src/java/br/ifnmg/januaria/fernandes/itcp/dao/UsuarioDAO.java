@@ -34,11 +34,11 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         excluirGenerico(usr);
     }
 
-    public Usuario buscarPorEmail(String emailUsuario) {
+    public Usuario buscarPorEmail(String email) {
         List<Usuario> listaUsuarios;
         Usuario usr;
 
-        listaUsuarios = listarObjsFiltradosGenerico("Usuario", "emailUsuario", emailUsuario);
+        listaUsuarios = listarObjsFiltradosGenerico("Usuario", "email", email);
         if (listaUsuarios.size() > 0) {
             usr = listaUsuarios.get(0);
             System.out.println("NUM: " + listaUsuarios.size());
@@ -53,7 +53,7 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
     public Usuario buscarPorCodigo(Usuario usr) {
         List<Usuario> listaUsrs;
         
-        listaUsrs = listarObjsFiltradosIntGenerico("Usuario", "idUsuario", usr.getIdUsuario());
+        listaUsrs = listarObjsFiltradosIntGenerico("Usuario", "id", usr.getId());
         
         if (listaUsrs.size() > 0) {
             usr = listaUsrs.get(0);
@@ -81,27 +81,27 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         return usr;
     
     **/
-    public Usuario logar(String emailUsuario, String senhaUsuario) {
+    public Usuario logar(String email, String senha) {
         EntityManager em = emc.gerarEntityManager();
         Usuario usuario;
         List<Usuario> listaObjs;
         em.getTransaction().begin();
 
-        Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.emailUsuario = :emailUsuario AND u.senhaUsuario = :senhaUsuario");
-        consulta.setParameter("emailUsuario", emailUsuario);
-        consulta.setParameter("senhaUsuario", senhaUsuario);
+        Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha");
+        consulta.setParameter("email", email);
+        consulta.setParameter("senha", senha);
         listaObjs = consulta.getResultList();//Pega a lista de objs
         System.out.println("Numero de users encontrados: " + listaObjs.size());
         if (listaObjs.size() > 0 && listaObjs.size() < 2) {
             System.out.println("NUM: " + listaObjs.size());
-            System.out.println("EMAIL: " + listaObjs.get(0).getEmailUsuario());
+            System.out.println("EMAIL: " + listaObjs.get(0).getEmail());
             usuario = listaObjs.get(0);
             System.out.println("NUM: " + listaObjs.size());
-            System.out.println("DAO(logar): SENHA: " + usuario.getSenhaUsuario());
-            System.out.println("DAO(logar): EMAIL: " + usuario.getEmailUsuario());
+            System.out.println("DAO(logar): SENHA: " + usuario.getSenha());
+            System.out.println("DAO(logar): EMAIL: " + usuario.getEmail());
             return usuario;
         } else {
-            System.out.println("dfsfsdf sdf : ");
+            System.out.println("Senha ou email errados ");
             usuario = null;
             return usuario;
         }

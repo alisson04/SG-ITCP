@@ -36,7 +36,7 @@ public class controleDeAcesso implements Filter {
                 || (req.getServletPath().contains("/javax.faces.resource"))
                 || session.getAttribute("USUARIOLogado") != null) {
             if (session.getAttribute("USUARIOLogado") != null) {
-                if (!"Coordenador".equals(((Usuario) session.getAttribute("USUARIOLogado")).getCargoUsuario())
+                if (!"Coordenador".equals(((Usuario) session.getAttribute("USUARIOLogado")).getCargo())
                         && req.getServletPath().endsWith("CadastroUsuario.xhtml")) {
                     System.out.println("5");
                     redireciona("/sigitec/inicio.xhtml", response);

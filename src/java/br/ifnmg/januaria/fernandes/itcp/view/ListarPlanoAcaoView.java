@@ -24,16 +24,19 @@ import org.primefaces.context.RequestContext;
 @ViewScoped
 public class ListarPlanoAcaoView implements Serializable {
 
-    PlanoAcaoBean bean = new PlanoAcaoBean();
-    EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
+    PlanoAcaoBean bean;
+    EmpreendimentoBean empreendimentoBean;
     private PlanoAcao planoSelecionado;
-    private PlanoAcao objSalvar = new PlanoAcao();
+    private PlanoAcao objSalvar;
     private List<PlanoAcao> listaPlanoAcao;
     private List<PlanoAcao> listaPlanoAcaoFiltrados;
     private List<Empreendimento> listaEmpreendimentos;
 
     public ListarPlanoAcaoView() {
         try {
+            bean = new PlanoAcaoBean();
+            empreendimentoBean = new EmpreendimentoBean();
+            objSalvar = new PlanoAcao();
             listaEmpreendimentos = empreendimentoBean.listarBean();
             listaPlanoAcao = bean.listarBean();
         } catch (RuntimeException ex) {

@@ -8,10 +8,11 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
-                <p:panel styleClass="corPanel" header="Visitas cadastradas:" >
+                <p:panel styleClass="corPanel" header="Acompanhamentos cadastradas:" >
                     <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhuma visita cadastrada." 
-                                 value="#{ListarVisitasView.listaVisitasEpt}" filteredValue="#{ListarVisitasView.listaParceirosFiltrados}" 
-                                 selectionMode="single" selection="#{ListarVisitasView.objSelecionado}" rowKey="#{cursor.id}" 
+                                 value="#{ListarAcompanhamentosView.listaAcompanhamentosEpt}" 
+                                 filteredValue="#{ListarAcompanhamentosView.listaAcompanhamentosFiltrados}" 
+                                 selectionMode="single" selection="#{ListarAcompanhamentosView.objSelecionado}" rowKey="#{cursor.id}" 
                                  var="cursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
                         <p:ajax event="rowSelect" update="frmListagem"/>
 
@@ -20,14 +21,8 @@
                             <h:outputText value="#{cursor.objetivo}"/>
                         </p:column>
 
-                        <p:column headerText="Data de início" >
-                            <h:outputText value="#{cursor.dataInicio}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
-                            </h:outputText>
-                        </p:column>
-
-                        <p:column headerText="Data de fim" >
-                            <h:outputText value="#{cursor.dataInicio}">
+                        <p:column headerText="Data" >
+                            <h:outputText value="#{cursor.dataAcompanhamento}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
@@ -46,17 +41,17 @@
                         <f:facet name="footer">
                             <p:commandButton id="btnVisualizarParceiro" update=":frmListagem:carDetail" 
                                              icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()"
-                                             disabled="#{ListarVisitasView.objSelecionado == null}"/>
+                                             disabled="#{ListarAcompanhamentosView.objSelecionado == null}"/>
                             <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicao"
                                              oncomplete="PF('wVarEditarDialog').show()"
-                                             actionListener="#{ListarVisitasView.reiniciaObj()}"/>
+                                             actionListener="#{ListarAcompanhamentosView.reiniciaObj()}"/>
                             <p:commandButton id="btnEditar" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
-                                             disabled="#{ListarVisitasView.objSelecionado == null}"
+                                             disabled="#{ListarAcompanhamentosView.objSelecionado == null}"
                                              oncomplete="PF('wVarEditarDialog').show()"
-                                             actionListener="#{ListarVisitasView.transfereObj()}"/>
+                                             actionListener="#{ListarAcompanhamentosView.transfereObj()}"/>
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" update=":frmListagem"
-                                             disabled="#{ListarVisitasView.objSelecionado == null}" 
-                                             actionListener="#{ListarVisitasView.excluirParceiroView()}">
+                                             disabled="#{ListarAcompanhamentosView.objSelecionado == null}" 
+                                             actionListener="#{ListarAcompanhamentosView.excluirParceiroView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" icon="Alert16-iconfinder" />
                             </p:commandButton>
 
@@ -72,80 +67,75 @@
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Empreendimento: " />
-                                <h:outputText value="#{ListarVisitasView.objSelecionado.empreendimento.nome} " />
+                                <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.empreendimento.nome} " />
 
                                 <h:outputText value="Objetivo: " />
-                                <h:outputText value="#{ListarVisitasView.objSelecionado.objetivo}" />
+                                <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.objetivo}" />
 
-                                <h:outputText value="Data de início: " />
-                                <h:outputText value="#{ListarVisitasView.objSelecionado.dataInicio}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                                </h:outputText>
-
-                                <h:outputText value="Data de fim: " />
-                                <h:outputText value="#{ListarVisitasView.objSelecionado.dataFim}">
+                                <h:outputText value="Data: " />
+                                <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.dataAcompanhamento}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </h:outputText>
 
                                 <h:outputText value="Hora de início: " />
-                                <h:outputText value="#{ListarVisitasView.objSelecionado.horaInicio}">
+                                <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.horaInicio}">
                                     <f:convertDateTime pattern="HH:mm" />
                                 </h:outputText>
 
                                 <h:outputText value="Hora de fim: " />
-                                <h:outputText value="#{ListarVisitasView.objSelecionado.horaFim}">
+                                <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.horaFim}">
                                     <f:convertDateTime pattern="HH:mm" />
                                 </h:outputText>
+                                
+                                <h:outputText value="Descrição: " />
+                                <p:scrollPanel mode="native" style="width:435px;height:100px">
+                                    <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.descricao}" />
+                                </p:scrollPanel>
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
                 </p:panel>
             </h:form>
 
-            <p:dialog id="dlgEditar" header="Visita" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  dynamic="true" >
+            <p:dialog id="dlgEditar" header="Acompanhamento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
+                      appendTo="@(body)" styleClass="corDialog" resizable="false" draggable="false" modal="true"  dynamic="true" >
                 <h:form id="frmEdicao">
-                    <p:tabView id="tabGeral" activeIndex="#{ListarVisitasView.tabview.activeIndex}">
-                        <p:ajax event="tabChange" listener="#{ListarVisitasView.onTabChange}" />
+                    <p:tabView id="tabGeral" activeIndex="#{ListarAcompanhamentosView.tabview.activeIndex}">
+                        <p:ajax event="tabChange" listener="#{ListarAcompanhamentosView.onTabChange}" />
                         <p:tab id="tabInfo" title="Informações" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
                                 <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório."
-                                                 value="#{ListarVisitasView.objSalvar.empreendimento}" style="width:435px"
+                                                 value="#{ListarAcompanhamentosView.objSalvar.empreendimento}" style="width:435px"
                                                  converter="generic">
                                     <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarVisitasView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
+                                    <f:selectItems value="#{ListarAcompanhamentosView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
                                                    itemValue="#{ept}"/>
                                 </p:selectOneMenu>
                                 <p:message for="empreendimento"/>
 
                                 <p:outputLabel for="objetivo" value="Objetivo: " />
-                                <p:inputText id="objetivo" value="#{ListarVisitasView.objSalvar.objetivo}" required="true"
+                                <p:inputText id="objetivo" value="#{ListarAcompanhamentosView.objSalvar.objetivo}" required="true"
                                              requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                                 <p:message for="objetivo" />
 
-                                <p:outputLabel for="dataInicio" value="Data de início: " />
-                                <p:calendar id="dataInicio" value="#{ListarVisitasView.objSalvar.dataInicio}" pattern="dd/MM/yyyy" 
-                                            size="45" mask="true" locale="pt" required="true" requiredMessage="O campo data de início é obrigatório."/>
-                                <p:message for="dataInicio"/>
-
-                                <p:outputLabel for="dataFim" value="Data de fim: " />
-                                <p:calendar id="dataFim" value="#{ListarVisitasView.objSalvar.dataFim}" pattern="dd/MM/yyyy" 
-                                            size="45" mask="true" locale="pt" required="true" requiredMessage="O campo data de fim é obrigatório."/>
-                                <p:message for="dataInicio"/>
+                                <p:outputLabel for="data" value="Data: " />
+                                <p:calendar id="data" value="#{ListarAcompanhamentosView.objSalvar.dataAcompanhamento}" pattern="dd/MM/yyyy" 
+                                            size="45" mask="true" locale="pt" required="true" requiredMessage="O campo data é obrigatório."/>
+                                <p:message for="data"/>
 
                                 <p:outputLabel for="horaInicio" value="Hora de início: " />
-                                <p:calendar id="horaInicio" value="#{ListarVisitasView.objSalvar.horaInicio}" pattern="HH:mm" timeOnly="true" 
+                                <p:calendar id="horaInicio" value="#{ListarAcompanhamentosView.objSalvar.horaInicio}" pattern="HH:mm" timeOnly="true" 
                                             locale="pt" size="45" required="true" requiredMessage="O campo hora de início é obrigatório!" />
                                 <p:message for="horaInicio"/>
 
                                 <p:outputLabel for="Horafim" value="Hora de fim " />
-                                <p:calendar id="Horafim" value="#{ListarVisitasView.objSalvar.horaFim}" pattern="HH:mm" timeOnly="true" 
+                                <p:calendar id="Horafim" value="#{ListarAcompanhamentosView.objSalvar.horaFim}" pattern="HH:mm" timeOnly="true" 
                                             locale="pt" size="45" required="true" requiredMessage="O campo hora de fim é obrigatório!" />
                                 <p:message for="Horafim"/>
 
                                 <p:outputLabel for="descricao" value="Descrição: " />
-                                <p:inputTextarea id="descricao" value="#{ListarVisitasView.objSalvar.descricao}" rows="5" cols="45" 
+                                <p:inputTextarea id="descricao" value="#{ListarAcompanhamentosView.objSalvar.descricao}" rows="5" cols="45" 
                                                  maxlength="200" />
                                 <p:message for="descricao" />
                             </h:panelGrid>
@@ -154,8 +144,8 @@
                         </p:tab>
 
                         <p:tab id="tabUsr" title="Usuários que participaram" >
-                            <p:pickList id="PojoPickList" value="#{ListarVisitasView.usuariosPickList}" var="objPickList" 
-                                        effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nomeUsuario}" 
+                            <p:pickList id="PojoPickList" value="#{ListarAcompanhamentosView.usuariosPickList}" var="objPickList" 
+                                        effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
                                         showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
                                         removeLabel="Remover" removeAllLabel="Remover todos">
 
@@ -163,18 +153,18 @@
                                 <f:facet name="targetCaption">Participaram</f:facet>
 
                                 <p:column >
-                                    <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nomeUsuario}" />
+                                    <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
                                 </p:column>
 
                                 <p:column >
-                                    <h:outputText value="#{objPickList.nomeUsuario}" />
+                                    <h:outputText value="#{objPickList.nome}" />
                                 </p:column>
                             </p:pickList>
                         </p:tab>
                         
                         <p:tab title="Parceiros que participaram" >
-                            <p:pickList value="#{ListarVisitasView.parceirosPickList}" var="objParceiroPickList" 
-                                        effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nomeParceiro}" 
+                            <p:pickList value="#{ListarAcompanhamentosView.parceirosPickList}" var="objParceiroPickList" 
+                                        effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nome}" 
                                         showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
                                         removeLabel="Remover" removeAllLabel="Remover todos">
 
@@ -182,11 +172,11 @@
                                 <f:facet name="targetCaption">Participaram</f:facet>
 
                                 <p:column >
-                                    <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nomeParceiro}" />
+                                    <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nome}" />
                                 </p:column>
 
                                 <p:column >
-                                    <h:outputText value="#{objParceiroPickList.nomeParceiro}" />
+                                    <h:outputText value="#{objParceiroPickList.nome}" />
                                 </p:column>
                             </p:pickList>
                         </p:tab>
@@ -194,7 +184,7 @@
 
                     <p:separator/>
 
-                    <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarVisitasView.salvarView()}" 
+                    <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAcompanhamentosView.salvarView()}" 
                                      icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagemParceiros" >
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                     </p:commandButton>

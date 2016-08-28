@@ -18,7 +18,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,130 +30,133 @@ import javax.validation.constraints.Size;
 @Table(name = "Parceiro")
 @NamedQueries({
     @NamedQuery(name = "Parceiro.findAll", query = "SELECT p FROM Parceiro p")})
-public class Parceiro implements Serializable, EntityConverter  {
-
-    @ManyToMany(mappedBy = "parceiroList")
-    private List<VisitaEpt> visitaEptList;
-
-    @OneToMany(mappedBy = "parceiro")
-    private List<AtividadeParceiro> atividadeParceiroList;
+public class Parceiro implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idparceiro")
-    private Integer idparceiro;
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nomeParceiro")
-    private String nomeParceiro;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "emailParceiro")
-    private String emailParceiro;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "telefoneParceiro")
-    private String telefoneParceiro;
+    @Column(name = "nome")
+    private String nome;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 45)
-    @Column(name = "telefoneAlternativoParceiro")
-    private String telefoneAlternativoParceiro;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "enderecoParceiro")
-    private String enderecoParceiro;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "tipoParceiro")
-    private String tipoParceiro;
+    @Column(name = "email")
+    private String email;
+    @Size(max = 45)
+    @Column(name = "telefone")
+    private String telefone;
+    @Size(max = 45)
+    @Column(name = "telefoneAlternativo")
+    private String telefoneAlternativo;
+    @Size(max = 45)
+    @Column(name = "endereco")
+    private String endereco;
+    @Size(max = 45)
+    @Column(name = "tipo")
+    private String tipo;
+    
+    @ManyToMany(mappedBy = "parceiroList")
+    private List<AcompanhamentoEpt> acompanhamentoEptList;
+    
+    @JoinTable(name = "AtividadeParceiro", joinColumns = {
+        @JoinColumn(name = "idParceiroFk", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idAtividadeFk", referencedColumnName = "id")})
+    @ManyToMany
+    private List<AtividadePlanejada> atividadePlanejadaList;
 
     public Parceiro() {
     }
 
-    public Parceiro(Integer idparceiro) {
-        this.idparceiro = idparceiro;
+    public Parceiro(Integer id) {
+        this.id = id;
     }
 
-    public Parceiro(Integer idparceiro, String nomeParceiro, String emailParceiro, String telefoneParceiro, String enderecoParceiro, String tipoParceiro) {
-        this.idparceiro = idparceiro;
-        this.nomeParceiro = nomeParceiro;
-        this.emailParceiro = emailParceiro;
-        this.telefoneParceiro = telefoneParceiro;
-        this.enderecoParceiro = enderecoParceiro;
-        this.tipoParceiro = tipoParceiro;
-    }
-    
-    @Override
-    public Integer getIdConverter(){
-        return idparceiro;
+    public Parceiro(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
     }
 
-    public Integer getIdparceiro() {
-        return idparceiro;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdparceiro(Integer idparceiro) {
-        this.idparceiro = idparceiro;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getNomeParceiro() {
-        return nomeParceiro;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeParceiro(String nomeParceiro) {
-        this.nomeParceiro = nomeParceiro;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getEmailParceiro() {
-        return emailParceiro;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailParceiro(String emailParceiro) {
-        this.emailParceiro = emailParceiro;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getTelefoneParceiro() {
-        return telefoneParceiro;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setTelefoneParceiro(String telefoneParceiro) {
-        this.telefoneParceiro = telefoneParceiro;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public String getTelefoneAlternativoParceiro() {
-        return telefoneAlternativoParceiro;
+    public String getTelefoneAlternativo() {
+        return telefoneAlternativo;
     }
 
-    public void setTelefoneAlternativoParceiro(String telefoneAlternativoParceiro) {
-        this.telefoneAlternativoParceiro = telefoneAlternativoParceiro;
+    public void setTelefoneAlternativo(String telefoneAlternativo) {
+        this.telefoneAlternativo = telefoneAlternativo;
     }
 
-    public String getEnderecoParceiro() {
-        return enderecoParceiro;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setEnderecoParceiro(String enderecoParceiro) {
-        this.enderecoParceiro = enderecoParceiro;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
-    public String getTipoParceiro() {
-        return tipoParceiro;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipoParceiro(String tipoParceiro) {
-        this.tipoParceiro = tipoParceiro;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public List<AcompanhamentoEpt> getAcompanhamentoEptList() {
+        return acompanhamentoEptList;
+    }
+
+    public void setAcompanhamentoEptList(List<AcompanhamentoEpt> acompanhamentoEptList) {
+        this.acompanhamentoEptList = acompanhamentoEptList;
+    }
+
+    public List<AtividadePlanejada> getAtividadePlanejadaList() {
+        return atividadePlanejadaList;
+    }
+
+    public void setAtividadePlanejadaList(List<AtividadePlanejada> atividadePlanejadaList) {
+        this.atividadePlanejadaList = atividadePlanejadaList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idparceiro != null ? idparceiro.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -165,7 +167,7 @@ public class Parceiro implements Serializable, EntityConverter  {
             return false;
         }
         Parceiro other = (Parceiro) object;
-        if ((this.idparceiro == null && other.idparceiro != null) || (this.idparceiro != null && !this.idparceiro.equals(other.idparceiro))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -173,23 +175,7 @@ public class Parceiro implements Serializable, EntityConverter  {
 
     @Override
     public String toString() {
-        return "br.ifnmg.januaria.fernandes.itcp.domain.Parceiro[ idparceiro=" + idparceiro + " ]";
-    }
-
-    public List<AtividadeParceiro> getAtividadeParceiroList() {
-        return atividadeParceiroList;
-    }
-
-    public void setAtividadeParceiroList(List<AtividadeParceiro> atividadeParceiroList) {
-        this.atividadeParceiroList = atividadeParceiroList;
-    }
-
-    public List<VisitaEpt> getVisitaEptList() {
-        return visitaEptList;
-    }
-
-    public void setVisitaEptList(List<VisitaEpt> visitaEptList) {
-        this.visitaEptList = visitaEptList;
+        return "br.ifnmg.januaria.fernandes.itcp.domain.Parceiro[ id=" + id + " ]";
     }
     
 }

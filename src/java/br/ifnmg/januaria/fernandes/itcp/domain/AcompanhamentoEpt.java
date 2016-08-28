@@ -31,10 +31,10 @@ import javax.validation.constraints.Size;
  * @author alisson
  */
 @Entity
-@Table(name = "VisitaEpt")
+@Table(name = "AcompanhamentoEpt")
 @NamedQueries({
-    @NamedQuery(name = "VisitaEpt.findAll", query = "SELECT v FROM VisitaEpt v")})
-public class VisitaEpt implements Serializable {
+    @NamedQuery(name = "AcompanhamentoEpt.findAll", query = "SELECT a FROM AcompanhamentoEpt a")})
+public class AcompanhamentoEpt implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,14 +52,9 @@ public class VisitaEpt implements Serializable {
     private String descricao;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "dataInicio")
+    @Column(name = "dataAcompanhamento")
     @Temporal(TemporalType.DATE)
-    private Date dataInicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "dataFim")
-    @Temporal(TemporalType.DATE)
-    private Date dataFim;
+    private Date dataAcompanhamento;
     @Basic(optional = false)
     @NotNull
     @Column(name = "horaInicio")
@@ -71,34 +66,33 @@ public class VisitaEpt implements Serializable {
     @Temporal(TemporalType.TIME)
     private Date horaFim;
     
-    @JoinTable(name = "VisitaEptUsuario", joinColumns = {
-        @JoinColumn(name = "idVisitaEptFk", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "idUsuarioFk", referencedColumnName = "idUsuario")})
+    @JoinTable(name = "AcompanhamentoEptParceiro", joinColumns = {
+        @JoinColumn(name = "idAcompanhamentoFk", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idParceiroFk", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Parceiro> parceiroList;
+    
+    @JoinTable(name = "AcompanhamentoEptUsuario", joinColumns = {
+        @JoinColumn(name = "idAcompanhamentoFk", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idUsuarioFk", referencedColumnName = "id")})
     @ManyToMany
     private List<Usuario> usuarioList;
-    
-    @JoinTable(name = "VisitaEptParceiro", joinColumns = {
-        @JoinColumn(name = "idVisitaEptFk", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "idParceiroFk", referencedColumnName = "idparceiro")})
-    @ManyToMany
-    private List<Parceiro> parceiroList;    
     
     @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "idEpt")
     @ManyToOne(optional = false)
     private Empreendimento empreendimento;
 
-    public VisitaEpt() {
+    public AcompanhamentoEpt() {
     }
 
-    public VisitaEpt(Integer id) {
+    public AcompanhamentoEpt(Integer id) {
         this.id = id;
     }
 
-    public VisitaEpt(Integer id, String objetivo, Date dataInicio, Date dataFim, Date horaInicio, Date horaFim) {
+    public AcompanhamentoEpt(Integer id, String objetivo, Date dataAcompanhamento, Date horaInicio, Date horaFim) {
         this.id = id;
         this.objetivo = objetivo;
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
+        this.dataAcompanhamento = dataAcompanhamento;
         this.horaInicio = horaInicio;
         this.horaFim = horaFim;
     }
@@ -127,20 +121,12 @@ public class VisitaEpt implements Serializable {
         this.descricao = descricao;
     }
 
-    public Date getDataInicio() {
-        return dataInicio;
+    public Date getDataAcompanhamento() {
+        return dataAcompanhamento;
     }
 
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public Date getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
+    public void setDataAcompanhamento(Date dataAcompanhamento) {
+        this.dataAcompanhamento = dataAcompanhamento;
     }
 
     public Date getHoraInicio() {
@@ -159,20 +145,20 @@ public class VisitaEpt implements Serializable {
         this.horaFim = horaFim;
     }
 
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
-
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
-    }
-
     public List<Parceiro> getParceiroList() {
         return parceiroList;
     }
 
     public void setParceiroList(List<Parceiro> parceiroList) {
         this.parceiroList = parceiroList;
+    }
+
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     public Empreendimento getEmpreendimento() {
@@ -193,10 +179,10 @@ public class VisitaEpt implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof VisitaEpt)) {
+        if (!(object instanceof AcompanhamentoEpt)) {
             return false;
         }
-        VisitaEpt other = (VisitaEpt) object;
+        AcompanhamentoEpt other = (AcompanhamentoEpt) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -205,7 +191,7 @@ public class VisitaEpt implements Serializable {
 
     @Override
     public String toString() {
-        return "br.ifnmg.januaria.fernandes.itcp.domain.VisitaEpt[ id=" + id + " ]";
+        return "br.ifnmg.januaria.fernandes.itcp.domain.AcompanhamentoEpt[ id=" + id + " ]";
     }
     
 }

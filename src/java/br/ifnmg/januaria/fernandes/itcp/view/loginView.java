@@ -18,15 +18,16 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean(name = "loginView")
 @ViewScoped
-public class loginView implements Serializable{
+public class loginView implements Serializable {
+
     private Usuario usuarioLogado = new Usuario();
     private LoginBean bean = new LoginBean();
     MensagensBean mensagensBean;
-    
-    public String logar(){
-        try{
-        usuarioLogado = bean.logar(usuarioLogado);
-        if (usuarioLogado != null) {
+
+    public String logar() {
+        try {
+            usuarioLogado = bean.logar(usuarioLogado);
+            if (usuarioLogado != null) {
                 SessionUtil.setParam("USUARIOLogado", usuarioLogado);
                 FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage(null, new FacesMessage("Successful", "Your message: "));
@@ -38,16 +39,16 @@ public class loginView implements Serializable{
                         new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail ou senha invalidos", "E-mail ou senha invalidos!"));
                 return null;
             }
-        }catch(RuntimeException | IOException ex){
+        } catch (RuntimeException | IOException ex) {
             System.out.println("RuntimeException: " + ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Erro inesperado", "Erro grave ao tentar logar, contate o administrador do sistema!");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             return null;
         }
     }
-    
-    public String sair(){
+
+    public String sair() {
         return bean.sair(usuarioLogado);
     }
 
