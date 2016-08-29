@@ -26,9 +26,7 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             objeto = em.merge(objeto);
             em.getTransaction().commit();
             return objeto;
-        } catch (ConstraintViolationException x) {
-            System.out.println("DaoGenerico(SalvarGenerico) - getConstraintViolations():");
-            System.out.println(x.getConstraintViolations());            
+        } catch (Exception x) {           
             em.getTransaction().rollback();
             throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
         } finally {
@@ -44,9 +42,9 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             em.remove(objeto);
             em.getTransaction().commit();
         } catch (ConstraintViolationException x) {
-            System.out.println("DaoGenerico(SalvarGenerico) - getConstraintViolations():");
+            System.out.println("__________DAOGenerico(SalvarGenerico) - getConstraintViolations():");
             System.out.println(x.getConstraintViolations());
-            System.out.println("DaoGenerico(SalvarGenerico) - getConstraintViolations():");
+            System.out.println("__________DAOGenerico(SalvarGenerico) - getConstraintViolations():");
             
             em.getTransaction().rollback();
             throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
@@ -85,10 +83,10 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             consulta.setParameter("paramComparacao", paramComparacao);
 
             listaObjsFiltrados = consulta.getResultList();//Pega a lista de usuarios
-            System.out.println("__________DAO(listarUsrAtivos): Numero de usuarios " + paramComparacao + " na lista: " + listaObjsFiltrados.size());
+            System.out.println("__________DAOGenerico(listarObjsFiltradosGenerico): Numero de objs " + paramComparacao + " na lista: " + listaObjsFiltrados.size());
         } catch (Exception e) {
             em.getTransaction().rollback();
-            System.out.println("__________DAO(listarObjsFiltradosGenerico): Erro ao buscar objetos filtrados: " + e);
+            System.out.println("__________DAOGenerico(listarObjsFiltradosGenerico): Erro ao buscar objetos filtrados: " + e);
         } finally {
             em.close();
         }
@@ -106,10 +104,11 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             consulta.setParameter("paramComparacao", paramComparacao);
 
             listaObjsFiltrados = consulta.getResultList();//Pega a lista de usuarios
-            System.out.println("__________DAO(listarUsrAtivos): Numero de usuarios " + paramComparacao + " na lista: " + listaObjsFiltrados.size());
+            System.out.println("__________DAOGenerico(listarObjsFiltradosIntGenerico): Numero de objs com id " + paramComparacao 
+                    + " na lista: " + listaObjsFiltrados.size());
         } catch (Exception e) {
             em.getTransaction().rollback();
-            System.out.println("__________DAO(listarObjsFiltradosGenerico): Erro ao buscar objetos filtrados: " + e);
+            System.out.println("__________DAOGenerico(listarObjsFiltradosIntGenerico): Erro ao buscar objetos filtrados: " + e);
         } finally {
             em.close();
         }

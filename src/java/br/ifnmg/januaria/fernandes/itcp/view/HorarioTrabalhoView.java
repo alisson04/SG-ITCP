@@ -1,12 +1,12 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.HorarioTrabalhoBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.HorarioTrabalho;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -14,6 +14,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolationException;
 
 /**
  *
@@ -45,10 +46,8 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
         obj = bean.buscaHorarioBean(usrLogado);
         System.out.println("ID LOGADO: " + usrLogado.getId());
         if (obj == null) {
-            System.out.println("OBJ é NULL");
             obj = new HorarioTrabalho();
             obj.setUsuario(usrLogado);
-            obj.setIdUsuarioFk(usrLogado.getId());
         } else {
             verificaHorario();
         }
@@ -56,17 +55,22 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
 
     //METODOS
     public void salvar() {
-        if (verificaHorario()) {
-            if (!(totalHoras.getTime() > 201600000)) {
-                obj.setHorasSemana((int) (long) totalHoras.getTime());
-                obj = bean.salvarBean(obj);
-                listaHorarios = bean.listarBean();
-                msgGrowSaveGeneric();
+        try {
+            if (verificaHorario()) {
+                if (!(totalHoras.getTime() > 201600000)) {
+                    obj.setHorasSemana((int) (long) totalHoras.getTime());
+                    obj = bean.salvarBean(obj);
+                    listaHorarios = bean.listarBean();
+                    msgGrowSaveGeneric();
+                } else {
+                    msgPanelErro("Erro", "A jornada de trabalho não pode ser maior que 56 horas semanais!");
+                }
             } else {
-                msgPanelErro("Erro", "A jornada de trabalho não pode ser maior que 56 horas semanais!");
+                msgPanelErro("Erro", "Verifique a coerência dos horários e tente novamente!");
             }
-        } else {
-            msgPanelErro("Erro", "Verifique a coerência dos horários e tente novamente!");
+        } catch (Exception ex) {
+            System.out.println("ERRO ao salvar: " + ex);
+            msgPanelErroInesperadoGeneric();;
         }
     }
 
@@ -88,7 +92,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
                     || minutosRestantes == 8
                     || minutosRestantes == 9) {
                 return (horas + ":0" + minutosRestantes);
-            }else{
+            } else {
                 return (horas + ":" + minutosRestantes);
             }
 

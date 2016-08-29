@@ -34,7 +34,7 @@ import javax.validation.constraints.Size;
 @Table(name = "AcompanhamentoEpt")
 @NamedQueries({
     @NamedQuery(name = "AcompanhamentoEpt.findAll", query = "SELECT a FROM AcompanhamentoEpt a")})
-public class AcompanhamentoEpt implements Serializable {
+public class AcompanhamentoEpt implements Serializable, EntityConverter {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -83,6 +83,11 @@ public class AcompanhamentoEpt implements Serializable {
     private Empreendimento empreendimento;
 
     public AcompanhamentoEpt() {
+    }
+    
+    @Override
+    public Integer getIdConverter(){
+        return id;
     }
 
     public AcompanhamentoEpt(Integer id) {

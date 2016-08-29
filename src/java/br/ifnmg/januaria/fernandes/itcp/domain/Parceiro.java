@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Parceiro")
 @NamedQueries({
     @NamedQuery(name = "Parceiro.findAll", query = "SELECT p FROM Parceiro p")})
-public class Parceiro implements Serializable {
+public class Parceiro implements Serializable, EntityConverter {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -70,6 +70,11 @@ public class Parceiro implements Serializable {
     private List<AtividadePlanejada> atividadePlanejadaList;
 
     public Parceiro() {
+    }
+    
+    @Override
+    public Integer getIdConverter(){
+        return id;
     }
 
     public Parceiro(Integer id) {

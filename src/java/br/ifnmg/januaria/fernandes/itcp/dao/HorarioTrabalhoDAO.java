@@ -29,10 +29,10 @@ public class HorarioTrabalhoDAO extends DaoGenerico<HorarioTrabalho> {
         listaHorarios = listarObjsFiltradosIntGenerico("HorarioTrabalho", "usuario.id", usr.getId());
         if (listaHorarios.size() > 0) {
             horarioAux = listaHorarios.get(0);
-            System.out.println("NUM: " + listaHorarios.size());
+            System.out.println("__________HorarioTrabalhoDAO: número de horarios para este user: " + listaHorarios.size());
         } else {
             horarioAux = null;
-            System.out.println("NUM: ");
+            System.out.println("__________HorarioTrabalhoDAO: Nenhum horário cadastrado para esse user");
         }
         
         return horarioAux;

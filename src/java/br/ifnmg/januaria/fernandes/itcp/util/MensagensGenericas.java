@@ -1,5 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.util;
 
+import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
@@ -8,7 +9,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author alisson
  */
-public abstract class MensagensGenericas {
+public abstract class MensagensGenericas implements Serializable{
         
     public void msgGrowSaveGeneric() {
         FacesContext context = FacesContext.getCurrentInstance();

@@ -1,7 +1,9 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.HorarioTrabalhoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MensagensBean;
+import br.ifnmg.januaria.fernandes.itcp.domain.HorarioTrabalho;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.validation.ConstraintViolationException;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -47,6 +50,21 @@ public class loginView implements Serializable {
             return null;
         }
     }
+/**
+    public void teste() {
+        try {
+            HorarioTrabalho h = new HorarioTrabalho();
+            Usuario u = new Usuario();
+            u.setId(4);
+            h.setUsuario(u);
+            HorarioTrabalhoBean beanH = new HorarioTrabalhoBean();
+            beanH.salvarBean(h);
+        } catch (ConstraintViolationException ex) {
+
+            System.out.println("TRETA TRETA TRETA TRETA: " + ex);
+        }
+
+    }*/
 
     public String sair() {
         return bean.sair(usuarioLogado);

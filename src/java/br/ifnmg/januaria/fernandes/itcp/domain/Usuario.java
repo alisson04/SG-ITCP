@@ -33,7 +33,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Usuario")
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, EntityConverter {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -119,6 +119,11 @@ public class Usuario implements Serializable {
     private HorarioTrabalho horarioTrabalho;
 
     public Usuario() {
+    }
+    
+    @Override
+    public Integer getIdConverter(){
+        return id;
     }
 
     public Usuario(Integer id) {

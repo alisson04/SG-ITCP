@@ -1,6 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.bean;
 
 import br.ifnmg.januaria.fernandes.itcp.dao.UsuarioDAO;
+import br.ifnmg.januaria.fernandes.itcp.domain.HorarioTrabalho;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;

@@ -4,15 +4,15 @@ import br.ifnmg.januaria.fernandes.itcp.dao.ParceiroDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
 import java.io.Serializable;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
  * @author alisson
  */
-@ManagedBean
 @SessionScoped
+@Named
 public class ParceiroBean implements Serializable{
     
     private ParceiroDAO dao;

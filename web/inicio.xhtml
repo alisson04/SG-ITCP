@@ -64,7 +64,7 @@
                                               sortBy="#{horarioCursor.usuario.nome}" filterMatchMode="contains">
                                         <h:outputText value="#{horarioCursor.usuario.nome}"/>
                                     </p:column>
-
+                    
                                     <p:column headerText="Domingo" >
                                         <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.domIni)} 
                                                       - #{HorarioTrabalhoView.conveteData(horarioCursor.domFim)}"/>

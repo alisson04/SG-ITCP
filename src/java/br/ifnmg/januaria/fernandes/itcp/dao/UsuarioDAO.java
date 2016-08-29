@@ -41,10 +41,10 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         listaUsuarios = listarObjsFiltradosGenerico("Usuario", "email", email);
         if (listaUsuarios.size() > 0) {
             usr = listaUsuarios.get(0);
-            System.out.println("NUM: " + listaUsuarios.size());
+            System.out.println("__________UsarioDAO(buscarPorEmail): Número de usuários com esse e-mail: " + listaUsuarios.size());
         } else {
             usr = null;
-            System.out.println("NUM: ");
+            System.out.println("__________UsarioDAO(buscarPorEmail): não a usuários com esse e-mail ");
         }
 
         return usr;
