@@ -10,8 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -20,6 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -33,10 +32,10 @@ public class HorarioTrabalho implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
+    @NotNull
+    @Column(name = "idUsuarioFk")
+    private Integer idUsuarioFk;
     @Column(name = "horasSemana")
     private Integer horasSemana;
     @Column(name = "domIni")
@@ -82,23 +81,23 @@ public class HorarioTrabalho implements Serializable {
     @Temporal(TemporalType.TIME)
     private Date sabFim;
     
-    @JoinColumn(name = "idUsuarioFk", referencedColumnName = "id")
+    @JoinColumn(name = "idUsuarioFk", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Usuario usuario;
 
     public HorarioTrabalho() {
     }
 
-    public HorarioTrabalho(Integer id) {
-        this.id = id;
+    public HorarioTrabalho(Integer idUsuarioFk) {
+        this.idUsuarioFk = idUsuarioFk;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdUsuarioFk() {
+        return idUsuarioFk;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdUsuarioFk(Integer idUsuarioFk) {
+        this.idUsuarioFk = idUsuarioFk;
     }
 
     public Integer getHorasSemana() {
@@ -232,7 +231,7 @@ public class HorarioTrabalho implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (idUsuarioFk != null ? idUsuarioFk.hashCode() : 0);
         return hash;
     }
 
@@ -243,7 +242,7 @@ public class HorarioTrabalho implements Serializable {
             return false;
         }
         HorarioTrabalho other = (HorarioTrabalho) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.idUsuarioFk == null && other.idUsuarioFk != null) || (this.idUsuarioFk != null && !this.idUsuarioFk.equals(other.idUsuarioFk))) {
             return false;
         }
         return true;
@@ -251,7 +250,7 @@ public class HorarioTrabalho implements Serializable {
 
     @Override
     public String toString() {
-        return "br.ifnmg.januaria.fernandes.itcp.domain.HorarioTrabalho[ id=" + id + " ]";
+        return "br.ifnmg.januaria.fernandes.itcp.domain.HorarioTrabalho[ idUsuarioFk=" + idUsuarioFk + " ]";
     }
     
 }

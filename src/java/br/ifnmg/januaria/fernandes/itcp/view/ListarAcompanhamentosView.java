@@ -51,6 +51,8 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
     private List<Parceiro> parceirosSelecionados;
     private DualListModel<Parceiro> parceirosPickList;
 
+    int i = 0;
+
     public ListarAcompanhamentosView() {
         try {
             objSalvar = new AcompanhamentoEpt();
@@ -69,6 +71,7 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
 
             listaEmpreendimentos = empreendimentoBean.listarBean();
             listaAcompanhamentosEpt = bean.listarBean();
+
         } catch (RuntimeException ex) {
             msgPanelErroInesperadoGeneric();
             System.out.println("Erro Inesperado no construtor: " + ex);
@@ -109,6 +112,7 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
     }
 
     public void reiniciaObj() {//Para botão de cadastrar
+        tabview.setActiveIndex(0);
         System.out.println("objSalvar Reiniciado ====================== ");
         usuarios = usuarioBean.listarBean();
         parceiros = parceiroBean.listarBean();
@@ -123,11 +127,11 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
         parceirosPickList.setTarget(parceirosSelecionados);
 
         objSalvar = new AcompanhamentoEpt();
-        tabview.setActiveIndex(0);
     }
 
     public void salvarView() {
         try {
+            System.out.println("SALVAR");
             objSalvar.setUsuarioList(usuariosPickList.getTarget());
             objSalvar.setParceiroList(parceirosPickList.getTarget());
             objSalvar = bean.salvarBean(objSalvar);
@@ -163,12 +167,15 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
 
     public void onTabChange(TabChangeEvent event) {//Esse método é necessário para que o "tabView" do bean esteja atualizado com o que esta na tela
         System.out.println("Usuário esta na tab: " + event.getTab().getId());
-        if (event.getTab().getId().equals("tabInfo")) {
+        if (event.getTab().getId().equals("tabUsr")) {
             tabview.setActiveIndex(0);
-        } else if (event.getTab().getId().equals("tabUsr")) {
+            System.out.println("Usuário esta na tab: " + tabview.getActiveIndex());
+        } else if (event.getTab().getId().equals("tabPar")) {
             tabview.setActiveIndex(1);
+            System.out.println("Usuário esta na tab: " + tabview.getActiveIndex());
         } else {
             tabview.setActiveIndex(2);
+            System.out.println("Usuário esta na tab: " + tabview.getActiveIndex());
         }
     }
 

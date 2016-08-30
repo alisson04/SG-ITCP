@@ -8,7 +8,7 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
-                <p:panel styleClass="corPanel" header="Acompanhamentos cadastradas:" >
+                <p:panel styleClass="corPanel" header="Acompanhamentos cadastrados:" >
                     <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhuma visita cadastrada." 
                                  value="#{ListarAcompanhamentosView.listaAcompanhamentosEpt}" 
                                  filteredValue="#{ListarAcompanhamentosView.listaAcompanhamentosFiltrados}" 
@@ -62,36 +62,60 @@
                         </f:facet>
                     </p:dataTable>
 
-                    <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
+                    <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                              resizable="false" draggable="true" modal="true"  appendTo="@(body)" styleClass="corDialog" >
                         <p:outputPanel id="carDetail" style="text-align:center;">
-                            <p:panelGrid  columns="2" columnClasses="label,value" >
-                                <h:outputText value="Empreendimento: " />
-                                <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.empreendimento.nome} " />
+                            <p:fieldset legend="Informações do acompanhamento" toggleable="true" toggleSpeed="500" >
+                                <p:panelGrid  columns="2" columnClasses="label,value" >
+                                    <h:outputText value="Empreendimento: " />
+                                    <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.empreendimento.nome} " />
 
-                                <h:outputText value="Objetivo: " />
-                                <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.objetivo}" />
+                                    <h:outputText value="Objetivo: " />
+                                    <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.objetivo}" />
 
-                                <h:outputText value="Data: " />
-                                <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.dataAcompanhamento}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                                </h:outputText>
+                                    <h:outputText value="Data: " />
+                                    <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.dataAcompanhamento}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
 
-                                <h:outputText value="Hora de início: " />
-                                <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.horaInicio}">
-                                    <f:convertDateTime pattern="HH:mm" />
-                                </h:outputText>
+                                    <h:outputText value="Hora de início: " />
+                                    <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.horaInicio}">
+                                        <f:convertDateTime pattern="HH:mm" />
+                                    </h:outputText>
 
-                                <h:outputText value="Hora de fim: " />
-                                <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.horaFim}">
-                                    <f:convertDateTime pattern="HH:mm" />
-                                </h:outputText>
-                                
-                                <h:outputText value="Descrição: " />
-                                <p:scrollPanel mode="native" style="width:435px;height:100px">
-                                    <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.descricao}" />
-                                </p:scrollPanel>
-                            </p:panelGrid>
+                                    <h:outputText value="Hora de fim: " />
+                                    <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.horaFim}">
+                                        <f:convertDateTime pattern="HH:mm" />
+                                    </h:outputText>
+
+                                    <h:outputText value="Descrição: " />
+                                    <p:scrollPanel mode="native" style="width:435px;height:100px">
+                                        <h:outputText value="#{ListarAcompanhamentosView.objSelecionado.descricao}" />
+                                    </p:scrollPanel>
+                                </p:panelGrid>
+                            </p:fieldset>
+                            <br/>
+
+                            <p:fieldset legend="Usuários no acompanhamento" toggleable="true" toggleSpeed="500" collapsed="true">
+                                <p:dataTable id="dtListagemUsr" emptyMessage="Nenhum usuário." style="width:620px"
+                                             value="#{ListarAcompanhamentosView.objSelecionado.usuarioList}" rowKey="#{usr.id}" 
+                                             var="usr" rows="5" paginator="true" paginatorPosition="top">
+                                    <p:column headerText="Nome" sortBy="#{usr.nome}" >
+                                        <h:outputText value="#{usr.nome}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:fieldset>
+                            <br/>
+
+                            <p:fieldset legend="Parceiros no acompanhamento" toggleable="true" toggleSpeed="500" collapsed="true">
+                                <p:dataTable id="dtListagemPar" emptyMessage="Nenhum parceiro." style="width:620px"
+                                             value="#{ListarAcompanhamentosView.objSelecionado.parceiroList}" rowKey="#{par.id}" 
+                                             var="par" rows="5" paginator="true" paginatorPosition="top">
+                                    <p:column headerText="Nome" sortBy="#{par.nome}" >
+                                        <h:outputText value="#{par.nome}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:fieldset>
                         </p:outputPanel>
                     </p:dialog>
                 </p:panel>
@@ -102,6 +126,45 @@
                 <h:form id="frmEdicao">
                     <p:tabView id="tabGeral" activeIndex="#{ListarAcompanhamentosView.tabview.activeIndex}">
                         <p:ajax event="tabChange" listener="#{ListarAcompanhamentosView.onTabChange}" />
+
+                        <p:tab id="tabUsr" title="Usuários que participaram" >
+                            <p:pickList id="PojoPickList" value="#{ListarAcompanhamentosView.usuariosPickList}" var="objPickList" 
+                                        effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
+                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                        removeLabel="Remover" removeAllLabel="Remover todos">
+
+                                <f:facet name="sourceCaption">Não participaram</f:facet>
+                                <f:facet name="targetCaption">Participaram</f:facet>
+
+                                <p:column >
+                                    <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
+                                </p:column>
+
+                                <p:column >
+                                    <h:outputText value="#{objPickList.nome}" />
+                                </p:column>
+                            </p:pickList>
+                        </p:tab>
+
+                        <p:tab id="tabPar" title="Parceiros que participaram" >
+                            <p:pickList value="#{ListarAcompanhamentosView.parceirosPickList}" var="objParceiroPickList" 
+                                        effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nome}" 
+                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                        removeLabel="Remover" removeAllLabel="Remover todos">
+
+                                <f:facet name="sourceCaption">Não participaram</f:facet>
+                                <f:facet name="targetCaption">Participaram</f:facet>
+
+                                <p:column >
+                                    <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nome}" />
+                                </p:column>
+
+                                <p:column >
+                                    <h:outputText value="#{objParceiroPickList.nome}" />
+                                </p:column>
+                            </p:pickList>
+                        </p:tab>
+
                         <p:tab id="tabInfo" title="Informações" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
@@ -141,44 +204,6 @@
                             </h:panelGrid>
 
                             <p:outputLabel value="* Campos obrigatórios" />
-                        </p:tab>
-
-                        <p:tab id="tabUsr" title="Usuários que participaram" >
-                            <p:pickList id="PojoPickList" value="#{ListarAcompanhamentosView.usuariosPickList}" var="objPickList" 
-                                        effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
-                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
-                                        removeLabel="Remover" removeAllLabel="Remover todos">
-
-                                <f:facet name="sourceCaption">Não participaram</f:facet>
-                                <f:facet name="targetCaption">Participaram</f:facet>
-
-                                <p:column >
-                                    <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
-                                </p:column>
-
-                                <p:column >
-                                    <h:outputText value="#{objPickList.nome}" />
-                                </p:column>
-                            </p:pickList>
-                        </p:tab>
-                        
-                        <p:tab title="Parceiros que participaram" >
-                            <p:pickList value="#{ListarAcompanhamentosView.parceirosPickList}" var="objParceiroPickList" 
-                                        effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nome}" 
-                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
-                                        removeLabel="Remover" removeAllLabel="Remover todos">
-
-                                <f:facet name="sourceCaption">Não participaram</f:facet>
-                                <f:facet name="targetCaption">Participaram</f:facet>
-
-                                <p:column >
-                                    <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nome}" />
-                                </p:column>
-
-                                <p:column >
-                                    <h:outputText value="#{objParceiroPickList.nome}" />
-                                </p:column>
-                            </p:pickList>
                         </p:tab>
                     </p:tabView>
 

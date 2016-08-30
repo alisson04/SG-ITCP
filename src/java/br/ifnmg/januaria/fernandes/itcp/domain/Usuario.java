@@ -114,10 +114,10 @@ public class Usuario implements Serializable, EntityConverter {
     
     @ManyToMany(mappedBy = "usuarioList")
     private List<AtividadePlanejada> atividadePlanejadaList;
-    
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private HorarioTrabalho horarioTrabalho;
-
+    
     public Usuario() {
     }
     
@@ -281,15 +281,7 @@ public class Usuario implements Serializable, EntityConverter {
     public void setAtividadePlanejadaList(List<AtividadePlanejada> atividadePlanejadaList) {
         this.atividadePlanejadaList = atividadePlanejadaList;
     }
-
-    public HorarioTrabalho getHorarioTrabalho() {
-        return horarioTrabalho;
-    }
-
-    public void setHorarioTrabalho(HorarioTrabalho horarioTrabalho) {
-        this.horarioTrabalho = horarioTrabalho;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -313,6 +305,14 @@ public class Usuario implements Serializable, EntityConverter {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Usuario[ id=" + id + " ]";
+    }
+
+    public HorarioTrabalho getHorarioTrabalho() {
+        return horarioTrabalho;
+    }
+
+    public void setHorarioTrabalho(HorarioTrabalho horarioTrabalho) {
+        this.horarioTrabalho = horarioTrabalho;
     }
     
 }
