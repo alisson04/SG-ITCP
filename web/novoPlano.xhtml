@@ -94,13 +94,15 @@
                                     </p:column>
 
                                     <f:facet name="footer">
-                                        <p:commandButton id="btnCadastrar" value="Nova meta" icon="Add24-iconfinder" update=":frmEdicao"
-                                                         oncomplete="PF('wVarEditarDialog').show()" />
+                                        <p:commandButton id="btnCadastrar" value="Nova meta" icon="Add24-iconfinder"
+                                                         oncomplete="PF('wVarEditarDialog').show()" update=":frmEdicao"
+                                                         actionListener="#{CadastrarPlanoAcaoView.reiniciaObj()}"/>
                                         <p:commandButton value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
                                                          disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}"
                                                          oncomplete="PF('wVarEditarDialog').show()" 
                                                          actionListener="#{CadastrarPlanoAcaoView.transfereObj()}"/>
-                                        <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cross24-iconfinder" update="frmCadastro"
+                                        <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cross24-iconfinder" 
+                                                         update="frmCadastro" 
                                                          disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}" 
                                                          actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}">
                                             <p:confirm header="ATENÇÃO! " message="Todas as atividades dessa meta também serão excluidas, continuar?" 
@@ -140,6 +142,7 @@
 
                                 <f:facet name="footer">
                                     <p:commandButton value="Nova atividade" icon="Add24-iconfinder" 
+                                                     actionListener="#{CadastrarPlanoAcaoView.reiniciaObj()}"
                                                      oncomplete="PF('wVarEditarAtividadeDialog').show()" update=":frmEdicaoAtividade" />
                                     <p:commandButton value="Editar" icon="Edit24-iconfinder" update=":frmEdicaoAtividade"
                                                      disabled="#{CadastrarPlanoAcaoView.atividadeSelecionada == null}"
@@ -207,51 +210,94 @@
             <p:dialog id="dlgEditarAtividade" header="Atividade" widgetVar="wVarEditarAtividadeDialog" showEffect="fade" hideEffect="fade" modal="true"
                       styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicaoAtividade">
-                    <p:panel styleClass="corPanel" >
-                        <h:panelGrid style="text-align:right;" columns="3">
+                    <p:tabView id="tabGeral" activeIndex="#{CadastrarPlanoAcaoView.tabviewAtividades.activeIndex}">
+                        <p:ajax event="tabChange" listener="#{CadastrarPlanoAcaoView.onTabAtividadesChange}" />
+                        <p:tab id="tabInfo" title="Informações" >
+                            <p:panel styleClass="corPanel" >
+                                <h:panelGrid style="text-align:right;" columns="3">
+                                    <p:outputLabel for="meta" value="Meta: "/>
+                                    <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
+                                                     value="#{CadastrarPlanoAcaoView.atividadeSalvar.meta}" style="width:435px" converter="generic" >
+                                        <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{CadastrarPlanoAcaoView.listaSalvarMetas}" var="obj" 
+                                                       itemLabel="#{obj.nome}: #{CadastrarPlanoAcaoView.conveteData(obj.prazo)}" 
+                                                       itemValue="#{obj}"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="meta"/>
 
-                            <p:outputLabel for="meta" value="Meta: "/>
-                            <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
-                                             value="#{CadastrarPlanoAcaoView.atividadeSalvar.meta}" style="width:435px" converter="generic" >
-                                <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{CadastrarPlanoAcaoView.listaSalvarMetas}" var="obj" 
-                                               itemLabel="#{obj.nome}: #{CadastrarPlanoAcaoView.conveteData(obj.prazo)}" 
-                                               itemValue="#{obj}"/>
-                            </p:selectOneMenu>
-                            <p:message for="meta"/>
+                                    <p:outputLabel for="nome" value="Nome: " />
+                                    <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.atividadeSalvar.nome}" required="true" 
+                                                 requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                                    <p:message for="nome" />
 
-                            <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.atividadeSalvar.nome}" required="true" 
-                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
-                            <p:message for="nome" />
+                                    <p:outputLabel for="dataInicio" value="Prazo de início:" />
+                                    <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.atividadeSalvar.dataInicio}" 
+                                                pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
+                                                mask="true" locale="pt"/>
+                                    <p:message for="dataInicio" />
 
-                            <p:outputLabel for="dataInicio" value="Prazo de início:" />
-                            <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.atividadeSalvar.dataInicio}" 
-                                        pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
-                                        mask="true" locale="pt"/>
-                            <p:message for="dataInicio" />
+                                    <p:outputLabel for="dataFim" value="Prazo de fim:" />
+                                    <p:calendar id="dataFim" value="#{CadastrarPlanoAcaoView.atividadeSalvar.dataFim}" pattern="dd/MM/yyyy"
+                                                size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                                    <p:message for="dataFim" />
 
-                            <p:outputLabel for="dataFim" value="Prazo de fim:" />
-                            <p:calendar id="dataFim" value="#{CadastrarPlanoAcaoView.atividadeSalvar.dataFim}" pattern="dd/MM/yyyy"
-                                        size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
-                            <p:message for="dataFim" />
+                                    <p:outputLabel for="descricao" value="Descrição: " />
+                                    <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.atividadeSalvar.descricao}"
+                                                     rows="5" cols="45" maxlength="200" />
+                                    <p:message for="descricao" />
+                                </h:panelGrid>
 
-                            <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.atividadeSalvar.descricao}"
-                                             rows="5" cols="45" maxlength="200" />
-                            <p:message for="descricao" />
-                        </h:panelGrid>
+                                <p:outputLabel value="* Campos obrigatórios" />
 
-                        <p:outputLabel value="* Campos obrigatórios" />
+                                <p:separator />
+                                <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarAtividade()}" 
+                                                 icon="Save24-iconfinder" update="frmCadastro, frmEdicaoAtividade" >
+                                    <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                                </p:commandButton>
 
-                        <p:separator />
-                        <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarAtividade()}" 
-                                         icon="Save24-iconfinder" update="frmCadastro, frmEdicaoAtividade" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
-                        </p:commandButton>
+                                <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarAtividadeDialog').hide()" />
+                            </p:panel>
+                        </p:tab>
+                        
+                        <p:tab id="tabUsr" title="Usuários que participarão" >
+                            <p:pickList id="PojoPickList" value="#{CadastrarPlanoAcaoView.usuariosPickList}" var="objPickList" 
+                                        effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
+                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                        removeLabel="Remover" removeAllLabel="Remover todos">
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarAtividadeDialog').hide()" />
-                    </p:panel>
+                                <f:facet name="sourceCaption">Não participarão</f:facet>
+                                <f:facet name="targetCaption">Participarão</f:facet>
+
+                                <p:column >
+                                    <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
+                                </p:column>
+
+                                <p:column >
+                                    <h:outputText value="#{objPickList.nome}" />
+                                </p:column>
+                            </p:pickList>
+                        </p:tab>
+
+                        <p:tab id="tabPar" title="Parceiros que participarão" >
+                            <p:pickList value="#{CadastrarPlanoAcaoView.parceirosPickList}" var="objParceiroPickList" 
+                                        effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nome}" 
+                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                        removeLabel="Remover" removeAllLabel="Remover todos">
+
+                                <f:facet name="sourceCaption">Não participarão</f:facet>
+                                <f:facet name="targetCaption">Participarão</f:facet>
+
+                                <p:column >
+                                    <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nome}" />
+                                </p:column>
+
+                                <p:column >
+                                    <h:outputText value="#{objParceiroPickList.nome}" />
+                                </p:column>
+                            </p:pickList>
+                        </p:tab>
+                    </p:tabView>
+
                 </h:form>
             </p:dialog>
         </ui:define>

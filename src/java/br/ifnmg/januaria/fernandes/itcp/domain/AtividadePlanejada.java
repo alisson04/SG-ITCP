@@ -43,8 +43,11 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
         @JoinColumn(name = "idUsuarioFk", referencedColumnName = "id")})
     @ManyToMany
     private List<Usuario> usuarioList;
-
-    @ManyToMany(mappedBy = "atividadePlanejadaList")
+    
+    @JoinTable(name = "AtividadeParceiro", joinColumns = {
+        @JoinColumn(name = "idAtividadeFk", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idParceiroFk", referencedColumnName = "id")})
+    @ManyToMany
     private List<Parceiro> parceiroList;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "atividadePlanejada")

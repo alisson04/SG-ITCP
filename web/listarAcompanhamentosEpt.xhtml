@@ -126,45 +126,6 @@
                 <h:form id="frmEdicao">
                     <p:tabView id="tabGeral" activeIndex="#{ListarAcompanhamentosView.tabview.activeIndex}">
                         <p:ajax event="tabChange" listener="#{ListarAcompanhamentosView.onTabChange}" />
-
-                        <p:tab id="tabUsr" title="Usuários que participaram" >
-                            <p:pickList id="PojoPickList" value="#{ListarAcompanhamentosView.usuariosPickList}" var="objPickList" 
-                                        effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
-                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
-                                        removeLabel="Remover" removeAllLabel="Remover todos">
-
-                                <f:facet name="sourceCaption">Não participaram</f:facet>
-                                <f:facet name="targetCaption">Participaram</f:facet>
-
-                                <p:column >
-                                    <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
-                                </p:column>
-
-                                <p:column >
-                                    <h:outputText value="#{objPickList.nome}" />
-                                </p:column>
-                            </p:pickList>
-                        </p:tab>
-
-                        <p:tab id="tabPar" title="Parceiros que participaram" >
-                            <p:pickList value="#{ListarAcompanhamentosView.parceirosPickList}" var="objParceiroPickList" 
-                                        effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nome}" 
-                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
-                                        removeLabel="Remover" removeAllLabel="Remover todos">
-
-                                <f:facet name="sourceCaption">Não participaram</f:facet>
-                                <f:facet name="targetCaption">Participaram</f:facet>
-
-                                <p:column >
-                                    <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nome}" />
-                                </p:column>
-
-                                <p:column >
-                                    <h:outputText value="#{objParceiroPickList.nome}" />
-                                </p:column>
-                            </p:pickList>
-                        </p:tab>
-
                         <p:tab id="tabInfo" title="Informações" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
@@ -205,6 +166,43 @@
 
                             <p:outputLabel value="* Campos obrigatórios" />
                         </p:tab>
+                        <p:tab id="tabUsr" title="Usuários que participaram" >
+                            <p:pickList id="PojoPickList" value="#{ListarAcompanhamentosView.usuariosPickList}" var="objPickList" 
+                                        effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
+                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                        removeLabel="Remover" removeAllLabel="Remover todos">
+
+                                <f:facet name="sourceCaption">Não participaram</f:facet>
+                                <f:facet name="targetCaption">Participaram</f:facet>
+
+                                <p:column >
+                                    <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
+                                </p:column>
+
+                                <p:column >
+                                    <h:outputText value="#{objPickList.nome}" />
+                                </p:column>
+                            </p:pickList>
+                        </p:tab>
+
+                        <p:tab id="tabPar" title="Parceiros que participaram" >
+                            <p:pickList value="#{ListarAcompanhamentosView.parceirosPickList}" var="objParceiroPickList" 
+                                        effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nome}" 
+                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                        removeLabel="Remover" removeAllLabel="Remover todos">
+
+                                <f:facet name="sourceCaption">Não participaram</f:facet>
+                                <f:facet name="targetCaption">Participaram</f:facet>
+
+                                <p:column >
+                                    <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nome}" />
+                                </p:column>
+
+                                <p:column >
+                                    <h:outputText value="#{objParceiroPickList.nome}" />
+                                </p:column>
+                            </p:pickList>
+                        </p:tab>
                     </p:tabView>
 
                     <p:separator/>
@@ -213,6 +211,9 @@
                                      icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagemParceiros" >
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                     </p:commandButton>
+                    
+                    <p:commandButton value="Salvar" onclick="#{ListarAcompanhamentosView.testeOnclick()}"
+                                     icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagemParceiros" />
 
                     <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
 

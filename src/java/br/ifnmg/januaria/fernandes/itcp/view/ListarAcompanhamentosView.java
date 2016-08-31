@@ -85,7 +85,6 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
 
             usuarios = usuarioBean.listarBean();
             parceiros = parceiroBean.listarBean();
-
             usuariosPickList.setSource(usuarios);
             parceirosPickList.setSource(parceiros);
 
@@ -136,6 +135,7 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
             objSalvar.setParceiroList(parceirosPickList.getTarget());
             objSalvar = bean.salvarBean(objSalvar);
 
+            //Limpa valores das PickLists
             usuarios = usuarioBean.listarBean();
             parceiros = parceiroBean.listarBean();
             usuariosSelecionados = new ArrayList<Usuario>();
@@ -153,6 +153,16 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
             msgPanelErroInesperadoGeneric();
         }
     }
+    
+    public void teste(){
+        System.out.println("_____TESTE: Usuário esta na tab: " + tabview.getActiveIndex());
+        tabview.setActiveIndex(0);
+    }
+    
+    public void testeOnclick(){
+        System.out.println("_____TESTE ON CLICK: Usuário esta na tab: " + tabview.getActiveIndex());
+        tabview.setActiveIndex(0);
+    }
 
     public void excluirParceiroView() {
         try {
@@ -167,10 +177,10 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
 
     public void onTabChange(TabChangeEvent event) {//Esse método é necessário para que o "tabView" do bean esteja atualizado com o que esta na tela
         System.out.println("Usuário esta na tab: " + event.getTab().getId());
-        if (event.getTab().getId().equals("tabUsr")) {
+        if (event.getTab().getId().equals("tabInfo")) {
             tabview.setActiveIndex(0);
             System.out.println("Usuário esta na tab: " + tabview.getActiveIndex());
-        } else if (event.getTab().getId().equals("tabPar")) {
+        } else if (event.getTab().getId().equals("tabUsr")) {
             tabview.setActiveIndex(1);
             System.out.println("Usuário esta na tab: " + tabview.getActiveIndex());
         } else {

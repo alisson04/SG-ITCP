@@ -63,10 +63,7 @@ public class Parceiro implements Serializable, EntityConverter {
     @ManyToMany(mappedBy = "parceiroList")
     private List<AcompanhamentoEpt> acompanhamentoEptList;
     
-    @JoinTable(name = "AtividadeParceiro", joinColumns = {
-        @JoinColumn(name = "idParceiroFk", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "idAtividadeFk", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "parceiroList")
     private List<AtividadePlanejada> atividadePlanejadaList;
 
     public Parceiro() {

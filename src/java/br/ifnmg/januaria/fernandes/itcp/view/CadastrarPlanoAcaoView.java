@@ -3,11 +3,15 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 import br.ifnmg.januaria.fernandes.itcp.bean.AtividadePlanejadaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.ParceiroBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
+import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
+import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -21,6 +25,7 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -30,34 +35,66 @@ import org.primefaces.event.TabChangeEvent;
 @ViewScoped
 public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serializable {
 
-    PlanoAcaoBean bean = new PlanoAcaoBean();
-    EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
-    MetaBean metaBean = new MetaBean();
-    AtividadePlanejadaBean atividadeBean = new AtividadePlanejadaBean();
+    PlanoAcaoBean bean;
+    EmpreendimentoBean empreendimentoBean;
+    MetaBean metaBean;
+    AtividadePlanejadaBean atividadeBean;
 
-    private PlanoAcao objSalvar = new PlanoAcao();
-    private Meta metaSalvar = new Meta();
+    private PlanoAcao objSalvar;
+    private Meta metaSalvar;
     private Meta metaSelecionada;
 
-    private AtividadePlanejada atividadeSalvar = new AtividadePlanejada();
-    private AtividadePlanejada atividadeSelecionada = new AtividadePlanejada();
+    private AtividadePlanejada atividadeSalvar;
+    private AtividadePlanejada atividadeSelecionada;
 
     private List<Empreendimento> listaEmpreendimentos;
-    private List<AtividadePlanejada> listaSalvarAtividades = new ArrayList();
-    private List<Meta> listaSalvarMetas = new ArrayList();
+    private List<AtividadePlanejada> listaSalvarAtividades;
+    private List<Meta> listaSalvarMetas;
 
     TabView tabview = new TabView();
+    TabView tabviewAtividades = new TabView();
 
-    private boolean skip;
+    //PickList Usuario
+    private UsuarioBean usuarioBean;
+    private List<Usuario> usuarios;
+    private List<Usuario> usuariosSelecionados;
+    private DualListModel<Usuario> usuariosPickList;
+
+    //PickList Parceiro
+    private ParceiroBean parceiroBean;
+    private List<Parceiro> parceiros;
+    private List<Parceiro> parceirosSelecionados;
+    private DualListModel<Parceiro> parceirosPickList;
 
     //Construtor
     public CadastrarPlanoAcaoView() {
         try {
+            bean = new PlanoAcaoBean();
+            empreendimentoBean = new EmpreendimentoBean();
+            metaBean = new MetaBean();
+            atividadeBean = new AtividadePlanejadaBean();
+            objSalvar = new PlanoAcao();
+            metaSalvar = new Meta();
+            atividadeSalvar = new AtividadePlanejada();
+            atividadeSelecionada = new AtividadePlanejada();
+            listaSalvarAtividades = new ArrayList();
+            listaSalvarMetas = new ArrayList();
             listaEmpreendimentos = empreendimentoBean.listarBean();
-            //tabview.setActiveIndex(0);
+
+            //PickList Usuario
+            usuarioBean = new UsuarioBean();
+            usuarios = usuarioBean.listarBean();
+            usuariosSelecionados = new ArrayList<Usuario>();
+            usuariosPickList = new DualListModel<Usuario>(usuarios, usuariosSelecionados);
+
+            //PickList Parceiro
+            parceiroBean = new ParceiroBean();
+            parceiros = parceiroBean.listarBean();
+            parceirosSelecionados = new ArrayList<Parceiro>();
+            parceirosPickList = new DualListModel<Parceiro>(parceiros, parceirosSelecionados);
         } catch (RuntimeException ex) {
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
-
+            msgPanelErroInesperadoGeneric();
         }
     }
 
@@ -102,9 +139,22 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             if (listaSalvarAtividades.contains(atividadeSalvar)) {//ESTA EDITANDO
                 listaSalvarAtividades.remove(atividadeSalvar);
             }
+
+            atividadeSalvar.setUsuarioList(usuariosPickList.getTarget());
+            atividadeSalvar.setParceiroList(parceirosPickList.getTarget());
             atividadeSalvar = atividadeBean.salvarBean(atividadeSalvar);
             listaSalvarAtividades.add(atividadeSalvar);
-            atividadeSalvar = new AtividadePlanejada();
+
+            atividadeSalvar = new AtividadePlanejada();//Limpa o obj que foi salvo
+
+            //Limpa valores das PickLists
+            usuarios = usuarioBean.listarBean();
+            parceiros = parceiroBean.listarBean();
+            usuariosSelecionados = new ArrayList<Usuario>();
+            parceirosSelecionados = new ArrayList<Parceiro>();
+            usuariosPickList = new DualListModel<Usuario>(usuarios, usuariosSelecionados);
+            parceirosPickList = new DualListModel<Parceiro>(parceiros, parceirosSelecionados);
+
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarAtividadeDialog').hide()");
             msgGrowSaveGeneric();
@@ -169,12 +219,69 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
         }
     }
 
+    public void onTabAtividadesChange(TabChangeEvent event) {
+        System.out.println("Usuário esta na tab: " + event.getTab().getId());
+        if (event.getTab().getId().equals("tabInfo")) {
+            tabviewAtividades.setActiveIndex(0);
+            System.out.println("Usuário esta na tab ATV: " + tabviewAtividades.getActiveIndex());
+        } else if (event.getTab().getId().equals("tabUsr")) {
+            tabviewAtividades.setActiveIndex(1);
+            System.out.println("Usuário esta na tab ATV: " + tabviewAtividades.getActiveIndex());
+        } else {
+            tabviewAtividades.setActiveIndex(2);
+            System.out.println("Usuário esta na tab ATV: " + tabviewAtividades.getActiveIndex());
+        }
+    }
+
     public void transfereObj() {//Para botão de editar
         System.out.println("Usuário esta na aba: " + tabview.getActiveIndex());
         if (tabview.getActiveIndex() == 1) {//Se estiver na aba de metas
             metaSalvar = metaSelecionada;
         } else {//senão, esta na aba de atividades
             atividadeSalvar = atividadeSelecionada;
+
+            usuarios = usuarioBean.listarBean();
+            parceiros = parceiroBean.listarBean();
+            usuariosPickList.setSource(usuarios);
+            parceirosPickList.setSource(parceiros);
+
+            //PARCEIRO PICK LIST
+            if (atividadeSalvar.getParceiroList().size() > 0) {
+                parceirosPickList.setTarget(atividadeSalvar.getParceiroList());
+                parceiros.removeAll(atividadeSalvar.getParceiroList());
+            } else {
+                parceirosSelecionados = new ArrayList<Parceiro>();
+                parceirosPickList.setTarget(parceirosSelecionados);
+            }
+
+            //USUARIO PICK LIST
+            if (atividadeSalvar.getUsuarioList().size() > 0) {
+                usuariosPickList.setTarget(atividadeSalvar.getUsuarioList());
+                usuarios.removeAll(atividadeSalvar.getUsuarioList());
+            } else {
+                usuariosSelecionados = new ArrayList<Usuario>();
+                usuariosPickList.setTarget(usuariosSelecionados);
+            }
+        }
+    }
+
+    public void reiniciaObj() {//Para botão de cadastrar
+        if (tabview.getActiveIndex() == 1) {//Se estiver na aba de metas
+            metaSalvar = new Meta();
+        } else {//senão, esta na aba de atividades
+            usuarios = usuarioBean.listarBean();
+            parceiros = parceiroBean.listarBean();
+
+            usuariosPickList.setSource(usuarios);
+            parceirosPickList.setSource(parceiros);
+
+            usuariosSelecionados = new ArrayList<Usuario>();
+            usuariosPickList.setTarget(usuariosSelecionados);
+
+            parceirosSelecionados = new ArrayList<Parceiro>();
+            parceirosPickList.setTarget(parceirosSelecionados);
+
+            atividadeSalvar = new AtividadePlanejada();
         }
     }
 
@@ -193,14 +300,6 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
 
     public void setObjSalvar(PlanoAcao objSalvar) {
         this.objSalvar = objSalvar;
-    }
-
-    public boolean isSkip() {
-        return skip;
-    }
-
-    public void setSkip(boolean skip) {
-        this.skip = skip;
     }
 
     public Meta getMetaSalvar() {
@@ -257,5 +356,29 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
 
     public void setListaSalvarMetas(List<Meta> listaSalvarMetas) {
         this.listaSalvarMetas = listaSalvarMetas;
+    }
+
+    public TabView getTabviewAtividades() {
+        return tabviewAtividades;
+    }
+
+    public void setTabviewAtividades(TabView tabviewAtividades) {
+        this.tabviewAtividades = tabviewAtividades;
+    }
+
+    public DualListModel<Usuario> getUsuariosPickList() {
+        return usuariosPickList;
+    }
+
+    public void setUsuariosPickList(DualListModel<Usuario> usuariosPickList) {
+        this.usuariosPickList = usuariosPickList;
+    }
+
+    public DualListModel<Parceiro> getParceirosPickList() {
+        return parceirosPickList;
+    }
+
+    public void setParceirosPickList(DualListModel<Parceiro> parceirosPickList) {
+        this.parceirosPickList = parceirosPickList;
     }
 }

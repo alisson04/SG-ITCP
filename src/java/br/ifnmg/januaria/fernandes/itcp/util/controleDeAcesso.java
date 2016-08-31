@@ -38,18 +38,17 @@ public class controleDeAcesso implements Filter {
             if (session.getAttribute("USUARIOLogado") != null) {
                 if (!"Coordenador".equals(((Usuario) session.getAttribute("USUARIOLogado")).getCargo())
                         && req.getServletPath().endsWith("CadastroUsuario.xhtml")) {
-                    System.out.println("5");
+                    System.out.println("__________controleDeAcesso(doFilter): Usuario tentando acessar pagina restrita");
                     redireciona("/sigitec/inicio.xhtml", response);
-                } else {
-                    System.out.println("2");
+                } else {//Usuario acessando paginas que tem permissão(Situação comum)
                     chain.doFilter(request, response);
                 }
             } else {
-                System.out.println("3");
+                System.out.println("__________controleDeAcesso(doFilter): Usuario esta nulo");
                 chain.doFilter(request, response);
             }
         } else {
-            System.out.println("__________controleDeAcesso(doFilter) ELSE");
+            System.out.println("__________controleDeAcesso(doFilter): Redirecionou para LOGIN");
             redireciona("/sigitec/Login.xhtml", response);
         }
     }
