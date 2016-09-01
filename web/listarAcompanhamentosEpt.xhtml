@@ -156,7 +156,7 @@
                                 <p:outputLabel for="Horafim" value="Hora de fim " />
                                 <p:calendar id="Horafim" value="#{ListarAcompanhamentosView.objSalvar.horaFim}" pattern="HH:mm" timeOnly="true" 
                                             locale="pt" size="45" required="true" requiredMessage="O campo hora de fim é obrigatório!" />
-                                <p:message for="Horafim"/>
+                                <p:message  for="Horafim"/>
 
                                 <p:outputLabel for="descricao" value="Descrição: " />
                                 <p:inputTextarea id="descricao" value="#{ListarAcompanhamentosView.objSalvar.descricao}" rows="5" cols="45" 
@@ -209,11 +209,11 @@
 
                     <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAcompanhamentosView.salvarView()}" 
                                      icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagemParceiros" >
-                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                     </p:commandButton>
                     
-                    <p:commandButton value="Salvar" onclick="#{ListarAcompanhamentosView.testeOnclick()}"
-                                     icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagemParceiros" />
+                    <p:commandButton value="IME" actionListener="#{ListarAcompanhamentosView.teste()}" type="button"
+                                     icon="Save24-iconfinder" >
+                    </p:commandButton>
 
                     <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
 

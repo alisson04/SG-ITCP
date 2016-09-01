@@ -20,8 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
@@ -31,8 +31,8 @@ import org.primefaces.model.DualListModel;
  *
  * @author alisson
  */
-@ManagedBean(name = "CadastrarPlanoAcaoView")
 @ViewScoped
+@Named("CadastrarPlanoAcaoView")
 public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serializable {
 
     PlanoAcaoBean bean;
