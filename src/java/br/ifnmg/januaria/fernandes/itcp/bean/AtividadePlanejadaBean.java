@@ -2,6 +2,7 @@ package br.ifnmg.januaria.fernandes.itcp.bean;
 
 import br.ifnmg.januaria.fernandes.itcp.dao.AtividadePlanejadaDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
+import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -29,5 +30,9 @@ public class AtividadePlanejadaBean implements Serializable{
     
     public void excluirBean(AtividadePlanejada obj){
         dao.excluirDao(obj);
+    }
+    
+    public List<AtividadePlanejada> buscarAtividadesPorMetaBean(Meta obj) {
+        return dao.buscarAtividadesPorMetaDao(obj);
     }
 }

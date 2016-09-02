@@ -43,7 +43,6 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
     private PlanoAcao objSalvar;
     private Meta metaSalvar;
     private Meta metaSelecionada;
-
     private AtividadePlanejada atividadeSalvar;
     private AtividadePlanejada atividadeSelecionada;
 
@@ -51,8 +50,8 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
     private List<AtividadePlanejada> listaSalvarAtividades;
     private List<Meta> listaSalvarMetas;
 
-    TabView tabview = new TabView();
-    TabView tabviewAtividades = new TabView();
+    TabView tabview;
+    TabView tabviewAtividades;
 
     //PickList Usuario
     private UsuarioBean usuarioBean;
@@ -80,6 +79,8 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             listaSalvarAtividades = new ArrayList();
             listaSalvarMetas = new ArrayList();
             listaEmpreendimentos = empreendimentoBean.listarBean();
+            tabview = new TabView();
+            tabviewAtividades = new TabView();
 
             //PickList Usuario
             usuarioBean = new UsuarioBean();
@@ -93,33 +94,22 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             parceirosSelecionados = new ArrayList<Parceiro>();
             parceirosPickList = new DualListModel<Parceiro>(parceiros, parceirosSelecionados);
         } catch (RuntimeException ex) {
-            System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
+            System.out.println("Cadastrar Plano(construtor): Erro no construtor: " + ex);
             msgPanelErroInesperadoGeneric();
         }
     }
 
     public void excluirMeta() {
-        System.out.println("Número de atividades na lista: " + metaSelecionada.getAtividadePlanejadaList().size());
         metaBean.excluirBean(metaSelecionada);//Exclui a meta do BD
-        listaSalvarMetas.remove(metaSelecionada);//Exclui a meta da Tela
-
-        System.out.println("A atividades na meta");
-        for (int i = 0; i < listaSalvarAtividades.size(); i++) {
-            System.out.println("RODOU: " + i);
-            if (listaSalvarAtividades.get(i).getMeta().equals(metaSelecionada)) {
-                System.out.println("Apagou a atividade: " + listaSalvarAtividades.get(i).getNome());
-                listaSalvarAtividades.remove(i);
-            }
-        }
-
-        metaSelecionada = null;
+        atualizaMetasAtividades();//Atualiza atividades e metas
+        metaSelecionada = null;//Limpa o obj de meta selecionada
         msgGrowDeleteGeneric();
     }
 
     public void excluirAtividade() {
-        atividadeBean.excluirBean(atividadeSelecionada);
-        listaSalvarAtividades.remove(atividadeSelecionada);
-        atividadeSelecionada = null;
+        atividadeBean.excluirBean(atividadeSelecionada);//Exclui a atividade do BD
+        atualizaMetasAtividades();//Atualiza atividades e metas
+        atividadeSelecionada = null;//Limpa o obj de atividade selecionada
         msgGrowDeleteGeneric();
     }
 
@@ -136,17 +126,15 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             msgPanelErro("Erro na data", "A 'data de fim' da atividade deve ser antes ou igual ao prazo de sua meta!");
         } else {
             System.out.println("ADD O OBJ: " + atividadeSalvar.getId());
-            if (listaSalvarAtividades.contains(atividadeSalvar)) {//ESTA EDITANDO
-                listaSalvarAtividades.remove(atividadeSalvar);
-            }
-
+            System.out.println("META ID: " + atividadeSalvar.getMeta().getIdMeta());
             atividadeSalvar.setUsuarioList(usuariosPickList.getTarget());
             atividadeSalvar.setParceiroList(parceirosPickList.getTarget());
-            atividadeSalvar = atividadeBean.salvarBean(atividadeSalvar);
-            listaSalvarAtividades.add(atividadeSalvar);
-
+            atividadeSalvar = atividadeBean.salvarBean(atividadeSalvar);//Salva a atividade no BD
+            
+            atualizaMetasAtividades();//Atualiza atividades e metas
+            
             atividadeSalvar = new AtividadePlanejada();//Limpa o obj que foi salvo
-
+            
             //Limpa valores das PickLists
             usuarios = usuarioBean.listarBean();
             parceiros = parceiroBean.listarBean();
@@ -156,7 +144,7 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             parceirosPickList = new DualListModel<Parceiro>(parceiros, parceirosSelecionados);
 
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVarEditarAtividadeDialog').hide()");
+            context.execute("PF('wVarEditarAtividadeDialog').hide()");//Esconde a caixa de edição
             msgGrowSaveGeneric();
         }
     }
@@ -167,15 +155,10 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
         } else if (metaSalvar.getPrazo().after(objSalvar.getDataFim())) {
             msgPanelErro("Erro na data", "O prazo da meta deve ser menor ou igual a 'data de fim' do plano de ação'!");
         } else {
-            System.out.println("ADD O OBJ: " + metaSalvar.getIdMeta());
-            if (listaSalvarMetas.contains(metaSalvar)) {//ESTA EDITANDO
-                listaSalvarMetas.remove(metaSalvar);
-            } else {//ESTA CADASTRANDO
-                metaSalvar.setPlanoAcao(objSalvar);
-            }
-            metaSalvar = metaBean.salvarBean(metaSalvar);
-            listaSalvarMetas.add(metaSalvar);
-            metaSalvar = new Meta();
+            metaSalvar.setPlanoAcao(objSalvar);
+            metaSalvar = metaBean.salvarBean(metaSalvar);//Salva a meta no BD
+            atualizaMetasAtividades();//Atualiza atividades e metas
+            metaSalvar = new Meta();//Limpa o obj que foi salvo
             System.out.println("Tamanho das metas: " + listaSalvarMetas.size());
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");
@@ -198,17 +181,20 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             msgPanelErro("Erro inesperado", "Erro ao tentar salvar, contate o administrador do sistema!");
         }
     }
-
-    public String conveteData(Date data) {
-        if (data != null) {
-            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-            return forma.format(data);
-        } else {
-            return "";
+    
+    public void atualizaMetasAtividades(){
+        listaSalvarMetas = metaBean.buscarMetasPorPlanoBean(objSalvar);//Atualiza a lista de metas
+        System.out.println("Num de metas no plano: " + listaSalvarMetas.size());
+        listaSalvarAtividades = new ArrayList();//limpa a lista de atividades
+        for (int i = 0; i < listaSalvarMetas.size(); i++) {//Roda todas as metas do plano em questão
+            System.out.println("Num de ativi na meta: " + 
+                    atividadeBean.buscarAtividadesPorMetaBean(listaSalvarMetas.get(i)));
+            listaSalvarAtividades.addAll(atividadeBean.buscarAtividadesPorMetaBean(listaSalvarMetas.get(i))); //insere todas as atividades na lista
         }
+        System.out.println("Num de atividas no plano: " + listaSalvarAtividades.size());
     }
 
-    public void onTabChange(TabChangeEvent event) {//Esse método é necessário para que o "tabView" do bean esteja atualizado com o que esta na tela
+    public void onTabChange(TabChangeEvent event) {//necessário para que o "tabView" do bean esteja atualizado com o que esta na tela
         System.out.println("Usuário esta na tab: " + event.getTab().getId());
         if (event.getTab().getId().equals("tabPlano")) {
             tabview.setActiveIndex(0);
@@ -282,6 +268,15 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             parceirosPickList.setTarget(parceirosSelecionados);
 
             atividadeSalvar = new AtividadePlanejada();
+        }
+    }
+
+    public String conveteData(Date data) {
+        if (data != null) {
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+            return forma.format(data);
+        } else {
+            return "";
         }
     }
 

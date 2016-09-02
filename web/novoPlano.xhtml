@@ -89,9 +89,6 @@
                                     <p:column headerText="Prazo" >
                                         <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(metaCursor.prazo)}" />
                                     </p:column>
-                                    <p:column headerText="Descrição" >
-                                        <h:outputText value="#{metaCursor.descricao}" />
-                                    </p:column>
 
                                     <f:facet name="footer">
                                         <p:commandButton update="frmCadastro:diaShowMeta" icon="Find24-iconfinder" value="Visualizar" 
@@ -359,15 +356,15 @@
                                 </p:column>
                             </p:pickList>
                         </p:tab>
-                        <p:separator />
-                        <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarAtividade()}" 
-                                         icon="Save24-iconfinder" update="frmCadastro, frmEdicaoAtividade" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
-                        </p:commandButton>
-
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarAtividadeDialog').hide()" />
-
                     </p:tabView>
+                    
+                    <p:separator />
+                    <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarAtividade()}" 
+                                     icon="Save24-iconfinder" update="frmCadastro, frmEdicaoAtividade" >
+                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarAtividadeDialog').hide()" />
 
                 </h:form>
             </p:dialog>

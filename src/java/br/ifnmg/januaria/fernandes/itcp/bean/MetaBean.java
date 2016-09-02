@@ -2,6 +2,7 @@ package br.ifnmg.januaria.fernandes.itcp.bean;
 
 import br.ifnmg.januaria.fernandes.itcp.dao.MetaDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
+import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -31,5 +32,9 @@ public class MetaBean implements Serializable{
     
     public void excluirBean(Meta meta){
         dao.excluirDao(meta);
+    }
+    
+    public List<Meta> buscarMetasPorPlanoBean(PlanoAcao p) {
+        return dao.buscarMetasPorPlanoDao(p);
     }
 }
