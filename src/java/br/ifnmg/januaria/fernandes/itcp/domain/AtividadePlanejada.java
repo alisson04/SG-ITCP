@@ -80,6 +80,11 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
     @Size(max = 200)
     @Column(name = "descricao")
     private String descricao;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 15)
+    @Column(name = "status")
+    private String status;
     @JoinColumn(name = "metafk", referencedColumnName = "idMeta")
     @ManyToOne
     private Meta meta;
@@ -149,6 +154,14 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
 
     public void setMeta(Meta meta) {
         this.meta = meta;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

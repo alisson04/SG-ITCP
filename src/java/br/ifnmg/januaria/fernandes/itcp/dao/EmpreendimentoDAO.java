@@ -32,8 +32,8 @@ public class EmpreendimentoDAO extends DaoGenerico<Empreendimento> {
         EntityManager em = emc.gerarEntityManager();
         try {
             em.getTransaction().begin();
-            Query consulta = em.createQuery("SELECT e FROM Empreendimento e WHERE e.idEpt = :idEpt");
-            consulta.setParameter("idEpt", ept.getIdEpt()); // O primeiro "id" é do Domain.Usuario; o segundo do que foi criado nesse metodo
+            Query consulta = em.createQuery("SELECT e FROM Empreendimento e WHERE e.id = :id");
+            consulta.setParameter("id", ept.getId());
             ept = (Empreendimento) consulta.getSingleResult();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao buscar por codigo", e);

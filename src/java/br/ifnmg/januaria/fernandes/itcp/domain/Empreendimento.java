@@ -47,8 +47,8 @@ public class Empreendimento implements Serializable, EntityConverter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idEpt")
-    private Integer idEpt;
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -59,80 +59,74 @@ public class Empreendimento implements Serializable, EntityConverter {
     @Column(name = "email")
     private String email;
     @Size(max = 45)
-    @Column(name = "telefoneEpt")
-    private String telefoneEpt;
+    @Column(name = "telefone")
+    private String telefone;
     @Size(max = 45)
-    @Column(name = "telefoneAlternativoEpt")
-    private String telefoneAlternativoEpt;
+    @Column(name = "telefoneAlternativo")
+    private String telefoneAlternativo;
     @Size(max = 45)
-    @Column(name = "cnpjEpt")
-    private String cnpjEpt;
+    @Column(name = "cnpj")
+    private String cnpj;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "enderecoEpt")
-    private String enderecoEpt;
+    @Column(name = "endereco")
+    private String endereco;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "situacaoEpt")
-    private String situacaoEpt;
-    @Column(name = "dataCriacaoEpt")
+    @Column(name = "situacao")
+    private String situacao;
+    @Column(name = "dataCriacao")
     @Temporal(TemporalType.DATE)
-    private Date dataCriacaoEpt;
-    @Column(name = "dataIncubacaoEpt")
+    private Date dataCriacao;
+    @Column(name = "dataIncubacao")
     @Temporal(TemporalType.DATE)
-    private Date dataIncubacaoEpt;
+    private Date dataIncubacao;
     @Size(max = 45)
     @Column(name = "razaoSocial")
     private String razaoSocial;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "tipoEpt")
-    private String tipoEpt;
+    @Column(name = "tipo")
+    private String tipo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "AtividadeExercidaEpt")
-    private String atividadeExercidaEpt;
+    @Column(name = "AtividadeExercida")
+    private String atividadeExercida;
     @Size(max = 45)
-    @Column(name = "siteEpt")
-    private String siteEpt;
-    @Size(max = 45)
-    @Column(name = "faturamentoMedioMensalEmp")
-    private String faturamentoMedioMensalEmp;
-    @Size(max = 45)
-    @Column(name = "faturamentoMedioAnualEmp")
-    private String faturamentoMedioAnualEmp;
+    @Column(name = "site")
+    private String site;
 
     public Empreendimento() {
     }
 
     public Empreendimento(Integer idEpt) {
-        this.idEpt = idEpt;
+        this.id = idEpt;
     }
 
     public Empreendimento(Integer idEpt, String nome, String enderecoEpt, String situacaoEpt, String tipoEpt, String atividadeExercidaEpt) {
-        this.idEpt = idEpt;
+        this.id = idEpt;
         this.nome = nome;
-        this.enderecoEpt = enderecoEpt;
-        this.situacaoEpt = situacaoEpt;
-        this.tipoEpt = tipoEpt;
-        this.atividadeExercidaEpt = atividadeExercidaEpt;
+        this.endereco = enderecoEpt;
+        this.situacao = situacaoEpt;
+        this.tipo = tipoEpt;
+        this.atividadeExercida = atividadeExercidaEpt;
     }
     
     @Override
     public Integer getIdConverter(){
-        return idEpt;
+        return id;
     }
 
-    public Integer getIdEpt() {
-        return idEpt;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdEpt(Integer idEpt) {
-        this.idEpt = idEpt;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -151,60 +145,60 @@ public class Empreendimento implements Serializable, EntityConverter {
         this.email = email;
     }
 
-    public String getTelefoneEpt() {
-        return telefoneEpt;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setTelefoneEpt(String telefoneEpt) {
-        this.telefoneEpt = telefoneEpt;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public String getTelefoneAlternativoEpt() {
-        return telefoneAlternativoEpt;
+    public String getTelefoneAlternativo() {
+        return telefoneAlternativo;
     }
 
-    public void setTelefoneAlternativoEpt(String telefoneAlternativoEpt) {
-        this.telefoneAlternativoEpt = telefoneAlternativoEpt;
+    public void setTelefoneAlternativo(String telefoneAlternativo) {
+        this.telefoneAlternativo = telefoneAlternativo;
     }
 
-    public String getCnpjEpt() {
-        return cnpjEpt;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCnpjEpt(String cnpjEpt) {
-        this.cnpjEpt = cnpjEpt;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
-    public String getEnderecoEpt() {
-        return enderecoEpt;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setEnderecoEpt(String enderecoEpt) {
-        this.enderecoEpt = enderecoEpt;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
-    public String getSituacaoEpt() {
-        return situacaoEpt;
+    public String getSituacao() {
+        return situacao;
     }
 
-    public void setSituacaoEpt(String situacaoEpt) {
-        this.situacaoEpt = situacaoEpt;
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
     }
 
-    public Date getDataCriacaoEpt() {
-        return dataCriacaoEpt;
+    public Date getDataCriacao() {
+        return dataCriacao;
     }
 
-    public void setDataCriacaoEpt(Date dataCriacaoEpt) {
-        this.dataCriacaoEpt = dataCriacaoEpt;
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
-    public Date getDataIncubacaoEpt() {
-        return dataIncubacaoEpt;
+    public Date getDataIncubacao() {
+        return dataIncubacao;
     }
 
-    public void setDataIncubacaoEpt(Date dataIncubacaoEpt) {
-        this.dataIncubacaoEpt = dataIncubacaoEpt;
+    public void setDataIncubacao(Date dataIncubacao) {
+        this.dataIncubacao = dataIncubacao;
     }
 
     public String getRazaoSocial() {
@@ -215,50 +209,34 @@ public class Empreendimento implements Serializable, EntityConverter {
         this.razaoSocial = razaoSocial;
     }
 
-    public String getTipoEpt() {
-        return tipoEpt;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipoEpt(String tipoEpt) {
-        this.tipoEpt = tipoEpt;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public String getAtividadeExercidaEpt() {
-        return atividadeExercidaEpt;
+    public String getAtividadeExercida() {
+        return atividadeExercida;
     }
 
-    public void setAtividadeExercidaEpt(String atividadeExercidaEpt) {
-        this.atividadeExercidaEpt = atividadeExercidaEpt;
+    public void setAtividadeExercida(String atividadeExercida) {
+        this.atividadeExercida = atividadeExercida;
     }
 
-    public String getSiteEpt() {
-        return siteEpt;
+    public String getSite() {
+        return site;
     }
 
-    public void setSiteEpt(String siteEpt) {
-        this.siteEpt = siteEpt;
-    }
-
-    public String getFaturamentoMedioMensalEmp() {
-        return faturamentoMedioMensalEmp;
-    }
-
-    public void setFaturamentoMedioMensalEmp(String faturamentoMedioMensalEmp) {
-        this.faturamentoMedioMensalEmp = faturamentoMedioMensalEmp;
-    }
-
-    public String getFaturamentoMedioAnualEmp() {
-        return faturamentoMedioAnualEmp;
-    }
-
-    public void setFaturamentoMedioAnualEmp(String faturamentoMedioAnualEmp) {
-        this.faturamentoMedioAnualEmp = faturamentoMedioAnualEmp;
+    public void setSite(String site) {
+        this.site = site;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idEpt != null ? idEpt.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -269,7 +247,7 @@ public class Empreendimento implements Serializable, EntityConverter {
             return false;
         }
         Empreendimento other = (Empreendimento) object;
-        if ((this.idEpt == null && other.idEpt != null) || (this.idEpt != null && !this.idEpt.equals(other.idEpt))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -277,7 +255,7 @@ public class Empreendimento implements Serializable, EntityConverter {
 
     @Override
     public String toString() {
-        return "br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento[ idEpt=" + idEpt + " ]";
+        return "br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento[ id=" + id + " ]";
     }
 
     public List<MembroEmpreendimento> getMembroEmpreendimentoList() {

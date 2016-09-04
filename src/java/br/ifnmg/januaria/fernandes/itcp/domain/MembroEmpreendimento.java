@@ -77,7 +77,7 @@ public class MembroEmpreendimento implements Serializable {
     @Size(max = 45)
     @Column(name = "email")
     private String email;
-    @JoinColumn(name = "empreendimentoFK", referencedColumnName = "idEpt")
+    @JoinColumn(name = "empreendimentoFK", referencedColumnName = "id")
     @ManyToOne
     private Empreendimento empreendimento;
 

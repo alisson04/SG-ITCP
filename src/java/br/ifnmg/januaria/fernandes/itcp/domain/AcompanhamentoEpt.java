@@ -78,7 +78,7 @@ public class AcompanhamentoEpt implements Serializable, EntityConverter {
     @ManyToMany
     private List<Usuario> usuarioList;
     
-    @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "idEpt")
+    @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Empreendimento empreendimento;
 

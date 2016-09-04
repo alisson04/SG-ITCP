@@ -20,7 +20,7 @@
                     <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." selectionMode="single"
                                  value="#{ListarEmpreendimentosView.listaEmpreendimentos}" var="empreendimentoCursor" widgetVar="varGlobal"
                                  filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}" rows="12" paginator="true"
-                                 selection="#{ListarEmpreendimentosView.empreendimentoSelecionado}" rowKey="#{empreendimentoCursor.idEpt}"
+                                 selection="#{ListarEmpreendimentosView.empreendimentoSelecionado}" rowKey="#{empreendimentoCursor.id}"
                                  paginatorPosition="top">
 
                         <p:ajax event="rowSelect" update=":frmListagemEmpreendimentos" />
@@ -40,14 +40,14 @@
                             <h:outputText value="#{empreendimentoCursor.email}"/>
                         </p:column>
 
-                        <p:column filterBy="#{empreendimentoCursor.situacaoEpt}" headerText="Fase de Incubação" filterMatchMode="exact">
+                        <p:column filterBy="#{empreendimentoCursor.situacao}" headerText="Fase de Incubação" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarEmpreendimentosView.processoIncubacao}" />
                                 </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{empreendimentoCursor.situacaoEpt}" />
+                            <h:outputText value="#{empreendimentoCursor.situacao}" />
                         </p:column>
 
                         <f:facet name="footer">
@@ -85,29 +85,25 @@
                                 <p:outputLabel value="Razão social: " />
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.razaoSocial}" />
                                 <p:outputLabel value="CNPJ: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.cnpjEpt}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.cnpj}" />
                                 <p:outputLabel value="Endereço: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.enderecoEpt}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.endereco}" />
                                 <p:outputLabel value="Telefone: " />
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.telefoneEpt}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.telefone}" />
                                 <p:outputLabel value="Telefone alternativo: " />
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.telefoneAlternativoEpt}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.telefoneAlternativo}" />
                                 <p:outputLabel value="Data de criação do empreendimento: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.conveteData(ListarEmpreendimentosView.empreendimentoSelecionado.dataCriacaoEpt)}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.conveteData(ListarEmpreendimentosView.empreendimentoSelecionado.dataCriacao)}" />
                                 <p:outputLabel value="Data de início da incubação: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.conveteData(ListarEmpreendimentosView.empreendimentoSelecionado.dataIncubacaoEpt)}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.conveteData(ListarEmpreendimentosView.empreendimentoSelecionado.dataIncubacao)}" />
                                 <p:outputLabel value="Tipo de empreendimento: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.tipoEpt}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.tipo}" />
                                 <p:outputLabel value="Site do empreendimento: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.siteEpt}" />
-                                <p:outputLabel value="Faturamento médio mensal: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.faturamentoMedioMensalEmp}" />
-                                <p:outputLabel value="Faturamento médio anual: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.faturamentoMedioAnualEmp}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.site}" />
                                 <p:outputLabel value="Atividades exercidas: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.atividadeExercidaEpt}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.atividadeExercida}" />
                                 <p:outputLabel value="Fase de incubação: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.situacaoEpt}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.situacao}" />
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
@@ -139,65 +135,55 @@
                             <p:message for="razaoSocial" />
 
                             <p:outputLabel for="cnpj" value="CNPJ: "/>
-                            <p:inputMask id="cnpj" value="#{ListarEmpreendimentosView.objSalvar.cnpjEpt}"
+                            <p:inputMask id="cnpj" value="#{ListarEmpreendimentosView.objSalvar.cnpj}"
                                          mask="99.999.999/9999-99" size="45" maxlength="18"/>
                             <p:message for="cnpj" />
 
                             <p:outputLabel for="endereco" value="Endereço: "/>
-                            <p:inputText id="endereco" value="#{ListarEmpreendimentosView.objSalvar.enderecoEpt}" size="45" 
+                            <p:inputText id="endereco" value="#{ListarEmpreendimentosView.objSalvar.endereco}" size="45" 
                                          maxlength="45" required="true" requiredMessage="O campo Endereço é obrigatório."/>
                             <p:message for="endereco" />
 
                             <p:outputLabel for="telefone" value="Telefone: " />
-                            <p:inputMask id="telefone" value="#{ListarEmpreendimentosView.objSalvar.telefoneEpt}" mask="(99) 9999-9999?9" 
+                            <p:inputMask id="telefone" value="#{ListarEmpreendimentosView.objSalvar.telefone}" mask="(99) 9999-9999?9" 
                                          size="45" maxlength="11"/>
                             <p:message for="telefone" />
 
                             <p:outputLabel value="Telefone alternativo: " />
-                            <p:inputMask id="telefoneAlternativo" value="#{ListarEmpreendimentosView.objSalvar.telefoneAlternativoEpt}" 
+                            <p:inputMask id="telefoneAlternativo" value="#{ListarEmpreendimentosView.objSalvar.telefoneAlternativo}" 
                                          mask="(99) 9999-9999?9" size="45"/>
                             <p:message for="telefoneAlternativo" />
 
                             <p:outputLabel for="dataCriacao" value="Data de criação do empreendimento: "/>
-                            <p:calendar id="dataCriacao" value="#{ListarEmpreendimentosView.objSalvar.dataCriacaoEpt}"
+                            <p:calendar id="dataCriacao" value="#{ListarEmpreendimentosView.objSalvar.dataCriacao}"
                                         pattern="dd/MM/yyyy" size="45" mask="true" locale="pt"/>
                             <p:message for="dataCriacao" />
 
                             <p:outputLabel for="dataIncubação" value="Data de início da incubação: "/>
-                            <p:calendar id="dataIncubação" value="#{ListarEmpreendimentosView.objSalvar.dataIncubacaoEpt}" 
+                            <p:calendar id="dataIncubação" value="#{ListarEmpreendimentosView.objSalvar.dataIncubacao}" 
                                         pattern="dd/MM/yyyy" size="45" mask="true" locale="pt"/>
                             <p:message for="dataIncubação" />
 
                             <p:outputLabel for="tipoEpt" value="Tipo de empreendimento: "/>
                             <p:selectOneMenu id="tipoEpt" required="true" requiredMessage="O Tipo de empreendimento é obrigatório."
-                                             value="#{ListarEmpreendimentosView.objSalvar.tipoEpt}" style="width:435px">
+                                             value="#{ListarEmpreendimentosView.objSalvar.tipo}" style="width:435px">
                                 <f:selectItem itemLabel="Selecione o tipo" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarEmpreendimentosView.tiposEpt}" />
                             </p:selectOneMenu>
                             <p:message for="tipoEpt"/>
 
                             <p:outputLabel for="siteEpt" value="Site do empreendimento: "/>
-                            <p:inputText id="siteEpt" value="#{ListarEmpreendimentosView.objSalvar.siteEpt}" size="45" maxlength="45"/>
+                            <p:inputText id="siteEpt" value="#{ListarEmpreendimentosView.objSalvar.site}" size="45" maxlength="45"/>
                             <p:message for="siteEpt"/>
 
-                            <p:outputLabel for="faturamentoMedioMensal" value="Faturamento médio mensal: "/>
-                            <p:inputText id="faturamentoMedioMensal" value="#{ListarEmpreendimentosView.objSalvar.faturamentoMedioMensalEmp}" 
-                                         size="45" maxlength="45"/>
-                            <p:message for="faturamentoMedioMensal"/>
-
-                            <p:outputLabel for="faturamentoMedioAnual" value="Faturamento médio anual: "/>
-                            <p:inputText id="faturamentoMedioAnual" value="#{ListarEmpreendimentosView.objSalvar.faturamentoMedioAnualEmp}" 
-                                         size="45" maxlength="45"/>
-                            <p:message for="faturamentoMedioAnual"/>
-
                             <p:outputLabel for="atividadeExercida" value="Atividades exercidas: "/>
-                            <p:inputText id="atividadeExercida" value="#{ListarEmpreendimentosView.objSalvar.atividadeExercidaEpt}" 
+                            <p:inputText id="atividadeExercida" value="#{ListarEmpreendimentosView.objSalvar.atividadeExercida}" 
                                          size="45" maxlength="45" required="true" requiredMessage="O campo de Atividades exercidas é obrigatório."/>
                             <p:message for="atividadeExercida"/>
 
                             <p:outputLabel for="situacaoEpt" value="Fase de Incubação: "/>
                             <p:selectOneMenu id="situacaoEpt" required="true" requiredMessage="O Processo de incubação é obrigatório."
-                                             value="#{ListarEmpreendimentosView.objSalvar.situacaoEpt}" style="width:435px">
+                                             value="#{ListarEmpreendimentosView.objSalvar.situacao}" style="width:435px">
                                 <f:selectItem itemLabel="Selecione a situação" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarEmpreendimentosView.situacaoEpt}" />
                             </p:selectOneMenu>

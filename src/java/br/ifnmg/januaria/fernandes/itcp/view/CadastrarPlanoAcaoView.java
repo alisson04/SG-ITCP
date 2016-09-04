@@ -125,10 +125,9 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
         } else if (fimAtividade.after(atividadeSalvar.getMeta().getPrazo())) {//SE FIM ATIVIDADE depois PRAZO META
             msgPanelErro("Erro na data", "A 'data de fim' da atividade deve ser antes ou igual ao prazo de sua meta!");
         } else {
-            System.out.println("ADD O OBJ: " + atividadeSalvar.getId());
-            System.out.println("META ID: " + atividadeSalvar.getMeta().getIdMeta());
-            atividadeSalvar.setUsuarioList(usuariosPickList.getTarget());
-            atividadeSalvar.setParceiroList(parceirosPickList.getTarget());
+            atividadeSalvar.setUsuarioList(usuariosPickList.getTarget());//Seta usuários na atividade
+            atividadeSalvar.setParceiroList(parceirosPickList.getTarget());//Seta parceiros na atividade
+            atividadeSalvar.setStatus("não iniciada");//Seta o status
             atividadeSalvar = atividadeBean.salvarBean(atividadeSalvar);//Salva a atividade no BD
             
             atualizaMetasAtividades();//Atualiza atividades e metas
