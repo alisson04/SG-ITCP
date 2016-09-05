@@ -8,7 +8,6 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmListagemUsuarios" >
-                <p:growl id="msgs" showDetail="true" showSummary="false"/>
                 <p:panel styleClass="corPanel" header="Usuários no sistema:" >
                     <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
                                  filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" selectionMode="single"

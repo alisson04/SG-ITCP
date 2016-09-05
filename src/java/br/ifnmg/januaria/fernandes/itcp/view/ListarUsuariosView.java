@@ -2,6 +2,7 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
+import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,24 +11,27 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.primefaces.context.RequestContext;
 
-@ManagedBean(name = "ListarUsuariosView")
 @ViewScoped
-public class ListarUsuariosView implements Serializable {
+@Named("ListarUsuariosView")
+public class ListarUsuariosView extends MensagensGenericas implements Serializable {
 
     private Usuario objSelecionado;
-    private Usuario objSalvar = new Usuario();
+    private Usuario objSalvar;
     private String[] cargos;//para a tela de listar usuarios
     private List<Usuario> listaUsuarios;
     private List<Usuario> listaUsuariosFiltrados;
-    private UsuarioBean bean = new UsuarioBean();
+    private UsuarioBean bean;
 
     public ListarUsuariosView() {
+        objSalvar = new Usuario();
+        bean = new UsuarioBean();
+        
         cargos = new String[8];
         cargos[0] = "Coordenador";
         cargos[1] = "Professor";
@@ -38,7 +42,7 @@ public class ListarUsuariosView implements Serializable {
         cargos[6] = "Bolsista - PIBIC";
         cargos[7] = "Bolsista - PROEXT";
         
-        listaUsuarios = bean.listarBean();
+        listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
     }
 
     public void transfereObj() {//Para botão de editar
@@ -52,28 +56,22 @@ public class ListarUsuariosView implements Serializable {
     public void salvarView() {
         try {
             if ((bean.buscarPorEmailBean(objSalvar.getEmail()) == null)) {
-                //SETA O STATUS
-                objSalvar.setStatusSistema("Ativo");
-                //GERA A SENHA ALEATORIA
-                objSalvar.setSenha(gerarSenhaAleatoria());
-                bean.enviarEmail(objSalvar.getEmail(), "Sistema Sigitec", "Sua senha é: " + objSalvar.getSenha());
-                //CRIPTOGRAFA A SENHA ALEATORIA
-                objSalvar.setSenha(DigestUtils.md5Hex(objSalvar.getSenha()));
-                bean.salvarBean(objSalvar);
-                objSalvar = new Usuario();
+                objSalvar.setStatusSistema("Ativo");//SETA O STATUS
+                objSalvar.setSenha(gerarSenhaAleatoria());//GERA A SENHA ALEATORIA
+                bean.enviarEmail(objSalvar.getEmail(), "Sistema Sigitec", "Sua senha é: " + objSalvar.getSenha());//Manda o emaill
+                objSalvar.setSenha(DigestUtils.md5Hex(objSalvar.getSenha()));//CRIPTOGRAFA A SENHA ALEATORIA
+                bean.salvarBean(objSalvar);//Salva o usuário
+                objSalvar = new Usuario();//Limpa o usuário salvo
+                listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('wVarEditarDialog').hide()");
-                context.execute("PF('dlgEdicaoPronta').show()");
+                msgGrowSaveGeneric();
             } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "Erro no e-mail", "Este e-mail já esta cadastrado no sistema!");
-                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                msgPanelErro("Erro no e-mail", "Este e-mail já esta cadastrado no sistema!");
             }
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erro inesperado", "Erro ao salvar, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            msgPanelErroInesperadoGeneric();
         }
     }
     
@@ -92,15 +90,13 @@ public class ListarUsuariosView implements Serializable {
 
     public void excluirView() {
         try {
-            bean.excluirBean(objSelecionado);
+            bean.excluirBean(objSelecionado);//Exclui o usuário
             objSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
-            FacesMessage msg = new FacesMessage("Exclusão realizada com sucesso sistema");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
+            msgGrowDeleteGeneric();
         } catch (RuntimeException ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erro inesperado", "Erro ao tentar excluir, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            msgPanelErroInesperadoGeneric();
         }
     }
 
@@ -113,7 +109,7 @@ public class ListarUsuariosView implements Serializable {
         }
     }
 
-    public String btAtivarDesativarUser(Usuario userAtivarDesativar) {
+    public String btAtivarDesativarUser(Usuario userAtivarDesativar) {//Determina o nome do botão 
         if (userAtivarDesativar == null) {
             return "Ativar ou desativar";
         } else if (userAtivarDesativar.getStatusSistema().equals("Ativo")) {
@@ -127,16 +123,16 @@ public class ListarUsuariosView implements Serializable {
         if (objSelecionado.getStatusSistema().equals("Ativo")) {
             objSelecionado.setStatusSistema("Desativado");
             bean.salvarBean(objSelecionado);
-            FacesMessage msg = new FacesMessage("O usuário foi desativado");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            msgGrow("SUCESSO", "O usuário foi desativado");
         } else {
             objSelecionado.setStatusSistema("Ativo");
             bean.salvarBean(objSelecionado);
-            FacesMessage msg = new FacesMessage("O usuário foi ativado");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            msgGrow("SUCESSO", "O usuário foi ativado");
         }
+        listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
     }
 
+    //SETS E GETS
     public Usuario getObjSelecionado() {
         return objSelecionado;
     }
