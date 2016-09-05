@@ -61,7 +61,7 @@ public class PlanoAcao implements Serializable, EntityConverter {
     private String descricao;
     @OneToMany(mappedBy = "planoAcao")
     private List<Meta> metaList;
-    @JoinColumn(name = "idEmpreendimento", referencedColumnName = "id")
+    @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "id")
     @ManyToOne
     private Empreendimento empreendimento;
 

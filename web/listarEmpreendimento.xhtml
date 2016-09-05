@@ -6,18 +6,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-
-        <ui:define name="metadata">
-            <f:metadata>
-                <f:event listener="#{ListarEmpreendimentosView.listarTodosEmpreendimentos()}" type="preRenderView"/>
-            </f:metadata>
-        </ui:define>
-
         <ui:define name="conteudo">
             <h:form id="frmListagemEmpreendimentos" >
-                <p:growl id="msgs" showDetail="true" showSummary="false" />
                 <p:panel header="Empreendimentos no sistema:" styleClass="corPanel">
-                    <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." selectionMode="single"
+                    <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento cadastrado." selectionMode="single"
                                  value="#{ListarEmpreendimentosView.listaEmpreendimentos}" var="empreendimentoCursor" widgetVar="varGlobal"
                                  filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}" rows="12" paginator="true"
                                  selection="#{ListarEmpreendimentosView.empreendimentoSelecionado}" rowKey="#{empreendimentoCursor.id}"
@@ -51,7 +43,8 @@
                         </p:column>
 
                         <f:facet name="footer">
-                            <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" update=":frmListagemEmpreendimentos:carDetail" 
+                            <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" 
+                                             update=":frmListagemEmpreendimentos:carDetail" 
                                              icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" />
                             <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicaoEpt"
@@ -61,7 +54,8 @@
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" 
                                              process="dtListagemEmpreendimentos" oncomplete="PF('wVarEditarDialog').show()"
                                              actionListener="#{ListarEmpreendimentosView.transfereObj()}"/>
-                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" update=":frmListagemEmpreendimentos"
+                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" 
+                                             update=":frmListagemEmpreendimentos"
                                              disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" 
                                              actionListener="#{ListarEmpreendimentosView.excluirView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" icon="Alert16-iconfinder" />
@@ -109,12 +103,6 @@
                     </p:dialog>
                 </p:panel>
             </h:form>
-
-            <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
-                      style="text-align:center;" >
-                <h:outputText value="Salvo com sucesso! " />
-            </p:dialog>
 
             <p:dialog id="dlgEditarEpt" header="Empreendimento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
                       styleClass="corDialog" resizable="false" draggable="false"   appendTo="@(body)" dynamic="true" >
