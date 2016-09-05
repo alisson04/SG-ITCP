@@ -21,29 +21,29 @@
                                  value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
                                  filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}" selectionMode="single" 
                                  selection="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado}" 
-                                 rowKey="#{membroEmpreendimentoCursor.idMembroEmpreendimento}" var="membroEmpreendimentoCursor" 
+                                 rowKey="#{membroEmpreendimentoCursor.id}" var="membroEmpreendimentoCursor" 
                                  widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top" >
 
                         <p:ajax event="rowSelect" update=":frmListagemMembrosEpts"/>
 
-                        <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" 
-                                  sortBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" filterMatchMode="contains">
-                            <h:outputText value="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}"/>
+                        <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nome}" 
+                                  sortBy="#{membroEmpreendimentoCursor.nome}" filterMatchMode="contains">
+                            <h:outputText value="#{membroEmpreendimentoCursor.nome}"/>
                         </p:column>
 
-                        <p:column headerText="Apelido" filterBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" 
-                                  sortBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" filterMatchMode="contains">
-                            <h:outputText value="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}"/>
+                        <p:column headerText="Apelido" filterBy="#{membroEmpreendimentoCursor.apelido}" 
+                                  sortBy="#{membroEmpreendimentoCursor.apelido}" filterMatchMode="contains">
+                            <h:outputText value="#{membroEmpreendimentoCursor.apelido}"/>
                         </p:column>
 
-                        <p:column headerText="Telefone" filterBy="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}" 
+                        <p:column headerText="Telefone" filterBy="#{membroEmpreendimentoCursor.telefone}" 
                                   filterMatchMode="contains">
-                            <h:outputText value="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}"/>
+                            <h:outputText value="#{membroEmpreendimentoCursor.telefone}"/>
                         </p:column>
 
-                        <p:column headerText="Telefone alternativo" filterBy="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}" 
+                        <p:column headerText="Telefone alternativo" filterBy="#{membroEmpreendimentoCursor.telefoneAlternativo}" 
                                   filterMatchMode="contains">
-                            <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}"/>
+                            <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativo}"/>
                         </p:column>
 
                         <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento}" headerText="Empreendimento" filterMatchMode="exact">
@@ -93,27 +93,27 @@
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />                            
-                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nomeMembroEmpreendimento}" />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nome}" />
                                 <h:outputText value="Apelido: " />
-                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.apelidoMembroEmpreendimento}" />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.apelido}" />
                                 <h:outputText value="E-mail: " />
                                 <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.email}" />
                                 <h:outputText value="RG: " />
-                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.rgMembroEmpreendimento}" />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.rg}" />
                                 <h:outputText value="Endereço: " />
-                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.enderecoMembroEmpreendimento}" />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.endereco}" />
                                 <h:outputText value="Data de nascimento: " />
-                                <h:outputText value="#{ListarMembrosEptsView.conveteData(ListarMembrosEptsView.membroEmpreendimentoSelecionado.dataNascimentoMembroEmpreendimento)}" />
+                                <h:outputText value="#{ListarMembrosEptsView.conveteData(ListarMembrosEptsView.membroEmpreendimentoSelecionado.dataNascimento)}" />
                                 <h:outputText value="NIS: " />
-                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nisMembroEmpreendimento}" />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.nis}" />
                                 <h:outputText value="Telefone: " />
-                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneMembroEmpreendimento}" />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefone}" />
                                 <h:outputText value="Telefone alternativo: " />
-                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneAlternativoMembroEmpreendimento}" />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.telefoneAlternativo}" />
                                 <h:outputText value="Empreendimento: " />
                                 <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.empreendimento.nome}" />
                                 <h:outputText value="Sexo: " />
-                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.sexoMembroEmpreendimento}" />
+                                <h:outputText value="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado.sexo}" />
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
@@ -126,7 +126,7 @@
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarMembrosEptsView.objSalvar.nomeMembroEmpreendimento}" 
+                            <p:inputText id="nome" value="#{ListarMembrosEptsView.objSalvar.nome}" 
                                          required="true" requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                             <p:message for="nome" />
                             
@@ -135,43 +135,43 @@
                             <p:message for="email" />
 
                             <p:outputLabel for="apelido" value="Apelido: " />
-                            <p:inputText id="apelido" value="#{ListarMembrosEptsView.objSalvar.apelidoMembroEmpreendimento}" 
+                            <p:inputText id="apelido" value="#{ListarMembrosEptsView.objSalvar.apelido}" 
                                          size="45" maxlength="45"/>
                             <p:message for="apelido" />
 
                             <p:outputLabel for="nomeMae" value="Nome da mãe: " />
-                            <p:inputText id="nomeMae" value="#{ListarMembrosEptsView.objSalvar.nomeMaeMembroEmpreendimento}" 
+                            <p:inputText id="nomeMae" value="#{ListarMembrosEptsView.objSalvar.nomeMae}" 
                                          size="45" maxlength="45"/>
                             <p:message for="nomeMae" />
 
                             <p:outputLabel for="endereco" value="Endereco: " />
-                            <p:inputText id="endereco" value="#{ListarMembrosEptsView.objSalvar.enderecoMembroEmpreendimento}" 
+                            <p:inputText id="endereco" value="#{ListarMembrosEptsView.objSalvar.endereco}" 
                                          size="45" maxlength="45"/>
                             <p:message for="endereco" />
 
                             <p:outputLabel for="rg" value="RG: " />
-                            <p:inputText id="rg" value="#{ListarMembrosEptsView.objSalvar.rgMembroEmpreendimento}" 
+                            <p:inputText id="rg" value="#{ListarMembrosEptsView.objSalvar.rg}" 
                                          size="45" maxlength="45"/>
                             <p:message for="rg" />
 
                             <p:outputLabel for="nis" value="NIS: " />
-                            <p:inputText id="nis" value="#{ListarMembrosEptsView.objSalvar.nisMembroEmpreendimento}" 
+                            <p:inputText id="nis" value="#{ListarMembrosEptsView.objSalvar.nis}" 
                                          size="45" maxlength="45"/>
                             <p:message for="nis" />
 
                             <p:outputLabel for="telefone" value="Telefone: " />
-                            <p:inputMask id="telefone" value="#{ListarMembrosEptsView.objSalvar.telefoneMembroEmpreendimento}"
+                            <p:inputMask id="telefone" value="#{ListarMembrosEptsView.objSalvar.telefone}"
                                          mask="(99) 9999-9999?9" size="45" maxlength="11"/>
                             <p:message for="telefone" />
 
                             <p:outputLabel value="Telefone alternativo: " />
                             <p:inputMask id="telefoneAlternativo" mask="(99) 9999-9999?9" size="45" maxlength="11"
-                                         value="#{ListarMembrosEptsView.objSalvar.telefoneAlternativoMembroEmpreendimento}" />
+                                         value="#{ListarMembrosEptsView.objSalvar.telefoneAlternativo}" />
                             <p:message for="telefoneAlternativo" />
 
                             <p:outputLabel for="dataNascimento" value="Data Nascimento: "/>
                             <p:calendar id="dataNascimento" mask="true" pattern="dd/MM/yyyy" size="45" locale="pt"
-                                        value="#{ListarMembrosEptsView.objSalvar.dataNascimentoMembroEmpreendimento}" />
+                                        value="#{ListarMembrosEptsView.objSalvar.dataNascimento}" />
                             <p:message for="dataNascimento" />
 
                             <p:outputLabel for="empreendimento" value="Empreendimento: "/>
@@ -186,7 +186,7 @@
 
                             <p:outputLabel for="sexo" value="Sexo: "/>
                             <p:selectOneRadio id="sexo" required="true" requiredMessage="O campo Sexo é obrigatório."
-                                              value="#{ListarMembrosEptsView.objSalvar.sexoMembroEmpreendimento}">
+                                              value="#{ListarMembrosEptsView.objSalvar.sexo}">
                                 <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
                                 <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
                                 <f:selectItem itemLabel="Outro" itemValue="Outro"/>

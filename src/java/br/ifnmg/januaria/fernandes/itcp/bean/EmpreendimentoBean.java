@@ -32,8 +32,4 @@ public class EmpreendimentoBean implements Serializable {
     public List<Empreendimento> listarBean() {
         return dao.listarTodosEptsDao();
     }
-    
-    public Empreendimento buscarPorCodigoBean(Empreendimento ept){
-        return dao.buscarPorCodigo(ept);
-    }
 }

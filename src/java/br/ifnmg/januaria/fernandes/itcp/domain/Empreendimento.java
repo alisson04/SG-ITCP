@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
@@ -37,10 +32,10 @@ public class Empreendimento implements Serializable, EntityConverter {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
     private List<AcompanhamentoEpt> visitaEptList;
 
-    @OneToMany(mappedBy = "empreendimento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
     private List<PlanoAcao> planoAcaoList;
 
-    @OneToMany(mappedBy = "empreendimento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
     private List<MembroEmpreendimento> membroEmpreendimentoList;
 
     private static final long serialVersionUID = 1L;

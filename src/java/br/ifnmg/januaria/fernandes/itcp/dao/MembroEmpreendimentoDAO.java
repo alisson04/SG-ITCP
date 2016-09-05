@@ -1,10 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
-import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.MembroEmpreendimento;
-import java.util.ArrayList;
 import java.util.List;
-import javax.validation.ConstraintViolationException;
 
 /**
  *

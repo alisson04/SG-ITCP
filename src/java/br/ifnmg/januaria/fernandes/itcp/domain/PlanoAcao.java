@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,8 +55,10 @@ public class PlanoAcao implements Serializable, EntityConverter {
     @Size(max = 200)
     @Column(name = "descricao")
     private String descricao;
-    @OneToMany(mappedBy = "planoAcao")
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planoAcao")
     private List<Meta> metaList;
+    
     @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "id")
     @ManyToOne
     private Empreendimento empreendimento;

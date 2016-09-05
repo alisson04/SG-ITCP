@@ -27,19 +27,4 @@ public class EmpreendimentoDAO extends DaoGenerico<Empreendimento> {
     public List<Empreendimento> listarTodosEptsDao() {
         return listarObjsGenerico("Empreendimento");
     }
-    
-    public Empreendimento buscarPorCodigo(Empreendimento ept) {
-        EntityManager em = emc.gerarEntityManager();
-        try {
-            em.getTransaction().begin();
-            Query consulta = em.createQuery("SELECT e FROM Empreendimento e WHERE e.id = :id");
-            consulta.setParameter("id", ept.getId());
-            ept = (Empreendimento) consulta.getSingleResult();
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao buscar por codigo", e);
-        } finally {
-            em.close();
-        }
-        return ept;
-    }
 }

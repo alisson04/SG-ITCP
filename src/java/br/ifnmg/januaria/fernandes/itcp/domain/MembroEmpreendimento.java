@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
@@ -37,46 +32,47 @@ public class MembroEmpreendimento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idMembroEmpreendimento")
-    private Integer idMembroEmpreendimento;
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nomeMembroEmpreendimento")
-    private String nomeMembroEmpreendimento;
-    @Size(max = 45)
-    @Column(name = "apelidoMembroEmpreendimento")
-    private String apelidoMembroEmpreendimento;
-    @Size(max = 45)
-    @Column(name = "nomeMaeMembroEmpreendimento")
-    private String nomeMaeMembroEmpreendimento;
-    @Size(max = 45)
-    @Column(name = "enderecoMembroEmpreendimento")
-    private String enderecoMembroEmpreendimento;
-    @Size(max = 45)
-    @Column(name = "telefoneMembroEmpreendimento")
-    private String telefoneMembroEmpreendimento;
-    @Size(max = 45)
-    @Column(name = "telefoneAlternativoMembroEmpreendimento")
-    private String telefoneAlternativoMembroEmpreendimento;
-    @Size(max = 45)
-    @Column(name = "rgMembroEmpreendimento")
-    private String rgMembroEmpreendimento;
-    @Size(max = 45)
-    @Column(name = "nisMembroEmpreendimento")
-    private String nisMembroEmpreendimento;
-    @Column(name = "dataNascimentoMembroEmpreendimento")
-    @Temporal(TemporalType.DATE)
-    private Date dataNascimentoMembroEmpreendimento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "sexoMembroEmpreendimento")
-    private String sexoMembroEmpreendimento;
+    @Column(name = "nome")
+    private String nome;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 45)
     @Column(name = "email")
     private String email;
+    @Size(max = 45)
+    @Column(name = "apelido")
+    private String apelido;
+    @Size(max = 45)
+    @Column(name = "nomeMae")
+    private String nomeMae;
+    @Size(max = 45)
+    @Column(name = "endereco")
+    private String endereco;
+    @Size(max = 45)
+    @Column(name = "telefone")
+    private String telefone;
+    @Size(max = 45)
+    @Column(name = "telefoneAlternativo")
+    private String telefoneAlternativo;
+    @Size(max = 45)
+    @Column(name = "rg")
+    private String rg;
+    @Size(max = 45)
+    @Column(name = "nis")
+    private String nis;
+    @Column(name = "dataNascimento")
+    @Temporal(TemporalType.DATE)
+    private Date dataNascimento;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "sexo")
+    private String sexo;
+    
     @JoinColumn(name = "empreendimentoFK", referencedColumnName = "id")
     @ManyToOne
     private Empreendimento empreendimento;
@@ -85,101 +81,101 @@ public class MembroEmpreendimento implements Serializable {
     }
 
     public MembroEmpreendimento(Integer idMembroEmpreendimento) {
-        this.idMembroEmpreendimento = idMembroEmpreendimento;
+        this.id = idMembroEmpreendimento;
     }
 
     public MembroEmpreendimento(Integer idMembroEmpreendimento, String nomeMembroEmpreendimento, String sexoMembroEmpreendimento) {
-        this.idMembroEmpreendimento = idMembroEmpreendimento;
-        this.nomeMembroEmpreendimento = nomeMembroEmpreendimento;
-        this.sexoMembroEmpreendimento = sexoMembroEmpreendimento;
+        this.id = idMembroEmpreendimento;
+        this.nome = nomeMembroEmpreendimento;
+        this.sexo = sexoMembroEmpreendimento;
     }
 
-    public Integer getIdMembroEmpreendimento() {
-        return idMembroEmpreendimento;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdMembroEmpreendimento(Integer idMembroEmpreendimento) {
-        this.idMembroEmpreendimento = idMembroEmpreendimento;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getNomeMembroEmpreendimento() {
-        return nomeMembroEmpreendimento;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeMembroEmpreendimento(String nomeMembroEmpreendimento) {
-        this.nomeMembroEmpreendimento = nomeMembroEmpreendimento;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getApelidoMembroEmpreendimento() {
-        return apelidoMembroEmpreendimento;
+    public String getApelido() {
+        return apelido;
     }
 
-    public void setApelidoMembroEmpreendimento(String apelidoMembroEmpreendimento) {
-        this.apelidoMembroEmpreendimento = apelidoMembroEmpreendimento;
+    public void setApelido(String apelido) {
+        this.apelido = apelido;
     }
 
-    public String getNomeMaeMembroEmpreendimento() {
-        return nomeMaeMembroEmpreendimento;
+    public String getNomeMae() {
+        return nomeMae;
     }
 
-    public void setNomeMaeMembroEmpreendimento(String nomeMaeMembroEmpreendimento) {
-        this.nomeMaeMembroEmpreendimento = nomeMaeMembroEmpreendimento;
+    public void setNomeMae(String nomeMae) {
+        this.nomeMae = nomeMae;
     }
 
-    public String getEnderecoMembroEmpreendimento() {
-        return enderecoMembroEmpreendimento;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setEnderecoMembroEmpreendimento(String enderecoMembroEmpreendimento) {
-        this.enderecoMembroEmpreendimento = enderecoMembroEmpreendimento;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
-    public String getTelefoneMembroEmpreendimento() {
-        return telefoneMembroEmpreendimento;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setTelefoneMembroEmpreendimento(String telefoneMembroEmpreendimento) {
-        this.telefoneMembroEmpreendimento = telefoneMembroEmpreendimento;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public String getTelefoneAlternativoMembroEmpreendimento() {
-        return telefoneAlternativoMembroEmpreendimento;
+    public String getTelefoneAlternativo() {
+        return telefoneAlternativo;
     }
 
-    public void setTelefoneAlternativoMembroEmpreendimento(String telefoneAlternativoMembroEmpreendimento) {
-        this.telefoneAlternativoMembroEmpreendimento = telefoneAlternativoMembroEmpreendimento;
+    public void setTelefoneAlternativo(String telefoneAlternativo) {
+        this.telefoneAlternativo = telefoneAlternativo;
     }
 
-    public String getRgMembroEmpreendimento() {
-        return rgMembroEmpreendimento;
+    public String getRg() {
+        return rg;
     }
 
-    public void setRgMembroEmpreendimento(String rgMembroEmpreendimento) {
-        this.rgMembroEmpreendimento = rgMembroEmpreendimento;
+    public void setRg(String rg) {
+        this.rg = rg;
     }
 
-    public String getNisMembroEmpreendimento() {
-        return nisMembroEmpreendimento;
+    public String getNis() {
+        return nis;
     }
 
-    public void setNisMembroEmpreendimento(String nisMembroEmpreendimento) {
-        this.nisMembroEmpreendimento = nisMembroEmpreendimento;
+    public void setNis(String nis) {
+        this.nis = nis;
     }
 
-    public Date getDataNascimentoMembroEmpreendimento() {
-        return dataNascimentoMembroEmpreendimento;
+    public Date getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setDataNascimentoMembroEmpreendimento(Date dataNascimentoMembroEmpreendimento) {
-        this.dataNascimentoMembroEmpreendimento = dataNascimentoMembroEmpreendimento;
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
-    public String getSexoMembroEmpreendimento() {
-        return sexoMembroEmpreendimento;
+    public String getSexo() {
+        return sexo;
     }
 
-    public void setSexoMembroEmpreendimento(String sexoMembroEmpreendimento) {
-        this.sexoMembroEmpreendimento = sexoMembroEmpreendimento;
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
     public String getEmail() {
@@ -201,7 +197,7 @@ public class MembroEmpreendimento implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idMembroEmpreendimento != null ? idMembroEmpreendimento.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -212,7 +208,7 @@ public class MembroEmpreendimento implements Serializable {
             return false;
         }
         MembroEmpreendimento other = (MembroEmpreendimento) object;
-        if ((this.idMembroEmpreendimento == null && other.idMembroEmpreendimento != null) || (this.idMembroEmpreendimento != null && !this.idMembroEmpreendimento.equals(other.idMembroEmpreendimento))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -220,7 +216,7 @@ public class MembroEmpreendimento implements Serializable {
 
     @Override
     public String toString() {
-        return "br.ifnmg.januaria.fernandes.itcp.domain.MembroEmpreendimento[ idMembroEmpreendimento=" + idMembroEmpreendimento + " ]";
+        return "br.ifnmg.januaria.fernandes.itcp.domain.MembroEmpreendimento[ id=" + id + " ]";
     }
     
 }
