@@ -127,8 +127,7 @@
                             <p:message for="e-mail"/>
 
                             <p:outputLabel for="endereco" value="Endereço: "/>
-                            <p:inputText id="endereco" value="#{ListarUsuariosView.objSalvar.endereco}" required="true"
-                                         requiredMessage="O endereco é obrigatório." size="45" maxlength="50"/>
+                            <p:inputText id="endereco" value="#{ListarUsuariosView.objSalvar.endereco}" size="45" maxlength="50"/>
                             <p:message for="endereco"/>
 
                             <p:outputLabel for="telefone" value="Telefone: " />
@@ -143,14 +142,12 @@
                             <p:message for="telefoneAlternativo"/>
 
                             <p:outputLabel for="rg" value="RG: " />
-                            <p:inputText id="rg" value="#{ListarUsuariosView.objSalvar.rg}"
-                                         required="true" requiredMessage="O RG é obrigatório." size="45" maxlength="13"/>
+                            <p:inputText id="rg" value="#{ListarUsuariosView.objSalvar.rg}" size="45" maxlength="13"/>
                             <p:message for="rg"/>
 
                             <p:outputLabel for="cpf" value="CPF: " />
                             <p:inputMask id="cpf" value="#{ListarUsuariosView.objSalvar.cpf}"
-                                         mask="999-999-999.99" required="true" size="45" maxlength="11"
-                                         requiredMessage="O CPF é obrigatório."/>   
+                                         mask="999-999-999.99" size="45" maxlength="11" />   
                             <p:message for="cpf"/>
 
                             <p:outputLabel for="dataNascimento" value="Data de nascimento: " />

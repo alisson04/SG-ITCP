@@ -38,4 +38,90 @@
                              styleClass="ui-button-text"/>
         </p:dialog>
     </h:form>
+
+    <p:dialog header="Cadastre o coordenador da incubadora" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
+              appendTo="@(body)"styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
+        <h:form id="frmEdicao">
+            <p:panel id="panel" styleClass="corPanel" >
+                <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                    <p:outputLabel for="nome" value="Nome: " />
+                    <p:inputText id="nome" value="#{ListarUsuariosView.objSalvar.nome}" required="true"
+                                 requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
+                    <p:message for="nome"/>
+
+                    <p:outputLabel for="e-mail" value="E-mail: " />  
+                    <p:inputText id="e-mail" value="#{ListarUsuariosView.objSalvar.email}" required="true"
+                                 requiredMessage="O e-mail é obrigatório." size="45" maxlength="50"/>
+                    <p:message for="e-mail"/>
+
+                    <p:outputLabel for="endereco" value="Endereço: "/>
+                    <p:inputText id="endereco" value="#{ListarUsuariosView.objSalvar.endereco}" size="45" maxlength="50"/>
+                    <p:message for="endereco"/>
+
+                    <p:outputLabel for="telefone" value="Telefone: " />
+                    <p:inputMask id="telefone" value="#{ListarUsuariosView.objSalvar.telefone}"
+                                 mask="(99) ?9-9999-9999" size="45" maxlength="11" required="true"
+                                 requiredMessage="O telefone é obrigatório."/>
+                    <p:message for="telefone"/>
+
+                    <p:outputLabel value="Telefone alternativo: " />
+                    <p:inputMask id="telefoneAlternativo" value="#{ListarUsuariosView.objSalvar.telefoneAlternativo}"
+                                 mask="(99) ?9-9999-9999" size="45" maxlength="11"/>
+                    <p:message for="telefoneAlternativo"/>
+
+                    <p:outputLabel for="rg" value="RG: " />
+                    <p:inputText id="rg" value="#{ListarUsuariosView.objSalvar.rg}" size="45" maxlength="13"/>
+                    <p:message for="rg"/>
+
+                    <p:outputLabel for="cpf" value="CPF: " />
+                    <p:inputMask id="cpf" value="#{ListarUsuariosView.objSalvar.cpf}" 
+                                 mask="999-999-999.99" size="45" maxlength="11" />   
+                    <p:message for="cpf"/>
+
+                    <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
+                    <p:calendar id="dataNascimento" value="#{ListarUsuariosView.objSalvar.dataNascimento}" pattern="dd/MM/yyyy" 
+                                size="45" mask="true" locale="pt" required="true" requiredMessage="A data de nascimento é obrigatória." />
+                    <p:message for="dataNascimento"/>
+
+                    <p:outputLabel for="dataEntrada" value="Entrada na ITCP: " />
+                    <p:calendar id="dataEntrada" value="#{ListarUsuariosView.objSalvar.dataEntrada}" pattern="dd/MM/yyyy" 
+                                mask="true" locale="pt" size="45" required="true" requiredMessage="A data de entrada é obrigatória." />
+                    <p:message for="dataEntrada"/>
+
+                    <p:outputLabel for="cargoItcp" value="Cargo: " />
+                    <p:selectOneMenu id="cargoItcp" required="true" requiredMessage="O cargo na ITCP é obrigatório."
+                                     value="#{ListarUsuariosView.objSalvar.cargo}" style="width:435px"
+                                     rendered="#{InicioBean.usuarioLogado.cargo == 'Coordenador'}">
+                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{ListarUsuariosView.cargos}" />
+                    </p:selectOneMenu>
+                    <p:message for="cargoItcp"/>
+
+                    <p:outputLabel for="sexo" value="Sexo: "/>
+                    <p:selectOneRadio id="sexo" required="true" requiredMessage="O sexo é obrigatório."
+                                      value="#{ListarUsuariosView.objSalvar.sexo}">
+                        <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                        <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
+                        <f:selectItem itemLabel="Outro" itemValue="Outro"/>
+                    </p:selectOneRadio>
+                    <p:message for="sexo" />
+                </h:panelGrid>
+
+                <p:outputLabel value="* Campos obrigatórios" />
+
+                <p:separator />
+                <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarUsuariosView.salvarView()}" 
+                                 icon="Save24-iconfinder" update=":frmEdicao, :frmListagemUsuarios:ListagemUsuarios" >
+                    <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                </p:commandButton>
+
+                <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+
+                <p:blockUI block="panel" trigger="btnSalvar">
+                    CARREGANDO<br />
+                    <p:graphicImage name="icons/LoadingBar.gif"/>
+                </p:blockUI>
+            </p:panel>
+        </h:form>
+    </p:dialog>
 </html>
