@@ -119,11 +119,11 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
         Date inicioPlano = objSalvar.getDataInicio();
 
         if (fimAtividade.before(inicioAtividade)) { //SE o FIM antes deINICIO
-            msgPanelErro("Erro na data", "A 'data de início' da atividade deve ser igual ou maior a sua data de fim!");
+            msgPanelErroCustomizavel("Erro na data", "A 'data de início' da atividade deve ser igual ou maior a sua data de fim!");
         } else if (inicioAtividade.before(inicioPlano)) {//SE INICIO ATIVIDADE antes INICIO PLANO
-            msgPanelErro("Erro na data", "A 'data de início' da atividade deve ser maior ou igual a 'data de iníco' do plano!");
+            msgPanelErroCustomizavel("Erro na data", "A 'data de início' da atividade deve ser maior ou igual a 'data de iníco' do plano!");
         } else if (fimAtividade.after(atividadeSalvar.getMeta().getPrazo())) {//SE FIM ATIVIDADE depois PRAZO META
-            msgPanelErro("Erro na data", "A 'data de fim' da atividade deve ser antes ou igual ao prazo de sua meta!");
+            msgPanelErroCustomizavel("Erro na data", "A 'data de fim' da atividade deve ser antes ou igual ao prazo de sua meta!");
         } else {
             atividadeSalvar.setUsuarioList(usuariosPickList.getTarget());//Seta usuários na atividade
             atividadeSalvar.setParceiroList(parceirosPickList.getTarget());//Seta parceiros na atividade
@@ -150,9 +150,9 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
 
     public void salvarMeta() {
         if (metaSalvar.getPrazo().before(objSalvar.getDataInicio())) {
-            msgPanelErro("Erro na data", "O prazo da meta deve ser maior ou igual a 'data de início' do plano de ação!");
+            msgPanelErroCustomizavel("Erro na data", "O prazo da meta deve ser maior ou igual a 'data de início' do plano de ação!");
         } else if (metaSalvar.getPrazo().after(objSalvar.getDataFim())) {
-            msgPanelErro("Erro na data", "O prazo da meta deve ser menor ou igual a 'data de fim' do plano de ação'!");
+            msgPanelErroCustomizavel("Erro na data", "O prazo da meta deve ser menor ou igual a 'data de fim' do plano de ação'!");
         } else {
             metaSalvar.setPlanoAcao(objSalvar);
             metaSalvar = metaBean.salvarBean(metaSalvar);//Salva a meta no BD
@@ -173,11 +173,11 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
                 msgGrowSaveGeneric();
                 tabview.setActiveIndex(1);
             } else {
-                msgPanelErro("Erro na data", "A data de início deve ser antes da data de fim!");
+                msgPanelErroCustomizavel("Erro na data", "A data de início deve ser antes da data de fim!");
             }
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            msgPanelErro("Erro inesperado", "Erro ao tentar salvar, contate o administrador do sistema!");
+            msgPanelErroCustomizavel("Erro inesperado", "Erro ao tentar salvar, contate o administrador do sistema!");
         }
     }
     

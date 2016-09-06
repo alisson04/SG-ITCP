@@ -1,5 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.util;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.io.IOException;
 import java.util.List;
@@ -25,10 +26,13 @@ public class controleDeAcesso implements Filter {
 
     private List<String> listaIds;
 
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
+    public controleDeAcesso() {
 
-        System.out.println("__________controleDeAcesso(doFilter) Inicio");
+    }
+
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain) throws IOException, ServletException {//Metodo chamado em toda requisição de pagina
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
 

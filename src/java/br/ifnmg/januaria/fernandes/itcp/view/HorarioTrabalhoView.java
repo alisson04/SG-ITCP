@@ -63,10 +63,10 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
                     listaHorarios = bean.listarBean();
                     msgGrowSaveGeneric();
                 } else {
-                    msgPanelErro("Erro", "A jornada de trabalho não pode ser maior que 56 horas semanais!");
+                    msgPanelErroCustomizavel("Erro", "A jornada de trabalho não pode ser maior que 56 horas semanais!");
                 }
             } else {
-                msgPanelErro("Erro", "Verifique a coerência dos horários e tente novamente!");
+                msgPanelErroCustomizavel("Erro", "Verifique a coerência dos horários e tente novamente!");
             }
         } catch (Exception ex) {
             System.out.println("ERRO ao salvar: " + ex);

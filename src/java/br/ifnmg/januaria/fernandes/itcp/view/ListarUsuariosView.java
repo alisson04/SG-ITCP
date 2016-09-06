@@ -31,7 +31,7 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
     public ListarUsuariosView() {
         objSalvar = new Usuario();
         bean = new UsuarioBean();
-        
+
         cargos = new String[8];
         cargos[0] = "Coordenador";
         cargos[1] = "Professor";
@@ -41,7 +41,7 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
         cargos[5] = "Bolsista - PIBED";
         cargos[6] = "Bolsista - PIBIC";
         cargos[7] = "Bolsista - PROEXT";
-        
+
         listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
     }
 
@@ -67,14 +67,14 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
                 context.execute("PF('wVarEditarDialog').hide()");
                 msgGrowSaveGeneric();
             } else {
-                msgPanelErro("Erro no e-mail", "Este e-mail já esta cadastrado no sistema!");
+                msgPanelErroCustomizavel("Erro no e-mail", "Este e-mail já esta cadastrado no sistema!");
             }
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             msgPanelErroInesperadoGeneric();
         }
     }
-    
+
     public String gerarSenhaAleatoria() {
         String letras = "ABCDEFGHIJKLMNOPQRSTUVYWXZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
@@ -123,12 +123,11 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
         if (objSelecionado.getStatusSistema().equals("Ativo")) {
             objSelecionado.setStatusSistema("Desativado");
             bean.salvarBean(objSelecionado);
-            msgGrow("SUCESSO", "O usuário foi desativado");
         } else {
             objSelecionado.setStatusSistema("Ativo");
             bean.salvarBean(objSelecionado);
-            msgGrow("SUCESSO", "O usuário foi ativado");
         }
+        msgGrowUpdateGeneric();
         listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
     }
 

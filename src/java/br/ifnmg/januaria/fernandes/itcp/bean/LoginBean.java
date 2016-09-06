@@ -1,18 +1,15 @@
 package br.ifnmg.januaria.fernandes.itcp.bean;
 
 import br.ifnmg.januaria.fernandes.itcp.dao.UsuarioDAO;
-import br.ifnmg.januaria.fernandes.itcp.domain.HorarioTrabalho;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import static javax.faces.context.FacesContext.getCurrentInstance;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -25,11 +22,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class LoginBean implements Serializable {
 
     private UsuarioDAO usuarioDAO;
-    MensagensBean mensagensBean;
 
     public LoginBean() {
         usuarioDAO = new UsuarioDAO();
-        mensagensBean = new MensagensBean();
     }
 
     public Usuario logar(Usuario usuarioLogado) {

@@ -34,6 +34,7 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
         }
     }
     
+    //Excluir um objeto do BD
     public void excluirGenerico(TipoClasse objeto) {
         em = gerarEntityManager();
         try {
@@ -71,7 +72,7 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
         return listaObjs;
     }
 
-    //Lista todos os objetos de uma classe no BD filtrados por um parametro
+    //Lista todos os objetos de uma classe no BD filtrados por um parametro STRING
     public List<TipoClasse> listarObjsFiltradosGenerico(String classe, String atributoClasse, String paramComparacao) {
         em = gerarEntityManager();
         List<TipoClasse> listaObjsFiltrados;
@@ -93,6 +94,7 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
         return listaObjsFiltrados;
     }
     
+    //Lista todos os objetos de uma classe no BD filtrados por um parametro INT
     public List<TipoClasse> listarObjsFiltradosIntGenerico(String classe, String atributoDaClasse, int paramComparacao) {
         em = gerarEntityManager();
         List<TipoClasse> listaObjsFiltrados;
@@ -113,5 +115,24 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             em.close();
         }
         return listaObjsFiltrados;
+    }
+    
+    //Conta linha de uma tabela no BD
+    public long contarLinhasGenerico(String classe) {
+        em = gerarEntityManager();
+        try {
+            em.getTransaction().begin();
+            Query consulta = em.createQuery("SELECT COUNT(o.id) FROM " + classe + " o ");
+            long numLinhas = (long)consulta.getSingleResult();//Pega a lista de usuarios
+            System.out.println("__________DAOGenerico(contarLinhasGenerico) número de linhas: " + numLinhas);
+            return numLinhas;
+        } catch (ConstraintViolationException x) {
+            System.out.println("__________DAOGenerico(contarLinhasGenerico) - getConstraintViolations():");
+            System.out.println(x.getConstraintViolations());            
+            em.getTransaction().rollback();
+            throw new RuntimeException("__________DAOGenerico(contarLinhasGenerico): Erro ao salvar objetos: ", x);
+        } finally {
+            em.close();
+        }
     }
 }

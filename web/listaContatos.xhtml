@@ -9,9 +9,7 @@
 
         <ui:define name="metadata">
             <f:metadata>
-                <f:event listener="#{ListarEmpreendimentosView.listarTodosEmpreendimentos()}" type="preRenderView"/>
                 <f:event listener="#{ListarMembrosEptsView.ListarMembrosEpts()}" type="preRenderView"/>
-
             </f:metadata>
         </ui:define>
 
@@ -111,22 +109,22 @@
                                 </p:column>
 
                                 <p:column headerText="Telefone: " filterBy="#{empreendimentoCursor.telefone}" filterMatchMode="contains">
-                                    <h:outputText value="#{empreendimentoCursor.teltelefone>
+                                    <h:outputText value="#{empreendimentoCursor.telefone}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone alternativo: " filterBy="#{empreendimentoCursor.telefoneAlternativoEpt}"
+                                <p:column headerText="Telefone alternativo: " filterBy="#{empreendimentoCursor.telefoneAlternativo}"
                                           filterMatchMode="contains">
-                                    <h:outputText value="#{empreendimentoCursor.telefoneAlternativoEpt}"/>
+                                    <h:outputText value="#{empreendimentoCursor.telefoneAlternativo}"/>
                                 </p:column>
 
-                                <p:column filterBy="#{empreendimentoCursor.situacaoEpt}" headerText="Processo de Incubação" filterMatchMode="exact">
+                                <p:column filterBy="#{empreendimentoCursor.situacao}" headerText="Processo de Incubação" filterMatchMode="exact">
                                     <f:facet name="filter">
                                         <p:selectOneMenu onchange="PF('varGlobalEmpreendimentos').filter()" >
                                             <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
                                             <f:selectItems value="#{ListarEmpreendimentosView.processoIncubacao}" />
                                         </p:selectOneMenu>
                                     </f:facet>
-                                    <h:outputText value="#{empreendimentoCursor.situacaoEpt}" />
+                                    <h:outputText value="#{empreendimentoCursor.situacao}" />
                                 </p:column>
                             </p:dataTable>
                         </p:tab>
@@ -136,7 +134,7 @@
                                          value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" rows="12" paginator="true"
                                          paginatorPosition="top" var="membroEmpreendimentoCursor"
                                          filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}"
-                                         rowKey="#{membroEmpreendimentoCursor.idMembroEmpreendimento}"  widgetVar="varGlobalMembro">
+                                         rowKey="#{membroEmpreendimentoCursor.id}"  widgetVar="varGlobalMembro">
                                 
                                 <f:facet name="footer" >
                                     <h:commandLink id="pdfMep">
@@ -155,24 +153,24 @@
                                     <p:tooltip for="xlsMep" value="Exportar para Excel" />
                                 </f:facet>
 
-                                <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" 
-                                          sortBy="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}" filterMatchMode="contains">
-                                    <h:outputText value="#{membroEmpreendimentoCursor.nomeMembroEmpreendimento}"/>
+                                <p:column headerText="Nome" filterBy="#{membroEmpreendimentoCursor.nome}" 
+                                          sortBy="#{membroEmpreendimentoCursor.nome}" filterMatchMode="contains">
+                                    <h:outputText value="#{membroEmpreendimentoCursor.nome}"/>
                                 </p:column>
 
-                                <p:column headerText="Apelido" filterBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" 
-                                          sortBy="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}" filterMatchMode="contains">
-                                    <h:outputText value="#{membroEmpreendimentoCursor.apelidoMembroEmpreendimento}"/>
+                                <p:column headerText="Apelido" filterBy="#{membroEmpreendimentoCursor.apelido}" 
+                                          sortBy="#{membroEmpreendimentoCursor.apelido}" filterMatchMode="contains">
+                                    <h:outputText value="#{membroEmpreendimentoCursor.apelido}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone" filterBy="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}" 
+                                <p:column headerText="Telefone" filterBy="#{membroEmpreendimentoCursor.telefone}" 
                                           filterMatchMode="contains">
-                                    <h:outputText value="#{membroEmpreendimentoCursor.telefoneMembroEmpreendimento}"/>
+                                    <h:outputText value="#{membroEmpreendimentoCursor.telefone}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone alternativo" filterBy="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}" 
+                                <p:column headerText="Telefone alternativo" filterBy="#{membroEmpreendimentoCursor.telefoneAlternativo}" 
                                           filterMatchMode="contains">
-                                    <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativoMembroEmpreendimento}"/>
+                                    <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativo}"/>
                                 </p:column>
 
                                 <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento}" headerText="Empreendimento" filterMatchMode="exact">

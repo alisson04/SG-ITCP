@@ -49,4 +49,8 @@ public class UsuarioBean implements Serializable{
     public Usuario buscarPorCodigoBean(Usuario user){
         return dao.buscarPorCodigo(user);
     }
+    
+    public long contarLinhasBean(){
+        return dao.contarLinhasDAO();
+    }
 }

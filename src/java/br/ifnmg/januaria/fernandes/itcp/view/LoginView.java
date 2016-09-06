@@ -1,31 +1,38 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
-import br.ifnmg.januaria.fernandes.itcp.bean.HorarioTrabalhoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
-import br.ifnmg.januaria.fernandes.itcp.bean.MensagensBean;
-import br.ifnmg.januaria.fernandes.itcp.domain.HorarioTrabalho;
+import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
+import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.validation.ConstraintViolationException;
-import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author alisson
  */
-@ManagedBean(name = "loginView")
 @ViewScoped
-public class loginView implements Serializable {
+@Named("LoginView")
+public class LoginView extends MensagensGenericas implements Serializable {
 
     private Usuario usuarioLogado = new Usuario();
     private LoginBean bean = new LoginBean();
-    MensagensBean mensagensBean;
+    private UsuarioBean usrBean;
+    private boolean existeUser;
+
+    public LoginView() {
+        usrBean = new UsuarioBean();
+        existeUser = true;
+
+        if (usrBean.contarLinhasBean() == 0) {
+            existeUser = false;
+        }
+    }
 
     public String logar() {
         try {
@@ -38,33 +45,15 @@ public class loginView implements Serializable {
                 return "/sigitec/inicio.xhtml";
             } else {
                 System.out.println("__________BEAN(loginBean): Não encontrou o e-mail");
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail ou senha invalidos", "E-mail ou senha invalidos!"));
+                msgGrowlErroCustomizavel("E-mail ou senha invalidos", "E-mail ou senha invalidos!");
                 return null;
             }
         } catch (RuntimeException | IOException ex) {
             System.out.println("RuntimeException: " + ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erro inesperado", "Erro grave ao tentar logar, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            msgPanelErroInesperadoGeneric();
             return null;
         }
     }
-/**
-    public void teste() {
-        try {
-            HorarioTrabalho h = new HorarioTrabalho();
-            Usuario u = new Usuario();
-            u.setId(4);
-            h.setUsuario(u);
-            HorarioTrabalhoBean beanH = new HorarioTrabalhoBean();
-            beanH.salvarBean(h);
-        } catch (ConstraintViolationException ex) {
-
-            System.out.println("TRETA TRETA TRETA TRETA: " + ex);
-        }
-
-    }*/
 
     public String sair() {
         return bean.sair(usuarioLogado);
@@ -76,5 +65,9 @@ public class loginView implements Serializable {
 
     public void setUsuarioLogado(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
+    }
+
+    public boolean isExisteUser() {
+        return existeUser;
     }
 }

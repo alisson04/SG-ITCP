@@ -64,23 +64,7 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         }
         return usr;
     }
-
-    /*
-        List<Usuario> listaUsuarios;
-        Usuario usr;
-
-        listaUsuarios = listarObjsFiltradosIntGenerico("Usuario", "idUsuario", user.getIdUsuario());
-        if (listaUsuarios.size() > 0) {
-            usr = listaUsuarios.get(0);
-            System.out.println("NUM: " + listaUsuarios.size());
-        } else {
-            usr = null;
-            System.out.println("NUM: ");
-        }
-
-        return usr;
     
-    **/
     public Usuario logar(String email, String senha) {
         EntityManager em = emc.gerarEntityManager();
         Usuario usuario;
@@ -93,17 +77,15 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         listaObjs = consulta.getResultList();//Pega a lista de objs
         System.out.println("Numero de users encontrados: " + listaObjs.size());
         if (listaObjs.size() > 0 && listaObjs.size() < 2) {
-            System.out.println("NUM: " + listaObjs.size());
-            System.out.println("EMAIL: " + listaObjs.get(0).getEmail());
             usuario = listaObjs.get(0);
-            System.out.println("NUM: " + listaObjs.size());
-            System.out.println("DAO(logar): SENHA: " + usuario.getSenha());
-            System.out.println("DAO(logar): EMAIL: " + usuario.getEmail());
             return usuario;
         } else {
-            System.out.println("Senha ou email errados ");
             usuario = null;
             return usuario;
         }
+    }
+    
+    public long contarLinhasDAO(){
+        return contarLinhasGenerico("Usuario");
     }
 }

@@ -21,19 +21,20 @@
     </h:head>
     <h:form>
         <p:graphicImage name="fotos/IfnmgNatureClara1920.jpg" width="100%" height="50%" />
-        <p:dialog header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" resizable="false">
+        <p:dialog header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" resizable="false"
+                  rendered="#{LoginView.existeUser}">
             <p:growl id="growl" showDetail="true" sticky="true" showSummary="false"/>
             <h:panelGrid id="panelLogin" columns="2" cellpadding="5" style="ui-widget">
 
                 <p:outputLabel for="emailUsr" value="E-mail: " />
-                <p:inputText id="emailUsr" value="#{loginView.usuarioLogado.email}"
+                <p:inputText id="emailUsr" value="#{LoginView.usuarioLogado.email}"
                              required="true" requiredMessage="Insira um e-mail!"/>
 
                 <p:outputLabel for="senhaUsr" value="Senha: " />
-                <p:password id="senhaUsr" value="#{loginView.usuarioLogado.senha}"
+                <p:password id="senhaUsr" value="#{LoginView.usuarioLogado.senha}"
                             required="true" requiredMessage="Insira uma senha!" />
             </h:panelGrid>
-            <p:commandButton value="Acessar" action="#{loginView.logar()}" update="growl" icon="Key24-iconfinder" style="ui-button"
+            <p:commandButton value="Acessar" action="#{LoginView.logar()}" update="growl" icon="Key24-iconfinder" style="ui-button"
                              styleClass="ui-button-text"/>
         </p:dialog>
     </h:form>
