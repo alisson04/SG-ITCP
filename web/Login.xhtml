@@ -19,87 +19,67 @@
 
         <link type="text/css" rel="stylesheet" href="dot-luv/skin.css"/>
     </h:head>
-    <h:form>
-        <p:graphicImage name="fotos/IfnmgNatureClara1920.jpg" width="100%" height="50%" />
-        <p:dialog header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" resizable="false"
-                  rendered="#{LoginView.existeUser}">
-            <p:growl id="growl" showDetail="true" sticky="true" showSummary="false"/>
-            <h:panelGrid id="panelLogin" columns="2" cellpadding="5" style="ui-widget">
+    
+    <h:body styleClass="loginPage">
+        <h:form id="frmLogar">
 
-                <p:outputLabel for="emailUsr" value="E-mail: " />
-                <p:inputText id="emailUsr" value="#{LoginView.usuarioLogado.email}"
-                             required="true" requiredMessage="Insira um e-mail!"/>
+            <p:dialog header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" resizable="false"
+                      rendered="#{LoginView.existeUser}" >
+                <p:growl id="growl" showDetail="true" sticky="true" showSummary="false"/>
+                <h:panelGrid id="panelLogin" columns="2" cellpadding="5" style="ui-widget">
 
-                <p:outputLabel for="senhaUsr" value="Senha: " />
-                <p:password id="senhaUsr" value="#{LoginView.usuarioLogado.senha}"
-                            required="true" requiredMessage="Insira uma senha!" />
-            </h:panelGrid>
-            <p:commandButton value="Acessar" action="#{LoginView.logar()}" update="growl" icon="Key24-iconfinder" style="ui-button"
-                             styleClass="ui-button-text"/>
-        </p:dialog>
-    </h:form>
+                    <p:outputLabel for="emailUsr" value="E-mail: " />
+                    <p:inputText id="emailUsr" value="#{LoginView.usuarioLogado.email}"
+                                 required="true" requiredMessage="Insira um e-mail!"/>
 
-    <p:dialog header="Cadastre o coordenador da incubadora" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
-              appendTo="@(body)"styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
-        <h:form id="frmEdicao">
-            <p:panel id="panel" styleClass="corPanel" >
+                    <p:outputLabel for="senhaUsr" value="Senha: " />
+                    <p:password id="senhaUsr" value="#{LoginView.usuarioLogado.senha}"
+                                required="true" requiredMessage="Insira uma senha!" />
+                </h:panelGrid>
+                <p:commandButton value="Acessar" action="#{LoginView.logar()}" update="growl" icon="Key24-iconfinder" style="ui-button"
+                                 styleClass="ui-button-text"/>
+            </p:dialog>
+
+            <p:panel id="panel" styleClass="corPanel" rendered="#{!LoginView.existeUser}" >
                 <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                     <p:outputLabel for="nome" value="Nome: " />
-                    <p:inputText id="nome" value="#{ListarUsuariosView.objSalvar.nome}" required="true"
+                    <p:inputText id="nome" value="#{LoginView.obj.nome}" required="true"
                                  requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
                     <p:message for="nome"/>
 
                     <p:outputLabel for="e-mail" value="E-mail: " />  
-                    <p:inputText id="e-mail" value="#{ListarUsuariosView.objSalvar.email}" required="true"
+                    <p:inputText id="e-mail" value="#{LoginView.obj.email}" required="true"
                                  requiredMessage="O e-mail é obrigatório." size="45" maxlength="50"/>
                     <p:message for="e-mail"/>
 
                     <p:outputLabel for="endereco" value="Endereço: "/>
-                    <p:inputText id="endereco" value="#{ListarUsuariosView.objSalvar.endereco}" size="45" maxlength="50"/>
+                    <p:inputText id="endereco" value="#{LoginView.obj.endereco}" size="45" maxlength="50"/>
                     <p:message for="endereco"/>
 
                     <p:outputLabel for="telefone" value="Telefone: " />
-                    <p:inputMask id="telefone" value="#{ListarUsuariosView.objSalvar.telefone}"
+                    <p:inputMask id="telefone" value="#{LoginView.obj.telefone}"
                                  mask="(99) ?9-9999-9999" size="45" maxlength="11" required="true"
                                  requiredMessage="O telefone é obrigatório."/>
                     <p:message for="telefone"/>
 
                     <p:outputLabel value="Telefone alternativo: " />
-                    <p:inputMask id="telefoneAlternativo" value="#{ListarUsuariosView.objSalvar.telefoneAlternativo}"
+                    <p:inputMask id="telefoneAlternativo" value="#{LoginView.obj.telefoneAlternativo}"
                                  mask="(99) ?9-9999-9999" size="45" maxlength="11"/>
                     <p:message for="telefoneAlternativo"/>
 
-                    <p:outputLabel for="rg" value="RG: " />
-                    <p:inputText id="rg" value="#{ListarUsuariosView.objSalvar.rg}" size="45" maxlength="13"/>
-                    <p:message for="rg"/>
-
-                    <p:outputLabel for="cpf" value="CPF: " />
-                    <p:inputMask id="cpf" value="#{ListarUsuariosView.objSalvar.cpf}" 
-                                 mask="999-999-999.99" size="45" maxlength="11" />   
-                    <p:message for="cpf"/>
-
                     <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
-                    <p:calendar id="dataNascimento" value="#{ListarUsuariosView.objSalvar.dataNascimento}" pattern="dd/MM/yyyy" 
+                    <p:calendar id="dataNascimento" value="#{LoginView.obj.dataNascimento}" pattern="dd/MM/yyyy" 
                                 size="45" mask="true" locale="pt" required="true" requiredMessage="A data de nascimento é obrigatória." />
                     <p:message for="dataNascimento"/>
 
                     <p:outputLabel for="dataEntrada" value="Entrada na ITCP: " />
-                    <p:calendar id="dataEntrada" value="#{ListarUsuariosView.objSalvar.dataEntrada}" pattern="dd/MM/yyyy" 
+                    <p:calendar id="dataEntrada" value="#{LoginView.obj.dataEntrada}" pattern="dd/MM/yyyy" 
                                 mask="true" locale="pt" size="45" required="true" requiredMessage="A data de entrada é obrigatória." />
                     <p:message for="dataEntrada"/>
 
-                    <p:outputLabel for="cargoItcp" value="Cargo: " />
-                    <p:selectOneMenu id="cargoItcp" required="true" requiredMessage="O cargo na ITCP é obrigatório."
-                                     value="#{ListarUsuariosView.objSalvar.cargo}" style="width:435px"
-                                     rendered="#{InicioBean.usuarioLogado.cargo == 'Coordenador'}">
-                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{ListarUsuariosView.cargos}" />
-                    </p:selectOneMenu>
-                    <p:message for="cargoItcp"/>
-
                     <p:outputLabel for="sexo" value="Sexo: "/>
                     <p:selectOneRadio id="sexo" required="true" requiredMessage="O sexo é obrigatório."
-                                      value="#{ListarUsuariosView.objSalvar.sexo}">
+                                      value="#{LoginView.obj.sexo}">
                         <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
                         <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
                         <f:selectItem itemLabel="Outro" itemValue="Outro"/>
@@ -110,12 +90,10 @@
                 <p:outputLabel value="* Campos obrigatórios" />
 
                 <p:separator />
-                <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarUsuariosView.salvarView()}" 
-                                 icon="Save24-iconfinder" update=":frmEdicao, :frmListagemUsuarios:ListagemUsuarios" >
+                <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{LoginView.salvarCoordenador()}" 
+                                 icon="Save24-iconfinder" update="frmEdicao, frmLogar" >
                     <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                 </p:commandButton>
-
-                <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
 
                 <p:blockUI block="panel" trigger="btnSalvar">
                     CARREGANDO<br />
@@ -123,5 +101,5 @@
                 </p:blockUI>
             </p:panel>
         </h:form>
-    </p:dialog>
+    </h:body>
 </html>
