@@ -15,8 +15,7 @@ public class EnviarEmail {
 
     }
 
-    public void enviarEmail(String enviarPara, String assunto, String mensagem) {
-        try {
+    public void enviarEmail(String enviarPara, String assunto, String mensagem) throws EmailException{
             Email email = new SimpleEmail();
             email.setDebug(true);
             
@@ -33,8 +32,5 @@ public class EnviarEmail {
             email.send();
             
             System.out.println("Enviou");
-        } catch (EmailException e) {
-            System.out.println("ERRO" + e);
-        }
     }
 }

@@ -19,8 +19,8 @@
 
         <link type="text/css" rel="stylesheet" href="dot-luv/skin.css"/>
     </h:head>
-    
-    <h:body styleClass="loginPage">
+
+    <h:body style="background-image: url(resources/fotos/IfnmgNatureClara1920.jpg) !important">
         <h:form id="frmLogar">
 
             <p:dialog header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" resizable="false"
@@ -38,68 +38,77 @@
                 </h:panelGrid>
                 <p:commandButton value="Acessar" action="#{LoginView.logar()}" update="growl" icon="Key24-iconfinder" style="ui-button"
                                  styleClass="ui-button-text"/>
+
+                <p:commandButton value="Testa conexão" actionListener="#{LoginView.testeNet()}" 
+                                 icon="Save24-iconfinder" update="frmLogar"/>
             </p:dialog>
 
-            <p:panel id="panel" styleClass="corPanel" rendered="#{!LoginView.existeUser}" >
-                <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                    <p:outputLabel for="nome" value="Nome: " />
-                    <p:inputText id="nome" value="#{LoginView.obj.nome}" required="true"
-                                 requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
-                    <p:message for="nome"/>
+            <p:dialog visible="true" closable="false" draggable="false" resizable="false" 
+                      header="Cadastre o coordenador da Incubadora" rendered="#{!LoginView.existeUser}"  >
+                <p:panel id="panel" styleClass="corPanel" >
+                    <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                        <p:outputLabel for="nome" value="Nome: " />
+                        <p:inputText id="nome" value="#{LoginView.obj.nome}" required="true"
+                                     requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
+                        <p:message for="nome"/>
 
-                    <p:outputLabel for="e-mail" value="E-mail: " />  
-                    <p:inputText id="e-mail" value="#{LoginView.obj.email}" required="true"
-                                 requiredMessage="O e-mail é obrigatório." size="45" maxlength="50"/>
-                    <p:message for="e-mail"/>
+                        <p:outputLabel for="e-mail" value="E-mail: " />  
+                        <p:inputText id="e-mail" value="#{LoginView.obj.email}" required="true"
+                                     requiredMessage="O e-mail é obrigatório." size="45" maxlength="50"/>
+                        <p:message for="e-mail"/>
 
-                    <p:outputLabel for="endereco" value="Endereço: "/>
-                    <p:inputText id="endereco" value="#{LoginView.obj.endereco}" size="45" maxlength="50"/>
-                    <p:message for="endereco"/>
+                        <p:outputLabel for="telefone" value="Telefone: " />
+                        <p:inputMask id="telefone" value="#{LoginView.obj.telefone}"
+                                     mask="(99) ?9-9999-9999" size="45" maxlength="11" required="true"
+                                     requiredMessage="O telefone é obrigatório."/>
+                        <p:message for="telefone"/>
 
-                    <p:outputLabel for="telefone" value="Telefone: " />
-                    <p:inputMask id="telefone" value="#{LoginView.obj.telefone}"
-                                 mask="(99) ?9-9999-9999" size="45" maxlength="11" required="true"
-                                 requiredMessage="O telefone é obrigatório."/>
-                    <p:message for="telefone"/>
+                        <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
+                        <p:calendar id="dataNascimento" value="#{LoginView.obj.dataNascimento}" pattern="dd/MM/yyyy" 
+                                    size="45" mask="true" locale="pt" required="true" requiredMessage="A data de nascimento é obrigatória." />
+                        <p:message for="dataNascimento"/>
 
-                    <p:outputLabel value="Telefone alternativo: " />
-                    <p:inputMask id="telefoneAlternativo" value="#{LoginView.obj.telefoneAlternativo}"
-                                 mask="(99) ?9-9999-9999" size="45" maxlength="11"/>
-                    <p:message for="telefoneAlternativo"/>
+                        <p:outputLabel for="dataEntrada" value="Entrada na ITCP: " />
+                        <p:calendar id="dataEntrada" value="#{LoginView.obj.dataEntrada}" pattern="dd/MM/yyyy" 
+                                    mask="true" locale="pt" size="45" required="true" requiredMessage="A data de entrada é obrigatória." />
+                        <p:message for="dataEntrada"/>
 
-                    <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
-                    <p:calendar id="dataNascimento" value="#{LoginView.obj.dataNascimento}" pattern="dd/MM/yyyy" 
-                                size="45" mask="true" locale="pt" required="true" requiredMessage="A data de nascimento é obrigatória." />
-                    <p:message for="dataNascimento"/>
+                        <p:outputLabel for="sexo" value="Sexo: "/>
+                        <p:selectOneRadio id="sexo" required="true" requiredMessage="O sexo é obrigatório."
+                                          value="#{LoginView.obj.sexo}">
+                            <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                            <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
+                            <f:selectItem itemLabel="Outro" itemValue="Outro"/>
+                        </p:selectOneRadio>
+                        <p:message for="sexo" />
+                    </h:panelGrid>
 
-                    <p:outputLabel for="dataEntrada" value="Entrada na ITCP: " />
-                    <p:calendar id="dataEntrada" value="#{LoginView.obj.dataEntrada}" pattern="dd/MM/yyyy" 
-                                mask="true" locale="pt" size="45" required="true" requiredMessage="A data de entrada é obrigatória." />
-                    <p:message for="dataEntrada"/>
+                    <p:outputLabel value="* Campos obrigatórios" />
 
-                    <p:outputLabel for="sexo" value="Sexo: "/>
-                    <p:selectOneRadio id="sexo" required="true" requiredMessage="O sexo é obrigatório."
-                                      value="#{LoginView.obj.sexo}">
-                        <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
-                        <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
-                        <f:selectItem itemLabel="Outro" itemValue="Outro"/>
-                    </p:selectOneRadio>
-                    <p:message for="sexo" />
-                </h:panelGrid>
+                    <p:separator />
+                    <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{LoginView.salvarCoordenador()}" 
+                                     icon="Save24-iconfinder" update="frmLogar">
+                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                    </p:commandButton>
 
-                <p:outputLabel value="* Campos obrigatórios" />
+                    <p:commandLink   id="clWhy" >
+                        <p:graphicImage name="icons24/24Question.png" />
+                    </p:commandLink>
 
-                <p:separator />
-                <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{LoginView.salvarCoordenador()}" 
-                                 icon="Save24-iconfinder" update="frmEdicao, frmLogar" >
-                    <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
-                </p:commandButton>
+                    <p:tooltip for="clWhy" value="Porque tenho que fazer isso?"/>
 
-                <p:blockUI block="panel" trigger="btnSalvar">
-                    CARREGANDO<br />
-                    <p:graphicImage name="icons/LoadingBar.gif"/>
-                </p:blockUI>
-            </p:panel>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
+                    </p:confirmDialog>
+
+                    <p:blockUI block="panel" trigger="btnSalvar">
+                        <p:outputLabel value="SSSSSSexo: "/>
+                        CARREGANDO<br />
+                        <p:graphicImage name="fotos/LoadingBar.gif"/>
+                    </p:blockUI>
+                </p:panel>
+            </p:dialog>
         </h:form>
     </h:body>
 </html>

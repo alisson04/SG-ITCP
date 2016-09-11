@@ -47,6 +47,13 @@
     background-position: 0px 0x;
 }
 
+.Grafico24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Grafico24.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
 .Key24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Key24.png") !important;  
     height: 24px;
@@ -75,13 +82,6 @@
     background-position: 0px 0x;
 }
 
-.Grafico24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Grafico24.png") !important;
-    height: 24px;
-    width: 34px;
-    background-position: 0px 0x;
-}
-
 .PhoneList24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/PhoneList24.png") !important;
     height: 24px;
@@ -98,6 +98,13 @@
 
 .Parceria24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Parceria24.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Question24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Question.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;

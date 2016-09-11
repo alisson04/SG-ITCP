@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import org.apache.commons.mail.EmailException;
 
 /**
  *
@@ -37,13 +38,12 @@ public class UsuarioBean implements Serializable{
         return dao.buscarPorEmail(email);
     }
     
-    public void enviarEmail(String enviarPara, String assunto, String mensagem) {
+    public void enviarEmail(String enviarPara, String assunto, String mensagem) throws EmailException{
         System.out.println("__________BEAN(enviarEmail): Para:" + enviarPara);
         System.out.println("__________BEAN(enviarEmail): Assunto" + assunto);
         System.out.println("__________BEAN(enviarEmail): Mensagem" + mensagem);
         EnviarEmail enviarEmail = new EnviarEmail();
         enviarEmail.enviarEmail(enviarPara, assunto, mensagem);
-        System.out.println("__________BEAN(enviarEmail): Fim");
     }
     
     public Usuario buscarPorCodigoBean(Usuario user){

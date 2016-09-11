@@ -48,4 +48,9 @@ public abstract class MensagensGenericas implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, title, msg));
     }
+    
+    public void msgGrowlInfoCustomizavel(String title, String msg) {
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, title, msg));
+    }
 }
