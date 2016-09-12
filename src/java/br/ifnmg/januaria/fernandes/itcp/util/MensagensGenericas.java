@@ -11,46 +11,41 @@ import org.primefaces.context.RequestContext;
  */
 public abstract class MensagensGenericas implements Serializable {
 
-    //Mensagens de sucesso em GROW genéricas
-    public void msgGrowSaveGeneric() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("SUCESSO!", "Informações salvas. "));
-        RequestContext.getCurrentInstance().update("frmGrowl");
+    //Mensagens de GROW genéricas
+    public void msgGrowSaveGeneric() {//Salvar
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "SUCESSO!", "Informações salvas."));
     }
 
-    public void msgGrowDeleteGeneric() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("SUCESSO!", "Informações excluidas. "));
-        RequestContext.getCurrentInstance().update("frmGrowl");
+    public void msgGrowDeleteGeneric() {//Excluir
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "SUCESSO!", "Informações excluidas."));
     }
 
-    public void msgGrowUpdateGeneric() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("SUCESSO!", "Informações atualizadas. "));
-        RequestContext.getCurrentInstance().update("frmGrowl");
+    public void msgGrowUpdateGeneric() {//Atualizar
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "SUCESSO!", "Informações atualizadas."));
     }
 
-    //Mensagem de erro inesperado em painel genérica
-    public void msgPanelErroInesperadoGeneric() {
+    public void msgGrowlErroCustomizavel(String title, String msg) {//Erro customizavel
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, title, msg));
+    }
+
+    public void msgGrowlInfoCustomizavel(String title, String msg) {//Informação customizavel
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, title, msg));
+    }
+
+    //Mensagem PAINEL genérica
+    public void msgPanelErroInesperadoGeneric() {//Erro inesperado
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 "Erro inesperado", "Contate o administrador do sistema!");
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 
-    //Mensagem de erro em painel customizavel
-    public void msgPanelErroCustomizavel(String title, String msg) {
+    public void msgPanelErroCustomizavel(String title, String msg) {//Erro inesprado customizavel
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, title, msg);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
-    }
-
-    //Mensagem de erro Growlcustomizavel
-    public void msgGrowlErroCustomizavel(String title, String msg) {
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, title, msg));
-    }
-    
-    public void msgGrowlInfoCustomizavel(String title, String msg) {
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, title, msg));
     }
 }

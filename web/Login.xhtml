@@ -22,7 +22,6 @@
 
     <h:body style="background-image: url(resources/fotos/IfnmgNatureClara1920.jpg) !important">
         <h:form id="frmLogar">
-
             <p:dialog header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" resizable="false"
                       rendered="#{LoginView.existeUser}" >
                 <p:growl id="growl" showDetail="true" sticky="true" showSummary="false"/>
@@ -36,8 +35,8 @@
                     <p:password id="senhaUsr" value="#{LoginView.usuarioLogado.senha}"
                                 required="true" requiredMessage="Insira uma senha!" />
                 </h:panelGrid>
-                <p:commandButton value="Acessar" action="#{LoginView.logar()}" update="growl" icon="Key24-iconfinder" style="ui-button"
-                                 styleClass="ui-button-text"/>
+                <p:commandButton id="btnLogar" value="Acessar" action="#{LoginView.logar()}" update="growl" icon="Key24-iconfinder" 
+                                 style="ui-button" styleClass="ui-button-text"/>
 
                 <p:commandButton value="Testa conexão" actionListener="#{LoginView.testeNet()}" 
                                  icon="Save24-iconfinder" update="frmLogar"/>
@@ -87,28 +86,33 @@
 
                     <p:separator />
                     <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{LoginView.salvarCoordenador()}" 
-                                     icon="Save24-iconfinder" update="frmLogar">
-                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                                     icon="Save24-iconfinder" update="frmLogar" style="text-align: center">
+                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
                     </p:commandButton>
 
-                    <p:commandLink   id="clWhy" >
-                        <p:graphicImage name="icons24/24Question.png" />
-                    </p:commandLink>
+                    <p:tooltip for="clWhy" value="Porque tenho que fazer isso?" />
 
-                    <p:tooltip for="clWhy" value="Porque tenho que fazer isso?"/>
-
-                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
+                                     style="text-align:center;" >
                         <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
                         <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
                     </p:confirmDialog>
 
                     <p:blockUI block="panel" trigger="btnSalvar">
-                        <p:outputLabel value="SSSSSSexo: "/>
-                        CARREGANDO<br />
-                        <p:graphicImage name="fotos/LoadingBar.gif"/>
+                        SALVANDO<br />
+                        <p:graphicImage name="fotos/LoadingBar.gif" />
+                    </p:blockUI>
+
+                    <p:blockUI block="panelLogin" trigger="btnLogar">
+                        ACESSANDO<br />
+                        <p:graphicImage name="fotos/LoadingBar.gif" />
                     </p:blockUI>
                 </p:panel>
             </p:dialog>
+
+            <p:commandLink   id="clWhy" >
+                <p:graphicImage name="fotos/64Question.png" />
+            </p:commandLink>
         </h:form>
     </h:body>
 </html>

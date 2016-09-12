@@ -3,10 +3,13 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
+import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.util.Random;
+import javax.el.PropertyNotFoundException;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -22,7 +25,7 @@ import org.primefaces.context.RequestContext;
  */
 @ViewScoped
 @Named("LoginView")
-public class LoginView implements Serializable {
+public class LoginView extends MensagensGenericas implements Serializable {
 
     private Usuario usuarioLogado;
     private Usuario obj;
@@ -51,31 +54,22 @@ public class LoginView implements Serializable {
             obj.setSenha(DigestUtils.md5Hex(obj.getSenha()));//CRIPTOGRAFA A SENHA ALEATORIA
             usrBean.salvarBean(obj);//Salva o usuário
             obj = new Usuario();//Limpa o usuário salvo
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("SUCESSO!", "Informações salvas. "));
+            msgGrowSaveGeneric();//Mensagem de salvar
         } catch (EmailException ex) {
             System.out.println("ERRO no Endereço de e-mail");
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "A operação falhou", "Verifique o e-mail e a conexão com a internet ");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            msgPanelErroCustomizavel("Impossível salvar", "Verifique o e-mail e a conexão com a internet ");
         }
     }
 
     public void testeNet() {
         try {
-            java.net.URL mandarMail = new java.net.URL("https://www.google.com.br");
-            java.net.URLConnection conn = mandarMail.openConnection();
-            java.net.HttpURLConnection httpConn = (java.net.HttpURLConnection) conn;
-            httpConn.connect();
-            int x = httpConn.getResponseCode();
-            if (x == 200) {
+            InetAddress endereco = InetAddress.getByName("www.google.com");
+            int timeout = 30000;
+            if (endereco.isReachable(timeout)) {
+                System.out.println("Funcionou!");
                 FacesContext.getCurrentInstance().addMessage(null,
                         new FacesMessage(FacesMessage.SEVERITY_INFO, "SUCESSO", "Conexão bem sucedida!"));
             }
-        } catch (java.net.MalformedURLException urlmal) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erro de conexão", "Verifique sua conexão com a internet!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
         } catch (java.io.IOException ioexcp) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Erro de conexão", "Verifique sua conexão com a internet!");
@@ -88,15 +82,15 @@ public class LoginView implements Serializable {
             usuarioLogado = bean.logar(usuarioLogado);
             if (usuarioLogado != null) {
                 SessionUtil.setParam("USUARIOLogado", usuarioLogado);
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage("Successful", "Your message: "));
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/inicio.xhtml");
                 return "/sigitec/inicio.xhtml";
             } else {
-                System.out.println("__________BEAN(loginBean): Não encontrou o e-mail");
-                return null;
+                usuarioLogado = new Usuario();
+                msgGrowlErroCustomizavel("Erro", "E-mail ou senha incorretos!");
+                return "";
             }
         } catch (RuntimeException | IOException ex) {
+            msgPanelErroInesperadoGeneric();
             System.out.println("RuntimeException: " + ex);
             return null;
         }
