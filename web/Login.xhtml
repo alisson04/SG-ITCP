@@ -22,28 +22,33 @@
 
     <h:body style="background-image: url(resources/fotos/IfnmgNatureClara1920.jpg) !important">
         <h:form id="frmLogar">
-            <p:dialog header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" resizable="false"
-                      rendered="#{LoginView.existeUser}" >
-                <p:growl id="growl" showDetail="true" sticky="true" showSummary="false"/>
-                <h:panelGrid id="panelLogin" columns="2" cellpadding="5" style="ui-widget">
+            <p:growl showDetail="true" sticky="true" />
+
+            <p:dialog  header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" 
+                       resizable="false" rendered="#{LoginView.existeUserBd}" >
+                <h:panelGrid id="panelGridLogin" columns="3" cellpadding="5" style="ui-widget">
 
                     <p:outputLabel for="emailUsr" value="E-mail: " />
                     <p:inputText id="emailUsr" value="#{LoginView.usuarioLogado.email}"
                                  required="true" requiredMessage="Insira um e-mail!"/>
+                    <p:message for="emailUsr"/>
 
                     <p:outputLabel for="senhaUsr" value="Senha: " />
                     <p:password id="senhaUsr" value="#{LoginView.usuarioLogado.senha}"
                                 required="true" requiredMessage="Insira uma senha!" />
+                    <p:message for="senhaUsr"/>
                 </h:panelGrid>
-                <p:commandButton id="btnLogar" value="Acessar" action="#{LoginView.logar()}" update="growl" icon="Key24-iconfinder" 
-                                 style="ui-button" styleClass="ui-button-text"/>
+                <p:commandButton id="btnLogar" value="Acessar" actionListener="#{LoginView.logar()}" 
+                                 icon="Key24-iconfinder" style="ui-button" styleClass="ui-button-text" />
 
-                <p:commandButton value="Testa conexão" actionListener="#{LoginView.testeNet()}" 
-                                 icon="Save24-iconfinder" update="frmLogar"/>
+                <p:blockUI block="panelGridLogin" trigger="btnLogar">
+                    ACESSANDO<br />
+                    <!--<p:graphicImage name="fotos/circuloCarregando.gif" />-->
+                </p:blockUI>
             </p:dialog>
 
-            <p:dialog visible="true" closable="false" draggable="false" resizable="false" 
-                      header="Cadastre o coordenador da Incubadora" rendered="#{!LoginView.existeUser}"  >
+            <p:dialog closable="false" draggable="false" resizable="false" visible="true"
+                      header="Cadastre o coordenador da Incubadora" rendered="#{!LoginView.existeUserBd}"  >
                 <p:panel id="panel" styleClass="corPanel" >
                     <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                         <p:outputLabel for="nome" value="Nome: " />
@@ -86,11 +91,11 @@
 
                     <p:separator />
                     <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{LoginView.salvarCoordenador()}" 
-                                     icon="Save24-iconfinder" update="frmLogar" style="text-align: center">
+                                     icon="Save24-iconfinder" update="frmLogar">
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
                     </p:commandButton>
 
-                    <p:tooltip for="clWhy" value="Porque tenho que fazer isso?" />
+                    <p:commandButton value="UP" icon="Save24-iconfinder" update="frmLogar" />
 
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
                                      style="text-align:center;" >
@@ -98,21 +103,30 @@
                         <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
                     </p:confirmDialog>
 
-                    <p:blockUI block="panel" trigger="btnSalvar">
+                    <p:blockUI block="panel" trigger="btnSalvar" >
                         SALVANDO<br />
-                        <p:graphicImage name="fotos/LoadingBar.gif" />
-                    </p:blockUI>
-
-                    <p:blockUI block="panelLogin" trigger="btnLogar">
-                        ACESSANDO<br />
                         <p:graphicImage name="fotos/LoadingBar.gif" />
                     </p:blockUI>
                 </p:panel>
             </p:dialog>
 
-            <p:commandLink   id="clWhy" >
+            <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade"
+                      header="Por que preciso cadastrar um coordenador?" modal="true"
+                      resizable="false" draggable="false"   appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
+                <p:scrollPanel mode="native" style="width:435px;height:100px">
+                    <h:outputText value="O coordenador da incubadora é aquele que cadastra outros usuários no sistema,
+                                  por isso seu cadastro deve ser a primeira coisa a ser feita. Uma incubadora pode ter mais de um
+                                  coordenador, mas nunca pode ficar sem nenhum." />
+                </p:scrollPanel>
+            </p:dialog>
+
+            <p:commandLink   id="clWhy" update=":frmLogar:diaShowUsr" oncomplete="PF('carDialog').show()" 
+                             rendered="#{!LoginView.existeUserBd}">
                 <p:graphicImage name="fotos/64Question.png" />
             </p:commandLink>
+            <p:tooltip for="clWhy" value="Porque tenho que fazer isso?" />
         </h:form>
+
+
     </h:body>
 </html>

@@ -4,6 +4,7 @@ import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MembroEmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.MembroEmpreendimento;
+import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,7 +23,7 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean(name = "ListarMembrosEptsView")
 @ViewScoped
-public class ListarMembrosEptsView implements Serializable {
+public class ListarMembrosEptsView extends MensagensGenericas implements Serializable {
 
     MembroEmpreendimentoBean bean = new MembroEmpreendimentoBean();
     EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
@@ -42,9 +43,7 @@ public class ListarMembrosEptsView implements Serializable {
             listaMembrosEmpreendimentos = bean.listarBean();
             
         } catch (RuntimeException ex) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Erro inesperado", "Erro ao tentar listar os membros, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            msgPanelErroInesperadoGeneric();
         }
     }
     
@@ -60,8 +59,7 @@ public class ListarMembrosEptsView implements Serializable {
     public void excluirMembroView(){
         bean.excluirBean(membroEmpreendimentoSelecionado);
         membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
-        FacesMessage msg = new FacesMessage("Exclusão realizada com sucesso!");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        msgGrowDeleteGeneric();
     }
     
     public void salvarView() {
@@ -73,9 +71,7 @@ public class ListarMembrosEptsView implements Serializable {
             context.execute("PF('dlgEdicaoPronta').show()");
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Erro inesperado", "Erro ao tentar editar o empreendimento, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            msgPanelErroInesperadoGeneric();
         }
     }
 

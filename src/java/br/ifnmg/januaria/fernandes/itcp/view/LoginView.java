@@ -15,6 +15,12 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
@@ -31,17 +37,20 @@ public class LoginView extends MensagensGenericas implements Serializable {
     private Usuario obj;
     private LoginBean bean;
     private UsuarioBean usrBean;
-    private boolean existeUser;
-
+    private boolean existeUserBd;
+    private boolean existeUserLogado;
+    
     public LoginView() {
         bean = new LoginBean();
         obj = new Usuario();
         usuarioLogado = new Usuario();
-        usrBean = new UsuarioBean();
-        existeUser = true;
 
+        //Verifica se existe user no banco de dados
+        usrBean = new UsuarioBean();
+        existeUserBd = true;
         if (usrBean.contarLinhasBean() == 0) {
-            existeUser = false;
+            System.out.println("Não há usuários cadastrados");
+            existeUserBd = false;
         }
     }
 
@@ -54,26 +63,12 @@ public class LoginView extends MensagensGenericas implements Serializable {
             obj.setSenha(DigestUtils.md5Hex(obj.getSenha()));//CRIPTOGRAFA A SENHA ALEATORIA
             usrBean.salvarBean(obj);//Salva o usuário
             obj = new Usuario();//Limpa o usuário salvo
+            existeUserBd = true;//Atualiza variável para dizer q já existe um user no BD
             msgGrowSaveGeneric();//Mensagem de salvar
+            msgGrowlInfoCustomizavel("Senha enviada", "A senha foi enviada ao seu e-mail!");
         } catch (EmailException ex) {
             System.out.println("ERRO no Endereço de e-mail");
             msgPanelErroCustomizavel("Impossível salvar", "Verifique o e-mail e a conexão com a internet ");
-        }
-    }
-
-    public void testeNet() {
-        try {
-            InetAddress endereco = InetAddress.getByName("www.google.com");
-            int timeout = 30000;
-            if (endereco.isReachable(timeout)) {
-                System.out.println("Funcionou!");
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "SUCESSO", "Conexão bem sucedida!"));
-            }
-        } catch (java.io.IOException ioexcp) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erro de conexão", "Verifique sua conexão com a internet!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
 
@@ -122,8 +117,8 @@ public class LoginView extends MensagensGenericas implements Serializable {
         this.usuarioLogado = usuarioLogado;
     }
 
-    public boolean isExisteUser() {
-        return existeUser;
+    public boolean isExisteUserBd() {
+        return existeUserBd;
     }
 
     public Usuario getObj() {
@@ -132,5 +127,13 @@ public class LoginView extends MensagensGenericas implements Serializable {
 
     public void setObj(Usuario obj) {
         this.obj = obj;
+    }
+
+    public boolean isExisteUserLogado() {
+        return existeUserLogado;
+    }
+
+    public void setExisteUserLogado(boolean existeUserLogado) {
+        this.existeUserLogado = existeUserLogado;
     }
 }

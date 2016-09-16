@@ -54,6 +54,10 @@
     </script>
 
     <h:body>
+        <h:form id="frmMsgGenerico">
+            <p:growl showDetail="true" sticky="true" autoUpdate="true" />
+        </h:form>
+        
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="100" >
                 <p:graphicImage name="fotos/IfnmgTopoMenor.jpg" width="100%" height="100%" styleClass="semMargin"/>
@@ -65,7 +69,7 @@
                 </p:outputPanel>
             </p:layoutUnit>
 
-            <p:layoutUnit position="center">
+            <p:layoutUnit position="center">                
                 <h:form id="frmModeloGeral">
                     <p:menubar style="ui-button" styleClass="textoMenuPrincipal semMargin">
                         <p:menuitem value="Início" icon="Home24-iconfinder" 
@@ -91,7 +95,7 @@
                             <p:menuitem value="Atividades" icon="Ideia24-iconfinder" 
                                         action="/listarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
                         </p:submenu>
-                        
+
                         <p:menuitem value="Acompanhamentos" icon="Parceria24-iconfinder" 
                                     action="/listarAcompanhamentosEpt.xhtml?faces-redirect=true"/>
 

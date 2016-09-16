@@ -15,7 +15,6 @@
 
         <ui:define name="conteudo">
             <h:form id="frmListagemMembrosEpts" >
-                <p:growl id="msgs" showDetail="true" showSummary="false" />
                 <p:panel id="pnlListagem" styleClass="corPanel" header="Membros de empreendimentos no sistema:" >
                     <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento encontrado." 
                                  value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
@@ -68,7 +67,8 @@
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
                                              process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
                                              actionListener="#{ListarMembrosEptsView.transfereObj()}"/>
-                            <p:commandButton id="btnExcluirMembro" value="Excluir" icon="Cross24-iconfinder" update=":frmListagemMembrosEpts"
+                            <p:commandButton id="btnExcluirMembro" value="Excluir" icon="Cross24-iconfinder" 
+                                             update=":frmListagemMembrosEpts"
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
                                              actionListener="#{ListarMembrosEptsView.excluirMembroView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
