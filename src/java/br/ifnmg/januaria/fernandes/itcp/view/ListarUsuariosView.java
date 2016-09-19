@@ -10,10 +10,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.primefaces.context.RequestContext;
 
@@ -55,7 +53,7 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
 
     public void salvarView() {
         try {
-            if ((bean.buscarPorEmailBean(objSalvar.getEmail()) == null)) {
+            if ((bean.buscarPorEmailBean(objSalvar) == null)) {
                 objSalvar.setStatusSistema("Ativo");//SETA O STATUS
                 objSalvar.setSenha(gerarSenhaAleatoria());//GERA A SENHA ALEATORIA
                 bean.enviarEmail(objSalvar.getEmail(), "Sistema Sigitec", "Sua senha é: " + objSalvar.getSenha());//Manda o emaill

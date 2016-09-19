@@ -34,8 +34,8 @@ public class UsuarioBean implements Serializable{
         return dao.listarTodosUsuarios();
     }
     
-    public Usuario buscarPorEmailBean(String email){
-        return dao.buscarPorEmail(email);
+    public Usuario buscarPorEmailBean(Usuario user){
+        return dao.buscarPorEmail(user);
     }
     
     public void enviarEmail(String enviarPara, String assunto, String mensagem) throws EmailException{

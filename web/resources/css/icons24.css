@@ -40,6 +40,13 @@
     background-position: 0px 0x;
 }
 
+.Email24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Email.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
 .Find24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Find.png") !important;
     height: 24px;

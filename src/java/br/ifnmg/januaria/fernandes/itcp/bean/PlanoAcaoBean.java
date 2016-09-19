@@ -2,17 +2,16 @@ package br.ifnmg.januaria.fernandes.itcp.bean;
 
 import br.ifnmg.januaria.fernandes.itcp.dao.PlanoAcaoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
-import org.primefaces.context.RequestContext;
 /**
  *
  * @author alisson
  */
-@ManagedBean
 @SessionScoped
+@Named
 public class PlanoAcaoBean implements Serializable{
     private PlanoAcaoDAO dao;
     private PlanoAcao planoEditar = null;//deve receber null

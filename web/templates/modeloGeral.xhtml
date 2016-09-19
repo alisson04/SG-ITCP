@@ -55,7 +55,7 @@
 
     <h:body>
         <h:form id="frmMsgGenerico">
-            <p:growl showDetail="true" sticky="true" autoUpdate="true" />
+            <p:growl showDetail="true" sticky="true" />
         </h:form>
         
         <p:layout fullPage="true">
@@ -113,7 +113,7 @@
                                 <p:menuitem value="Mudar senha" icon="Key16-iconfinder" oncomplete="PF('UserDia').show()"
                                             update=":frmModeloGeral:outPaMostrarUsr" />
                                 <p:menuitem value=" Sair" icon="Exit16-iconfinder"
-                                            action="#{loginBean.sair}"/>
+                                            action="#{LoginView.sair()}"/>
                             </p:slideMenu>
                         </f:facet>
                     </p:menubar>

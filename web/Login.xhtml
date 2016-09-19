@@ -20,10 +20,12 @@
         <link type="text/css" rel="stylesheet" href="dot-luv/skin.css"/>
     </h:head>
 
-    <h:body style="background-image: url(resources/fotos/IfnmgNatureClara1920.jpg) !important">
-        <h:form id="frmLogar">
+    <h:body style="background-image: url(resources/fotos/IfnmgNatureClara1920.jpg) !important">        
+        <h:form id="frmMsgGenerico">
             <p:growl showDetail="true" sticky="true" />
-
+        </h:form>
+        
+        <h:form id="frmLogar">
             <p:dialog  header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" 
                        resizable="false" rendered="#{LoginView.existeUserBd}" >
                 <h:panelGrid id="panelGridLogin" columns="3" cellpadding="5" style="ui-widget">
@@ -39,7 +41,14 @@
                     <p:message for="senhaUsr"/>
                 </h:panelGrid>
                 <p:commandButton id="btnLogar" value="Acessar" actionListener="#{LoginView.logar()}" 
-                                 icon="Key24-iconfinder" style="ui-button" styleClass="ui-button-text" />
+                                 icon="Key24-iconfinder" style="ui-button" styleClass="ui-button-text" update="frmLogar" />
+                
+                <p:spacer width="2l5" />
+
+                <p:commandLink   id="clReenviarSenha" update=":frmLogar:diaReenviarSenha" value="Esqueci minha senha"
+                                 oncomplete="PF('wVarReenviarSenhaDl').show()" >
+                    <!--<p:graphicImage name="fotos/64Question.png" />-->
+                </p:commandLink>
 
                 <p:blockUI block="panelGridLogin" trigger="btnLogar">
                     ACESSANDO<br />
@@ -91,7 +100,7 @@
 
                     <p:separator />
                     <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{LoginView.salvarCoordenador()}" 
-                                     icon="Save24-iconfinder" update="frmLogar">
+                                     icon="Save24-iconfinder" update="frmLogar" >
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
                     </p:commandButton>
 
@@ -118,6 +127,22 @@
                                   por isso seu cadastro deve ser a primeira coisa a ser feita. Uma incubadora pode ter mais de um
                                   coordenador, mas nunca pode ficar sem nenhum." />
                 </p:scrollPanel>
+            </p:dialog>
+
+            <p:dialog id="diaReenviarSenha" widgetVar="wVarReenviarSenhaDl" showEffect="fade" hideEffect="fade"
+                      header="Reenviar minha senha" modal="true"
+                      resizable="false" draggable="false"   appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
+
+                <p:outputLabel for="emailReen" value="E-mail: " />  
+                <p:inputText id="emailReen" value="#{LoginView.obj.email}" required="true"
+                             requiredMessage="O e-mail é obrigatório." size="45" maxlength="50"/>
+                <p:message for="emailReen"/>
+
+                <p:separator />
+                <p:commandButton id="btnReenviarSenha" value="Reenviar senha" actionListener="#{LoginView.salvarCoordenador()}" 
+                                 icon="Email24-iconfinder" update="frmLogar">
+                    <p:confirm header="ATENÇÃO!" message="Reenviar senha para esse e-mail?" icon="Information32-iconfinder" />
+                </p:commandButton>
             </p:dialog>
 
             <p:commandLink   id="clWhy" update=":frmLogar:diaShowUsr" oncomplete="PF('carDialog').show()" 

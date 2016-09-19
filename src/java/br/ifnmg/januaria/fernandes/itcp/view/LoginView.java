@@ -7,23 +7,12 @@ import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.InetAddress;
 import java.util.Random;
-import javax.el.PropertyNotFoundException;
-import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.mail.internet.AddressException;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.mail.EmailException;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -57,11 +46,13 @@ public class LoginView extends MensagensGenericas implements Serializable {
     public void salvarCoordenador() {
         try {
             obj.setStatusSistema("Ativo");//SETA O STATUS
-            obj.setSenha(gerarSenhaAleatoria());//GERA A SENHA ALEATORIA e SETA
             obj.setCargo("Coordenador");//SETA O CARGO
-            usrBean.enviarEmail(obj.getEmail(), "Sistema Sigitec", "Sua senha é: " + obj.getSenha());//Manda o emaill
+            obj.setSenha(gerarSenhaAleatoria());//GERA A SENHA ALEATORIA e SETA
+            String senha = obj.getSenha();//Salva a senha na variavel
             obj.setSenha(DigestUtils.md5Hex(obj.getSenha()));//CRIPTOGRAFA A SENHA ALEATORIA
             usrBean.salvarBean(obj);//Salva o usuário
+            usrBean.enviarEmail(obj.getEmail(), "Sistema Sigitec", "Sua senha é: " + senha);//Manda o emaill
+            senha = ""; //Limpa a senha
             obj = new Usuario();//Limpa o usuário salvo
             existeUserBd = true;//Atualiza variável para dizer q já existe um user no BD
             msgGrowSaveGeneric();//Mensagem de salvar
@@ -70,6 +61,11 @@ public class LoginView extends MensagensGenericas implements Serializable {
             System.out.println("ERRO no Endereço de e-mail");
             msgPanelErroCustomizavel("Impossível salvar", "Verifique o e-mail e a conexão com a internet ");
         }
+    }
+    public void reenviarSenha(){
+        usrBean.buscarPorEmailBean(obj);
+        
+        String senha = obj.getSenha();//Salva a senha na variavel
     }
 
     public String logar() {
@@ -90,6 +86,8 @@ public class LoginView extends MensagensGenericas implements Serializable {
             return null;
         }
     }
+    
+    
 
     public String sair() {
         return bean.sair(usuarioLogado);

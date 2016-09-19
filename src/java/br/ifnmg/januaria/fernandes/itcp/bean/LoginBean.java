@@ -8,7 +8,8 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,7 +19,8 @@ import org.apache.commons.codec.digest.DigestUtils;
  *
  * @author alisson
  */
-@ManagedBean
+@Named
+@SessionScoped
 public class LoginBean implements Serializable {
 
     private UsuarioDAO usuarioDAO;
@@ -42,7 +44,8 @@ public class LoginBean implements Serializable {
             HttpSession session = (HttpSession) request.getSession();
             usuarioLogado = (Usuario) session.getAttribute("USUARIOLogado");
 
-            System.out.println("EM SAIR " + usuarioLogado.getEmail());
+            System.out.println("User com ID: " + usuarioLogado.getId()+ " saiu!");
+            System.out.println("User com e-mail: " + usuarioLogado.getEmail() + " saiu!");
             usuarioLogado = null;
             SessionUtil.remove("USUARIOLogado");
             FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/Login.xhtml");

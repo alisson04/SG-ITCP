@@ -34,11 +34,11 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         excluirGenerico(usr);
     }
 
-    public Usuario buscarPorEmail(String email) {
+    public Usuario buscarPorEmail(Usuario user) {
         List<Usuario> listaUsuarios;
         Usuario usr;
 
-        listaUsuarios = listarObjsFiltradosGenerico("Usuario", "email", email);
+        listaUsuarios = listarObjsFiltradosGenerico("Usuario", "email", user.getEmail());
         if (listaUsuarios.size() > 0) {
             usr = listaUsuarios.get(0);
             System.out.println("__________UsarioDAO(buscarPorEmail): Número de usuários com esse e-mail: " + listaUsuarios.size());
