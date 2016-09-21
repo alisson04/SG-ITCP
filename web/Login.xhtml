@@ -24,29 +24,29 @@
         <h:form id="frmMsgGenerico">
             <p:growl showDetail="true" sticky="true" />
         </h:form>
-        
+
         <h:form id="frmLogar">
             <p:dialog  header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" 
-                       resizable="false" rendered="#{LoginView.existeUserBd}" >
+                       resizable="false" rendered="#{LoginView.existeUserBd}" widgetVar="tes">
                 <h:panelGrid id="panelGridLogin" columns="3" cellpadding="5" style="ui-widget">
 
                     <p:outputLabel for="emailUsr" value="E-mail: " />
                     <p:inputText id="emailUsr" value="#{LoginView.usuarioLogado.email}"
-                                 required="true" requiredMessage="Insira um e-mail!"/>
+                                 required="true" requiredMessage="Insira um e-mail!" size="25" maxlength="45" />
                     <p:message for="emailUsr"/>
 
                     <p:outputLabel for="senhaUsr" value="Senha: " />
                     <p:password id="senhaUsr" value="#{LoginView.usuarioLogado.senha}"
-                                required="true" requiredMessage="Insira uma senha!" />
+                                required="true" requiredMessage="Insira uma senha!" size="25" maxlength="45" />
                     <p:message for="senhaUsr"/>
                 </h:panelGrid>
                 <p:commandButton id="btnLogar" value="Acessar" actionListener="#{LoginView.logar()}" 
                                  icon="Key24-iconfinder" style="ui-button" styleClass="ui-button-text" update="frmLogar" />
-                
+
                 <p:spacer width="2l5" />
 
-                <p:commandLink   id="clReenviarSenha" update=":frmLogar:diaReenviarSenha" value="Esqueci minha senha"
-                                 oncomplete="PF('wVarReenviarSenhaDl').show()" >
+                <p:commandLink   id="clReenviarSenha" update="frmLogar" value="Esqueci minha senha" type="button" immediate="true"
+                                 action="/EsqueciMinhaSenha.xhtml?faces-redirect=true" >
                     <!--<p:graphicImage name="fotos/64Question.png" />-->
                 </p:commandLink>
 
@@ -67,8 +67,7 @@
 
                         <p:outputLabel for="e-mail" value="E-mail: " />  
                         <p:inputText id="e-mail" value="#{LoginView.obj.email}" required="true"
-                                     requiredMessage="O e-mail é obrigatório." size="45" maxlength="50"/>
-                        <p:message for="e-mail"/>
+                                     requiredMessage="O e-mail é obrigatório." size="45" maxlength="45" />
 
                         <p:outputLabel for="telefone" value="Telefone: " />
                         <p:inputMask id="telefone" value="#{LoginView.obj.telefone}"
@@ -127,22 +126,6 @@
                                   por isso seu cadastro deve ser a primeira coisa a ser feita. Uma incubadora pode ter mais de um
                                   coordenador, mas nunca pode ficar sem nenhum." />
                 </p:scrollPanel>
-            </p:dialog>
-
-            <p:dialog id="diaReenviarSenha" widgetVar="wVarReenviarSenhaDl" showEffect="fade" hideEffect="fade"
-                      header="Reenviar minha senha" modal="true"
-                      resizable="false" draggable="false"   appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
-
-                <p:outputLabel for="emailReen" value="E-mail: " />  
-                <p:inputText id="emailReen" value="#{LoginView.obj.email}" required="true"
-                             requiredMessage="O e-mail é obrigatório." size="45" maxlength="50"/>
-                <p:message for="emailReen"/>
-
-                <p:separator />
-                <p:commandButton id="btnReenviarSenha" value="Reenviar senha" actionListener="#{LoginView.salvarCoordenador()}" 
-                                 icon="Email24-iconfinder" update="frmLogar">
-                    <p:confirm header="ATENÇÃO!" message="Reenviar senha para esse e-mail?" icon="Information32-iconfinder" />
-                </p:commandButton>
             </p:dialog>
 
             <p:commandLink   id="clWhy" update=":frmLogar:diaShowUsr" oncomplete="PF('carDialog').show()" 

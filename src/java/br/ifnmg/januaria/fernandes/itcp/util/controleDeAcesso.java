@@ -1,6 +1,5 @@
 package br.ifnmg.januaria.fernandes.itcp.util;
 
-import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.io.IOException;
 import java.util.List;
@@ -36,8 +35,9 @@ public class controleDeAcesso implements Filter {
         HttpSession session = req.getSession();
 
         if ((req.getServletPath().endsWith("Login.xhtml"))
+                || (req.getServletPath().endsWith("EsqueciMinhaSenha.xhtml"))
                 || (req.getServletPath().contains("/javax.faces.resource"))
-                || session.getAttribute("USUARIOLogado") != null) {
+                || session.getAttribute("USUARIOLogado") != null) {//Acessando login OU é componente OU esta logado
             if (session.getAttribute("USUARIOLogado") != null) {
                 if (!"Coordenador".equals(((Usuario) session.getAttribute("USUARIOLogado")).getCargo())
                         && req.getServletPath().endsWith("CadastroUsuario.xhtml")) {

@@ -8,6 +8,7 @@ import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Random;
+import javax.el.PropertyNotFoundException;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -28,7 +29,7 @@ public class LoginView extends MensagensGenericas implements Serializable {
     private UsuarioBean usrBean;
     private boolean existeUserBd;
     private boolean existeUserLogado;
-    
+
     public LoginView() {
         bean = new LoginBean();
         obj = new Usuario();
@@ -48,24 +49,38 @@ public class LoginView extends MensagensGenericas implements Serializable {
             obj.setStatusSistema("Ativo");//SETA O STATUS
             obj.setCargo("Coordenador");//SETA O CARGO
             obj.setSenha(gerarSenhaAleatoria());//GERA A SENHA ALEATORIA e SETA
-            String senha = obj.getSenha();//Salva a senha na variavel
+            usrBean.enviarEmail(obj.getEmail(), "Sistema Sigitec", "Sua senha é: " + obj.getSenha());//Manda o emaill
             obj.setSenha(DigestUtils.md5Hex(obj.getSenha()));//CRIPTOGRAFA A SENHA ALEATORIA
             usrBean.salvarBean(obj);//Salva o usuário
-            usrBean.enviarEmail(obj.getEmail(), "Sistema Sigitec", "Sua senha é: " + senha);//Manda o emaill
-            senha = ""; //Limpa a senha
             obj = new Usuario();//Limpa o usuário salvo
             existeUserBd = true;//Atualiza variável para dizer q já existe um user no BD
             msgGrowSaveGeneric();//Mensagem de salvar
             msgGrowlInfoCustomizavel("Senha enviada", "A senha foi enviada ao seu e-mail!");
         } catch (EmailException ex) {
-            System.out.println("ERRO no Endereço de e-mail");
+            System.out.println("ERRO no Endereço de e-mail: " + ex);
             msgPanelErroCustomizavel("Impossível salvar", "Verifique o e-mail e a conexão com a internet ");
         }
     }
-    public void reenviarSenha(){
-        usrBean.buscarPorEmailBean(obj);
-        
-        String senha = obj.getSenha();//Salva a senha na variavel
+
+    public void gerarNovaSenha() {
+        try {
+            System.out.println("TESTE--------------------");
+            obj = usrBean.buscarPorEmailBean(obj);//Busca o user no BD
+            obj.setSenha(gerarSenhaAleatoria());//GERA A SENHA ALEATORIA e SETA
+            usrBean.enviarEmail(obj.getEmail(), "Sistema Sigitec", "Sua nova senha é: " + obj.getSenha());//Manda o emaill
+            obj.setSenha(DigestUtils.md5Hex(obj.getSenha()));//CRIPTOGRAFA A SENHA ALEATORIA
+            usrBean.salvarBean(obj);//Salva o usuário
+            obj = new Usuario();//Limpa o usuário salvo
+            msgGrowlInfoCustomizavel("Nova senha", "A nova senha foi enviada ao seu e-mail!");
+        } catch (EmailException ex) {
+            System.out.println("ERRO no Endereço de e-mail: " + ex);
+            obj = new Usuario();//Limpa o usuário salvo
+            msgPanelErroCustomizavel("Impossível salvar", "Verifique o e-mail e a conexão com a internet ");
+        } catch (NullPointerException | PropertyNotFoundException ex){
+            System.out.println("ERRO no obj: " + ex);
+            obj = new Usuario();//Limpa o usuário salvo
+            msgPanelErroCustomizavel("E-mail desconhecido", "Esse e-mail não esta cadastrado no sistema!");
+        }
     }
 
     public String logar() {
@@ -86,8 +101,6 @@ public class LoginView extends MensagensGenericas implements Serializable {
             return null;
         }
     }
-    
-    
 
     public String sair() {
         return bean.sair(usuarioLogado);
