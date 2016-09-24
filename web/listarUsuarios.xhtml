@@ -43,7 +43,8 @@
                                              disabled="#{ListarUsuariosView.objSelecionado == null}"/>
                             <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicao"
                                              process="ListagemUsuarios" oncomplete="PF('wVarEditarDialog').show()"
-                                             actionListener="#{ListarUsuariosView.reiniciaObj()}"/>                            
+                                             actionListener="#{ListarUsuariosView.reiniciaObj()}"/>
+                            
                             <p:commandButton id="btnInativarusr" actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}"
                                              value="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.objSelecionado)}" 
                                              icon="Refresh24-iconfinder" disabled="#{ListarUsuariosView.objSelecionado == null}" 
@@ -191,7 +192,7 @@
 
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />
-                            <p:graphicImage name="icons/LoadingBar.gif"/>
+                            <p:graphicImage name="fotos/LoadingBar.gif"/>
                         </p:blockUI>
                     </p:panel>
                 </h:form>

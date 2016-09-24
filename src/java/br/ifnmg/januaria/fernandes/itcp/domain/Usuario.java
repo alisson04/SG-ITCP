@@ -65,10 +65,10 @@ public class Usuario implements Serializable, EntityConverter {
     @Column(name = "dataNascimento")
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "rg")
     private String rg;
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "cpf")
     private String cpf;
     @Basic(optional = false)
@@ -94,7 +94,7 @@ public class Usuario implements Serializable, EntityConverter {
     @Size(min = 1, max = 45)
     @Column(name = "statusSistema")
     private String statusSistema;
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "endereco")
     private String endereco;
     

@@ -9,7 +9,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
                 <p:panel styleClass="corPanel" header="Acompanhamentos cadastrados:" >
-                    <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhuma visita cadastrada." 
+                    <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhum acompanhamento cadastrado!." 
                                  value="#{ListarAcompanhamentosView.listaAcompanhamentosEpt}" 
                                  filteredValue="#{ListarAcompanhamentosView.listaAcompanhamentosFiltrados}" 
                                  selectionMode="single" selection="#{ListarAcompanhamentosView.objSelecionado}" rowKey="#{cursor.id}" 

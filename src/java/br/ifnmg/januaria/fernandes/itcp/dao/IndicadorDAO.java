@@ -24,4 +24,8 @@ public class IndicadorDAO extends DaoGenerico<Indicador> {
     public void excluirDao(Indicador obj){
         excluirGenerico(obj);
     }
+    
+    public void iniciarIndicadoresDAO(List<Indicador> listaSalvar){
+            salvarListaGenerico(listaSalvar);
+    }
 }

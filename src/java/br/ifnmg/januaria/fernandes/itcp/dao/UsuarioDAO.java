@@ -35,19 +35,15 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
     }
 
     public Usuario buscarPorEmail(Usuario user) {
-        List<Usuario> listaUsuarios;
-        Usuario usr;
-
-        listaUsuarios = listarObjsFiltradosGenerico("Usuario", "email", user.getEmail());
-        if (listaUsuarios.size() > 0) {
-            usr = listaUsuarios.get(0);
-            System.out.println("__________UsarioDAO(buscarPorEmail): Número de usuários com esse e-mail: " + listaUsuarios.size());
-        } else {
-            usr = null;
-            System.out.println("__________UsarioDAO(buscarPorEmail): não a usuários com esse e-mail ");
-        }
-
-        return usr;
+        return listarSingleObjGenerico("Usuario", "email", user.getEmail());
+    }
+    
+    public Usuario buscarPorCpfDAO(Usuario user) {
+        return listarSingleObjGenerico("Usuario", "cpf", user.getCpf());
+    }
+    
+    public Usuario buscarPorRgDAO(Usuario user) {
+        return listarSingleObjGenerico("Usuario", "rg", user.getRg());
     }
 
     public Usuario buscarPorCodigo(Usuario usr) {

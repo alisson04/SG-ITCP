@@ -11,10 +11,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -25,15 +23,26 @@ import org.primefaces.context.RequestContext;
 @ViewScoped
 public class ListarMembrosEptsView extends MensagensGenericas implements Serializable {
 
-    MembroEmpreendimentoBean bean = new MembroEmpreendimentoBean();
-    EmpreendimentoBean empreendimentoBean = new EmpreendimentoBean();
+    private MembroEmpreendimentoBean bean;
+    private EmpreendimentoBean empreendimentoBean;
     private MembroEmpreendimento membroEmpreendimentoSelecionado;
-    private MembroEmpreendimento objSalvar = new MembroEmpreendimento();
+    private MembroEmpreendimento objSalvar;
     private List<MembroEmpreendimento> listaMembrosEmpreendimentos;
     private List<MembroEmpreendimento> listaMembrosEmpreendimentosFiltrados;
     private List<Empreendimento> listaEmpreendimentos;
+    private boolean existeEptBd;
 
     public ListarMembrosEptsView() {
+        bean = new MembroEmpreendimentoBean();
+        empreendimentoBean = new EmpreendimentoBean();
+        objSalvar = new MembroEmpreendimento();
+        
+        //Verifica se existe Empreendimento no banco de dados
+        existeEptBd = true;
+        if (empreendimentoBean.contarLinhasBean() == 0) {
+            System.out.println("Não há EES cadastrados");
+            existeEptBd = false;
+        }
     }
 
     public void ListarMembrosEpts() {
@@ -123,5 +132,13 @@ public class ListarMembrosEptsView extends MensagensGenericas implements Seriali
 
     public void setObjSalvar(MembroEmpreendimento objSalvar) {
         this.objSalvar = objSalvar;
+    }
+
+    public boolean isExisteEptBd() {
+        return existeEptBd;
+    }
+
+    public void setExisteEptBd(boolean existeEptBd) {
+        this.existeEptBd = existeEptBd;
     }
 }

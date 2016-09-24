@@ -48,6 +48,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
         if (obj == null) {
             obj = new HorarioTrabalho();
             obj.setUsuario(usrLogado);
+            obj.setIdUsuarioFk(usrLogado.getId());
         } else {
             verificaHorario();
         }

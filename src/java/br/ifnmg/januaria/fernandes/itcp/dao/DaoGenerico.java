@@ -13,7 +13,7 @@ import javax.validation.ConstraintViolationException;
 public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
 
     private EntityManager em;
-    
+
     //Construtor
     public DaoGenerico() {
     }
@@ -26,14 +26,36 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             objeto = em.merge(objeto);
             em.getTransaction().commit();
             return objeto;
-        } catch (Exception x) {           
+        } catch (Exception x) {
             em.getTransaction().rollback();
             throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
         } finally {
             em.close();
         }
     }
-    
+
+    //Salvar uma lista de objetos no BD
+    public void salvarListaGenerico(List<TipoClasse> listaSalvar) {
+        em = gerarEntityManager();
+        try {
+            em.getTransaction().begin();
+
+            System.out.println("TAMANHO lista: " + listaSalvar.size());
+            for (int i = 0; i < listaSalvar.size(); i++) {
+                System.out.println("LISTA: " + i);
+                em.persist(listaSalvar.get(i));
+                System.out.println("LISTA: " + i);
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception x) {
+            em.getTransaction().rollback();
+            throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
+        } finally {
+            em.close();
+        }
+    }
+
     //Excluir um objeto do BD
     public void excluirGenerico(TipoClasse objeto) {
         em = gerarEntityManager();
@@ -46,12 +68,32 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             System.out.println("__________DAOGenerico(SalvarGenerico) - getConstraintViolations():");
             System.out.println(x.getConstraintViolations());
             System.out.println("__________DAOGenerico(SalvarGenerico) - getConstraintViolations():");
-            
+
             em.getTransaction().rollback();
             throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
         } finally {
             em.close();
         }
+    }
+
+    //Pegar um objeto por String
+    public TipoClasse listarSingleObjGenerico(String classe, String atributoClasse, String paramComparacao) {
+        em = gerarEntityManager();
+        TipoClasse objResultado;
+
+        try {
+            em.getTransaction().begin();
+            Query consulta = em.createQuery("SELECT o FROM " + classe + " o WHERE o." + atributoClasse + " = :paramComparacao");
+            consulta.setParameter("paramComparacao", paramComparacao);
+
+            objResultado = (TipoClasse) consulta.getSingleResult();//Pega a lista de usuarios
+        } catch (Exception e) {
+            objResultado = null;
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+        return objResultado;
     }
 
     //Lista todos os objetos de uma classe no BD
@@ -93,7 +135,7 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
         }
         return listaObjsFiltrados;
     }
-    
+
     //Lista todos os objetos de uma classe no BD filtrados por um parametro INT
     public List<TipoClasse> listarObjsFiltradosIntGenerico(String classe, String atributoDaClasse, int paramComparacao) {
         em = gerarEntityManager();
@@ -106,7 +148,7 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             consulta.setParameter("paramComparacao", paramComparacao);
 
             listaObjsFiltrados = consulta.getResultList();//Pega a lista de usuarios
-            System.out.println("__________DAOGenerico(listarObjsFiltradosIntGenerico): Numero de objs com id " + paramComparacao 
+            System.out.println("__________DAOGenerico(listarObjsFiltradosIntGenerico): Numero de objs com id " + paramComparacao
                     + " na lista: " + listaObjsFiltrados.size());
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -116,19 +158,19 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
         }
         return listaObjsFiltrados;
     }
-    
+
     //Conta linha de uma tabela no BD
     public long contarLinhasGenerico(String classe) {
         em = gerarEntityManager();
         try {
             em.getTransaction().begin();
             Query consulta = em.createQuery("SELECT COUNT(o.id) FROM " + classe + " o ");
-            long numLinhas = (long)consulta.getSingleResult();//Pega a lista de usuarios
+            long numLinhas = (long) consulta.getSingleResult();//Pega a lista de usuarios
             System.out.println("__________DAOGenerico(contarLinhasGenerico) número de linhas: " + numLinhas);
             return numLinhas;
         } catch (ConstraintViolationException x) {
             System.out.println("__________DAOGenerico(contarLinhasGenerico) - getConstraintViolations():");
-            System.out.println(x.getConstraintViolations());            
+            System.out.println(x.getConstraintViolations());
             em.getTransaction().rollback();
             throw new RuntimeException("__________DAOGenerico(contarLinhasGenerico): Erro ao salvar objetos: ", x);
         } finally {

@@ -32,4 +32,8 @@ public class IndicadorBean implements Serializable{
     public void excluirBean(Indicador obj){
         dao.excluirDao(obj);
     }
+    
+    public void iniciarIndicadoresBean(List<Indicador> listaSalvar){
+        dao.iniciarIndicadoresDAO(listaSalvar);
+    }
 }

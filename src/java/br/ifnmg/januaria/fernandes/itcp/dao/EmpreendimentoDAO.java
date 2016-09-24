@@ -27,4 +27,8 @@ public class EmpreendimentoDAO extends DaoGenerico<Empreendimento> {
     public List<Empreendimento> listarTodosEptsDao() {
         return listarObjsGenerico("Empreendimento");
     }
+    
+    public long contarLinhasDAO(){
+        return contarLinhasGenerico("Empreendimento");
+    }
 }

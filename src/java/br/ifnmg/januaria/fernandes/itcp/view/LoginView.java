@@ -1,8 +1,10 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.IndicadorBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
+import br.ifnmg.januaria.fernandes.itcp.util.IniciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;
@@ -43,6 +45,14 @@ public class LoginView extends MensagensGenericas implements Serializable {
             existeUserBd = false;
         }
     }
+    
+    public void teste(){
+        IndicadorBean b = new IndicadorBean();
+        IniciadorIndicadores ini = new IniciadorIndicadores();
+        
+        b.iniciarIndicadoresBean(ini.gerarIndicadores());
+        msgGrowlInfoCustomizavel("SUCESSO", "Teste bem sucedido!");
+    }
 
     public void salvarCoordenador() {
         try {
@@ -58,7 +68,7 @@ public class LoginView extends MensagensGenericas implements Serializable {
             msgGrowlInfoCustomizavel("Senha enviada", "A senha foi enviada ao seu e-mail!");
         } catch (EmailException ex) {
             System.out.println("ERRO no Endereço de e-mail: " + ex);
-            msgPanelErroCustomizavel("Impossível salvar", "Verifique o e-mail e a conexão com a internet ");
+            msgPanelErroCustomizavel("Impossível salvar", "Verifique a validade do e-mail e a conexão com a internet ");
         }
     }
 

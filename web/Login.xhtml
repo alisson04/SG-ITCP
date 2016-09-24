@@ -19,6 +19,35 @@
 
         <link type="text/css" rel="stylesheet" href="dot-luv/skin.css"/>
     </h:head>
+    
+    <script>
+        PrimeFaces.locales['pt'] = {
+            closeText: 'Fechar',
+            prevText: 'Anterior',
+            nextText: 'Próximo',
+            currentText: 'Hoje',
+            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+            weekHeader: 'Semana',
+            firstDay: 0,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Horas',
+            timeText: 'Tempo',
+            hourText: 'Hora',
+            minuteText: 'Minuto',
+            secondText: 'Segundo',
+            ampm: false,
+            month: 'Mês',
+            week: 'Semana',
+            day: 'Dia',
+            allDayText: 'Todo o Dia'
+        };
+    </script>
 
     <h:body style="background-image: url(resources/fotos/IfnmgNatureClara1920.jpg) !important">        
         <h:form id="frmMsgGenerico">
@@ -42,7 +71,7 @@
                 </h:panelGrid>
                 <p:commandButton id="btnLogar" value="Acessar" actionListener="#{LoginView.logar()}" 
                                  icon="Key24-iconfinder" style="ui-button" styleClass="ui-button-text" update="frmLogar" />
-
+                
                 <p:spacer width="2l5" />
 
                 <p:commandLink   id="clReenviarSenha" update="frmLogar" value="Esqueci minha senha" type="button" immediate="true"
@@ -68,6 +97,7 @@
                         <p:outputLabel for="e-mail" value="E-mail: " />  
                         <p:inputText id="e-mail" value="#{LoginView.obj.email}" required="true"
                                      requiredMessage="O e-mail é obrigatório." size="45" maxlength="45" />
+                        <p:message for="e-mail"/>
 
                         <p:outputLabel for="telefone" value="Telefone: " />
                         <p:inputMask id="telefone" value="#{LoginView.obj.telefone}"
@@ -102,8 +132,6 @@
                                      icon="Save24-iconfinder" update="frmLogar" >
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
                     </p:commandButton>
-
-                    <p:commandButton value="UP" icon="Save24-iconfinder" update="frmLogar" />
 
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
                                      style="text-align:center;" >

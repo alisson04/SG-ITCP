@@ -38,6 +38,14 @@ public class UsuarioBean implements Serializable{
         return dao.buscarPorEmail(user);
     }
     
+    public Usuario buscarPorCpfBean(Usuario user){
+        return dao.buscarPorCpfDAO(user);
+    }
+    
+    public Usuario buscarPorRgBean(Usuario user){
+        return dao.buscarPorRgDAO(user);
+    }
+    
     public void enviarEmail(String enviarPara, String assunto, String mensagem) throws EmailException{
         System.out.println("__________BEAN(enviarEmail): Para:" + enviarPara);
         System.out.println("__________BEAN(enviarEmail): Assunto" + assunto);

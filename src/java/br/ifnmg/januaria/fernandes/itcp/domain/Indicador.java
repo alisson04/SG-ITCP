@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
@@ -39,12 +34,10 @@ public class Indicador implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nome")
     private String nome;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "categoria")
     private String categoria;
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "eixo")

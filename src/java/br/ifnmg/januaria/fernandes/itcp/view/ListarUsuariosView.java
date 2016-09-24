@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
 
 @ViewScoped
@@ -53,7 +54,8 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
 
     public void salvarView() {
         try {
-            if ((bean.buscarPorEmailBean(objSalvar) == null)) {
+            if ((bean.buscarPorEmailBean(objSalvar) == null)) {//Verifica se o e-mail já esta cadastrado
+
                 objSalvar.setStatusSistema("Ativo");//SETA O STATUS
                 objSalvar.setSenha(gerarSenhaAleatoria());//GERA A SENHA ALEATORIA
                 bean.enviarEmail(objSalvar.getEmail(), "Sistema Sigitec", "Sua senha é: " + objSalvar.getSenha());//Manda o emaill
@@ -67,7 +69,10 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
             } else {
                 msgPanelErroCustomizavel("Erro no e-mail", "Este e-mail já esta cadastrado no sistema!");
             }
-        } catch (Exception ex) {
+        } catch(EmailException ex) {
+            msgPanelErroCustomizavel("Impossível salvar", "Verifique a validade do e-mail e a conexão com a internet ");
+        }
+        catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             msgPanelErroInesperadoGeneric();
         }

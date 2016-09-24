@@ -15,8 +15,9 @@
 
         <ui:define name="conteudo">
             <h:form id="frmListagemMembrosEpts" >
-                <p:panel id="pnlListagem" styleClass="corPanel" header="Membros de empreendimentos no sistema:" >
-                    <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento encontrado." 
+                <p:panel id="pnlListagem" styleClass="corPanel" header="Membros de empreendimentos no sistema" 
+                         rendered="#{ListarMembrosEptsView.existeEptBd}" >
+                    <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento cadastrado!." 
                                  value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
                                  filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}" selectionMode="single" 
                                  selection="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado}" 
@@ -62,7 +63,9 @@
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}"/>
                             <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicao"
                                              process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
-                                             actionListener="#{ListarMembrosEptsView.reiniciaObj()}"/>
+                                             actionListener="#{ListarMembrosEptsView.reiniciaObj()}" />
+
+
                             <p:commandButton id="btnEditarMembro" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
                                              process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
@@ -118,6 +121,21 @@
                         </p:outputPanel>
                     </p:dialog>
                 </p:panel>
+
+                <p:dialog  header="Cadastre um empreendimento primeiro" visible="true" closable="false" draggable="false" 
+                           resizable="false" rendered="#{!ListarMembrosEptsView.existeEptBd}" style="text-align:center;" >
+
+                    <br/>
+                    <p:outputLabel value="Antes de trabalhar os membros dos empreendimentos, cadastre algum primeiro!" />
+
+                    <p:separator/>
+                    
+                    <br/>
+                    <p:commandButton   value="Ir para pagina de empreendimentos" type="button" immediate="true"
+                                     action="/listarEmpreendimento.xhtml?faces-redirect=true" >
+                        <!--<p:graphicImage name="fotos/64Question.png" />-->
+                    </p:commandButton>
+                </p:dialog>
             </h:form>
 
             <p:dialog id="dlgEditar" header="Membro de empreedndimento" widgetVar="wVarDlgEditar" showEffect="fade" hideEffect="fade" 
@@ -129,7 +147,7 @@
                             <p:inputText id="nome" value="#{ListarMembrosEptsView.objSalvar.nome}" 
                                          required="true" requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
                             <p:message for="nome" />
-                            
+
                             <p:outputLabel for="email" value="E-mail: " />
                             <p:inputText id="email" value="#{ListarMembrosEptsView.objSalvar.email}" size="45" maxlength="45"/>
                             <p:message for="email" />
