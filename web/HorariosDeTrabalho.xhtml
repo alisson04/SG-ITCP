@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/templates/modeloGeral.xhtml">
+
+        <ui:define name="conteudo">
+            <style type="text/css">
+                .AlturaLinhas {
+                    width: 700px;
+                }
+            </style>
+
+            <h:form id="frmHorarios" >
+                <p:panelGrid columns="2" styleClass="semBorda" >
+                    <p:panel header="Todos os horários" >
+                        <p:dataTable emptyMessage="Nenhum horário cadastrado." value="#{HorarioTrabalhoView.listaHorarios}" 
+                                     filteredValue="#{HorarioTrabalhoView.listaHorariosFiltrados}" style="text-align: center"
+                                     var="horarioCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                            <p:column headerText="Nome" filterBy="#{horarioCursor.usuario.nome}"
+                                      sortBy="#{horarioCursor.usuario.nome}" filterMatchMode="contains">
+                                <h:outputText value="#{horarioCursor.usuario.nome}"/>
+                            </p:column>
+
+                            <p:column headerText="Domingo" >
+                                <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.domIni)} 
+                                              - #{HorarioTrabalhoView.conveteData(horarioCursor.domFim)}"/>
+                            </p:column>
+
+                            <p:column headerText="Segunda" >
+                                <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.segIni)} 
+                                              - #{HorarioTrabalhoView.conveteData(horarioCursor.segFim)}"/>
+                            </p:column>
+
+                            <p:column headerText="Terça" >
+                                <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.terIni)} 
+                                              - #{HorarioTrabalhoView.conveteData(horarioCursor.terFim)}"/>
+                            </p:column>
+
+                            <p:column headerText="Quarta" >
+                                <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.quaIni)} 
+                                              - #{HorarioTrabalhoView.conveteData(horarioCursor.quaFim)}"/>
+                            </p:column>
+
+                            <p:column headerText="Quinta" filterMatchMode="contains">
+                                <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.quiIni)} 
+                                              - #{HorarioTrabalhoView.conveteData(horarioCursor.quiFim)}"/>
+                            </p:column>
+
+                            <p:column headerText="Sexta" >
+                                <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.sexIni)} 
+                                              - #{HorarioTrabalhoView.conveteData(horarioCursor.sexFim)}"/>
+                            </p:column>
+
+                            <p:column headerText="Sábado" >
+                                <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.sabIni)} 
+                                              - #{HorarioTrabalhoView.conveteData(horarioCursor.sabFim)}"/>
+                            </p:column>
+
+                            <p:column headerText="Total" >
+                                <h:outputText value="#{HorarioTrabalhoView.geraHoras(horarioCursor)}" />
+                            </p:column>
+
+                            <f:facet name="footer">
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+
+                    <p:panel header="Meus horários" toggleable="true" collapsed="true">
+                        <h:panelGrid columns="4" >
+                            <p:outputLabel value="Domingo:" />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.domIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+                            <p:outputLabel value="até " />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.domFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+
+                            <p:outputLabel value="Segunda:" />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.segIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+                            <p:outputLabel value="até " />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.segFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+
+                            <p:outputLabel value="Terça:" />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.terIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+                            <p:outputLabel value="até " />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.terFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+
+                            <p:outputLabel value="Quarta:" />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.quaIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+                            <p:outputLabel value="até " />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.quaFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+
+                            <p:outputLabel value="Quinta:" />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.quiIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+                            <p:outputLabel value="até " />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.quiFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+
+                            <p:outputLabel value="Sexta:" />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.sexIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+                            <p:outputLabel value="até " />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.sexFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+
+                            <p:outputLabel value="Sábado" />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.sabIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+                            <p:outputLabel value="até " />
+                            <p:calendar value="#{HorarioTrabalhoView.obj.sabFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                        size="4"/>
+                        </h:panelGrid>
+
+                        <h:outputText value="Horas por semana: " />
+
+                        <h:outputText value="#{HorarioTrabalhoView.geraHoras(HorarioTrabalhoView.obj)}" />
+
+                        <p:separator/>
+                        <p:commandButton icon="Save24-iconfinder" value="Salvar" update="frmHorarios" 
+                                         actionListener="#{HorarioTrabalhoView.salvar()}"/>
+                    </p:panel>
+                </p:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
