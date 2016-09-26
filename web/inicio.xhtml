@@ -15,7 +15,65 @@
             </style>
 
             <h:form id="frmCadastro" >
-                <p:tabView dynamic="true" cache="true">
+                <p:tabView id="tvGeral" dynamic="true" cache="true"> 
+                    <p:tab title="Minhas atividades">
+                        <p:dataTable emptyMessage="Nenhuma atividade cadastrada." value="#{inicioView.listaAtividades}" 
+                                     filteredValue="#{inicioView.listaAtividadesFiltradas}" style="text-align: center"
+                                     var="atividadeCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+
+                            <p:column headerText="Nome" filterBy="#{atividadeCursor.nome}"
+                                      sortBy="#{atividadeCursor.nome}" filterMatchMode="contains">
+                                <h:outputText value="#{atividadeCursor.nome}"/>
+                            </p:column>
+
+                            <p:column headerText="Data início" filterBy="#{inicioView.conveteData(atividadeCursor.dataInicio)}" 
+                                      filterMatchMode="contains">
+                                <h:outputText value="#{inicioView.conveteData(atividadeCursor.dataInicio)}" />
+                            </p:column>
+
+                            <p:column headerText="Data fim" filterBy="#{inicioView.conveteData(atividadeCursor.dataFim)}" 
+                                      filterMatchMode="contains">
+                                <h:outputText value="#{inicioView.conveteData(atividadeCursor.dataFim)}" />
+                            </p:column>
+
+                            <p:column headerText="Situação"  filterBy="#{atividadeCursor.status}" filterMatchMode="exact">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                        <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Em espera" itemValue="Em espera" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Em execução" itemValue="Em execução" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Executada" itemValue="Executada" noSelectionOption="true" />
+
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <h:outputText value="#{atividadeCursor.status}"/>
+                            </p:column>
+
+                            <p:column headerText="Mudar situação para:" style="text-align: center" >
+                                <p:commandButton title="Não executada" update="frmCadastro" 
+                                                 rendered="#{atividadeCursor.status != 'Não executada'}"
+                                                 actionListener="#{inicioView.mudaAtvParaNaoExecutada(atividadeCursor)}" 
+                                                 icon="Cross24-iconfinder" > 
+                                    </p:commandButton>
+
+                                <p:commandButton title="Em execução" style="ui-button" update="frmCadastro"
+                                                 rendered="#{atividadeCursor.status != 'Em execução'}"
+                                                 actionListener="#{inicioView.mudaAtvParaEmExecução(atividadeCursor)}"
+                                                  icon="profile-iconfinder" > 
+                                </p:commandButton>
+                                
+                                <p:commandButton title="Executada" style="ui-button" update="frmCadastro"
+                                                 rendered="#{atividadeCursor.status != 'Executada'}"
+                                                 actionListener="#{inicioView.mudaAtvParaExecutada(atividadeCursor)}"
+                                                 icon="BlackCheck24-iconfinder" >
+                                </p:commandButton>
+                            </p:column>
+
+                            <f:facet name="footer">
+                            </f:facet>
+                        </p:dataTable>
+                    </p:tab>
+
                     <p:tab title="Calendário de atividades da incubadora">
                         <h:panelGrid columnClasses="AlturaLinhas" >
                             <p:schedule id="schedule" value="#{inicioView.eventModel}" widgetVar="myschedule" timeZone="GMT+2" 
@@ -35,124 +93,6 @@
                                 <h:outputText value="#{inicioView.conveteData(inicioView.event.endDate)}" />
                             </h:panelGrid>
                         </p:dialog>
-                    </p:tab>
-
-                    <p:tab title="Horários de trabalho">
-                        <p:panelGrid columns="2" styleClass="semBorda">
-                            <p:panel header="Todos os horários" >
-                                <p:dataTable emptyMessage="Nenhum horário cadastrado." value="#{HorarioTrabalhoView.listaHorarios}" 
-                                             filteredValue="#{HorarioTrabalhoView.listaHorariosFiltrados}" style="text-align: center"
-                                             var="horarioCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
-                                    <p:column headerText="Nome" filterBy="#{horarioCursor.usuario.nome}"
-                                              sortBy="#{horarioCursor.usuario.nome}" filterMatchMode="contains">
-                                        <h:outputText value="#{horarioCursor.usuario.nome}"/>
-                                    </p:column>
-                    
-                                    <p:column headerText="Domingo" >
-                                        <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.domIni)} 
-                                                      - #{HorarioTrabalhoView.conveteData(horarioCursor.domFim)}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Segunda" >
-                                        <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.segIni)} 
-                                                      - #{HorarioTrabalhoView.conveteData(horarioCursor.segFim)}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Terça" >
-                                        <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.terIni)} 
-                                                      - #{HorarioTrabalhoView.conveteData(horarioCursor.terFim)}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Quarta" >
-                                        <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.quaIni)} 
-                                                      - #{HorarioTrabalhoView.conveteData(horarioCursor.quaFim)}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Quinta" filterMatchMode="contains">
-                                        <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.quiIni)} 
-                                                      - #{HorarioTrabalhoView.conveteData(horarioCursor.quiFim)}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Sexta" >
-                                        <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.sexIni)} 
-                                                      - #{HorarioTrabalhoView.conveteData(horarioCursor.sexFim)}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Sábado" >
-                                        <h:outputText value="#{HorarioTrabalhoView.conveteData(horarioCursor.sabIni)} 
-                                                      - #{HorarioTrabalhoView.conveteData(horarioCursor.sabFim)}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Total" >
-                                        <h:outputText value="#{HorarioTrabalhoView.geraHoras(horarioCursor)}" />
-                                    </p:column>
-
-                                    <f:facet name="footer">
-                                    </f:facet>
-                                </p:dataTable>
-                            </p:panel>
-
-                            <p:panel header="Meus horários" toggleable="true" collapsed="true">
-                                <h:panelGrid columns="4" >
-                                    <p:outputLabel value="Domingo:" />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.domIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-                                    <p:outputLabel value="até " />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.domFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-
-                                    <p:outputLabel value="Segunda:" />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.segIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-                                    <p:outputLabel value="até " />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.segFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-
-                                    <p:outputLabel value="Terça:" />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.terIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-                                    <p:outputLabel value="até " />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.terFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-
-                                    <p:outputLabel value="Quarta:" />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.quaIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-                                    <p:outputLabel value="até " />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.quaFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-
-                                    <p:outputLabel value="Quinta:" />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.quiIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-                                    <p:outputLabel value="até " />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.quiFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-
-                                    <p:outputLabel value="Sexta:" />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.sexIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-                                    <p:outputLabel value="até " />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.sexFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-
-                                    <p:outputLabel value="Sábado" />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.sabIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-                                    <p:outputLabel value="até " />
-                                    <p:calendar value="#{HorarioTrabalhoView.obj.sabFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                                size="4"/>
-                                </h:panelGrid>
-
-                                <h:outputText value="Horas por semana: " />
-
-                                <h:outputText value="#{HorarioTrabalhoView.geraHoras(HorarioTrabalhoView.obj)}" />
-
-                                <p:separator/>
-                                <p:commandButton icon="Save24-iconfinder" value="Salvar" update="frmCadastro" 
-                                                 actionListener="#{HorarioTrabalhoView.salvar()}"/>
-                            </p:panel>
-                        </p:panelGrid>
                     </p:tab>
                 </p:tabView>
             </h:form>
