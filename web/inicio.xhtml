@@ -17,7 +17,7 @@
             <h:form id="frmCadastro" >
                 <p:tabView id="tvGeral" dynamic="true" cache="true"> 
                     <p:tab title="Minhas atividades">
-                        <p:dataTable emptyMessage="Nenhuma atividade cadastrada." value="#{inicioView.listaAtividades}" 
+                        <p:dataTable emptyMessage="Nenhuma atividade cadastrada." value="#{inicioView.listaAtividades}"
                                      filteredValue="#{inicioView.listaAtividadesFiltradas}" style="text-align: center"
                                      var="atividadeCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
@@ -40,10 +40,9 @@
                                 <f:facet name="filter">
                                     <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                         <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItem itemLabel="Em espera" itemValue="Em espera" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Não executada" itemValue="Não executada" noSelectionOption="true" />
                                         <f:selectItem itemLabel="Em execução" itemValue="Em execução" noSelectionOption="true" />
                                         <f:selectItem itemLabel="Executada" itemValue="Executada" noSelectionOption="true" />
-
                                     </p:selectOneMenu>
                                 </f:facet>
                                 <h:outputText value="#{atividadeCursor.status}"/>
@@ -77,13 +76,14 @@
                     <p:tab title="Calendário de atividades da incubadora">
                         <h:panelGrid columnClasses="AlturaLinhas" >
                             <p:schedule id="schedule" value="#{inicioView.eventModel}" widgetVar="myschedule" timeZone="GMT+2" 
-                                        locale="pt">
+                                        locale="pt" tooltip="true" >
                                 <p:ajax event="eventSelect" listener="#{inicioView.onEventSelect}" update="eventDetails" 
                                         oncomplete="PF('eventDialog').show();" />
                             </p:schedule>
                         </h:panelGrid>
 
-                        <p:dialog widgetVar="eventDialog" header="Detalhes da atividade" showEffect="clip" hideEffect="clip" >
+                        <p:dialog widgetVar="eventDialog" header="Detalhes da atividade" showEffect="clip" hideEffect="clip" 
+                                  closeOnEscape="true" resizable="false">
                             <h:panelGrid id="eventDetails" columns="2">
                                 <h:outputText value="Nome: " />
                                 <h:outputText value="#{inicioView.event.title}" />

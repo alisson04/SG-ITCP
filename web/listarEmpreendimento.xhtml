@@ -178,15 +178,15 @@
                             <p:message for="situacaoEpt"/>
                         </h:panelGrid>
 
-                        <p:outputLabel value="* Campos obrigatórios" />
-
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />
                             <p:graphicImage name="fotos/LoadingBar.gif"/>
                         </p:blockUI>
                     </p:panel>
-                    
-                    <p:separator/>
+
+                    <p:outputLabel value="* Campos obrigatórios" />
+
+                    <p:separator/>                    
                     <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarEmpreendimentosView.salvarView()}" 
                                      icon="Save24-iconfinder" update=":frmEdicaoEpt, :frmListagemEmpreendimentos:dtListagemEmpreendimentos" >
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>

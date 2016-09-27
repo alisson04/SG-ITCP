@@ -4,7 +4,7 @@ import br.ifnmg.januaria.fernandes.itcp.bean.IndicadorBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
-import br.ifnmg.januaria.fernandes.itcp.util.IniciadorIndicadores;
+import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;
@@ -48,9 +48,9 @@ public class LoginView extends MensagensGenericas implements Serializable {
     
     public void teste(){
         IndicadorBean b = new IndicadorBean();
-        IniciadorIndicadores ini = new IniciadorIndicadores();
+        GerenciadorIndicadores ini = new GerenciadorIndicadores();
         
-        b.iniciarIndicadoresBean(ini.gerarIndicadores());
+        b.iniciarIndicadoresBean(ini.listarIndicadores());
         msgGrowlInfoCustomizavel("SUCESSO", "Teste bem sucedido!");
     }
 

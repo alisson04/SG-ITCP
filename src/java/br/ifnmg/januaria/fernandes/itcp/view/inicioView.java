@@ -23,6 +23,7 @@ import org.primefaces.model.ScheduleModel;
 @ManagedBean(name = "inicioView")
 @ViewScoped
 public class inicioView extends MensagensGenericas implements Serializable {
+
     //VARIAVEIS
     private ScheduleModel eventModel;
     private ScheduleEvent event;
@@ -38,8 +39,13 @@ public class inicioView extends MensagensGenericas implements Serializable {
         bean = new AtividadePlanejadaBean();
         listaAtividades = bean.listarBean();
 
+        //Adiciona atividade ao calendário
         for (int i = 0; i < listaAtividades.size(); i++) {
-            eventModel.addEvent(new DefaultScheduleEvent(listaAtividades.get(i).getNome(), listaAtividades.get(i).getDataInicio(), listaAtividades.get(i).getDataFim()));
+            eventModel.addEvent(new DefaultScheduleEvent(
+                    listaAtividades.get(i).getNome(),
+                    listaAtividades.get(i).getDataInicio(),
+                    listaAtividades.get(i).getDataFim(),
+                    "corDialog"));
         }
     }
 
@@ -52,25 +58,25 @@ public class inicioView extends MensagensGenericas implements Serializable {
             return "";
         }
     }
-    
-    public void mudaAtvParaNaoExecutada(AtividadePlanejada at){//Muda Status da Atividade para "Não executada"
+
+    public void mudaAtvParaNaoExecutada(AtividadePlanejada at) {//Muda Status da Atividade para "Não executada"
         at.setStatus("Não executada");
         bean.salvarBean(at);
         msgGrowSaveGeneric();
     }
-    
-    public void mudaAtvParaEmExecução(AtividadePlanejada at){//Muda Status da Atividade para "Em execução"
+
+    public void mudaAtvParaEmExecução(AtividadePlanejada at) {//Muda Status da Atividade para "Em execução"
         at.setStatus("Em execução");
         bean.salvarBean(at);
         msgGrowSaveGeneric();
     }
-    
-    public void mudaAtvParaExecutada(AtividadePlanejada at){//Muda Status da Atividade para "Executada"
+
+    public void mudaAtvParaExecutada(AtividadePlanejada at) {//Muda Status da Atividade para "Executada"
         at.setStatus("Executada");
         bean.salvarBean(at);
         msgGrowSaveGeneric();
     }
-    
+
     public void onEventSelect(SelectEvent selectEvent) {
         event = (ScheduleEvent) selectEvent.getObject();
     }
