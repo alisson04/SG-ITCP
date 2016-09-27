@@ -3,6 +3,10 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 import br.ifnmg.januaria.fernandes.itcp.bean.IndicadorBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
+import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
+import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoIndicadorDAO;
+import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
+import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
@@ -45,14 +49,19 @@ public class LoginView extends MensagensGenericas implements Serializable {
             existeUserBd = false;
         }
     }
-    
+    /*
     public void teste(){
-        IndicadorBean b = new IndicadorBean();
-        GerenciadorIndicadores ini = new GerenciadorIndicadores();
+        EmpreendimentoIndicadorDAO dao = new EmpreendimentoIndicadorDAO();
         
-        b.iniciarIndicadoresBean(ini.listarIndicadores());
-        msgGrowlInfoCustomizavel("SUCESSO", "Teste bem sucedido!");
-    }
+        EmpreendimentoIndicador i = new EmpreendimentoIndicador();
+        EmpreendimentoIndicadorPK ip = new EmpreendimentoIndicadorPK();
+        
+        ip.setIdEmpreendimentoFk(1);
+        ip.setIdIndicadorFk(1);
+        
+        i.setEmpreendimentoIndicadorPK(ip);
+        dao.salvarDAO(i);
+    }**/
 
     public void salvarCoordenador() {
         try {

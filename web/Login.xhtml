@@ -71,9 +71,7 @@
                         <p:message for="senhaUsr"/>
                     </h:panelGrid>
                     <p:commandButton id="btnLogar" value="Acessar" actionListener="#{LoginView.logar()}" 
-                                     icon="Key24-iconfinder" style="ui-button" styleClass="ui-button-text" update="frmLogar" />
-
-                    <p:spacer width="2l5" />
+                                     style="ui-button" styleClass="ui-button-text" update="frmLogar" />
 
                     <p:commandLink   id="clReenviarSenha" update="frmLogar" value="Esqueci minha senha" type="button" immediate="true"
                                      action="/EsqueciMinhaSenha.xhtml?faces-redirect=true" >
