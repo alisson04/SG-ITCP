@@ -1,6 +1,5 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
-import br.ifnmg.januaria.fernandes.itcp.bean.IndicadorBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
@@ -49,19 +48,6 @@ public class LoginView extends MensagensGenericas implements Serializable {
             existeUserBd = false;
         }
     }
-    /*
-    public void teste(){
-        EmpreendimentoIndicadorDAO dao = new EmpreendimentoIndicadorDAO();
-        
-        EmpreendimentoIndicador i = new EmpreendimentoIndicador();
-        EmpreendimentoIndicadorPK ip = new EmpreendimentoIndicadorPK();
-        
-        ip.setIdEmpreendimentoFk(1);
-        ip.setIdIndicadorFk(1);
-        
-        i.setEmpreendimentoIndicadorPK(ip);
-        dao.salvarDAO(i);
-    }**/
 
     public void salvarCoordenador() {
         try {

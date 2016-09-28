@@ -72,6 +72,9 @@
                     </h:panelGrid>
                     <p:commandButton id="btnLogar" value="Acessar" actionListener="#{LoginView.logar()}" 
                                      style="ui-button" styleClass="ui-button-text" update="frmLogar" />
+                    
+                    <p:commandButton value="Acessar" actionListener="#{IndicadoresMaturidadeView.salvarView()}" 
+                                     />
 
                     <p:commandLink   id="clReenviarSenha" update="frmLogar" value="Esqueci minha senha" type="button" immediate="true"
                                      action="/EsqueciMinhaSenha.xhtml?faces-redirect=true" >
