@@ -1,9 +1,13 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
+import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
+import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
+import br.ifnmg.januaria.fernandes.itcp.domain.Teste;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TransactionRequiredException;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
@@ -37,7 +41,7 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
     }
 
     //Salvar uma lista de objetos no BD
-    public void salvarListaGenerico(List<TipoClasse> listaSalvar) {
+    public void salvarListaGenerico(List<TipoClasse> listaSalvar) throws TransactionRequiredException {
         em = gerarEntityManager();
         try {
             em.getTransaction().begin();
@@ -48,6 +52,16 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
                 em.persist(listaSalvar.get(i));
                 System.out.println("LISTA: " + i);
             }
+            /*
+            for (int i = 1; i <= 4; i++) {
+                EmpreendimentoIndicadorPK point = new EmpreendimentoIndicadorPK(i, i);
+                EmpreendimentoIndicador ind = new EmpreendimentoIndicador(point);
+                em.merge(ind);
+                if ((i % 100) == 0) {
+                    em.flush();
+                    em.clear();
+                }
+            }*/
 
             em.getTransaction().commit();
         } catch (Exception x) {
@@ -149,7 +163,7 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             Query consulta = em.createQuery("SELECT o FROM " + classe + " o WHERE o." + atributoDaClasse + " = :paramComparacao");
             consulta.setParameter("paramComparacao", paramComparacao);
 
-            listaObjsFiltrados = consulta.getResultList();//Pega a lista de usuarios
+            listaObjsFiltrados = consulta.getResultList();//Pega a lista de objetos
             System.out.println("__________DAOGenerico(listarObjsFiltradosIntGenerico): Numero de objs com id " + paramComparacao
                     + " na lista: " + listaObjsFiltrados.size());
         } catch (Exception e) {

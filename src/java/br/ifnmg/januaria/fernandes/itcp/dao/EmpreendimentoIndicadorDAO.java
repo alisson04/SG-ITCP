@@ -1,5 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
+import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import java.util.List;
 
@@ -12,16 +13,21 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
     public EmpreendimentoIndicadorDAO() {
     }
     
-    public EmpreendimentoIndicador salvarDAO(EmpreendimentoIndicador ip){
-        return salvarGenerico(ip);
+    public void salvarListaDAO(List<EmpreendimentoIndicador> listaEptInd){//Savar lista de objetos
+        salvarListaGenerico(listaEptInd);
     }
     
-    public void excluirDao(EmpreendimentoIndicador ip){
+    public void excluirDao(EmpreendimentoIndicador ip){//Excluir objeto
         excluirGenerico(ip);
     }
     
-    public List<EmpreendimentoIndicador> listarTodosDAO() {
+    public List<EmpreendimentoIndicador> listarTodosDAO() {//Listar todos os objetos
         return listarObjsGenerico("EmpreendimentoIndicador");
+    }
+    
+    public List<EmpreendimentoIndicador> buscarListaPorCodigo(Empreendimento obj) {//Busca uma lista por código
+        return listarObjsFiltradosIntGenerico("EmpreendimentoIndicador", "empreendimento.id", obj.getId());
+        
     }
     
     public long contarLinhasDAO(){

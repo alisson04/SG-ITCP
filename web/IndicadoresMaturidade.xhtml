@@ -8,37 +8,123 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmIndicadores" >
-                <p:panel header="Empreendimentos no sistema:" styleClass="corPanel">
-                    <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento cadastrado." 
-                                 selectionMode="single" value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" 
-                                 var="empreendimentoCursor" widgetVar="varGlobal" 
-                                 filteredValue="#{IndicadoresMaturidadeView.listaEmpreendimentosFiltrados}" rows="12" 
-                                 paginator="true" selection="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
-                                 rowKey="#{empreendimentoCursor.id}" paginatorPosition="top">
+                <p:panelGrid columns="2" layout="grid" >
+                    <p:panel header="Empreendimentos cadastrados">
+                        <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento cadastrado." 
+                                     selectionMode="single" value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" 
+                                     var="empreendimentoCursor" widgetVar="varGlobal"  
+                                     filteredValue="#{IndicadoresMaturidadeView.listaEmpreendimentosFiltrados}" rows="12" 
+                                     paginator="true" selection="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
+                                     rowKey="#{empreendimentoCursor.id}" paginatorPosition="top">
 
-                        <p:ajax event="rowSelect" update="frmIndicadores" />
+                            <p:ajax event="rowSelect" update="frmIndicadores" 
+                                    listener="#{IndicadoresMaturidadeView.liberaPainelIndicadores()}"/>
 
-                        <p:column headerText="Nome" filterBy="#{empreendimentoCursor.nome}" 
-                                  sortBy="#{empreendimentoCursor.nome}" filterMatchMode="contains">
-                            <h:outputText value="#{empreendimentoCursor.nome}"/>
-                        </p:column>
-                        
-                        <f:facet name="footer">
-                            <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" 
-                                             update=":frmIndicadores:carDetail" 
-                                             icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
-                            <p:commandButton id="btnLancarNotas" value="Lançar notas" icon="Add24-iconfinder" update="frmIndicadores"
-                                             disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" 
-                                             oncomplete="PF('wVarEditarDialog').show()" />
+                            <p:column headerText="Nome" sortBy="#{empreendimentoCursor.nome}" >
+                                <h:outputText value="#{empreendimentoCursor.nome}"/>
+                            </p:column>
 
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
-                            </p:confirmDialog>
-                        </f:facet>
-                    </p:dataTable>
+                            <f:facet name="footer">
+                                <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" 
+                                                 update=":frmIndicadores:carDetail" 
+                                                 icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
+                                                 disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
+                                <p:commandButton id="btnLancarNotas" value="Lançar notas" icon="Add24-iconfinder" update="frmIndicadores"
+                                                 disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" 
+                                                 oncomplete="PF('wVarEditarDialog').show()" />
 
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
+                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
+                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
+                                </p:confirmDialog>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+
+                    <p:panel id="panelCategorias" header="Categorias de indicadores">
+                        <!-- PAINEL DE CATEGORIAS DE EMPREENDIMENTOS-->
+                        <h:panelGrid columns="3">
+                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[1].categoria}" toggleable="true" 
+                                        collapsed="true" toggleSpeed="500">
+                                <h:panelGrid columns="3" cellpadding="5">
+                                    <p:commandButton update=":frmIndicadores:carDetail" icon="Find24-iconfinder"
+                                                     value="#{IndicadoresMaturidadeView.listaIndicadores[1].categoria}" 
+                                                     oncomplete="PF('carDialog').show()" />
+                                    <p:commandButton update=":frmIndicadores:carDetail" icon="Find24-iconfinder"
+                                                     value="Visualizar" oncomplete="PF('carDialog').show()" />
+                                    <p:commandButton update=":frmIndicadores:carDetail" icon="Find24-iconfinder"
+                                                     value="Visualizar" oncomplete="PF('carDialog').show()" />
+                                    <p:commandButton update=":frmIndicadores:carDetail" icon="Find24-iconfinder"
+                                                     value="Visualizar" oncomplete="PF('carDialog').show()" />
+                                    <p:commandButton update=":frmIndicadores:carDetail" icon="Find24-iconfinder"
+                                                     value="Visualizar" oncomplete="PF('carDialog').show()" />
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" toggleable="true" 
+                                        collapsed="true" toggleSpeed="500">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                </h:panelGrid>
+                            </p:fieldset>
+                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" toggleable="true" 
+                                        collapsed="true" toggleSpeed="500">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" toggleable="true" 
+                                        collapsed="true" toggleSpeed="500">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                </h:panelGrid>
+                            </p:fieldset>
+                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" toggleable="true" 
+                                        collapsed="true" toggleSpeed="500">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" toggleable="true" 
+                                        collapsed="true" toggleSpeed="500">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" toggleable="true" 
+                                        collapsed="true" toggleSpeed="500">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" toggleable="true" 
+                                        collapsed="true" toggleSpeed="500">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" toggleable="true" 
+                                        collapsed="true" toggleSpeed="500">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                </h:panelGrid>
+                            </p:fieldset>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:blockUI block="panelCategorias" widgetVar="bui" 
+                               blocked="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}">
+                        SELECIONE UM EMPREENDIMENTO<br />
+                        PARA ACESSAR SEUS INDICADORES<br />
+                        <p:graphicImage name="fotos/128Seta.png"/>
+                    </p:blockUI>
+                    
+                    <p:blockUI block="panelCategorias" widgetVar="buiPanelGrafic" 
+                               blocked="#{IndicadoresMaturidadeView.listaEptIndSalvar.size() == 0 
+                                          and IndicadoresMaturidadeView.empreendimentoSelecionado != null}">
+                        PREENCHA O FORMULÁRIO DE INDICADORES<br />
+                        DESSE EMPREENDIMENTO<br />
+                        <p:graphicImage name="fotos/128Check.png"/>
+                    </p:blockUI>
+
+                    <!-- CAIXA DE DIALOGO QUE MOSTRA AS INFORMAÇÕES DO EMPREENDIMENTO-->
                     <p:dialog id="diaShowUsr" header="Informações do empreendimento" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
                               resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
                         <p:outputPanel id="carDetail" style="text-align:center;">
@@ -47,7 +133,9 @@
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
-                </p:panel>
+                </p:panelGrid>
+
+
             </h:form>
 
             <!-- FORMULARIO DE PREENCHIMENTO DE INDICADORES -->
@@ -63,56 +151,54 @@
                                 <p:selectOneRadio id="ind1" required="true" requiredMessage="Essa Informação é obrigatória!"
                                                   value="#{IndicadoresMaturidadeView.notas[0]}" >
                                     <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.teste('0')}"/>
-                                    
+
                                     <f:selectItem itemLabel="Menos de 5 anos" itemValue="0"/>
                                     <f:selectItem itemLabel="Mais de 5 anos" itemValue="1"/>
                                     <f:selectItem itemLabel="Mais de 15 anos" itemValue="2"/>
                                 </p:selectOneRadio>
                                 <p:message for="ind1" />
-                                
+
                                 <p:outputLabel for="ind2" value="Cooperados/associados: " />
                                 <p:selectOneRadio id="ind2" required="true" requiredMessage="Essa Informação é obrigatória!"
                                                   value="#{IndicadoresMaturidadeView.notas[1]}" >
                                     <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.teste('1')}"/>
-                                    
+
                                     <f:selectItem itemLabel="Menos de 5" itemValue="0"/>
                                     <f:selectItem itemLabel="Mais de 5" itemValue="1"/>
                                 </p:selectOneRadio>
                                 <p:message for="ind2" />
-                                
+
                                 <p:outputLabel for="ind3" value="Gênese do empreendimento: " />
                                 <p:selectOneRadio id="ind3" required="true" requiredMessage="Essa Informação é obrigatória!"
                                                   value="#{IndicadoresMaturidadeView.notas[2]}" >
                                     <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.teste('2')}"/>
-                                    
+
                                     <f:selectItem itemLabel="Montado" itemValue="0"/>
                                     <f:selectItem itemLabel="Espontâneo" itemValue="1"/>
                                 </p:selectOneRadio>
                                 <p:message for="ind3" />
-                                
+
                                 <p:outputLabel for="ind4" value="Trabalhadores não-sócios: " />
                                 <p:selectOneRadio id="ind4" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                  value="#{IndicadoresMaturidadeView.nota}" >
+                                                  value="#{IndicadoresMaturidadeView.notas[3]}" >
                                     <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.teste('3')}"/>
-                                    
+
                                     <f:selectItem itemLabel="Sim" itemValue="0"/>
                                     <f:selectItem itemLabel="Não" itemValue="1"/>
                                 </p:selectOneRadio>
                                 <p:message for="ind4" />
-                                
+
                                 <p:outputLabel for="ind5" value="Rotatividade nos cargos da coordenação: " />
                                 <p:selectOneRadio id="ind5" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                  value="#{IndicadoresMaturidadeView.nota}" >
+                                                  value="#{IndicadoresMaturidadeView.notas[4]}" >
                                     <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.teste('4')}"/>
-                                    
+
                                     <f:selectItem itemLabel="Sim" itemValue="1"/>
                                     <f:selectItem itemLabel="Não" itemValue="0"/>
                                 </p:selectOneRadio>
                                 <p:message for="ind5" />
                             </p:panelGrid>
-
                         </p:panel>
-
 
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />

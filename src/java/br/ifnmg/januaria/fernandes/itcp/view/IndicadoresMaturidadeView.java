@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -30,30 +31,38 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     private Empreendimento empreendimentoSelecionado;
     private List<Empreendimento> listaEmpreendimentos;
     private List<Empreendimento> listaEmpreendimentosFiltrados;
-    private EmpreendimentoBean bean;
+    private EmpreendimentoBean eptBean;
 
     //EmpreendimentoIndicador Vars
     private List<EmpreendimentoIndicador> listaEptIndSalvar;
-    private EmpreendimentoIndicadorBean EptIndBean;
+    private EmpreendimentoIndicadorBean bean;
 
     //Indicador Vars
     private GerenciadorIndicadores gerenIndicadores;//Para gerar os indicadores
     private List<Indicador> listaIndicadores;//Para guardar os indicadores que serão usados na tela
-    private String nota;//Nota que virá da tela e será setada no EmpreendimentoIndicador
-    private String[] notas;//
+    private String[] notas;//Nota que virá da tela e será setada no EmpreendimentoIndicador
 
     //Construtor
     public IndicadoresMaturidadeView() {
         listaEptIndSalvar = new ArrayList();
-        bean = new EmpreendimentoBean();
-        EptIndBean = new EmpreendimentoIndicadorBean();
-        listaEmpreendimentos = bean.listarBean();
+        eptBean = new EmpreendimentoBean();
+        bean = new EmpreendimentoIndicadorBean();
+        listaEmpreendimentos = eptBean.listarBean();
 
         //Indicador
         gerenIndicadores = new GerenciadorIndicadores();
         listaIndicadores = gerenIndicadores.listarIndicadores();
-        
+
         notas = new String[5];
+    }
+
+    public void liberaPainelIndicadores() {
+        try {
+            //Pega a lista de inds para o EPT selecionado
+            listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);
+        } catch (NullPointerException ex) {
+            System.out.println("Nenhum indicador para esse EES: " + ex);
+        }
     }
 
     //METODOS
@@ -63,23 +72,20 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
         eptIndPk.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
         eptIndPk.setIdIndicadorFk(Integer.parseInt(posicaoIndi) + 1);//passa a posição para INT, soma com 1 e seta
-        
+
         eptInd.setEmpreendimentoIndicadorPK(eptIndPk);//SETA a empreendimento e indicador
         eptInd.setNota(Integer.parseInt(notas[Integer.parseInt(posicaoIndi)]));//Passa a nota para INT e seta
-        
+
         listaEptIndSalvar.add(eptInd);//ADICIONA o empreendimentoIndicador a lista para ser salvo depois
-        System.out.println("TESTESTESTESTESTE: " + posicaoIndi);
-        System.out.println("NOTANOTANOTA: " + notas[0]);
     }
 
     public void salvarView() {
         try {
-            
-            //EptIndBean.salvarBean(listaEptIndSalvar);
 
-            //listaEmpreendimentos = bean.listarBean();//Atualiza a lista de empreendimentos
-            //RequestContext context = RequestContext.getCurrentInstance();
-            //context.execute("PF('wVarEditarDialog').hide()");
+            bean.salvarBean(listaEptIndSalvar);
+
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('wVarEditarDialog').hide()");
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,19 +135,19 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         this.listaIndicadores = listaIndicadores;
     }
 
-    public String getNota() {
-        return nota;
-    }
-
-    public void setNota(String nota) {
-        this.nota = nota;
-    }
-
     public String[] getNotas() {
         return notas;
     }
 
     public void setNotas(String[] notas) {
         this.notas = notas;
+    }
+
+    public List<EmpreendimentoIndicador> getListaEptIndSalvar() {
+        return listaEptIndSalvar;
+    }
+
+    public void setListaEptIndSalvar(List<EmpreendimentoIndicador> listaEptIndSalvar) {
+        this.listaEptIndSalvar = listaEptIndSalvar;
     }
 }

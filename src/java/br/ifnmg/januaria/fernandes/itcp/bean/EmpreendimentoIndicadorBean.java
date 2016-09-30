@@ -1,6 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.bean;
 
 import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoIndicadorDAO;
+import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import java.io.Serializable;
 import java.util.List;
@@ -21,8 +22,8 @@ public class EmpreendimentoIndicadorBean implements Serializable {
         dao = new EmpreendimentoIndicadorDAO();
     }
 
-    public EmpreendimentoIndicador salvarBean(EmpreendimentoIndicador ept) {
-        return dao.salvarDAO(ept);
+    public void salvarBean(List<EmpreendimentoIndicador> listaEptInd) {
+        dao.salvarListaDAO(listaEptInd);
     }
     
     public void excluirBean(EmpreendimentoIndicador ept){
@@ -35,5 +36,9 @@ public class EmpreendimentoIndicadorBean implements Serializable {
     
     public long contarLinhasBean(){
         return dao.contarLinhasDAO();
+    }
+    
+    public List<EmpreendimentoIndicador> buscarListaPorCodigoBean(Empreendimento obj){
+        return dao.buscarListaPorCodigo(obj);
     }
 }
