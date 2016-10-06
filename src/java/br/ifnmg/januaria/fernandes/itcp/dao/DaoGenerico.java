@@ -49,19 +49,9 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             System.out.println("TAMANHO lista: " + listaSalvar.size());
             for (int i = 0; i < listaSalvar.size(); i++) {
                 System.out.println("LISTA: " + i);
-                em.persist(listaSalvar.get(i));
+                em.merge(listaSalvar.get(i));
                 System.out.println("LISTA: " + i);
             }
-            /*
-            for (int i = 1; i <= 4; i++) {
-                EmpreendimentoIndicadorPK point = new EmpreendimentoIndicadorPK(i, i);
-                EmpreendimentoIndicador ind = new EmpreendimentoIndicador(point);
-                em.merge(ind);
-                if ((i % 100) == 0) {
-                    em.flush();
-                    em.clear();
-                }
-            }*/
 
             em.getTransaction().commit();
         } catch (Exception x) {

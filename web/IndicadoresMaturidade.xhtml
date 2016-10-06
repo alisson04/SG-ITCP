@@ -25,11 +25,11 @@
                             </p:column>
 
                             <f:facet name="footer">
-                                <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" 
-                                                 update=":frmIndicadores:carDetail" 
+                                <p:commandButton id="btnVisualizarusr" update=":frmIndicadores:carDetail" 
                                                  icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
                                                  disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
-                                <p:commandButton id="btnLancarNotas" value="Lançar notas" icon="Add24-iconfinder" update="frmIndicadores"
+                                <p:commandButton id="btnLancarNotas" value="Lançar notas" icon="Add24-iconfinder" 
+                                                 update="frmIndicadores"
                                                  disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" 
                                                  oncomplete="PF('wVarEditarDialog').show()" />
 
@@ -47,17 +47,7 @@
                             <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[1].categoria}" toggleable="true" 
                                         collapsed="true" toggleSpeed="500">
                                 <h:panelGrid columns="3" cellpadding="5">
-                                    <p:commandButton update=":frmIndicadores:carDetail" icon="Find24-iconfinder"
-                                                     value="#{IndicadoresMaturidadeView.listaIndicadores[1].categoria}" 
-                                                     oncomplete="PF('carDialog').show()" />
-                                    <p:commandButton update=":frmIndicadores:carDetail" icon="Find24-iconfinder"
-                                                     value="Visualizar" oncomplete="PF('carDialog').show()" />
-                                    <p:commandButton update=":frmIndicadores:carDetail" icon="Find24-iconfinder"
-                                                     value="Visualizar" oncomplete="PF('carDialog').show()" />
-                                    <p:commandButton update=":frmIndicadores:carDetail" icon="Find24-iconfinder"
-                                                     value="Visualizar" oncomplete="PF('carDialog').show()" />
-                                    <p:commandButton update=":frmIndicadores:carDetail" icon="Find24-iconfinder"
-                                                     value="Visualizar" oncomplete="PF('carDialog').show()" />
+                                    
                                 </h:panelGrid>
                             </p:fieldset>
 
@@ -115,7 +105,7 @@
                         PARA ACESSAR SEUS INDICADORES<br />
                         <p:graphicImage name="fotos/128Seta.png"/>
                     </p:blockUI>
-                    
+
                     <p:blockUI block="panelCategorias" widgetVar="buiPanelGrafic" 
                                blocked="#{IndicadoresMaturidadeView.listaEptIndSalvar.size() == 0 
                                           and IndicadoresMaturidadeView.empreendimentoSelecionado != null}">
@@ -125,7 +115,8 @@
                     </p:blockUI>
 
                     <!-- CAIXA DE DIALOGO QUE MOSTRA AS INFORMAÇÕES DO EMPREENDIMENTO-->
-                    <p:dialog id="diaShowUsr" header="Informações do empreendimento" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                    <p:dialog id="diaShowUsr" header="Informações do empreendimento" widgetVar="carDialog" showEffect="fade" 
+                              hideEffect="fade" 
                               resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
@@ -143,68 +134,128 @@
                       showEffect="clip" hideEffect="clip" modal="true"
                       styleClass="corDialog" resizable="false" draggable="false"   appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
-                    <p:panel id="panel" styleClass="corPanel" >
+                    <p:tabView id="tabGeral"  >
+                            <p:tab id="tabCategoria1" title="Categoria 1">
+                                <p:panel header="Questões sobre o Empreendimento">
+                                    <h:panelGrid columns="3" >
+                                        <p:outputLabel for="ind1" value="Tempo de existência do EES: " />
+                                        <p:selectOneRadio id="ind1" required="true" requiredMessage="Essa Informação é obrigatória!"
+                                                          value="#{IndicadoresMaturidadeView.notas[0]}" >
+                                            <p:ajax process="@this" update="@form" 
+                                                    listener="#{IndicadoresMaturidadeView.adicionaNota('0')}"/>
 
-                        <p:panel id="panelCategoria1" header="Categoria 1 - Empreendimento" style="text-align:right;" >
-                            <p:panelGrid columns="3">
-                                <p:outputLabel for="ind1" value="Tempo de existência do EES: " />
-                                <p:selectOneRadio id="ind1" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                  value="#{IndicadoresMaturidadeView.notas[0]}" >
-                                    <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.teste('0')}"/>
+                                            <f:selectItem itemLabel="Menos de 5 anos" itemValue="0"/>
+                                            <f:selectItem itemLabel="Mais de 5 anos" itemValue="1"/>
+                                            <f:selectItem itemLabel="Mais de 15 anos" itemValue="2"/>
+                                        </p:selectOneRadio>
+                                        <p:message for="ind1" />
 
-                                    <f:selectItem itemLabel="Menos de 5 anos" itemValue="0"/>
-                                    <f:selectItem itemLabel="Mais de 5 anos" itemValue="1"/>
-                                    <f:selectItem itemLabel="Mais de 15 anos" itemValue="2"/>
-                                </p:selectOneRadio>
-                                <p:message for="ind1" />
+                                        <p:outputLabel for="ind2" value="Cooperados/associados: " />
+                                        <p:selectOneRadio id="ind2" required="true" requiredMessage="Essa Informação é obrigatória!"
+                                                          value="#{IndicadoresMaturidadeView.notas[1]}" >
+                                            <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.adicionaNota('1')}"/>
 
-                                <p:outputLabel for="ind2" value="Cooperados/associados: " />
-                                <p:selectOneRadio id="ind2" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                  value="#{IndicadoresMaturidadeView.notas[1]}" >
-                                    <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.teste('1')}"/>
+                                            <f:selectItem itemLabel="Menos de 5" itemValue="0"/>
+                                            <f:selectItem itemLabel="Mais de 5" itemValue="1"/>
+                                        </p:selectOneRadio>
+                                        <p:message for="ind2" />
 
-                                    <f:selectItem itemLabel="Menos de 5" itemValue="0"/>
-                                    <f:selectItem itemLabel="Mais de 5" itemValue="1"/>
-                                </p:selectOneRadio>
-                                <p:message for="ind2" />
+                                        <p:outputLabel for="ind3" value="Gênese do empreendimento: " />
+                                        <p:selectOneRadio id="ind3" required="true" requiredMessage="Essa Informação é obrigatória!"
+                                                          value="#{IndicadoresMaturidadeView.notas[2]}" >
+                                            <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.adicionaNota('2')}"/>
 
-                                <p:outputLabel for="ind3" value="Gênese do empreendimento: " />
-                                <p:selectOneRadio id="ind3" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                  value="#{IndicadoresMaturidadeView.notas[2]}" >
-                                    <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.teste('2')}"/>
+                                            <f:selectItem itemLabel="Montado" itemValue="0"/>
+                                            <f:selectItem itemLabel="Espontâneo" itemValue="1"/>
+                                        </p:selectOneRadio>
+                                        <p:message for="ind3" />
 
-                                    <f:selectItem itemLabel="Montado" itemValue="0"/>
-                                    <f:selectItem itemLabel="Espontâneo" itemValue="1"/>
-                                </p:selectOneRadio>
-                                <p:message for="ind3" />
+                                        <p:outputLabel for="ind4" value="Trabalhadores não-sócios: " />
+                                        <p:selectOneRadio id="ind4" required="true" requiredMessage="Essa Informação é obrigatória!"
+                                                          value="#{IndicadoresMaturidadeView.notas[3]}" >
+                                            <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.adicionaNota('3')}"/>
 
-                                <p:outputLabel for="ind4" value="Trabalhadores não-sócios: " />
-                                <p:selectOneRadio id="ind4" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                  value="#{IndicadoresMaturidadeView.notas[3]}" >
-                                    <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.teste('3')}"/>
+                                            <f:selectItem itemLabel="Sim" itemValue="0"/>
+                                            <f:selectItem itemLabel="Não" itemValue="1"/>
+                                        </p:selectOneRadio>
+                                        <p:message for="ind4" />
 
-                                    <f:selectItem itemLabel="Sim" itemValue="0"/>
-                                    <f:selectItem itemLabel="Não" itemValue="1"/>
-                                </p:selectOneRadio>
-                                <p:message for="ind4" />
+                                        <p:outputLabel for="ind5" value="Rotatividade nos cargos da coordenação: " />
+                                        <p:selectOneRadio id="ind5" required="true" requiredMessage="Essa Informação é obrigatória!"
+                                                          value="#{IndicadoresMaturidadeView.notas[4]}" >
+                                            <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.adicionaNota('4')}"/>
 
-                                <p:outputLabel for="ind5" value="Rotatividade nos cargos da coordenação: " />
-                                <p:selectOneRadio id="ind5" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                  value="#{IndicadoresMaturidadeView.notas[4]}" >
-                                    <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.teste('4')}"/>
+                                            <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                            <f:selectItem itemLabel="Não" itemValue="0"/>
+                                        </p:selectOneRadio>
+                                        <p:message for="ind5" />
 
-                                    <f:selectItem itemLabel="Sim" itemValue="1"/>
-                                    <f:selectItem itemLabel="Não" itemValue="0"/>
-                                </p:selectOneRadio>
-                                <p:message for="ind5" />
-                            </p:panelGrid>
-                        </p:panel>
+                                        <p:outputLabel for="ind6" value="Sede: " />
+                                        <p:selectOneRadio id="ind6" required="true" requiredMessage="Essa Informação é obrigatória!"
+                                                          value="#{IndicadoresMaturidadeView.notas[5]}" >
+                                            <p:ajax process="@this" update="@form" listener="#{IndicadoresMaturidadeView.adicionaNota('5')}"/>
 
-                        <p:blockUI block="panel" trigger="btnSalvar">
+                                            <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                            <f:selectItem itemLabel="Não" itemValue="0"/>
+                                        </p:selectOneRadio>
+                                        <p:message for="ind6" />
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                        <p:tab id="tabCategoria2" title="Categoria 2" disabled="">
+                                <p:panel header="Questões sobre Infraestrutura">
+
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="tabCategoria3" title="Categoria 3">
+                                <p:panel header="Questões sobre Organização">
+
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="tabCategoria4" title="Categoria 4">
+                                <p:panel header="Questões sobre Participação">
+
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="tabCategoria5" title="Categoria 5">
+                                <p:panel header="Questões sobre Remuneração">
+
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="tabCategoria6" title="Categoria 6">
+                                <p:panel header="Questões sobre Comercialização">
+
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="tabCategoria7" title="Categoria 7">
+                                <p:panel header="Questões sobre Redes">
+
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="tabCategoria8" title="Categoria 8">
+                                <p:panel header="Questões sobre Apoio">
+
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="tabCategoria9" title="Categoria 9">
+                                <p:panel header="Questões sobre Produção">
+
+                                </p:panel>
+                            </p:tab>
+                        </p:tabView>
+
+                    <p:blockUI id="blockUiFormIndi" block="tabGeral" trigger="btnSalvar">
                             CARREGANDO<br />
                             <p:graphicImage name="fotos/LoadingBar.gif"/>
                         </p:blockUI>
-                    </p:panel>
 
                     <p:outputLabel value="* Campos obrigatórios" />
 

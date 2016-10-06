@@ -53,20 +53,27 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         gerenIndicadores = new GerenciadorIndicadores();
         listaIndicadores = gerenIndicadores.listarIndicadores();
 
-        notas = new String[5];
+        notas = new String[6];
     }
 
     public void liberaPainelIndicadores() {
         try {
             //Pega a lista de inds para o EPT selecionado
             listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);
+            System.out.println("===============================");
+            for (int i = 0; i < listaEptIndSalvar.size(); i++) {
+                notas[i] = (String.valueOf(listaEptIndSalvar.get(i).getNota()));
+                System.out.println("ID EES: " + listaEptIndSalvar.get(i).getEmpreendimentoIndicadorPK().getIdEmpreendimentoFk());
+                System.out.println("ID IND: " + listaEptIndSalvar.get(i).getEmpreendimentoIndicadorPK().getIdIndicadorFk());
+            }
+            System.out.println("===============================");
         } catch (NullPointerException ex) {
             System.out.println("Nenhum indicador para esse EES: " + ex);
         }
     }
 
     //METODOS
-    public void teste(String posicaoIndi) {
+    public void adicionaNota(String posicaoIndi) {
         EmpreendimentoIndicador eptInd = new EmpreendimentoIndicador();
         EmpreendimentoIndicadorPK eptIndPk = new EmpreendimentoIndicadorPK();
 
@@ -76,12 +83,29 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         eptInd.setEmpreendimentoIndicadorPK(eptIndPk);//SETA a empreendimento e indicador
         eptInd.setNota(Integer.parseInt(notas[Integer.parseInt(posicaoIndi)]));//Passa a nota para INT e seta
 
-        listaEptIndSalvar.add(eptInd);//ADICIONA o empreendimentoIndicador a lista para ser salvo depois
+        boolean editando = false;
+        for (int i = 0; i < listaEptIndSalvar.size(); i++) {
+            if (eptIndPk.equals(listaEptIndSalvar.get(i).getEmpreendimentoIndicadorPK())) {
+                listaEptIndSalvar.set(i, eptInd);
+                editando = true;
+                System.out.println("===============================");
+                System.out.println("1 EDITADO");
+                System.out.println("TAMANHO: " + listaEptIndSalvar.size());
+                System.out.println("===============================");
+            }
+        }
+
+        if (!editando) {//
+            listaEptIndSalvar.add(eptInd);//ADICIONA o empreendimentoIndicador a lista para ser salvo depois
+            System.out.println("===============================");
+            System.out.println("1 ADICIONADO");
+            System.out.println("TAMANHO: " + listaEptIndSalvar.size());
+            System.out.println("===============================");
+        }
     }
 
     public void salvarView() {
         try {
-
             bean.salvarBean(listaEptIndSalvar);
 
             RequestContext context = RequestContext.getCurrentInstance();
