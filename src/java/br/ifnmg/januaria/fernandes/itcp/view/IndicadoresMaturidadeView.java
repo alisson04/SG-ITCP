@@ -53,7 +53,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         gerenIndicadores = new GerenciadorIndicadores();
         listaIndicadores = gerenIndicadores.listarIndicadores();
 
-        notas = new String[6];
+        notas = new String[48];//Lista de indicadores para a tela
     }
 
     public void liberaPainelIndicadores() {
