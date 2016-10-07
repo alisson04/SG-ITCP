@@ -41,6 +41,8 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     private GerenciadorIndicadores gerenIndicadores;//Para gerar os indicadores
     private List<Indicador> listaIndicadores;//Para guardar os indicadores que serão usados na tela
     private String[] notas;//Nota que virá da tela e será setada no EmpreendimentoIndicador
+    
+    private int teste;
 
     //Construtor
     public IndicadoresMaturidadeView() {
@@ -54,6 +56,8 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         listaIndicadores = gerenIndicadores.listarIndicadores();
 
         notas = new String[48];//Lista de indicadores para a tela
+        
+        
     }
 
     public void liberaPainelIndicadores() {
@@ -173,5 +177,13 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     public void setListaEptIndSalvar(List<EmpreendimentoIndicador> listaEptIndSalvar) {
         this.listaEptIndSalvar = listaEptIndSalvar;
+    }
+
+    public int getTeste() {
+        return teste;
+    }
+
+    public void setTeste(int teste) {
+        this.teste = teste;
     }
 }
