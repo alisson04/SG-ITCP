@@ -40,9 +40,6 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     //Indicador Vars
     private GerenciadorIndicadores gerenIndicadores;//Para gerar os indicadores
     private List<Indicador> listaIndicadores;//Para guardar os indicadores que serão usados na tela
-    private String[] notas;//Nota que virá da tela e será setada no EmpreendimentoIndicador
-    
-    private int teste;
 
     //Construtor
     public IndicadoresMaturidadeView() {
@@ -54,66 +51,57 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         //Indicador
         gerenIndicadores = new GerenciadorIndicadores();
         listaIndicadores = gerenIndicadores.listarIndicadores();
-
-        notas = new String[48];//Lista de indicadores para a tela
-        
-        
     }
 
-    public void liberaPainelIndicadores() {
+    //METODOS
+    public void liberaPainelIndicadores() {//Acontece ao selecionar um empreendimento na lista
         try {
-            //Pega a lista de inds para o EPT selecionado
-            listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);
+            listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
             System.out.println("===============================");
-            for (int i = 0; i < listaEptIndSalvar.size(); i++) {
-                notas[i] = (String.valueOf(listaEptIndSalvar.get(i).getNota()));
-                System.out.println("ID EES: " + listaEptIndSalvar.get(i).getEmpreendimentoIndicadorPK().getIdEmpreendimentoFk());
-                System.out.println("ID IND: " + listaEptIndSalvar.get(i).getEmpreendimentoIndicadorPK().getIdIndicadorFk());
+            System.out.println("Tamanho é " + listaEptIndSalvar.size());
+            for (int i = listaEptIndSalvar.size(); i < listaIndicadores.size(); i++) {
+                EmpreendimentoIndicador indAux = new EmpreendimentoIndicador();
+                EmpreendimentoIndicadorPK eptIndPk = new EmpreendimentoIndicadorPK();//guarda os IDs
+                
+                eptIndPk.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
+                eptIndPk.setIdIndicadorFk(i + 1);//soma com 1 e seta o id
+                indAux.setEmpreendimentoIndicadorPK(eptIndPk);//SETA a empreendimento e indicador
+                
+                listaEptIndSalvar.add(indAux);
             }
+            System.out.println("Tamanho agora é: " + listaEptIndSalvar.size());
             System.out.println("===============================");
         } catch (NullPointerException ex) {
             System.out.println("Nenhum indicador para esse EES: " + ex);
         }
     }
 
-    //METODOS
-    public void adicionaNota(String posicaoIndi) {
+    public void adicionaNota(int posicaoIndi) {
         EmpreendimentoIndicador eptInd = new EmpreendimentoIndicador();
-        EmpreendimentoIndicadorPK eptIndPk = new EmpreendimentoIndicadorPK();
+        EmpreendimentoIndicadorPK eptIndPk = new EmpreendimentoIndicadorPK();//guarda os IDs
 
         eptIndPk.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
-        eptIndPk.setIdIndicadorFk(Integer.parseInt(posicaoIndi) + 1);//passa a posição para INT, soma com 1 e seta
+        eptIndPk.setIdIndicadorFk(posicaoIndi + 1);//passa a posição para INT, soma com 1 e seta
 
         eptInd.setEmpreendimentoIndicadorPK(eptIndPk);//SETA a empreendimento e indicador
-        eptInd.setNota(Integer.parseInt(notas[Integer.parseInt(posicaoIndi)]));//Passa a nota para INT e seta
+        eptInd.setNota(listaEptIndSalvar.get(posicaoIndi).getNota());//Passa a nota para INT e seta
 
-        boolean editando = false;
         for (int i = 0; i < listaEptIndSalvar.size(); i++) {
             if (eptIndPk.equals(listaEptIndSalvar.get(i).getEmpreendimentoIndicadorPK())) {
                 listaEptIndSalvar.set(i, eptInd);
-                editando = true;
                 System.out.println("===============================");
-                System.out.println("1 EDITADO");
+                System.out.println("Indicador " + (i+1) + " editado");
                 System.out.println("TAMANHO: " + listaEptIndSalvar.size());
                 System.out.println("===============================");
             }
-        }
-
-        if (!editando) {//
-            listaEptIndSalvar.add(eptInd);//ADICIONA o empreendimentoIndicador a lista para ser salvo depois
-            System.out.println("===============================");
-            System.out.println("1 ADICIONADO");
-            System.out.println("TAMANHO: " + listaEptIndSalvar.size());
-            System.out.println("===============================");
         }
     }
 
     public void salvarView() {
         try {
             bean.salvarBean(listaEptIndSalvar);
-
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVarEditarDialog').hide()");
+            context.execute("PF('wVarEditarDialog').hide()");//fecha o panel de "formulario de indicadores"
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,27 +151,11 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         this.listaIndicadores = listaIndicadores;
     }
 
-    public String[] getNotas() {
-        return notas;
-    }
-
-    public void setNotas(String[] notas) {
-        this.notas = notas;
-    }
-
     public List<EmpreendimentoIndicador> getListaEptIndSalvar() {
         return listaEptIndSalvar;
     }
 
     public void setListaEptIndSalvar(List<EmpreendimentoIndicador> listaEptIndSalvar) {
         this.listaEptIndSalvar = listaEptIndSalvar;
-    }
-
-    public int getTeste() {
-        return teste;
-    }
-
-    public void setTeste(int teste) {
-        this.teste = teste;
     }
 }
