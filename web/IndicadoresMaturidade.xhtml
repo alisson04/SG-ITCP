@@ -24,6 +24,10 @@
                                 <h:outputText value="#{empreendimentoCursor.nome}"/>
                             </p:column>
 
+                            <p:column headerText="TESTE: " >
+                                <h:outputText value="#{IndicadoresMaturidadeView.listaEptIndSalvar[47].nota}"/>
+                            </p:column>
+
                             <f:facet name="footer">
                                 <p:commandButton id="btnVisualizarusr" update=":frmIndicadores:carDetail" 
                                                  icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
@@ -96,10 +100,19 @@
                                 <h:panelGrid columns="2" cellpadding="5">
                                 </h:panelGrid>
                             </p:fieldset>
+
+                            <p:commandButton id="btnMinhaConta" type="push" title="Minha conta" style="ui-button" 
+                                             icon="profile-iconfinder" />
+
+                            <p:slideMenu overlay="true" trigger="btnMinhaConta" my="left top" at="left bottom" >
+                                
+                                <p:menuitem value=" Sair" icon="Exit16-iconfinder"
+                                            action="#{LoginView.sair()}"/>
+                            </p:slideMenu>
                         </h:panelGrid>
                     </p:panel>
 
-                    <!--O blockUi abaixo só é renderizado se algum ESS estiver selecionado-->
+                    <!--O blockUi abaixo só é mostrado se nenhum ESS estiver selecionado-->
                     <p:blockUI block="panelCategorias" widgetVar="bui" 
                                blocked="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}">
                         SELECIONE UM EMPREENDIMENTO<br />
@@ -107,9 +120,9 @@
                         <p:graphicImage name="fotos/128Seta.png"/>
                     </p:blockUI>
 
-                    <!--O blockUi abaixo só é renderizado se algum ESS estiver selecionado e seu último indicador preenchido-->
+                    <!--O blockUi abaixo só é mostrado se algum ESS estiver selecionado e seu último indicador não preenchido-->
                     <p:blockUI block="panelCategorias" widgetVar="buiPanelGrafic" 
-                               blocked="#{IndicadoresMaturidadeView.listaEptIndSalvar[47].nota == '' 
+                               blocked="#{IndicadoresMaturidadeView.listaEptIndSalvar[47].nota == null
                                           and IndicadoresMaturidadeView.empreendimentoSelecionado != null}">
                         PREENCHA O FORMULÁRIO DE INDICADORES<br />
                         DESSE EMPREENDIMENTO<br />
@@ -322,7 +335,7 @@
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
                                     <p:message for="ind16" />
-                                    
+
                                     <p:outputLabel for="ind17" value="#{IndicadoresMaturidadeView.listaIndicadores[16].nome}:" />
                                     <p:selectOneRadio id="ind17" required="true" requiredMessage="Essa Informação é obrigatória!"
                                                       value="#{IndicadoresMaturidadeView.listaEptIndSalvar[16].nota}" >
@@ -409,7 +422,7 @@
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
                                     <p:message for="ind24" /> 
-                                    
+
                                     <p:outputLabel for="ind25" value="#{IndicadoresMaturidadeView.listaIndicadores[24].nome}: " />
                                     <p:selectOneRadio id="ind25" required="true" requiredMessage="Essa Informação é obrigatória!"
                                                       value="#{IndicadoresMaturidadeView.listaEptIndSalvar[24].nota}" >
@@ -485,7 +498,7 @@
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
                                     <p:message for="ind31" /> 
-                                    
+
                                     <p:outputLabel for="ind32" value="#{IndicadoresMaturidadeView.listaIndicadores[31].nome}: " />
                                     <p:selectOneRadio id="ind32" required="true" requiredMessage="Essa Informação é obrigatória!"
                                                       value="#{IndicadoresMaturidadeView.listaEptIndSalvar[31].nota}" >
@@ -542,7 +555,7 @@
                                         <f:selectItem itemLabel="Muita" itemValue="0"/>
                                     </p:selectOneRadio>
                                     <p:message for="ind36" />
-                                    
+
                                     <p:outputLabel for="ind37" value="#{IndicadoresMaturidadeView.listaIndicadores[36].nome}: " />
                                     <p:selectOneRadio id="ind37" required="true" requiredMessage="Essa Informação é obrigatória!"
                                                       value="#{IndicadoresMaturidadeView.listaEptIndSalvar[36].nota}" >
@@ -654,7 +667,7 @@
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
                                     <p:message for="ind46" />
-                                    
+
                                     <p:outputLabel for="ind47" value="#{IndicadoresMaturidadeView.listaIndicadores[46].nome}: " />
                                     <p:selectOneRadio id="ind47" required="true" requiredMessage="Essa Informação é obrigatória!"
                                                       value="#{IndicadoresMaturidadeView.listaEptIndSalvar[46].nota}" >
@@ -664,7 +677,7 @@
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
                                     <p:message for="ind47" />
-                                    
+
                                     <p:outputLabel for="ind48" value="#{IndicadoresMaturidadeView.listaIndicadores[47].nome}: " />
                                     <p:selectOneRadio id="ind48" required="true" requiredMessage="Essa Informação é obrigatória!"
                                                       value="#{IndicadoresMaturidadeView.listaEptIndSalvar[47].nota}" >
