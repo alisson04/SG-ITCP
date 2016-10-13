@@ -140,8 +140,6 @@
                         </p:outputPanel>
                     </p:dialog>
                 </p:panelGrid>
-
-
             </h:form>
 
             <!-- FORMULARIO DE PREENCHIMENTO DE INDICADORES -->
@@ -154,55 +152,45 @@
                             <p:panel header="Questões sobre o Empreendimento">
                                 <h:panelGrid columns="3" >
                                     <p:outputLabel for="ind1" value="#{IndicadoresMaturidadeView.listaIndicadores[0].nome}:" />
-                                    <p:selectOneRadio id="ind1" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[0].nota}" >
+                                    <p:selectOneRadio id="ind1" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[0].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(0)}"/>
 
                                         <f:selectItem itemLabel="Menos de 5 anos" itemValue="0"/>
                                         <f:selectItem itemLabel="Mais de 5 anos" itemValue="1"/>
                                         <f:selectItem itemLabel="Mais de 15 anos" itemValue="2"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind1" />
 
                                     <p:outputLabel for="ind2" value="#{IndicadoresMaturidadeView.listaIndicadores[1].nome}: " />
-                                    <p:selectOneRadio id="ind2" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[1].nota}" >
+                                    <p:selectOneRadio id="ind2" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[1].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(1)}"/>
 
-                                        <f:selectItem itemLabel="Menos de 5" itemValue="0"/>
+                                        <f:selectItem itemLabel="Menos de 5" itemValue="20"/>
                                         <f:selectItem itemLabel="Mais de 5" itemValue="1"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind2" />
 
                                     <p:outputLabel for="ind3" value="#{IndicadoresMaturidadeView.listaIndicadores[2].nome}: " />
-                                    <p:selectOneRadio id="ind3" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[2].nota}" >
+                                    <p:selectOneRadio id="ind3" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[2].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(2)}"/>
 
                                         <f:selectItem itemLabel="Montado" itemValue="0"/>
                                         <f:selectItem itemLabel="Espontâneo" itemValue="1"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind3" />
 
                                     <p:outputLabel for="ind4" value="#{IndicadoresMaturidadeView.listaIndicadores[3].nome}: " />
-                                    <p:selectOneRadio id="ind4" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[3].nota}" >
+                                    <p:selectOneRadio id="ind4" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[3].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(3)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="0"/>
                                         <f:selectItem itemLabel="Não" itemValue="1"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind4" />
 
                                     <p:outputLabel for="ind5" value="#{IndicadoresMaturidadeView.listaIndicadores[4].nome}: " />
-                                    <p:selectOneRadio id="ind5" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[4].nota}" >
+                                    <p:selectOneRadio id="ind5" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[4].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(4)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind5" />
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -212,47 +200,39 @@
                             <p:panel header="Questões sobre Infraestrutura">
                                 <h:panelGrid columns="3" >
                                     <p:outputLabel for="ind6" value="#{IndicadoresMaturidadeView.listaIndicadores[5].nome}: " />
-                                    <p:selectOneRadio id="ind6" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[5].nota}" >
+                                    <p:selectOneRadio id="ind6" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[5].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(5)}"/>
 
                                         <f:selectItem itemLabel="Própria" itemValue="2"/>
                                         <f:selectItem itemLabel="Alugada" itemValue="1"/>
                                         <f:selectItem itemLabel="Cedida/Outros" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind6" />
 
                                     <p:outputLabel for="ind7" value="#{IndicadoresMaturidadeView.listaIndicadores[6].nome}: " />
-                                    <p:selectOneRadio id="ind7" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[6].nota}" >
+                                    <p:selectOneRadio id="ind7" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[6].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(6)}"/>
 
                                         <f:selectItem itemLabel="Próprios" itemValue="2"/>
                                         <f:selectItem itemLabel="Alugados" itemValue="1"/>
                                         <f:selectItem itemLabel="Outros" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind7" />
 
                                     <p:outputLabel for="ind8" value="#{IndicadoresMaturidadeView.listaIndicadores[7].nome}: " />
-                                    <p:selectOneRadio id="ind8" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[7].nota}" >
+                                    <p:selectOneRadio id="ind8" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[7].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(7)}"/>
 
                                         <f:selectItem itemLabel="Próprios" itemValue="2"/>
                                         <f:selectItem itemLabel="Alugados" itemValue="1"/>
                                         <f:selectItem itemLabel="Cedido" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind8" />
 
                                     <p:outputLabel for="ind9" value="#{IndicadoresMaturidadeView.listaIndicadores[8].nome}: " />
-                                    <p:selectOneRadio id="ind9" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[8].nota}" >
+                                    <p:selectOneRadio id="ind9" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[8].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(8)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind9" />
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -261,64 +241,52 @@
                             <p:panel header="Questões sobre Organização">
                                 <h:panelGrid columns="3" >
                                     <p:outputLabel for="ind10" value="#{IndicadoresMaturidadeView.listaIndicadores[9].nome}: " />
-                                    <p:selectOneRadio id="ind10" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[9].nota}" >
+                                    <p:selectOneRadio id="ind10" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[9].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(9)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind10" />
 
                                     <p:outputLabel for="ind11" value="#{IndicadoresMaturidadeView.listaIndicadores[10].nome}: " />
-                                    <p:selectOneRadio id="ind11" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[10].nota}" >
+                                    <p:selectOneRadio id="ind11" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[10].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(10)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind11" />
 
                                     <p:outputLabel for="ind12" value="#{IndicadoresMaturidadeView.listaIndicadores[11].nome}: " />
-                                    <p:selectOneRadio id="ind12" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[11].nota}" >
+                                    <p:selectOneRadio id="ind12" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[11].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(11)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind12" />
 
                                     <p:outputLabel for="ind13" value="#{IndicadoresMaturidadeView.listaIndicadores[12].nome}: " />
-                                    <p:selectOneRadio id="ind13" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[12].nota}" >
+                                    <p:selectOneRadio id="ind13" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[12].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(12)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind13" />
 
                                     <p:outputLabel for="ind14" value="#{IndicadoresMaturidadeView.listaIndicadores[13].nome}: " />
-                                    <p:selectOneRadio id="ind14" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[13].nota}" >
+                                    <p:selectOneRadio id="ind14" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[13].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(13)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind14" />
 
                                     <p:outputLabel for="ind15" value="#{IndicadoresMaturidadeView.listaIndicadores[14].nome}: " />
-                                    <p:selectOneRadio id="ind15" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[14].nota}" >
+                                    <p:selectOneRadio id="ind15" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[14].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(14)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind15" />
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -327,85 +295,69 @@
                             <p:panel header="Questões sobre Participação">
                                 <h:panelGrid columns="3" >
                                     <p:outputLabel for="ind16" value="#{IndicadoresMaturidadeView.listaIndicadores[15].nome}: " />
-                                    <p:selectOneRadio id="ind16" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[15].nota}" >
+                                    <p:selectOneRadio id="ind16" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[15].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(15)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind16" />
 
                                     <p:outputLabel for="ind17" value="#{IndicadoresMaturidadeView.listaIndicadores[16].nome}:" />
-                                    <p:selectOneRadio id="ind17" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[16].nota}" >
+                                    <p:selectOneRadio id="ind17" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[16].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(16)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind17" />
 
                                     <p:outputLabel for="ind18" value="#{IndicadoresMaturidadeView.listaIndicadores[17].nome}: " />
-                                    <p:selectOneRadio id="ind18" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[17].nota}" >
+                                    <p:selectOneRadio id="ind18" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[17].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(17)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind18" />
 
                                     <p:outputLabel for="ind19" value="#{IndicadoresMaturidadeView.listaIndicadores[18].nome}: " />
-                                    <p:selectOneRadio id="ind19" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[18].nota}" >
+                                    <p:selectOneRadio id="ind19" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[18].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(18)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="2"/>
                                         <f:selectItem itemLabel="Nem sempre" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind19" />
 
                                     <p:outputLabel for="ind20" value="#{IndicadoresMaturidadeView.listaIndicadores[19].nome}: " />
-                                    <p:selectOneRadio id="ind20" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[19].nota}" >
+                                    <p:selectOneRadio id="ind20" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[19].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(19)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind20" />
 
                                     <p:outputLabel for="ind21" value="#{IndicadoresMaturidadeView.listaIndicadores[20].nome}: " />
-                                    <p:selectOneRadio id="ind21" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[20].nota}" >
+                                    <p:selectOneRadio id="ind21" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[20].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(20)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind21" />
 
                                     <p:outputLabel for="ind22" value="#{IndicadoresMaturidadeView.listaIndicadores[21].nome}: " />
-                                    <p:selectOneRadio id="ind22" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[21].nota}" >
+                                    <p:selectOneRadio id="ind22" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[21].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(21)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind22" />
 
                                     <p:outputLabel for="ind23" value="#{IndicadoresMaturidadeView.listaIndicadores[22].nome}: " />
-                                    <p:selectOneRadio id="ind23" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[22].nota}" >
+                                    <p:selectOneRadio id="ind23" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[22].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(22)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind23" />
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -414,74 +366,60 @@
                             <p:panel header="Questões sobre Remuneração">
                                 <h:panelGrid columns="3" >
                                     <p:outputLabel for="ind24" value="#{IndicadoresMaturidadeView.listaIndicadores[23].nome}: " />
-                                    <p:selectOneRadio id="ind24" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[23].nota}" >
+                                    <p:selectOneRadio id="ind24" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[23].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(23)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind24" /> 
 
                                     <p:outputLabel for="ind25" value="#{IndicadoresMaturidadeView.listaIndicadores[24].nome}: " />
-                                    <p:selectOneRadio id="ind25" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[24].nota}" >
+                                    <p:selectOneRadio id="ind25" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[24].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(24)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind25" /> 
 
                                     <p:outputLabel for="ind26" value="#{IndicadoresMaturidadeView.listaIndicadores[25].nome}: " />
-                                    <p:selectOneRadio id="ind26" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[25].nota}" >
+                                    <p:selectOneRadio id="ind26" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[25].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(25)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind26" /> 
 
                                     <p:outputLabel for="ind27" value="#{IndicadoresMaturidadeView.listaIndicadores[26].nome}: " />
-                                    <p:selectOneRadio id="ind27" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[26].nota}" >
+                                    <p:selectOneRadio id="ind27" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[26].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(26)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind27" /> 
 
                                     <p:outputLabel for="ind28" value="#{IndicadoresMaturidadeView.listaIndicadores[27].nome}: " />
-                                    <p:selectOneRadio id="ind28" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[27].nota}" >
+                                    <p:selectOneRadio id="ind28" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[27].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(27)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind28" /> 
 
                                     <p:outputLabel for="ind29" value="#{IndicadoresMaturidadeView.listaIndicadores[28].nome}: " />
-                                    <p:selectOneRadio id="ind29" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[28].nota}" >
+                                    <p:selectOneRadio id="ind29" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[28].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(28)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind29" /> 
 
                                     <p:outputLabel for="ind30" value="#{IndicadoresMaturidadeView.listaIndicadores[29].nome}: " />
-                                    <p:selectOneRadio id="ind30" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[29].nota}" >
+                                    <p:selectOneRadio id="ind30" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[29].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(29)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind30" />
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -490,54 +428,44 @@
                             <p:panel header="Questões sobre Comercialização">
                                 <h:panelGrid columns="3" >
                                     <p:outputLabel for="ind31" value="#{IndicadoresMaturidadeView.listaIndicadores[30].nome}: " />
-                                    <p:selectOneRadio id="ind31" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[30].nota}" >
+                                    <p:selectOneRadio id="ind31" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[30].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(30)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind31" /> 
 
                                     <p:outputLabel for="ind32" value="#{IndicadoresMaturidadeView.listaIndicadores[31].nome}: " />
-                                    <p:selectOneRadio id="ind32" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[31].nota}" >
+                                    <p:selectOneRadio id="ind32" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[31].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(31)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind32" /> 
 
                                     <p:outputLabel for="ind33" value="#{IndicadoresMaturidadeView.listaIndicadores[32].nome}: " />
-                                    <p:selectOneRadio id="ind33" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[32].nota}" >
+                                    <p:selectOneRadio id="ind33" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[32].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(32)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind33" /> 
 
                                     <p:outputLabel for="ind34" value="#{IndicadoresMaturidadeView.listaIndicadores[33].nome}: " />
-                                    <p:selectOneRadio id="ind34" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[33].nota}" >
+                                    <p:selectOneRadio id="ind34" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[33].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(33)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind34" /> 
 
                                     <p:outputLabel for="ind35" value="#{IndicadoresMaturidadeView.listaIndicadores[34].nome}: " />
-                                    <p:selectOneRadio id="ind35" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[34].nota}" >
+                                    <p:selectOneRadio id="ind35" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[34].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(34)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind35" />
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -546,65 +474,53 @@
                             <p:panel header="Questões sobre Redes">
                                 <h:panelGrid columns="3" >
                                     <p:outputLabel for="ind36" value="#{IndicadoresMaturidadeView.listaIndicadores[35].nome}: " />
-                                    <p:selectOneRadio id="ind36" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[35].nota}" >
+                                    <p:selectOneRadio id="ind36" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[35].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(35)}"/>
 
                                         <f:selectItem itemLabel="Pouca ou nenhuma" itemValue="2"/>
                                         <f:selectItem itemLabel="Mediana" itemValue="1"/>
                                         <f:selectItem itemLabel="Muita" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind36" />
 
                                     <p:outputLabel for="ind37" value="#{IndicadoresMaturidadeView.listaIndicadores[36].nome}: " />
-                                    <p:selectOneRadio id="ind37" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[36].nota}" >
+                                    <p:selectOneRadio id="ind37" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[36].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(36)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind37" />
 
                                     <p:outputLabel for="ind38" value="#{IndicadoresMaturidadeView.listaIndicadores[37].nome}: " />
-                                    <p:selectOneRadio id="ind38" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[37].nota}" >
+                                    <p:selectOneRadio id="ind38" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[37].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(37)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind38" />
 
                                     <p:outputLabel for="ind39" value="#{IndicadoresMaturidadeView.listaIndicadores[38].nome}: " />
-                                    <p:selectOneRadio id="ind39" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[38].nota}" >
+                                    <p:selectOneRadio id="ind39" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[38].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(38)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="2"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind39" />
 
                                     <p:outputLabel for="ind40" value="#{IndicadoresMaturidadeView.listaIndicadores[39].nome}: " />
-                                    <p:selectOneRadio id="ind40" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[39].nota}" >
+                                    <p:selectOneRadio id="ind40" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[39].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(39)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind40" />
 
                                     <p:outputLabel for="ind41" value="#{IndicadoresMaturidadeView.listaIndicadores[40].nome}: " />
-                                    <p:selectOneRadio id="ind41" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[40].nota}" >
+                                    <p:selectOneRadio id="ind41" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[40].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(40)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind41" />
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -613,44 +529,36 @@
                             <p:panel header="Questões sobre Apoio">
                                 <h:panelGrid columns="3" >
                                     <p:outputLabel for="ind42" value="#{IndicadoresMaturidadeView.listaIndicadores[41].nome}: " />
-                                    <p:selectOneRadio id="ind42" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[41].nota}" >
+                                    <p:selectOneRadio id="ind42" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[41].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(41)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind42" />
 
                                     <p:outputLabel for="ind43" value="#{IndicadoresMaturidadeView.listaIndicadores[42].nome}: " />
-                                    <p:selectOneRadio id="ind43" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[42].nota}" >
+                                    <p:selectOneRadio id="ind43" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[42].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(42)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind43" />
 
                                     <p:outputLabel for="ind44" value="#{IndicadoresMaturidadeView.listaIndicadores[43].nome}: " />
-                                    <p:selectOneRadio id="ind44" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[43].nota}" >
+                                    <p:selectOneRadio id="ind44" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[43].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(43)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind44" />
 
                                     <p:outputLabel for="ind45" value="#{IndicadoresMaturidadeView.listaIndicadores[44].nome}: " />
-                                    <p:selectOneRadio id="ind45" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[44].nota}" >
+                                    <p:selectOneRadio id="ind45" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[44].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(44)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind45" />
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -659,34 +567,28 @@
                             <p:panel header="Questões sobre Produção">
                                 <h:panelGrid columns="3" >
                                     <p:outputLabel for="ind46" value="#{IndicadoresMaturidadeView.listaIndicadores[45].nome}: " />
-                                    <p:selectOneRadio id="ind46" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[45].nota}" >
+                                    <p:selectOneRadio id="ind46" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[45].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(45)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind46" />
 
                                     <p:outputLabel for="ind47" value="#{IndicadoresMaturidadeView.listaIndicadores[46].nome}: " />
-                                    <p:selectOneRadio id="ind47" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[46].nota}" >
+                                    <p:selectOneRadio id="ind47" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[46].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(46)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind47" />
 
                                     <p:outputLabel for="ind48" value="#{IndicadoresMaturidadeView.listaIndicadores[47].nome}: " />
-                                    <p:selectOneRadio id="ind48" required="true" requiredMessage="Essa Informação é obrigatória!"
-                                                      value="#{IndicadoresMaturidadeView.listaEptIndSalvar[47].nota}" >
+                                    <p:selectOneRadio id="ind48" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[47].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(47)}"/>
 
                                         <f:selectItem itemLabel="Sim" itemValue="1"/>
                                         <f:selectItem itemLabel="Não" itemValue="0"/>
                                     </p:selectOneRadio>
-                                    <p:message for="ind48" />
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -699,7 +601,7 @@
 
                     <p:separator/>                    
                     <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{IndicadoresMaturidadeView.salvarView()}" 
-                                     icon="Save24-iconfinder" update="frmIndicadores" >
+                                     icon="Save24-iconfinder" update="frmIndicadores frmEdicao" >
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                     </p:commandButton>
 

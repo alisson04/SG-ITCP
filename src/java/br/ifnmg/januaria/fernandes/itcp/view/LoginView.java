@@ -2,12 +2,7 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
-import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
-import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoIndicadorDAO;
-import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
-import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
-import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;

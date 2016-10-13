@@ -1,14 +1,21 @@
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -21,32 +28,52 @@ import javax.persistence.Table;
 public class EmpreendimentoIndicador implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected EmpreendimentoIndicadorPK empreendimentoIndicadorPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idIndicador")
+    private int idIndicador;
     @Column(name = "nota")
     private Integer nota;
-    
-    @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "id", insertable = false, updatable = false)
+    @Column(name = "dataNota")
+    @Temporal(TemporalType.DATE)
+    private Date dataNota;
+    @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Empreendimento empreendimento;
 
     public EmpreendimentoIndicador() {
     }
 
-    public EmpreendimentoIndicador(EmpreendimentoIndicadorPK empreendimentoIndicadorPK) {
-        this.empreendimentoIndicadorPK = empreendimentoIndicadorPK;
+    public EmpreendimentoIndicador(Integer id) {
+        this.id = id;
     }
 
-    public EmpreendimentoIndicador(int idEmpreendimentoFk, int idIndicadorFk) {
-        this.empreendimentoIndicadorPK = new EmpreendimentoIndicadorPK(idEmpreendimentoFk, idIndicadorFk);
+    public EmpreendimentoIndicador(Integer id, int idIndicador, int nota, Date dataNota) {
+        this.id = id;
+        this.idIndicador = idIndicador;
+        this.nota = nota;
+        this.dataNota = dataNota;
     }
 
-    public EmpreendimentoIndicadorPK getEmpreendimentoIndicadorPK() {
-        return empreendimentoIndicadorPK;
+    public Integer getId() {
+        return id;
     }
 
-    public void setEmpreendimentoIndicadorPK(EmpreendimentoIndicadorPK empreendimentoIndicadorPK) {
-        this.empreendimentoIndicadorPK = empreendimentoIndicadorPK;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public int getIdIndicador() {
+        return idIndicador;
+    }
+
+    public void setIdIndicador(int idIndicador) {
+        this.idIndicador = idIndicador;
     }
 
     public Integer getNota() {
@@ -55,6 +82,14 @@ public class EmpreendimentoIndicador implements Serializable {
 
     public void setNota(Integer nota) {
         this.nota = nota;
+    }
+
+    public Date getDataNota() {
+        return dataNota;
+    }
+
+    public void setDataNota(Date dataNota) {
+        this.dataNota = dataNota;
     }
 
     public Empreendimento getEmpreendimento() {
@@ -68,7 +103,7 @@ public class EmpreendimentoIndicador implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (empreendimentoIndicadorPK != null ? empreendimentoIndicadorPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -79,7 +114,7 @@ public class EmpreendimentoIndicador implements Serializable {
             return false;
         }
         EmpreendimentoIndicador other = (EmpreendimentoIndicador) object;
-        if ((this.empreendimentoIndicadorPK == null && other.empreendimentoIndicadorPK != null) || (this.empreendimentoIndicadorPK != null && !this.empreendimentoIndicadorPK.equals(other.empreendimentoIndicadorPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -87,7 +122,7 @@ public class EmpreendimentoIndicador implements Serializable {
 
     @Override
     public String toString() {
-        return "br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador[ empreendimentoIndicadorPK=" + empreendimentoIndicadorPK + " ]";
+        return "br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador[ id=" + id + " ]";
     }
     
 }

@@ -4,7 +4,6 @@ import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoIndicadorBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
-import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
@@ -55,42 +54,35 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     //METODOS
     public void liberaPainelIndicadores() {//Acontece ao selecionar um empreendimento na lista
-        try {
-            listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
-            System.out.println("===============================");
-            System.out.println("Tamanho é " + listaEptIndSalvar.size());
-            for (int i = listaEptIndSalvar.size(); i < listaIndicadores.size(); i++) {
-                EmpreendimentoIndicador indAux = new EmpreendimentoIndicador();
-                EmpreendimentoIndicadorPK eptIndPk = new EmpreendimentoIndicadorPK();//guarda os IDs
-                
-                eptIndPk.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
-                eptIndPk.setIdIndicadorFk(i + 1);//soma com 1 e seta o id
-                indAux.setEmpreendimentoIndicadorPK(eptIndPk);//SETA a empreendimento e indicador
-                
-                listaEptIndSalvar.add(indAux);
-            }
-            System.out.println("Tamanho agora é: " + listaEptIndSalvar.size());
-            System.out.println("===============================");
-        } catch (NullPointerException ex) {
-            System.out.println("Nenhum indicador para esse EES: " + ex);
+        listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
+        
+        System.out.println("===============================");
+        System.out.println("Tamanho é " + listaEptIndSalvar.size());
+        for (int i = listaEptIndSalvar.size(); i < listaIndicadores.size(); i++) {//Roda se ouver algum ou nenhum ind não preenchido
+            EmpreendimentoIndicador indAux = new EmpreendimentoIndicador();
+            System.out.println("NOTA GERADA: " + indAux.getNota()); 
+            indAux.setEmpreendimento(empreendimentoSelecionado);//SETA o empreendimento
+            indAux.setIdIndicador(i + 1);//SETA o indicador
+            listaEptIndSalvar.add(indAux);
         }
     }
 
     public void adicionaNota(int posicaoIndi) {
         EmpreendimentoIndicador eptInd = new EmpreendimentoIndicador();
-        EmpreendimentoIndicadorPK eptIndPk = new EmpreendimentoIndicadorPK();//guarda os IDs
+        Date x = new Date();
+        System.out.println("DATA aTUAL: " + x);
 
-        eptIndPk.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
-        eptIndPk.setIdIndicadorFk(posicaoIndi + 1);//passa a posição para INT, soma com 1 e seta
-
-        eptInd.setEmpreendimentoIndicadorPK(eptIndPk);//SETA a empreendimento e indicador
-        eptInd.setNota(listaEptIndSalvar.get(posicaoIndi).getNota());//Passa a nota para INT e seta
+        eptInd.setDataNota(x);//SETA a data da nota
+        eptInd.setNota(listaEptIndSalvar.get(posicaoIndi).getNota());//SETA a nota
+        System.out.println("NOTA ANTES de setar: " + listaEptIndSalvar.get(posicaoIndi).getNota());
+        eptInd.setEmpreendimento(empreendimentoSelecionado);//SETA o EES
+        eptInd.setIdIndicador(posicaoIndi + 1);//SETa o indicador
 
         for (int i = 0; i < listaEptIndSalvar.size(); i++) {
-            if (eptIndPk.equals(listaEptIndSalvar.get(i).getEmpreendimentoIndicadorPK())) {
+            if (eptInd.getIdIndicador() == listaEptIndSalvar.get(i).getIdIndicador()) {
                 listaEptIndSalvar.set(i, eptInd);
                 System.out.println("===============================");
-                System.out.println("Indicador " + (i+1) + " editado");
+                System.out.println("Indicador " + (i + 1) + " editado");
                 System.out.println("TAMANHO: " + listaEptIndSalvar.size());
                 System.out.println("===============================");
             }

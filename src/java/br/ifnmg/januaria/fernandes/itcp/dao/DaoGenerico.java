@@ -1,8 +1,5 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
-import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
-import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
-import br.ifnmg.januaria.fernandes.itcp.domain.Teste;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
