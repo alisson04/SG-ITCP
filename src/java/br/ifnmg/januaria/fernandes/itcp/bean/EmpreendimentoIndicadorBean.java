@@ -4,6 +4,7 @@ import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoIndicadorDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -23,7 +24,16 @@ public class EmpreendimentoIndicadorBean implements Serializable {
     }
 
     public void salvarBean(List<EmpreendimentoIndicador> listaEptInd) {
-        dao.salvarListaDAO(listaEptInd);
+        List<EmpreendimentoIndicador> listaRetiradoNulls;
+        listaRetiradoNulls = new ArrayList();
+        
+        //Lembresse q uma nova lista é necessária pois utilizar a lista q será salva como parametro p o FOR acarretará erro
+        for(int i=0; i<listaEptInd.size(); i++){
+            if(listaEptInd.get(i).getNota() != null){
+                listaRetiradoNulls.add(listaEptInd.get(i));
+            }
+        }
+        dao.salvarListaDAO(listaRetiradoNulls);
     }
     
     public void excluirBean(EmpreendimentoIndicador ept){

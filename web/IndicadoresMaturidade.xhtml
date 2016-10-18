@@ -105,7 +105,7 @@
                                              icon="profile-iconfinder" />
 
                             <p:slideMenu overlay="true" trigger="btnMinhaConta" my="left top" at="left bottom" >
-                                
+
                                 <p:menuitem value=" Sair" icon="Exit16-iconfinder"
                                             action="#{LoginView.sair()}"/>
                             </p:slideMenu>
@@ -150,11 +150,10 @@
                     <p:tabView id="tabGeral"  >
                         <p:tab id="tabCategoria1" title="Categoria 1">
                             <p:panel header="Questões sobre o Empreendimento">
-                                <h:panelGrid columns="3" >
+                                <h:panelGrid columns="2" >
                                     <p:outputLabel for="ind1" value="#{IndicadoresMaturidadeView.listaIndicadores[0].nome}:" />
                                     <p:selectOneRadio id="ind1" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[0].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(0)}"/>
-
                                         <f:selectItem itemLabel="Menos de 5 anos" itemValue="0"/>
                                         <f:selectItem itemLabel="Mais de 5 anos" itemValue="1"/>
                                         <f:selectItem itemLabel="Mais de 15 anos" itemValue="2"/>
@@ -163,7 +162,6 @@
                                     <p:outputLabel for="ind2" value="#{IndicadoresMaturidadeView.listaIndicadores[1].nome}: " />
                                     <p:selectOneRadio id="ind2" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[1].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(1)}"/>
-
                                         <f:selectItem itemLabel="Menos de 5" itemValue="20"/>
                                         <f:selectItem itemLabel="Mais de 5" itemValue="1"/>
                                     </p:selectOneRadio>
@@ -198,7 +196,7 @@
                         <!--CATEGORIA 2-->
                         <p:tab id="tabCategoria2" title="Categoria 2" disabled="">
                             <p:panel header="Questões sobre Infraestrutura">
-                                <h:panelGrid columns="3" >
+                                <h:panelGrid columns="2" >
                                     <p:outputLabel for="ind6" value="#{IndicadoresMaturidadeView.listaIndicadores[5].nome}: " />
                                     <p:selectOneRadio id="ind6" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[5].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(5)}"/>
@@ -239,7 +237,7 @@
 
                         <p:tab id="tabCategoria3" title="Categoria 3">
                             <p:panel header="Questões sobre Organização">
-                                <h:panelGrid columns="3" >
+                                <h:panelGrid columns="2" >
                                     <p:outputLabel for="ind10" value="#{IndicadoresMaturidadeView.listaIndicadores[9].nome}: " />
                                     <p:selectOneRadio id="ind10" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[9].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(9)}"/>
@@ -293,7 +291,7 @@
 
                         <p:tab id="tabCategoria4" title="Categoria 4">
                             <p:panel header="Questões sobre Participação">
-                                <h:panelGrid columns="3" >
+                                <h:panelGrid columns="2" >
                                     <p:outputLabel for="ind16" value="#{IndicadoresMaturidadeView.listaIndicadores[15].nome}: " />
                                     <p:selectOneRadio id="ind16" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[15].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(15)}"/>
@@ -364,7 +362,7 @@
 
                         <p:tab id="tabCategoria5" title="Categoria 5">
                             <p:panel header="Questões sobre Remuneração">
-                                <h:panelGrid columns="3" >
+                                <h:panelGrid columns="2" >
                                     <p:outputLabel for="ind24" value="#{IndicadoresMaturidadeView.listaIndicadores[23].nome}: " />
                                     <p:selectOneRadio id="ind24" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[23].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(23)}"/>
@@ -426,7 +424,7 @@
 
                         <p:tab id="tabCategoria6" title="Categoria 6">
                             <p:panel header="Questões sobre Comercialização">
-                                <h:panelGrid columns="3" >
+                                <h:panelGrid columns="2" >
                                     <p:outputLabel for="ind31" value="#{IndicadoresMaturidadeView.listaIndicadores[30].nome}: " />
                                     <p:selectOneRadio id="ind31" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[30].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(30)}"/>
@@ -472,7 +470,7 @@
 
                         <p:tab id="tabCategoria7" title="Categoria 7">
                             <p:panel header="Questões sobre Redes">
-                                <h:panelGrid columns="3" >
+                                <h:panelGrid columns="2" >
                                     <p:outputLabel for="ind36" value="#{IndicadoresMaturidadeView.listaIndicadores[35].nome}: " />
                                     <p:selectOneRadio id="ind36" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[35].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(35)}"/>
@@ -527,7 +525,7 @@
 
                         <p:tab id="tabCategoria8" title="Categoria 8">
                             <p:panel header="Questões sobre Apoio">
-                                <h:panelGrid columns="3" >
+                                <h:panelGrid columns="2" >
                                     <p:outputLabel for="ind42" value="#{IndicadoresMaturidadeView.listaIndicadores[41].nome}: " />
                                     <p:selectOneRadio id="ind42" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[41].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(41)}"/>
@@ -565,7 +563,7 @@
 
                         <p:tab id="tabCategoria9" title="Categoria 9">
                             <p:panel header="Questões sobre Produção">
-                                <h:panelGrid columns="3" >
+                                <h:panelGrid columns="2" >
                                     <p:outputLabel for="ind46" value="#{IndicadoresMaturidadeView.listaIndicadores[45].nome}: " />
                                     <p:selectOneRadio id="ind46" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[45].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(45)}"/>

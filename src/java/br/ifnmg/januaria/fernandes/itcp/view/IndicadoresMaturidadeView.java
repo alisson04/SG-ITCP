@@ -60,7 +60,6 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         System.out.println("Tamanho é " + listaEptIndSalvar.size());
         for (int i = listaEptIndSalvar.size(); i < listaIndicadores.size(); i++) {//Roda se ouver algum ou nenhum ind não preenchido
             EmpreendimentoIndicador indAux = new EmpreendimentoIndicador();
-            System.out.println("NOTA GERADA: " + indAux.getNota()); 
             indAux.setEmpreendimento(empreendimentoSelecionado);//SETA o empreendimento
             indAux.setIdIndicador(i + 1);//SETA o indicador
             listaEptIndSalvar.add(indAux);
