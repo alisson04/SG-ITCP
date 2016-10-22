@@ -4,19 +4,29 @@ import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoIndicadorBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
+import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.chart.Axis;
+import javafx.scene.chart.CategoryAxis;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -40,6 +50,9 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     private GerenciadorIndicadores gerenIndicadores;//Para gerar os indicadores
     private List<Indicador> listaIndicadores;//Para guardar os indicadores que serão usados na tela
 
+    //Gráfico Vars
+    private LineChartModel lineModel1;
+
     //Construtor
     public IndicadoresMaturidadeView() {
         listaEptIndSalvar = new ArrayList();
@@ -50,42 +63,89 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         //Indicador
         gerenIndicadores = new GerenciadorIndicadores();
         listaIndicadores = gerenIndicadores.listarIndicadores();
+
+        //Gráfico
     }
 
     //METODOS
+    public LineChartModel getLineModel1() {
+        return lineModel1;
+    }
+
+    private void createLineModels() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
+        Date dataAtual = new Date();//Cria uma data atual referente a do sistema
+
+        lineModel1 = initLinearModel();
+        lineModel1.setTitle("Evolução dos indicadores por categoria");//Titulo do gráfico
+        lineModel1.setLegendPosition("e");
+
+        lineModel1.getAxis(AxisType.Y).setLabel("Nota");//Texto do eixo Y do gráfico
+        DateAxis axis = new DateAxis("Data de modificação do indicador");//Texto do eixo X do gráfico
+        axis.setTickAngle(-50);
+        System.out.println("DATA ATUAL: " + dateFormat.format(dataAtual));
+        axis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
+        axis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
+
+        lineModel1.getAxes().put(AxisType.X, axis);
+
+    }
+
+    private LineChartModel initLinearModel() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
+        Date dataAtual = new Date();//Cria uma data atual referente a do sistema
+        System.out.println("DATA ATUAL: " + dateFormat.format(dataAtual));
+        LineChartModel model = new LineChartModel();
+
+        //MES DIA ANO é a sequencia que as datas devem ser setadas
+        LineChartSeries series1 = new LineChartSeries();
+        series1.setLabel("Series 1");
+        series1.set("01-10-2016", 51);
+        series1.set("10-11-2016", 32);
+
+        LineChartSeries series2 = new LineChartSeries();
+        series2.setLabel("Series 2");
+        series2.set("10-15-2016", 51);
+        series2.set("10-16-2016", 32);
+
+        model.addSeries(series1);
+        model.addSeries(series2);
+
+        return model;
+    }
+
     public void liberaPainelIndicadores() {//Acontece ao selecionar um empreendimento na lista
+        Date x = new Date();
         listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
-        
+
         System.out.println("===============================");
         System.out.println("Tamanho é " + listaEptIndSalvar.size());
-        for (int i = listaEptIndSalvar.size(); i < listaIndicadores.size(); i++) {//Roda se ouver algum ou nenhum ind não preenchido
+        for (int i = listaEptIndSalvar.size(); i < listaIndicadores.size(); i++) {//Roda se ouver algum ind não preenchido
             EmpreendimentoIndicador indAux = new EmpreendimentoIndicador();
-            indAux.setEmpreendimento(empreendimentoSelecionado);//SETA o empreendimento
-            indAux.setIdIndicador(i + 1);//SETA o indicador
-            listaEptIndSalvar.add(indAux);
+            EmpreendimentoIndicadorPK EptIndPK = new EmpreendimentoIndicadorPK();
+
+            //indAux.setNota(0);
+            EptIndPK.setDataNota(x);//SETA a data
+            EptIndPK.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
+            EptIndPK.setIdIndicador(i + 1);//SETA o indicador
+
+            indAux.setEmpreendimentoIndicadorPK(EptIndPK);//SETA as chaves
+            listaEptIndSalvar.add(indAux);//Adiciona o obj a lista p ser usado na tela e talvez salvo
         }
+
+        createLineModels();//Chama o método para preencher o gráfico de indicadores
     }
 
     public void adicionaNota(int posicaoIndi) {
-        EmpreendimentoIndicador eptInd = new EmpreendimentoIndicador();
-        Date x = new Date();
-        System.out.println("DATA aTUAL: " + x);
+        EmpreendimentoIndicador eptIndAux;//Cria este para guardar a nota
+        EmpreendimentoIndicadorPK EptIndPK;//Criar esta para receber a data nova
+        Date x = new Date();//Cria a nova data
 
-        eptInd.setDataNota(x);//SETA a data da nota
-        eptInd.setNota(listaEptIndSalvar.get(posicaoIndi).getNota());//SETA a nota
-        System.out.println("NOTA ANTES de setar: " + listaEptIndSalvar.get(posicaoIndi).getNota());
-        eptInd.setEmpreendimento(empreendimentoSelecionado);//SETA o EES
-        eptInd.setIdIndicador(posicaoIndi + 1);//SETa o indicador
-
-        for (int i = 0; i < listaEptIndSalvar.size(); i++) {
-            if (eptInd.getIdIndicador() == listaEptIndSalvar.get(i).getIdIndicador()) {
-                listaEptIndSalvar.set(i, eptInd);
-                System.out.println("===============================");
-                System.out.println("Indicador " + (i + 1) + " editado");
-                System.out.println("TAMANHO: " + listaEptIndSalvar.size());
-                System.out.println("===============================");
-            }
-        }
+        EptIndPK = listaEptIndSalvar.get(posicaoIndi).getEmpreendimentoIndicadorPK();//SETA a chave
+        eptIndAux = listaEptIndSalvar.get(posicaoIndi);
+        EptIndPK.setDataNota(x);//SETA a data atual
+        eptIndAux.setEmpreendimentoIndicadorPK(EptIndPK);
+        listaEptIndSalvar.set(posicaoIndi, eptIndAux);//Coloca na lista com informações atualizadas
     }
 
     public void salvarView() {

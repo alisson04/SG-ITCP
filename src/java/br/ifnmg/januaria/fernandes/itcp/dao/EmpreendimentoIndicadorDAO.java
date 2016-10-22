@@ -36,21 +36,22 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         EntityManager em = emf.createEntityManager();
         
-        List<EmpreendimentoIndicador> listaObjsFiltrados;
-        listaObjsFiltrados = new ArrayList<>();
+        List<EmpreendimentoIndicador> listaObjsFiltrados;//Cria alista que será retornada
+        listaObjsFiltrados = new ArrayList<>();//Instancia  a lista
 
         for (int i = 0; i < 48; i++) {//Roda 48 vezes coletando os indicadores do ESS com maior data
             try {
                 em = emf.createEntityManager();
                 em.getTransaction().begin();
-                EmpreendimentoIndicador indAux;
+                EmpreendimentoIndicador indAux;//Cria o OBJ que receberá p resultado da consulta
                 //A consulta retorna a instancia de maior data com tal IdEmpreendimento e IDindicador
                 Query consulta = em.createQuery("SELECT o FROM EmpreendimentoIndicador o "
-                        + "WHERE o.empreendimento.id = :id "
-                        + "AND o.idIndicador = :idIndicador "
-                        + "AND o.dataNota = "
-                        + "(SELECT MAX(x.dataNota) FROM EmpreendimentoIndicador x WHERE x.empreendimento.id = :id "
-                        + "AND x.idIndicador = :idIndicador)");
+                        + "WHERE o.empreendimentoIndicadorPK.idEmpreendimentoFk = :id "
+                        + "AND o.empreendimentoIndicadorPK.idIndicador = :idIndicador "
+                        + "AND o.empreendimentoIndicadorPK.dataNota = "
+                        + "(SELECT MAX(x.empreendimentoIndicadorPK.dataNota) FROM EmpreendimentoIndicador x "
+                        + "WHERE x.empreendimentoIndicadorPK.idEmpreendimentoFk = :id "
+                        + "AND x.empreendimentoIndicadorPK.idIndicador = :idIndicador)");
                 consulta.setParameter("id", obj.getId());
                 consulta.setParameter("idIndicador", i+1);
                 indAux = (EmpreendimentoIndicador) consulta.getSingleResult();//Pega o indicador com maior data para tal EES e ind

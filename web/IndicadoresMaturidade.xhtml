@@ -29,9 +29,6 @@
                             </p:column>
 
                             <f:facet name="footer">
-                                <p:commandButton id="btnVisualizarusr" update=":frmIndicadores:carDetail" 
-                                                 icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                                 disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
                                 <p:commandButton id="btnLancarNotas" value="Lançar notas" icon="Add24-iconfinder" 
                                                  update="frmIndicadores"
                                                  disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" 
@@ -48,67 +45,32 @@
                     <p:panel id="panelCategorias" header="Categorias de indicadores">
                         <!-- PAINEL DE CATEGORIAS DE EMPREENDIMENTOS-->
                         <h:panelGrid columns="3">
-                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[1].categoria}" toggleable="true" 
-                                        collapsed="true" toggleSpeed="500">
-                                <h:panelGrid columns="3" cellpadding="5">
-
-                                </h:panelGrid>
-                            </p:fieldset>
-
-                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" toggleable="true" 
-                                        collapsed="true" toggleSpeed="500">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                </h:panelGrid>
-                            </p:fieldset>
-                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" toggleable="true" 
-                                        collapsed="true" toggleSpeed="500">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                </h:panelGrid>
-                            </p:fieldset>
-
-                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" toggleable="true" 
-                                        collapsed="true" toggleSpeed="500">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                </h:panelGrid>
-                            </p:fieldset>
-                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" toggleable="true" 
-                                        collapsed="true" toggleSpeed="500">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                </h:panelGrid>
-                            </p:fieldset>
-
-                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" toggleable="true" 
-                                        collapsed="true" toggleSpeed="500">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                </h:panelGrid>
-                            </p:fieldset>
-
-                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" toggleable="true" 
-                                        collapsed="true" toggleSpeed="500">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                </h:panelGrid>
-                            </p:fieldset>
-
-                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" toggleable="true" 
-                                        collapsed="true" toggleSpeed="500">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                </h:panelGrid>
-                            </p:fieldset>
-
-                            <p:fieldset legend="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" toggleable="true" 
-                                        collapsed="true" toggleSpeed="500">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                </h:panelGrid>
-                            </p:fieldset>
-
-                            <p:commandButton id="btnMinhaConta" type="push" title="Minha conta" style="ui-button" 
-                                             icon="profile-iconfinder" />
-
-                            <p:slideMenu overlay="true" trigger="btnMinhaConta" my="left top" at="left bottom" >
-
-                                <p:menuitem value=" Sair" icon="Exit16-iconfinder"
-                                            action="#{LoginView.sair()}"/>
-                            </p:slideMenu>
+                            <p:commandButton 
+                                             value="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" />
+                            
+                            <p:commandButton 
+                                             value="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" />
+                            
+                            <p:commandButton 
+                                             value="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" />
+                            
+                            <p:commandButton 
+                                             value="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" />
+                            
+                            <p:commandButton 
+                                             value="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" />
+                            
+                            <p:commandButton 
+                                             value="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
+                            
+                            <p:commandButton 
+                                             value="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
+                            
+                            <p:commandButton 
+                                             value="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
+                            
+                            <p:commandButton 
+                                             value="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" />
                         </h:panelGrid>
                     </p:panel>
 
@@ -119,27 +81,10 @@
                         PARA ACESSAR SEUS INDICADORES<br />
                         <p:graphicImage name="fotos/128Seta.png"/>
                     </p:blockUI>
-
-                    <!--O blockUi abaixo só é mostrado se algum ESS estiver selecionado e seu último indicador não preenchido-->
-                    <p:blockUI block="panelCategorias" widgetVar="buiPanelGrafic" 
-                               blocked="#{IndicadoresMaturidadeView.listaEptIndSalvar[47].nota == null
-                                          and IndicadoresMaturidadeView.empreendimentoSelecionado != null}">
-                        PREENCHA O FORMULÁRIO DE INDICADORES<br />
-                        DESSE EMPREENDIMENTO<br />
-                        <p:graphicImage name="fotos/128Check.png"/>
-                    </p:blockUI>
-
-                    <!-- CAIXA DE DIALOGO QUE MOSTRA AS INFORMAÇÕES DO EMPREENDIMENTO-->
-                    <p:dialog id="diaShowUsr" header="Informações do empreendimento" widgetVar="carDialog" showEffect="fade" 
-                              hideEffect="fade" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
-                        <p:outputPanel id="carDetail" style="text-align:center;">
-                            <p:panelGrid  columns="2" columnClasses="label,value" >
-
-                            </p:panelGrid>
-                        </p:outputPanel>
-                    </p:dialog>
                 </p:panelGrid>
+
+                <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:400px;"
+                         rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}"/>
             </h:form>
 
             <!-- FORMULARIO DE PREENCHIMENTO DE INDICADORES -->
@@ -162,7 +107,7 @@
                                     <p:outputLabel for="ind2" value="#{IndicadoresMaturidadeView.listaIndicadores[1].nome}: " />
                                     <p:selectOneRadio id="ind2" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[1].nota}" >
                                         <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(1)}"/>
-                                        <f:selectItem itemLabel="Menos de 5" itemValue="20"/>
+                                        <f:selectItem itemLabel="Menos de 5" itemValue="2"/>
                                         <f:selectItem itemLabel="Mais de 5" itemValue="1"/>
                                     </p:selectOneRadio>
 
@@ -599,7 +544,7 @@
 
                     <p:separator/>                    
                     <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{IndicadoresMaturidadeView.salvarView()}" 
-                                     icon="Save24-iconfinder" update="frmIndicadores frmEdicao" >
+                                     icon="Save24-iconfinder" update="frmIndicadores frmEdicao" immediate="true" >
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                     </p:commandButton>
 

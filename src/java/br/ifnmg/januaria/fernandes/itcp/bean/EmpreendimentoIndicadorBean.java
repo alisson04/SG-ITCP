@@ -18,7 +18,7 @@ import javax.faces.bean.SessionScoped;
 public class EmpreendimentoIndicadorBean implements Serializable {
 
     private EmpreendimentoIndicadorDAO dao;
-    
+
     public EmpreendimentoIndicadorBean() {
         dao = new EmpreendimentoIndicadorDAO();
     }
@@ -26,29 +26,34 @@ public class EmpreendimentoIndicadorBean implements Serializable {
     public void salvarBean(List<EmpreendimentoIndicador> listaEptInd) {
         List<EmpreendimentoIndicador> listaRetiradoNulls;
         listaRetiradoNulls = new ArrayList();
-        
+
         //Lembresse q uma nova lista é necessária pois utilizar a lista q será salva como parametro p o FOR acarretará erro
-        for(int i=0; i<listaEptInd.size(); i++){
-            if(listaEptInd.get(i).getNota() != null){
+        for (int i = 0; i < listaEptInd.size(); i++) {
+            if (listaEptInd.get(i).getNota() != null) {
                 listaRetiradoNulls.add(listaEptInd.get(i));
             }
         }
-        dao.salvarListaDAO(listaRetiradoNulls);
+
+        if (!listaRetiradoNulls.isEmpty()) {
+            dao.salvarListaDAO(listaRetiradoNulls);
+        }else{
+            System.out.println("Não salvou nada");
+        }
     }
-    
-    public void excluirBean(EmpreendimentoIndicador ept){
+
+    public void excluirBean(EmpreendimentoIndicador ept) {
         dao.excluirDao(ept);
     }
-    
+
     public List<EmpreendimentoIndicador> listarBean() {
         return dao.listarTodosDAO();
     }
-    
-    public long contarLinhasBean(){
+
+    public long contarLinhasBean() {
         return dao.contarLinhasDAO();
     }
-    
-    public List<EmpreendimentoIndicador> buscarListaPorCodigoBean(Empreendimento obj){
+
+    public List<EmpreendimentoIndicador> buscarListaPorCodigoBean(Empreendimento obj) {
         return dao.buscarListaPorCodigo(obj);
     }
 }
