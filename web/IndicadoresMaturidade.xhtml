@@ -8,83 +8,84 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmIndicadores" >
-                <p:panelGrid columns="2" layout="grid" >
-                    <p:panel header="Empreendimentos cadastrados">
-                        <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento cadastrado." 
-                                     selectionMode="single" value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" 
-                                     var="empreendimentoCursor" widgetVar="varGlobal"  
-                                     filteredValue="#{IndicadoresMaturidadeView.listaEmpreendimentosFiltrados}" rows="12" 
-                                     paginator="true" selection="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
-                                     rowKey="#{empreendimentoCursor.id}" paginatorPosition="top">
+                <p:panel header="Empreendimentos cadastrados">
+                    <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento cadastrado." 
+                                 selectionMode="single" value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" 
+                                 var="empreendimentoCursor" widgetVar="varGlobal"  
+                                 filteredValue="#{IndicadoresMaturidadeView.listaEmpreendimentosFiltrados}" rows="12" 
+                                 paginator="true" selection="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
+                                 rowKey="#{empreendimentoCursor.id}" paginatorPosition="top">
 
-                            <p:ajax event="rowSelect" update="frmIndicadores frmEdicao" 
-                                    listener="#{IndicadoresMaturidadeView.liberaPainelIndicadores()}"/>
+                        <p:ajax event="rowSelect" update="frmIndicadores frmEdicao" 
+                                listener="#{IndicadoresMaturidadeView.liberaPainelIndicadores()}"/>
 
-                            <p:column headerText="Nome" sortBy="#{empreendimentoCursor.nome}" >
-                                <h:outputText value="#{empreendimentoCursor.nome}"/>
-                            </p:column>
+                        <p:column headerText="Nome" sortBy="#{empreendimentoCursor.nome}" >
+                            <h:outputText value="#{empreendimentoCursor.nome}"/>
+                        </p:column>
 
-                            <p:column headerText="TESTE: " >
-                                <h:outputText value="#{IndicadoresMaturidadeView.listaEptIndSalvar[47].nota}"/>
-                            </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="btnLancarNotas" value="Lançar notas" icon="Add24-iconfinder" 
+                                             update="frmIndicadores"
+                                             disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" 
+                                             oncomplete="PF('wVarEditarDialog').show()" />
 
-                            <f:facet name="footer">
-                                <p:commandButton id="btnLancarNotas" value="Lançar notas" icon="Add24-iconfinder" 
-                                                 update="frmIndicadores"
-                                                 disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" 
-                                                 oncomplete="PF('wVarEditarDialog').show()" />
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
+                            </p:confirmDialog>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
 
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
-                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
-                                </p:confirmDialog>
-                            </f:facet>
-                        </p:dataTable>
-                    </p:panel>
+                <p:panel style="margin-bottom:20px" 
+                         >
+                    <p:selectOneMenu value="#{IndicadoresMaturidadeView.categoriaSelecionada}">
+                        <p:ajax update="frmIndicadores" event="itemSelect"
+                                listener="#{IndicadoresMaturidadeView.createLineModels()}" />
 
-                    <p:panel id="panelCategorias" header="Categorias de indicadores">
-                        <!-- PAINEL DE CATEGORIAS DE EMPREENDIMENTOS-->
-                        <h:panelGrid columns="3">
-                            <p:commandButton 
-                                             value="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" />
-                            
-                            <p:commandButton 
-                                             value="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" />
-                            
-                            <p:commandButton 
-                                             value="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" />
-                            
-                            <p:commandButton 
-                                             value="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" />
-                            
-                            <p:commandButton 
-                                             value="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" />
-                            
-                            <p:commandButton 
-                                             value="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
-                            
-                            <p:commandButton 
-                                             value="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
-                            
-                            <p:commandButton 
-                                             value="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
-                            
-                            <p:commandButton 
-                                             value="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" />
-                        </h:panelGrid>
-                    </p:panel>
+                        <f:selectItem itemLabel="Selecione a categoria" itemValue="" noSelectionOption="true" />
 
-                    <!--O blockUi abaixo só é mostrado se nenhum ESS estiver selecionado-->
-                    <p:blockUI block="panelCategorias" widgetVar="bui" 
-                               blocked="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}">
-                        SELECIONE UM EMPREENDIMENTO<br />
-                        PARA ACESSAR SEUS INDICADORES<br />
-                        <p:graphicImage name="fotos/128Seta.png"/>
-                    </p:blockUI>
-                </p:panelGrid>
+                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
+                        
+                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
+                        
+                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
+                        
+                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
+                        
+                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
+                        
+                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
+                        
+                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
+                        
+                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
+                        
+                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
+                    </p:selectOneMenu>
+                    <p:separator/>
 
-                <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:400px;"
-                         rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}"/>
+                    <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:300px;" 
+                             rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != null}"/>
+
+                    <f:facet name="options" >
+
+                        <p:menu >
+                            <p:submenu label="Escolher categoria">
+
+                            </p:submenu>
+                        </p:menu>
+                    </f:facet>
+                </p:panel>
             </h:form>
 
             <!-- FORMULARIO DE PREENCHIMENTO DE INDICADORES -->

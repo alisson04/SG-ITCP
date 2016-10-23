@@ -13,6 +13,19 @@ public class GerenciadorIndicadores {
     public GerenciadorIndicadores() {
     }
     
+    public List<Indicador> listarIndicadoresPorCategoria(String categoria){
+        List<Indicador> listaIndicadores =listarIndicadores();
+        List<Indicador> listaFiltrada = new ArrayList();
+        int quantidadeIndicadores = listaIndicadores.size();
+        
+        for(int i=0; i< quantidadeIndicadores; i++){
+            if(listaIndicadores.get(i).getCategoria().equals(categoria)){
+                listaFiltrada.add(listaIndicadores.get(i));
+            }
+        }
+        return listaFiltrada;
+    }
+    
     public List<Indicador> listarIndicadores(){
         Indicador obj = new Indicador();
         List<Indicador> listaIndicadores = new ArrayList();

@@ -16,14 +16,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.chart.Axis;
-import javafx.scene.chart.CategoryAxis;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.BarChartModel;
-import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
@@ -52,6 +48,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     //Gráfico Vars
     private LineChartModel lineModel1;
+    private String categoriaSelecionada;//Para receber o valor que representa a categoria selecionada
 
     //Construtor
     public IndicadoresMaturidadeView() {
@@ -68,17 +65,14 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     }
 
     //METODOS
-    public LineChartModel getLineModel1() {
-        return lineModel1;
-    }
-
-    private void createLineModels() {
+    public void createLineModels() {//Configurações do gráfico
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
         Date dataAtual = new Date();//Cria uma data atual referente a do sistema
 
-        lineModel1 = initLinearModel();
+        lineModel1 = preencheGrafico();
         lineModel1.setTitle("Evolução dos indicadores por categoria");//Titulo do gráfico
         lineModel1.setLegendPosition("e");
+        lineModel1.setAnimate(true);
 
         lineModel1.getAxis(AxisType.Y).setLabel("Nota");//Texto do eixo Y do gráfico
         DateAxis axis = new DateAxis("Data de modificação do indicador");//Texto do eixo X do gráfico
@@ -91,25 +85,38 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     }
 
-    private LineChartModel initLinearModel() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
-        Date dataAtual = new Date();//Cria uma data atual referente a do sistema
-        System.out.println("DATA ATUAL: " + dateFormat.format(dataAtual));
-        LineChartModel model = new LineChartModel();
-
+    private LineChartModel preencheGrafico() {//Preenche as informações do gráfico
         //MES DIA ANO é a sequencia que as datas devem ser setadas
-        LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Series 1");
-        series1.set("01-10-2016", 51);
-        series1.set("10-11-2016", 32);
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");//Cria o formato q data sera mostrada
+        Date dataAtual = new Date();//Cria uma data atual referente a do sistema
 
-        LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Series 2");
-        series2.set("10-15-2016", 51);
-        series2.set("10-16-2016", 32);
+        List<EmpreendimentoIndicador> listaEptIndGrafico;
+        listaEptIndGrafico = bean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
 
-        model.addSeries(series1);
-        model.addSeries(series2);
+        List<Indicador> listaIndicadoresCategoria;
+        listaIndicadoresCategoria = bean.listarIndicadoresPorCategoriaBean(categoriaSelecionada);
+
+        System.out.println("IND para a categoria: " + listaIndicadoresCategoria.size());
+
+        System.out.println("QUANTIDA: " + listaEptIndGrafico.size());
+
+        LineChartModel model = new LineChartModel();
+        LineChartSeries series1;
+
+        for (int i = 0; i < listaIndicadoresCategoria.size(); i++) {//Roda a quantidade de indicadores da categoria
+
+            series1 = new LineChartSeries();
+            series1.setLabel(listaIndicadoresCategoria.get(i).getNome());//Seta o nome da série como o nome do indicador
+            for (int x = 0; x < listaEptIndGrafico.size(); x++) {
+                if (listaIndicadoresCategoria.get(i).getId().equals(listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getIdIndicador())) {
+                    System.out.println("ID IND: " + listaIndicadoresCategoria.get(i).getId());
+                    System.out.println("ID GRA: " + listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getIdIndicador());
+                    series1.set(dateFormat.format(listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getDataNota()), 
+                            listaEptIndGrafico.get(x).getNota());
+                }
+            }
+            model.addSeries(series1);
+        }
 
         return model;
     }
@@ -208,5 +215,17 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     public void setListaEptIndSalvar(List<EmpreendimentoIndicador> listaEptIndSalvar) {
         this.listaEptIndSalvar = listaEptIndSalvar;
+    }
+
+    public LineChartModel getLineModel1() {
+        return lineModel1;
+    }
+
+    public String getCategoriaSelecionada() {
+        return categoriaSelecionada;
+    }
+
+    public void setCategoriaSelecionada(String categoriaSelecionada) {
+        this.categoriaSelecionada = categoriaSelecionada;
     }
 }

@@ -3,6 +3,8 @@ package br.ifnmg.januaria.fernandes.itcp.bean;
 import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoIndicadorDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
+import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
+import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +20,11 @@ import javax.faces.bean.SessionScoped;
 public class EmpreendimentoIndicadorBean implements Serializable {
 
     private EmpreendimentoIndicadorDAO dao;
+    private GerenciadorIndicadores gerenIndicadores;
 
     public EmpreendimentoIndicadorBean() {
         dao = new EmpreendimentoIndicadorDAO();
+        gerenIndicadores = new GerenciadorIndicadores();
     }
 
     public void salvarBean(List<EmpreendimentoIndicador> listaEptInd) {
@@ -39,6 +43,15 @@ public class EmpreendimentoIndicadorBean implements Serializable {
         }else{
             System.out.println("Não salvou nada");
         }
+    }
+    
+    //Retorna os EmprendimentoIndicadores por uma categoria
+    public List<EmpreendimentoIndicador> listarEesIndisPorcategoriaBean(Empreendimento ees, String categoria){
+        return dao.listarEesIndisPorcategoriaDAO(ees, listarIndicadoresPorCategoriaBean(categoria));
+    }
+    
+    public List<Indicador> listarIndicadoresPorCategoriaBean(String categoria){//Retorna os indicadores por uma categoria
+        return gerenIndicadores.listarIndicadoresPorCategoria(categoria);
     }
 
     public void excluirBean(EmpreendimentoIndicador ept) {
