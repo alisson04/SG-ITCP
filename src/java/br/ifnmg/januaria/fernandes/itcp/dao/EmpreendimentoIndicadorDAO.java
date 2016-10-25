@@ -98,7 +98,7 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
                 em.close();
             }
         }
-        System.out.println("TAMANANANANA: " + listaObjsFiltrados.size());
+        System.out.println("Encontrados DAO: " + listaObjsFiltrados.size());
         return listaObjsFiltrados;
     }
 

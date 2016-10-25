@@ -8,7 +8,7 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmIndicadores" >
-                <p:panel header="Empreendimentos cadastrados">
+                <p:panel header="Selecione um empreendimento para preencher ou visializar seus indicadores">
                     <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento cadastrado." 
                                  selectionMode="single" value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" 
                                  var="empreendimentoCursor" widgetVar="varGlobal"  
@@ -37,55 +37,66 @@
                     </p:dataTable>
                 </p:panel>
 
-                <p:panel style="margin-bottom:20px" 
-                         >
-                    <p:selectOneMenu value="#{IndicadoresMaturidadeView.categoriaSelecionada}">
-                        <p:ajax update="frmIndicadores" event="itemSelect"
-                                listener="#{IndicadoresMaturidadeView.createLineModels()}" />
+                <p:selectOneMenu value="#{IndicadoresMaturidadeView.categoriaSelecionada}"
+                                 rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" >
+                    <p:ajax update="frmIndicadores" event="itemSelect" listener="#{IndicadoresMaturidadeView.criaGrafico()}" />
 
-                        <f:selectItem itemLabel="Selecione a categoria" itemValue="" noSelectionOption="true" />
+                    <f:selectItem itemLabel="Selecione uma categoria de indicadores" itemValue="" noSelectionOption="true" />
 
-                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
-                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
-                        
-                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
-                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
-                        
-                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
-                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
-                        
-                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
-                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
-                        
-                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
-                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
-                        
-                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
-                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
-                        
-                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
-                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
-                        
-                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
-                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
-                        
-                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
-                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
-                    </p:selectOneMenu>
-                    <p:separator/>
+                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
+                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
 
-                    <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:300px;" 
-                             rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != null}"/>
+                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
+                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
 
-                    <f:facet name="options" >
+                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
+                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
 
-                        <p:menu >
-                            <p:submenu label="Escolher categoria">
+                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
+                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
 
-                            </p:submenu>
-                        </p:menu>
-                    </f:facet>
+                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
+                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
+
+                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
+                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
+
+                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
+                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
+
+                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
+                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
+
+                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
+                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
+                </p:selectOneMenu>
+
+                <p:separator/>
+
+                <p:panel id="panelGrafico" style="margin-bottom:20px"
+                         rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" >
+                    <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:400px;" 
+                             rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null
+                                         and IndicadoresMaturidadeView.listaEptIndGrafico.size() > 0}"/>
                 </p:panel>
+
+                <p:blockUI block="panelGrafico" blocked="#{
+                           IndicadoresMaturidadeView.empreendimentoSelecionado != null
+                               and IndicadoresMaturidadeView.listaEptIndGrafico.size() == 0
+                               and IndicadoresMaturidadeView.categoriaSelecionada == ''}" >
+                    <p:graphicImage name="icons32/SetaEsquerda32.png"/>
+                    <br />
+                    SELECIONE UMA CATEGORIA DE INDICADORES <br /> CLICANDO NA CAIXA AO LADO
+                </p:blockUI>
+
+                <p:blockUI block="panelGrafico" blocked="#{
+                           IndicadoresMaturidadeView.empreendimentoSelecionado != null
+                               and IndicadoresMaturidadeView.listaEptIndGrafico.size() == 0
+                               and IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
+                    <p:graphicImage name="icons32/SetaCima32.png"/>
+                    <br />
+                    NÃO HÁ INDICADORES PARA ESSA CATEGORIA, <br /> PREENCHA ALGUM CLICANDO NO BOTÃO ACIMA                    
+                </p:blockUI>
             </h:form>
 
             <!-- FORMULARIO DE PREENCHIMENTO DE INDICADORES -->
