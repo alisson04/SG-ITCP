@@ -80,15 +80,17 @@
                                          and IndicadoresMaturidadeView.listaEptIndGrafico.size() > 0}"/>
                 </p:panel>
 
+                <!-- Bloqueia se "algum EES esta selecionado" e "nenhuma categoria esta seleciona" -->
                 <p:blockUI block="panelGrafico" blocked="#{
                            IndicadoresMaturidadeView.empreendimentoSelecionado != null
-                               and IndicadoresMaturidadeView.listaEptIndGrafico.size() == 0
                                and IndicadoresMaturidadeView.categoriaSelecionada == ''}" >
                     <p:graphicImage name="icons32/SetaEsquerda32.png"/>
                     <br />
                     SELECIONE UMA CATEGORIA DE INDICADORES <br /> CLICANDO NA CAIXA AO LADO
                 </p:blockUI>
 
+                <!-- Bloqueia se "algum EES esta selecionado" e "alguma categoria esta seleciona" 
+                e "não a INDS preenchidos para a categoria"-->
                 <p:blockUI block="panelGrafico" blocked="#{
                            IndicadoresMaturidadeView.empreendimentoSelecionado != null
                                and IndicadoresMaturidadeView.listaEptIndGrafico.size() == 0
@@ -104,7 +106,7 @@
                       showEffect="clip" hideEffect="clip" modal="true"
                       styleClass="corDialog" resizable="false" draggable="false"   appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
-                    <p:tabView id="tabGeral"  >
+                    <p:tabView id="tabGeral"  activeIndex="#{IndicadoresMaturidadeView.tabview.activeIndex}">
                         <p:tab id="tabCategoria1" title="Categoria 1">
                             <p:panel header="Questões sobre o Empreendimento">
                                 <h:panelGrid columns="2" >

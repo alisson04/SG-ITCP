@@ -19,7 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
@@ -51,6 +53,8 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     private LineChartModel lineModel1;
     private String categoriaSelecionada;//Para receber o valor que representa a categoria selecionada
     private List<EmpreendimentoIndicador> listaEptIndGrafico;
+    
+    private TabView tabview;
 
     //Construtor
     public IndicadoresMaturidadeView() {
@@ -65,10 +69,11 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
         //Gráfico
         listaEptIndGrafico = new ArrayList();
-        categoriaSelecionada = "";
+        categoriaSelecionada = "";//Necessário, não retirar
+        tabview = new TabView();
     }
 
-    //METODOS
+    //METODOS    
     public void criaGrafico() {//Configurações do gráfico - Acontece ao selecionar uma categoria
         Calendar calendar = Calendar.getInstance();//Pega a data atual
         calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
@@ -88,13 +93,37 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         axis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
 
         lineModel1.getAxes().put(AxisType.X, axis);
+        
+        configuraCategoria();
+    }
+    
+    private void configuraCategoria(){
+        if(categoriaSelecionada.equals(listaIndicadores.get(0).getCategoria())){
+            tabview.setActiveIndex(0);//Ativa a TAB de sua categoria
+        }else if(categoriaSelecionada.equals(listaIndicadores.get(6).getCategoria())){
+            tabview.setActiveIndex(1);//Ativa a TAB de sua categoria
+        }else if(categoriaSelecionada.equals(listaIndicadores.get(10).getCategoria())){
+            tabview.setActiveIndex(2);//Ativa a TAB de sua categoria
+        }else if(categoriaSelecionada.equals(listaIndicadores.get(16).getCategoria())){
+            tabview.setActiveIndex(3);//Ativa a TAB de sua categoria
+        }else if(categoriaSelecionada.equals(listaIndicadores.get(24).getCategoria())){
+            tabview.setActiveIndex(4);//Ativa a TAB de sua categoria
+        }else if(categoriaSelecionada.equals(listaIndicadores.get(31).getCategoria())){
+            tabview.setActiveIndex(5);//Ativa a TAB de sua categoria
+        }else if(categoriaSelecionada.equals(listaIndicadores.get(36).getCategoria())){
+            tabview.setActiveIndex(6);//Ativa a TAB de sua categoria
+        }else if(categoriaSelecionada.equals(listaIndicadores.get(42).getCategoria())){
+            tabview.setActiveIndex(7);//Ativa a TAB de sua categoria
+        }else if(categoriaSelecionada.equals(listaIndicadores.get(46).getCategoria())){
+            tabview.setActiveIndex(8);//Ativa a TAB de sua categoria
+        }
     }
 
-    public void listarIndicadoresPorCategoriaView() {
+    private void listarIndicadoresPorCategoriaView() {
         listaEptIndGrafico = bean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
     }
 
-    private LineChartModel preencheGrafico() {//Preenche as informações do gráfico
+    private LineChartModel preencheGrafico() {//Preenche as informações do gráfico - É chamado pelo método "Cria Gráfico"
         //MES DIA ANO é a sequencia que as datas devem ser setadas
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");//Cria o formato q data sera mostrada
         listarIndicadoresPorCategoriaView();
@@ -105,14 +134,11 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         LineChartSeries series1;
 
         for (int i = 0; i < listaIndicadoresCategoria.size(); i++) {//Roda a quantidade de indicadores da categoria
-
             series1 = new LineChartSeries();
             series1.setLabel(listaIndicadoresCategoria.get(i).getNome());//Seta o nome da série como o nome do indicador
             for (int x = 0; x < listaEptIndGrafico.size(); x++) {
                 if (listaIndicadoresCategoria.get(i).getId().equals(
                         listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getIdIndicador())) {
-                    System.out.println("ID IND: " + listaIndicadoresCategoria.get(i).getId());
-                    System.out.println("ID GRA: " + listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getIdIndicador());
                     series1.set(dateFormat.format(listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getDataNota()),
                             listaEptIndGrafico.get(x).getNota());
                 }
@@ -139,10 +165,10 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
             indAux.setEmpreendimentoIndicadorPK(EptIndPK);//SETA as chaves
             listaEptIndSalvar.add(indAux);//Adiciona o obj a lista p ser usado na tela e talvez salvo
-
         }
         categoriaSelecionada = "";
         listaEptIndGrafico = new ArrayList();
+        tabview.setActiveIndex(0);//Volta para a primeira TAB do formulario da tela
     }
 
     public void adicionaNota(int posicaoIndi) {
@@ -237,5 +263,13 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     public void setListaEptIndGrafico(List<EmpreendimentoIndicador> listaEptIndGrafico) {
         this.listaEptIndGrafico = listaEptIndGrafico;
+    }
+
+    public TabView getTabview() {
+        return tabview;
+    }
+
+    public void setTabview(TabView tabview) {
+        this.tabview = tabview;
     }
 }

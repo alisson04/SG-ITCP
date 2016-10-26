@@ -16,13 +16,14 @@ public class GerenciadorIndicadores {
     public List<Indicador> listarIndicadoresPorCategoria(String categoria){
         List<Indicador> listaIndicadores =listarIndicadores();
         List<Indicador> listaFiltrada = new ArrayList();
-        int quantidadeIndicadores = listaIndicadores.size();
+        int quantidadeIndicadores = listaIndicadores.size();//Variavel é necessário visto q se mexe na lista dentro do FOR
         
         for(int i=0; i< quantidadeIndicadores; i++){
             if(listaIndicadores.get(i).getCategoria().equals(categoria)){
                 listaFiltrada.add(listaIndicadores.get(i));
             }
         }
+        System.out.println("listarIndicadoresPorCategoria-GerenciadorIndicadores");
         return listaFiltrada;
     }
     
@@ -472,6 +473,7 @@ public class GerenciadorIndicadores {
         
         //Indicador 46
         i = i+1;
+        obj.setId(i);
         obj.setNome("Preocupação com a qualidade de vida dos trabalhadores");
         obj.setCategoria(producao);
         obj.setEixo(economico);
@@ -494,9 +496,6 @@ public class GerenciadorIndicadores {
         obj.setCategoria(producao);
         obj.setEixo(economico);
         listaIndicadores.add(obj);
-        
-        System.out.println("Valor de i: " + i);
-        System.out.println("Tamanho da lista: " + listaIndicadores.size());
         return listaIndicadores;
     }
 }
