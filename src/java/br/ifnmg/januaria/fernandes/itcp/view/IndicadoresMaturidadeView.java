@@ -21,7 +21,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
@@ -97,7 +96,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         configuraCategoria();
     }
     
-    private void configuraCategoria(){
+    private void configuraCategoria(){//SETA a Tab que deve estar ativa de acordo com categoria selecionada
         if(categoriaSelecionada.equals(listaIndicadores.get(0).getCategoria())){
             tabview.setActiveIndex(0);//Ativa a TAB de sua categoria
         }else if(categoriaSelecionada.equals(listaIndicadores.get(6).getCategoria())){
@@ -124,28 +123,8 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     }
 
     private LineChartModel preencheGrafico() {//Preenche as informações do gráfico - É chamado pelo método "Cria Gráfico"
-        //MES DIA ANO é a sequencia que as datas devem ser setadas
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");//Cria o formato q data sera mostrada
         listarIndicadoresPorCategoriaView();
-        List<Indicador> listaIndicadoresCategoria;
-        listaIndicadoresCategoria = bean.listarIndicadoresPorCategoriaBean(categoriaSelecionada);
-
-        LineChartModel model = new LineChartModel();
-        LineChartSeries series1;
-
-        for (int i = 0; i < listaIndicadoresCategoria.size(); i++) {//Roda a quantidade de indicadores da categoria
-            series1 = new LineChartSeries();
-            series1.setLabel(listaIndicadoresCategoria.get(i).getNome());//Seta o nome da série como o nome do indicador
-            for (int x = 0; x < listaEptIndGrafico.size(); x++) {
-                if (listaIndicadoresCategoria.get(i).getId().equals(
-                        listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getIdIndicador())) {
-                    series1.set(dateFormat.format(listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getDataNota()),
-                            listaEptIndGrafico.get(x).getNota());
-                }
-            }
-            model.addSeries(series1);
-        }
-        return model;
+        return bean.preencheGraficoBean(categoriaSelecionada, listaEptIndGrafico);
     }
 
     public void liberaPainelIndicadores() {//Acontece ao selecionar um empreendimento na lista

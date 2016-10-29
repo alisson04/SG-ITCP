@@ -6,10 +6,14 @@ import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -18,13 +22,37 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class EmpreendimentoIndicadorBean implements Serializable {
-
     private EmpreendimentoIndicadorDAO dao;
     private GerenciadorIndicadores gerenIndicadores;
 
     public EmpreendimentoIndicadorBean() {
         dao = new EmpreendimentoIndicadorDAO();
         gerenIndicadores = new GerenciadorIndicadores();
+    }
+    
+    public LineChartModel preencheGraficoBean( String categoriaSelecionada, List<EmpreendimentoIndicador> listaEptIndGrafico) {
+        //MES DIA ANO é a sequencia que as datas devem ser setadas
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");//Cria o formato q data sera mostrada
+        
+        List<Indicador> listaIndicadoresCategoria;
+        listaIndicadoresCategoria = listarIndicadoresPorCategoriaBean(categoriaSelecionada);
+
+        LineChartModel model = new LineChartModel();
+        LineChartSeries series1;
+
+        for (int i = 0; i < listaIndicadoresCategoria.size(); i++) {//Roda a quantidade de indicadores da categoria
+            series1 = new LineChartSeries();
+            series1.setLabel(listaIndicadoresCategoria.get(i).getNome());//Seta o nome da série como o nome do indicador
+            for (int x = 0; x < listaEptIndGrafico.size(); x++) {
+                if (listaIndicadoresCategoria.get(i).getId().equals(
+                        listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getIdIndicador())) {
+                    series1.set(dateFormat.format(listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getDataNota()),
+                            listaEptIndGrafico.get(x).getNota());
+                }
+            }
+            model.addSeries(series1);
+        }
+        return model;
     }
 
     public void salvarBean(List<EmpreendimentoIndicador> listaEptInd) {
