@@ -24,7 +24,6 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -52,15 +51,17 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     private LineChartModel lineModel1;
     private String categoriaSelecionada;//Para receber o valor que representa a categoria selecionada
     private List<EmpreendimentoIndicador> listaEptIndGrafico;
-    
+
     private TabView tabview;
 
     //Construtor
     public IndicadoresMaturidadeView() {
+        System.out.println("Construtor iniciado!");
         listaEptIndSalvar = new ArrayList();
         eptBean = new EmpreendimentoBean();
         bean = new EmpreendimentoIndicadorBean();
         listaEmpreendimentos = eptBean.listarBean();
+        empreendimentoSelecionado = null;//Necessário na hora de atualizar a página, não retirar.
 
         //Indicador
         gerenIndicadores = new GerenciadorIndicadores();
@@ -92,62 +93,91 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         axis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
 
         lineModel1.getAxes().put(AxisType.X, axis);
-        
-        configuraCategoria();
-    }
-    
-    private void configuraCategoria(){//SETA a Tab que deve estar ativa de acordo com categoria selecionada
-        if(categoriaSelecionada.equals(listaIndicadores.get(0).getCategoria())){
-            tabview.setActiveIndex(0);//Ativa a TAB de sua categoria
-        }else if(categoriaSelecionada.equals(listaIndicadores.get(6).getCategoria())){
-            tabview.setActiveIndex(1);//Ativa a TAB de sua categoria
-        }else if(categoriaSelecionada.equals(listaIndicadores.get(10).getCategoria())){
-            tabview.setActiveIndex(2);//Ativa a TAB de sua categoria
-        }else if(categoriaSelecionada.equals(listaIndicadores.get(16).getCategoria())){
-            tabview.setActiveIndex(3);//Ativa a TAB de sua categoria
-        }else if(categoriaSelecionada.equals(listaIndicadores.get(24).getCategoria())){
-            tabview.setActiveIndex(4);//Ativa a TAB de sua categoria
-        }else if(categoriaSelecionada.equals(listaIndicadores.get(31).getCategoria())){
-            tabview.setActiveIndex(5);//Ativa a TAB de sua categoria
-        }else if(categoriaSelecionada.equals(listaIndicadores.get(36).getCategoria())){
-            tabview.setActiveIndex(6);//Ativa a TAB de sua categoria
-        }else if(categoriaSelecionada.equals(listaIndicadores.get(42).getCategoria())){
-            tabview.setActiveIndex(7);//Ativa a TAB de sua categoria
-        }else if(categoriaSelecionada.equals(listaIndicadores.get(46).getCategoria())){
-            tabview.setActiveIndex(8);//Ativa a TAB de sua categoria
+
+        configuraCategoria();//SETA a Tab que deve estar ativa de acordo com categoria selecionada
+
+        if (listaEptIndGrafico.isEmpty()) {
+            msgGrowlErroCustomizavel("", "Não há indicadores preenchidos para essa categoria.");
+        }else{
+            RequestContext.getCurrentInstance().update("frmMsgGenerico");//Atualiza para retirar a msg anterior
         }
     }
 
-    private void listarIndicadoresPorCategoriaView() {
-        listaEptIndGrafico = bean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
-    }
-
     private LineChartModel preencheGrafico() {//Preenche as informações do gráfico - É chamado pelo método "Cria Gráfico"
-        listarIndicadoresPorCategoriaView();
+        listaEptIndGrafico = bean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
         return bean.preencheGraficoBean(categoriaSelecionada, listaEptIndGrafico);
     }
 
+    private void configuraCategoria() {//SETA a Tab que deve estar ativa de acordo com categoria selecionada
+        if (categoriaSelecionada.equals(listaIndicadores.get(0).getCategoria())) {
+            tabview.setActiveIndex(0);//Ativa a TAB de sua categoria
+            System.out.println("0 Tab setada");
+        } else if (categoriaSelecionada.equals(listaIndicadores.get(6).getCategoria())) {
+            tabview.setActiveIndex(1);//Ativa a TAB de sua categoria
+            System.out.println("1 Tab setada");
+        } else if (categoriaSelecionada.equals(listaIndicadores.get(10).getCategoria())) {
+            tabview.setActiveIndex(2);//Ativa a TAB de sua categoria
+            System.out.println("2 Tab setada");
+        } else if (categoriaSelecionada.equals(listaIndicadores.get(16).getCategoria())) {
+            tabview.setActiveIndex(3);//Ativa a TAB de sua categoria
+            System.out.println("3 Tab setada");
+        } else if (categoriaSelecionada.equals(listaIndicadores.get(24).getCategoria())) {
+            tabview.setActiveIndex(4);//Ativa a TAB de sua categoria
+            System.out.println("4 Tab setada");
+        } else if (categoriaSelecionada.equals(listaIndicadores.get(31).getCategoria())) {
+            tabview.setActiveIndex(5);//Ativa a TAB de sua categoria
+            System.out.println("5 Tab setada");
+        } else if (categoriaSelecionada.equals(listaIndicadores.get(36).getCategoria())) {
+            tabview.setActiveIndex(6);//Ativa a TAB de sua categoria
+            System.out.println("6 Tab setada");
+        } else if (categoriaSelecionada.equals(listaIndicadores.get(42).getCategoria())) {
+            tabview.setActiveIndex(7);//Ativa a TAB de sua categoria
+            System.out.println("7 Tab setada");
+        } else if (categoriaSelecionada.equals(listaIndicadores.get(46).getCategoria())) {
+            tabview.setActiveIndex(8);//Ativa a TAB de sua categoria
+            System.out.println("8 Tab setada");
+        } else {
+            msgPanelErroInesperadoGeneric();
+            System.out.println("Estranho, nenhuma tab setada");
+        }
+    }
+
     public void liberaPainelIndicadores() {//Acontece ao selecionar um empreendimento na lista
-        Date x = new Date();
+        Date dataAtual = new Date();
         listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
+        List<EmpreendimentoIndicador> listaEptIndAux = new ArrayList();//Lista auxiliar
 
         System.out.println("===============================");
-        System.out.println("Tamanho é " + listaEptIndSalvar.size());
-        for (int i = listaEptIndSalvar.size(); i < listaIndicadores.size(); i++) {//Roda se ouver algum ind não preenchido
+        System.out.println("Quantidade de inds Cadastrados para esse EES: " + listaEptIndSalvar.size());
+        
+        for (int i = 0; i < listaIndicadores.size(); i++) {//Roda o total de indicaroes possiveis
             EmpreendimentoIndicador indAux = new EmpreendimentoIndicador();
             EmpreendimentoIndicadorPK EptIndPK = new EmpreendimentoIndicadorPK();
-
-            //indAux.setNota(0);
-            EptIndPK.setDataNota(x);//SETA a data
+            EptIndPK.setDataNota(dataAtual);//SETA a data
             EptIndPK.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
             EptIndPK.setIdIndicador(i + 1);//SETA o indicador
 
             indAux.setEmpreendimentoIndicadorPK(EptIndPK);//SETA as chaves
-            listaEptIndSalvar.add(indAux);//Adiciona o obj a lista p ser usado na tela e talvez salvo
+            listaEptIndAux.add(indAux);//Adiciona o obj a lista p ser usado na tela e talvez salvo
         }
-        categoriaSelecionada = "";
-        listaEptIndGrafico = new ArrayList();
+        System.out.println("Lista aux: " + listaEptIndAux.size());
+        
+        for (int i = 0; i < listaIndicadores.size(); i++) {//Roda o total de indicaroes possiveis
+            for (int x = 0; x < listaEptIndSalvar.size(); x++) {//Roda os inds Pegos do BD
+                if(listaEptIndSalvar.get(x).getEmpreendimentoIndicadorPK().getIdIndicador() == i+1){
+                    listaEptIndAux.set(i, listaEptIndSalvar.get(x));
+                }
+            }
+        }
+        System.out.println("Lista Salvar oringin: " + listaEptIndSalvar.size());
+        System.out.println("Lista aux: " + listaEptIndAux.size());
+        
+        
+        listaEptIndSalvar=listaEptIndAux;
+        categoriaSelecionada = "";//Limpa a categoria
+        listaEptIndGrafico = new ArrayList();//Limpa o gráfico
         tabview.setActiveIndex(0);//Volta para a primeira TAB do formulario da tela
+        msgGrowlInfoCustomizavel("", "Agora selecione uma categoria de indicadores.");
     }
 
     public void adicionaNota(int posicaoIndi) {
@@ -166,7 +196,9 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
             bean.salvarBean(listaEptIndSalvar);
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");//fecha o panel de "formulario de indicadores"
-            criaGrafico();//Chama o gráfico para atualização
+            if (!categoriaSelecionada.equals("")) {//Caso algum gráfico esteja sendo mostrado na tela durante o salvamento
+                criaGrafico();//Chama o gráfico para atualização
+            }
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);

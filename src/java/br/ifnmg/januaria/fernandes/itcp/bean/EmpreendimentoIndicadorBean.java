@@ -22,6 +22,7 @@ import org.primefaces.model.chart.LineChartSeries;
 @ManagedBean
 @SessionScoped
 public class EmpreendimentoIndicadorBean implements Serializable {
+
     private EmpreendimentoIndicadorDAO dao;
     private GerenciadorIndicadores gerenIndicadores;
 
@@ -29,11 +30,11 @@ public class EmpreendimentoIndicadorBean implements Serializable {
         dao = new EmpreendimentoIndicadorDAO();
         gerenIndicadores = new GerenciadorIndicadores();
     }
-    
-    public LineChartModel preencheGraficoBean( String categoriaSelecionada, List<EmpreendimentoIndicador> listaEptIndGrafico) {
+
+    public LineChartModel preencheGraficoBean(String categoriaSelecionada, List<EmpreendimentoIndicador> listaEptIndGrafico) {
         //MES DIA ANO é a sequencia que as datas devem ser setadas
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");//Cria o formato q data sera mostrada
-        
+
         List<Indicador> listaIndicadoresCategoria;
         listaIndicadoresCategoria = listarIndicadoresPorCategoriaBean(categoriaSelecionada);
 
@@ -43,15 +44,24 @@ public class EmpreendimentoIndicadorBean implements Serializable {
         for (int i = 0; i < listaIndicadoresCategoria.size(); i++) {//Roda a quantidade de indicadores da categoria
             series1 = new LineChartSeries();
             series1.setLabel(listaIndicadoresCategoria.get(i).getNome());//Seta o nome da série como o nome do indicador
+            int verificador = 0;
             for (int x = 0; x < listaEptIndGrafico.size(); x++) {
                 if (listaIndicadoresCategoria.get(i).getId().equals(
                         listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getIdIndicador())) {
                     series1.set(dateFormat.format(listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getDataNota()),
                             listaEptIndGrafico.get(x).getNota());
+                    verificador = 1;
                 }
             }
-            model.addSeries(series1);
+
+            if (verificador != 0) {
+                model.addSeries(series1);
+                System.out.println("Adicionou o indicador " + listaIndicadoresCategoria.get(i).getNome() + " ao gráfico!");
+            } else {
+                System.out.println("Não adicionou o indicador " + listaIndicadoresCategoria.get(i).getNome() + " ao gráfico!");
+            }
         }
+
         return model;
     }
 
@@ -68,17 +78,17 @@ public class EmpreendimentoIndicadorBean implements Serializable {
 
         if (!listaRetiradoNulls.isEmpty()) {
             dao.salvarListaDAO(listaRetiradoNulls);
-        }else{
+        } else {
             System.out.println("Não salvou nada");
         }
     }
-    
+
     //Retorna os EmprendimentoIndicadores por uma categoria
-    public List<EmpreendimentoIndicador> listarEesIndisPorcategoriaBean(Empreendimento ees, String categoria){
+    public List<EmpreendimentoIndicador> listarEesIndisPorcategoriaBean(Empreendimento ees, String categoria) {
         return dao.listarEesIndisPorcategoriaDAO(ees, listarIndicadoresPorCategoriaBean(categoria));
     }
-    
-    public List<Indicador> listarIndicadoresPorCategoriaBean(String categoria){//Retorna os indicadores por uma categoria
+
+    public List<Indicador> listarIndicadoresPorCategoriaBean(String categoria) {//Retorna os indicadores por uma categoria
         return gerenIndicadores.listarIndicadoresPorCategoria(categoria);
     }
 
