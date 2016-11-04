@@ -68,13 +68,11 @@
                 </p:panel>
 
                 <p:separator/>
-
                 <p:panel id="panelGrafico" style="margin-bottom:20px"
                          rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null
                                      and IndicadoresMaturidadeView.listaEptIndGrafico.size() != 0
                                      and IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
-                    <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:400px;" 
-                            />
+                    <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:400px;" />
                 </p:panel>
             </h:form>
 

@@ -56,33 +56,37 @@
 
         <h:form id="frmLogar">
             <div class="ui-fluid">
+
                 <p:dialog  header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" 
                            resizable="false" rendered="#{LoginView.existeUserBd}" widgetVar="tes">
-                    <h:panelGrid id="panelGridLogin" columns="3" cellpadding="5" style="ui-widget">
+                    <p:panel id="panelLogin">
+                        <h:panelGrid id="panelGridLogin" columns="3" cellpadding="5" style="ui-widget">
 
-                        <p:outputLabel for="emailUsr" value="E-mail: " />
-                        <p:inputText id="emailUsr" value="#{LoginView.usuarioLogado.email}"
-                                     required="true" requiredMessage="Insira um e-mail!" size="25" maxlength="45" />
-                        <p:message for="emailUsr"/>
+                            <p:outputLabel for="emailUsr" value="E-mail: " />
+                            <p:inputText id="emailUsr" value="#{LoginView.usuarioLogado.email}"
+                                         required="true" requiredMessage="Insira um e-mail!" size="25" maxlength="45" />
+                            <p:message for="emailUsr"/>
 
-                        <p:outputLabel for="senhaUsr" value="Senha: " />
-                        <p:password id="senhaUsr" value="#{LoginView.usuarioLogado.senha}"
-                                    required="true" requiredMessage="Insira uma senha!" size="25" maxlength="45" />
-                        <p:message for="senhaUsr"/>
-                    </h:panelGrid>
-                    <p:commandButton id="btnLogar" value="Acessar" actionListener="#{LoginView.logar()}" 
-                                     style="ui-button" styleClass="ui-button-text" update="frmLogar" />
+                            <p:outputLabel for="senhaUsr" value="Senha: " />
+                            <p:password id="senhaUsr" value="#{LoginView.usuarioLogado.senha}"
+                                        required="true" requiredMessage="Insira uma senha!" size="25" maxlength="45" />
+                            <p:message for="senhaUsr"/>
+                        </h:panelGrid>
+                        <p:commandButton id="btnLogar" value="Acessar" actionListener="#{LoginView.logar()}" 
+                                         style="ui-button" styleClass="ui-button-text" update="frmLogar" />
 
-                    <p:commandLink   id="clReenviarSenha" update="frmLogar" value="Esqueci minha senha" type="button" immediate="true"
-                                     action="/EsqueciMinhaSenha.xhtml?faces-redirect=true" >
-                        <!--<p:graphicImage name="fotos/64Question.png" />-->
-                    </p:commandLink>
+                        <p:commandLink   id="clReenviarSenha" update="frmLogar" value="Esqueci minha senha" type="button" 
+                                         immediate="true" action="/EsqueciMinhaSenha.xhtml?faces-redirect=true" >
+                            <!--<p:graphicImage name="fotos/64Question.png" />-->
+                        </p:commandLink>
+                    </p:panel>
 
-                    <p:blockUI block="panelGridLogin" trigger="btnLogar">
+                    <p:blockUI block="panelLogin" trigger="btnLogar">
                         ACESSANDO<br />
                         <!--<p:graphicImage name="fotos/circuloCarregando.gif" />-->
                     </p:blockUI>
                 </p:dialog>
+
 
                 <p:dialog closable="false" draggable="false" resizable="false" visible="true"
                           header="Cadastre o coordenador da Incubadora" rendered="#{!LoginView.existeUserBd}"  >
