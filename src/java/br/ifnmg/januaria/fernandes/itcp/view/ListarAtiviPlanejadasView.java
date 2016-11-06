@@ -34,6 +34,15 @@ public class ListarAtiviPlanejadasView implements Serializable {
     private MetaBean metaBean = new MetaBean();
 
     public ListarAtiviPlanejadasView() {
+        try {
+            listaObjs = bean.listarBean();
+            listaSelectOneMenu = metaBean.listarBean();
+        } catch (RuntimeException ex) {
+            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Erro inesperado", "Erro ao tentar listar as atividades, contate o administrador do sistema!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        }
     }
     
     public void transfereObj(){//Para botão de editar
@@ -56,18 +65,6 @@ public class ListarAtiviPlanejadasView implements Serializable {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Erro inesperado", "Erro ao tentar editar a atividade, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
-        }
-    }
-
-    public void listarView() {
-        try {
-            listaObjs = bean.listarBean();
-            listaSelectOneMenu = metaBean.listarBean();
-        } catch (RuntimeException ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erro inesperado", "Erro ao tentar listar as atividades, contate o administrador do sistema!");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }

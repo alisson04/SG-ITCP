@@ -56,12 +56,10 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     //Construtor
     public IndicadoresMaturidadeView() {
-        System.out.println("Construtor iniciado!");
         listaEptIndSalvar = new ArrayList();
         eptBean = new EmpreendimentoBean();
         bean = new EmpreendimentoIndicadorBean();
         listaEmpreendimentos = eptBean.listarBean();
-        empreendimentoSelecionado = null;//Necessário na hora de atualizar a página, não retirar.
 
         //Indicador
         gerenIndicadores = new GerenciadorIndicadores();
@@ -205,7 +203,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
             msgPanelErroInesperadoGeneric();
         }
     }
-
+    
     public String conveteData(Date data) {
         if (data != null) {
             SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");

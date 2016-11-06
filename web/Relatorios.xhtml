@@ -14,72 +14,53 @@
             </style>
 
             <h:form id="frmCadastro" >
-                <p:chart type="line" model="#{relatoriosView.lineModel1}"  style="width:500px;height:300px" 
-                         widgetVar="chart"/>
-
-                <p:commandButton type="button" value="Export" icon="ui-icon-extlink" onclick="exportChart()"/>
-
-                <p:dialog widgetVar="dlg" showEffect="fade"  header="Chart as an Image" resizable="false">
-                    <p:outputPanel id="output" layout="block" style="width:500px;height:300px"/>
-                </p:dialog>
-
-                <script type="text/javascript">
-                    function exportChart() {
-                        var imageElement = PF('chart').exportAsImage();
-                        //export image
-                        $("#frmCadastro\\:output").empty().append(PF('chart').exportAsImage());
-
-                        //show the dialog
-                        PF('dlg').show();
-                    }
-                </script>
-                <p:tabView id="tvGeral" dynamic="true" cache="true"> 
+                <p:tabView id="tbGeral" dynamic="true" cache="true"> 
                     <p:tab id="tabIndis" title="Indicadores de maturidade">
                         <p:panel header="Selecione um empreendimento para preencher ou visializar seus indicadores">
                             <h:panelGrid columns="2">
-                                <p:selectOneMenu value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" converter="generic" >
+                                <p:selectOneMenu value="#{RelatoriosView.empreendimentoSelecionado}" converter="generic" >
                                     <p:ajax update="frmCadastro" event="itemSelect" 
-                                            listener="#{IndicadoresMaturidadeView.liberaPainelIndicadores()}"/>
+                                            listener="#{RelatoriosView.liberaPainelIndicadores()}"/>
                                     <f:selectItem itemLabel="Selecione o empreendimento" itemValue="#{null}" 
                                                   noSelectionOption="true" />
-                                    <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
+                                    <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
                                                    itemLabel="#{ept.nome}" itemValue="#{ept}"/>
                                 </p:selectOneMenu>
 
-                                <p:selectOneMenu value="#{IndicadoresMaturidadeView.categoriaSelecionada}"
-                                                 rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" >
+                                <p:selectOneMenu value="#{RelatoriosView.categoriaSelecionada}"
+                                                 rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
                                     <p:ajax update="frmCadastro" event="itemSelect" 
-                                            listener="#{IndicadoresMaturidadeView.criaGrafico()}" />
+                                            listener="#{RelatoriosView.criaGrafico()}" />
 
                                     <f:selectItem itemLabel="Selecione uma categoria de indicadores" itemValue="" 
                                                   noSelectionOption="true" />
 
-                                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
+                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[0].categoria}" 
+                                                  itemValue="#{RelatoriosView.listaIndicadores[0].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
+                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[6].categoria}" 
+                                                  itemValue="#{RelatoriosView.listaIndicadores[6].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
+                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[10].categoria}" 
+                                                  itemValue="#{RelatoriosView.listaIndicadores[10].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
+                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[16].categoria}" 
+                                                  itemValue="#{RelatoriosView.listaIndicadores[16].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
+                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[24].categoria}" 
+                                                  itemValue="#{RelatoriosView.listaIndicadores[24].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
+                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[31].categoria}" 
+                                                  itemValue="#{RelatoriosView.listaIndicadores[31].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
+                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[36].categoria}" 
+                                                  itemValue="#{RelatoriosView.listaIndicadores[36].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
+                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[42].categoria}" 
+                                                  itemValue="#{RelatoriosView.listaIndicadores[42].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
+                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[46].categoria}" 
+                                                  itemValue="#{RelatoriosView.listaIndicadores[46].categoria}"  />
                                 </p:selectOneMenu>
                             </h:panelGrid>
 
@@ -90,22 +71,37 @@
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
                                                  icon="Cross24-iconfinder" />
                             </p:confirmDialog>
-                        </p:panel>
+                            
+                            <p:panel id="panelGrafico" style="margin-bottom:20px"
+                                     rendered="#{RelatoriosView.empreendimentoSelecionado != null
+                                                 and RelatoriosView.categoriaSelecionada != ''}" >
+                                <p:chart type="line" model="#{RelatoriosView.lineModel1}" style="height:400px;" 
+                                         widgetVar="chartEvolucaoInds"/>
 
-                        <p:separator/>
-
-                        <p:panel id="panelGrafico" style="margin-bottom:20px"
-                                 rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null
-                                             and IndicadoresMaturidadeView.listaEptIndGrafico.size() != 0
-                                             and IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
-                            <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:400px;" />
+                                <p:commandButton value="Visualizar imagem " icon="ui-icon-extlink" onclick="exportChart()" 
+                                                 update="panelGrafico" />
+                            </p:panel>
                         </p:panel>
                     </p:tab>
 
-                    <p:tab title="Calendário de atividades da incubadora">
+                    <p:tab id="tabTeste" title="Calendário de atividades da incubadora">
 
                     </p:tab>
                 </p:tabView>
+
+                <p:dialog widgetVar="dlg" resizable="false"
+                          showEffect="clip" hideEffect="clip" modal="true"  appendTo="@(body)" draggable="false">
+                    <p:outputPanel id="output" layout="block" style="width:1600px;height:400px"/>
+                </p:dialog>
+
+                <script type="text/javascript">
+                    function exportChart() {
+                        //export image
+                        $("#frmCadastro\\:output").empty().append(PF('chartEvolucaoInds').exportAsImage());
+                        //show the dialog
+                        PF('dlg').show();
+                    }
+                </script>
             </h:form>
         </ui:define>
     </ui:composition>
