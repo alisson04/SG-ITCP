@@ -6,16 +6,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-        <ui:define name="metadata">
-            <f:metadata>
-                <f:event listener="#{ListarAtiviPlanejadasView.listarView()}" type="preRenderView"/>
-            </f:metadata>
-        </ui:define>
-
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
-                <p:growl id="msgs" showDetail="true" showSummary="false" />
-
                 <p:panel styleClass="corPanel" header="Atividades planejadas no sistema:" >
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma atividade encontrada." value="#{ListarAtiviPlanejadasView.listaObjs}" 
                                  filteredValue="#{ListarAtiviPlanejadasView.listaObjsFiltradas}" 
@@ -36,11 +28,41 @@
                             <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
                         </p:column>
 
+                        <p:column filterBy="#{objCursor.meta.planoAcao.empreendimento}" headerText="Empreendimento" 
+                                  filterMatchMode="exact" >
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('varGlobal').filter()" converter="generic"
+                                                 value="#{ListarAtiviPlanejadasView.eesSelecionado}" >
+                                    <p:ajax update="frmListagem" event="itemSelect" 
+                                            listener="#{ListarAtiviPlanejadasView.filtraPlanosPorEes()}" />
+
+                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaEmpreendimentos}" var="var" 
+                                                   itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{objCursor.meta.planoAcao.empreendimento.nome}" />
+                        </p:column>
+
+                        <p:column filterBy="#{objCursor.meta.planoAcao}" headerText="Plano de ação" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('varGlobal').filter()" converter="generic"
+                                                 value="#{ListarAtiviPlanejadasView.planoSelecionado}" >
+                                    <p:ajax update="frmListagem" event="itemSelect" 
+                                            listener="#{ListarAtiviPlanejadasView.filtraMetasPorPlano()}" />
+                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaPlanos}" var="var" itemLabel="#{var.nome}" 
+                                                   itemValue="#{var}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{objCursor.meta.planoAcao.nome}" />
+                        </p:column>
+
                         <p:column filterBy="#{objCursor.meta}" headerText="Meta" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaSelectOneMenu}" var="var" itemLabel="#{var.nome}" 
+                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="var" itemLabel="#{var.nome}" 
                                                    itemValue="#{var}"/>
                                 </p:selectOneMenu>
                             </f:facet>
@@ -114,7 +136,7 @@
                             <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
                                              value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:435px" converter="generic">
                                 <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarAtiviPlanejadasView.listaSelectOneMenu}" var="obj" itemLabel="#{obj.nome}" 
+                                <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="obj" itemLabel="#{obj.nome}" 
                                                itemValue="#{obj}"/>
                             </p:selectOneMenu>
                             <p:message for="meta"/>
