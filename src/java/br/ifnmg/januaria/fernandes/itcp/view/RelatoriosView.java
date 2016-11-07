@@ -1,11 +1,15 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.AtividadePlanejadaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoIndicadorBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
+import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
+import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
@@ -52,6 +56,15 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
     private GerenciadorIndicadores gerenIndicadores;//Para gerar os indicadores
     private List<Indicador> listaIndicadores;//Para guardar os indicadores que serão usados na tela
 
+    //Atividade Vars
+    private List<AtividadePlanejada> listaAtividades;
+    private List<AtividadePlanejada> listaAtividadesFiltradas;
+    private AtividadePlanejadaBean atividadeBean;
+    private PlanoAcao planoSelecionado;
+
+    private List<PlanoAcao> listaPlanos;
+    private PlanoAcaoBean planoBean;
+
     //Construtor
     public RelatoriosView() {
         eptBean = new EmpreendimentoBean();
@@ -65,9 +78,59 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
         //Indicador
         gerenIndicadores = new GerenciadorIndicadores();
         listaIndicadores = gerenIndicadores.listarIndicadores();
+
+        //Atividade Vars
+        atividadeBean = new AtividadePlanejadaBean();
+        listaAtividades = atividadeBean.listarBean();
+
+        planoBean = new PlanoAcaoBean();
+        listaPlanos = planoBean.listarBean();
     }
 
-    //METODOS
+//METODOS Atividades
+    public void filtraAtividadesPorEes() {
+        //Filtra os planos
+        List<PlanoAcao> listaPlanoAux = new ArrayList();
+        listaPlanos = planoBean.listarBean();
+        for(int i=0; i<listaPlanos.size(); i++){
+            if(listaPlanos.get(i).getEmpreendimento().equals(empreendimentoSelecionado)){
+                listaPlanoAux.add(listaPlanos.get(i));
+            }
+        }
+        listaPlanos = listaPlanoAux;
+        
+        //Filtra as atividades
+        List<AtividadePlanejada> listaAux = new ArrayList();
+        if (empreendimentoSelecionado != null) {
+            listaAtividades = atividadeBean.listarBean();
+            for (int i = 0; i < listaAtividades.size(); i++) {
+                if (listaAtividades.get(i).getMeta().getPlanoAcao().getEmpreendimento().equals(empreendimentoSelecionado)) {
+                    listaAux.add(listaAtividades.get(i));
+                }
+            }
+            listaAtividades = listaAux;
+        } else {
+            listaAtividades = atividadeBean.listarBean();
+        }
+    }
+
+    public void filtraAtividadesPorPlano() {
+        List<AtividadePlanejada> listaAux = new ArrayList();
+
+        if (planoSelecionado != null) {
+            for (int i = 0; i < listaAtividades.size(); i++) {
+                if (listaAtividades.get(i).getMeta().getPlanoAcao().equals(planoSelecionado)) {
+                    listaAux.add(listaAtividades.get(i));
+                }
+            }
+            listaAtividades = listaAux;
+        } else {
+            listaAtividades = atividadeBean.listarBean();
+            filtraAtividadesPorEes();
+        }
+    }
+
+    //METODOS Indicadores
     public void criaGrafico() {//Configurações do gráfico - Acontece ao selecionar uma categoria
         Calendar calendar = Calendar.getInstance();//Pega a data atual
         calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
@@ -140,5 +203,37 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
 
     public void setListaIndicadores(List<Indicador> listaIndicadores) {
         this.listaIndicadores = listaIndicadores;
+    }
+
+    public List<AtividadePlanejada> getListaAtividades() {
+        return listaAtividades;
+    }
+
+    public void setListaAtividades(List<AtividadePlanejada> listaAtividades) {
+        this.listaAtividades = listaAtividades;
+    }
+
+    public List<AtividadePlanejada> getListaAtividadesFiltradas() {
+        return listaAtividadesFiltradas;
+    }
+
+    public void setListaAtividadesFiltradas(List<AtividadePlanejada> listaAtividadesFiltradas) {
+        this.listaAtividadesFiltradas = listaAtividadesFiltradas;
+    }
+
+    public PlanoAcao getPlanoSelecionado() {
+        return planoSelecionado;
+    }
+
+    public void setPlanoSelecionado(PlanoAcao planoSelecionado) {
+        this.planoSelecionado = planoSelecionado;
+    }
+
+    public List<PlanoAcao> getListaPlanos() {
+        return listaPlanos;
+    }
+
+    public void setListaPlanos(List<PlanoAcao> listaPlanos) {
+        this.listaPlanos = listaPlanos;
     }
 }

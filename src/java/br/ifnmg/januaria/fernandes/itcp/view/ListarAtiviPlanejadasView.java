@@ -79,7 +79,6 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
         } else {
             listaPlanos = planoBean.listarBean();
         }
-
     }
 
     public void filtraMetasPorPlano() {//Acontece ao selecionar um Plano
