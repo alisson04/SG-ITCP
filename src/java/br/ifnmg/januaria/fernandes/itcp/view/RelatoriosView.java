@@ -4,12 +4,14 @@ import br.ifnmg.januaria.fernandes.itcp.bean.AtividadePlanejadaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoIndicadorBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
+import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
@@ -60,10 +62,16 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
     private List<AtividadePlanejada> listaAtividades;
     private List<AtividadePlanejada> listaAtividadesFiltradas;
     private AtividadePlanejadaBean atividadeBean;
-    private PlanoAcao planoSelecionado;
 
+    //Plano de ação
     private List<PlanoAcao> listaPlanos;
     private PlanoAcaoBean planoBean;
+    private PlanoAcao planoSelecionado;
+    
+    //Usuários
+    private List<Usuario> listaUser;
+    private UsuarioBean userlBean;
+    private Usuario userSelecionado;
 
     //Construtor
     public RelatoriosView() {
@@ -83,11 +91,20 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
         atividadeBean = new AtividadePlanejadaBean();
         listaAtividades = atividadeBean.listarBean();
 
+        //Plano de ação
         planoBean = new PlanoAcaoBean();
         listaPlanos = planoBean.listarBean();
+        
+        //User
+        userlBean = new UsuarioBean();
+        listaUser = userlBean.listarBean();
     }
 
 //METODOS Atividades
+    public void filtraAtividadesPorUser() {
+        listaAtividades = atividadeBean.listarBean();
+    }
+    
     public void filtraAtividadesPorEes() {
         //Filtra os planos
         List<PlanoAcao> listaPlanoAux = new ArrayList();
@@ -235,5 +252,21 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
 
     public void setListaPlanos(List<PlanoAcao> listaPlanos) {
         this.listaPlanos = listaPlanos;
+    }
+
+    public List<Usuario> getListaUser() {
+        return listaUser;
+    }
+
+    public void setListaUser(List<Usuario> listaUser) {
+        this.listaUser = listaUser;
+    }
+
+    public Usuario getUserSelecionado() {
+        return userSelecionado;
+    }
+
+    public void setUserSelecionado(Usuario userSelecionado) {
+        this.userSelecionado = userSelecionado;
     }
 }
