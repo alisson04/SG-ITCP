@@ -13,14 +13,46 @@
                 }
             </style>
 
+
+            <script type="text/javascript">
+                function exportChart() {
+                    //export image
+                    $("#frmrelatorios\\:output").empty().append(PF('chartEvolucaoInds').exportAsImage());
+                    //show the dialog
+                    PF('dlg').show();
+                }
+            </script>
+
+            <script type="text/javascript">
+                function exportChartBarra() {
+                    //export image
+                    $("#frmrelatorios\\:outputBarra").empty().append(PF('chartEvolucaoIndsBarra').exportAsImage());
+                    //show the dialog
+                    PF('dlgBarra').show();
+                }
+            </script>
+
             <h:form id="frmrelatorios" >
-                <p:tabView id="tbGeral" dynamic="true" cache="true"> 
+                <!--Dialogo que mostra o gráfico de indicadores em linhas-->
+                <p:dialog widgetVar="dlg" resizable="false"
+                          showEffect="clip" hideEffect="clip" modal="true"  appendTo="@(body)" draggable="false">
+                    <p:outputPanel id="output" layout="block" style="width:1570px;height:410px"/>
+                </p:dialog>
+
+                <!--Dialogo que mostra o gráfico de indicadores em barras-->
+                <p:dialog widgetVar="dlgBarra" resizable="false"
+                          showEffect="clip" hideEffect="clip" modal="true"  appendTo="@(body)" draggable="false">
+                    <p:outputPanel id="outputBarra" layout="block" style="width:1570px;height:320px"/>
+                </p:dialog>
+
+                <!-- Tabelas que separam os tipos de relatórios-->
+                <p:tabView id="tbGeral" dynamic="true" cache="true">
                     <p:tab id="tabIndis" title="Indicadores de maturidade">
                         <p:panel header="Selecione um empreendimento para preencher ou visializar seus indicadores">
                             <h:panelGrid columns="2">
                                 <p:selectOneMenu value="#{RelatoriosView.empreendimentoSelecionado}" converter="generic" >
                                     <p:ajax update="frmrelatorios" event="itemSelect" 
-                                            listener="#{RelatoriosView.liberaPainelIndicadores()}"/>
+                                            listener="#{RelatoriosView.limpaPainelIndicadores()}"/>
                                     <f:selectItem itemLabel="Selecione o empreendimento" itemValue="#{null}" 
                                                   noSelectionOption="true" />
                                     <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
@@ -71,37 +103,47 @@
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
                                                  icon="Cross24-iconfinder" />
                             </p:confirmDialog>
+                        </p:panel>
 
-                            <p:panel id="panelGrafico" style="margin-bottom:20px"
-                                     rendered="#{RelatoriosView.empreendimentoSelecionado != null
-                                                 and RelatoriosView.categoriaSelecionada != ''}" >
-                                <p:chart type="line" model="#{RelatoriosView.lineModel1}" style="height:400px;" 
-                                         widgetVar="chartEvolucaoInds"/>
+                        <p:panel id="panelGrafico" style="margin-bottom:20px"
+                                 rendered="#{RelatoriosView.empreendimentoSelecionado != null
+                                             and RelatoriosView.categoriaSelecionada != ''}" >
+                            <p:chart type="line" model="#{RelatoriosView.graficoAtividades}" style="height:400px;"
+                                     widgetVar="chartEvolucaoInds" />
 
-                                <p:commandButton value="Visualizar imagem " icon="ui-icon-extlink" onclick="exportChart()" 
-                                                 update="panelGrafico" />
-                            </p:panel>
+                            <p:commandButton value="Visualizar imagem " icon="See24-iconfinder" onclick="exportChart()" />
+                        </p:panel>
+
+                        <p:panel id="panelGraficoBarra" style="margin-bottom:20px"
+                                 rendered="#{RelatoriosView.empreendimentoSelecionado != null
+                                             and RelatoriosView.categoriaSelecionada != ''}" >                                    
+                            <p:chart type="bar" model="#{RelatoriosView.barModel}" style="height:300px"
+                                     widgetVar="chartEvolucaoIndsBarra"/>
+
+                            <p:commandButton value="Visualizar imagem " icon="See24-iconfinder" onclick="exportChartBarra()" />
                         </p:panel>
                     </p:tab>
 
                     <p:tab id="tabTeste" title="Atividades por empreendimento">
-                        <p:selectOneMenu value="#{RelatoriosView.empreendimentoSelecionado}" converter="generic" >
-                            <p:ajax update="frmrelatorios" event="itemSelect" 
-                                    listener="#{RelatoriosView.filtraAtividadesPorEes()}"/>
-                            <f:selectItem itemLabel="Filtrar por empreendimento" itemValue="#{null}" 
-                                          noSelectionOption="true" />
-                            <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
-                                           itemLabel="#{ept.nome}" itemValue="#{ept}"/>
-                        </p:selectOneMenu>
+                        <p:panel>
+                            <p:selectOneMenu value="#{RelatoriosView.empreendimentoSelecionado}" converter="generic" >
+                                <p:ajax update="frmrelatorios" event="itemSelect" 
+                                        listener="#{RelatoriosView.filtraAtividadesPorEes()}"/>
+                                <f:selectItem itemLabel="Filtrar por empreendimento" itemValue="#{null}" 
+                                              noSelectionOption="true" />
+                                <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
+                                               itemLabel="#{ept.nome}" itemValue="#{ept}"/>
+                            </p:selectOneMenu>
 
-                        <p:selectOneMenu value="#{RelatoriosView.planoSelecionado}" converter="generic" 
-                                         rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
-                            <p:ajax update="frmrelatorios" event="itemSelect" 
-                                    listener="#{RelatoriosView.filtraAtividadesPorPlano()}" />
-                            <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                            <f:selectItems value="#{RelatoriosView.listaPlanos}" var="var" itemLabel="#{var.nome}" 
-                                           itemValue="#{var}"/>
-                        </p:selectOneMenu>
+                            <p:selectOneMenu value="#{RelatoriosView.planoSelecionado}" converter="generic" 
+                                             rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
+                                <p:ajax update="frmrelatorios" event="itemSelect" 
+                                        listener="#{RelatoriosView.filtraAtividadesPorPlano()}" />
+                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{RelatoriosView.listaPlanos}" var="var" itemLabel="#{var.nome}" 
+                                               itemValue="#{var}"/>
+                            </p:selectOneMenu>
+                        </p:panel>
 
                         <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada " 
                                      value="#{RelatoriosView.listaAtividades}" 
@@ -158,16 +200,16 @@
                         </p:dataTable>
                     </p:tab>
 
-                    <p:tab id="tabAtividadesPorUser" title="Atividades por estagiário">
+                    <p:tab id="tabAtividadesPorUser" title="Atividades por usuário">
                         <p:selectOneMenu value="#{RelatoriosView.userSelecionado}" converter="generic" >
                             <p:ajax update="frmrelatorios" event="itemSelect" 
-                                    listener="#{RelatoriosView.filtraAtividadesPorPlano()}" />
+                                    listener="#{RelatoriosView.filtraAtividadesPorUser()}" />
                             <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                            <f:selectItems value="#{RelatoriosView.listaPlanos}" var="var" itemLabel="#{var.nome}" 
+                            <f:selectItems value="#{RelatoriosView.listaUser}" var="var" itemLabel="#{var.nome}" 
                                            itemValue="#{var}"/>
                         </p:selectOneMenu>
-                        
-                        <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada " 
+
+                        <p:dataTable emptyMessage="Nenhuma atividade cadastrada " 
                                      value="#{RelatoriosView.listaAtividades}" 
                                      filteredValue="#{RelatoriosView.listaAtividadesFiltradas}" rowKey="#{objCursor.id}"
                                      var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
@@ -221,21 +263,43 @@
                             </f:facet>
                         </p:dataTable>
                     </p:tab>
+
+                    <p:tab id="tabExecucaoPlano" title="Execução do plano de ação">
+                        <p:panel>
+                            <p:selectOneMenu value="#{RelatoriosView.empreendimentoSelecionado}" converter="generic" >
+                                <p:ajax update="frmrelatorios" event="itemSelect" 
+                                        listener="#{RelatoriosView.filtraAtividadesPorEes()}"/>
+                                <f:selectItem itemLabel="Escolha o empreendimento" itemValue="#{null}" 
+                                              noSelectionOption="true" />
+                                <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
+                                               itemLabel="#{ept.nome}" itemValue="#{ept}"/>
+                            </p:selectOneMenu>
+
+                            <p:selectOneMenu value="#{RelatoriosView.planoSelecionado}" converter="generic" 
+                                             rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
+                                <p:ajax update="frmrelatorios" event="itemSelect" 
+                                        listener="#{RelatoriosView.filtraAtividadesPorPlano(); 
+                                                    RelatoriosView.criaGraficoPieChatAtiviMetas()}" />
+                                <f:selectItem itemLabel="Escolha o plano" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{RelatoriosView.listaPlanos}" var="var" itemLabel="#{var.nome}" 
+                                               itemValue="#{var}"/>
+                            </p:selectOneMenu>
+                        </p:panel>
+                        <p:panelGrid columns="2" layout="grid">
+                            <p:panel rendered="#{RelatoriosView.planoSelecionado != null 
+                                                 and RelatoriosView.empreendimentoSelecionado != null }" >
+                                <p:chart type="pie" model="#{RelatoriosView.graficoAtividadesPlano}" 
+                                         style="width:400px;height:300px" />                            
+                            </p:panel>
+
+                            <p:panel rendered="#{RelatoriosView.planoSelecionado != null 
+                                                 and RelatoriosView.empreendimentoSelecionado != null }" >
+                                <p:chart type="pie" model="#{RelatoriosView.graficoAtividadesPlano}" 
+                                         style="width:400px;height:300px" />
+                            </p:panel>
+                        </p:panelGrid>
+                    </p:tab>
                 </p:tabView>
-
-                <p:dialog widgetVar="dlg" resizable="false"
-                          showEffect="clip" hideEffect="clip" modal="true"  appendTo="@(body)" draggable="false">
-                    <p:outputPanel id="output" layout="block" style="width:1600px;height:400px"/>
-                </p:dialog>
-
-                <script type="text/javascript">
-                    function exportChart() {
-                        //export image
-                        $("#frmCadastro\\:output").empty().append(PF('chartEvolucaoInds').exportAsImage());
-                        //show the dialog
-                        PF('dlg').show();
-                    }
-                </script>
             </h:form>
         </ui:define>
     </ui:composition>

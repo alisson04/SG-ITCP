@@ -15,7 +15,7 @@
             </style>
 
             <h:form id="frmCadastro" >
-                <p:tabView id="tvGeral" dynamic="true" cache="true"> 
+                <p:tabView id="tvGeral" dynamic="true" cache="true">
                     <p:tab title="Minhas atividades">
                         <p:dataTable emptyMessage="Nenhuma atividade cadastrada." value="#{inicioView.listaAtividades}"
                                      filteredValue="#{inicioView.listaAtividadesFiltradas}" style="text-align: center"
@@ -53,14 +53,14 @@
                                                  rendered="#{atividadeCursor.status != 'Não executada'}"
                                                  actionListener="#{inicioView.mudaAtvParaNaoExecutada(atividadeCursor)}" 
                                                  icon="Cross24-iconfinder" > 
-                                    </p:commandButton>
+                                </p:commandButton>
 
                                 <p:commandButton title="Em execução" style="ui-button" update="frmCadastro"
                                                  rendered="#{atividadeCursor.status != 'Em execução'}"
                                                  actionListener="#{inicioView.mudaAtvParaEmExecução(atividadeCursor)}"
-                                                  icon="profile-iconfinder" > 
+                                                 icon="profile-iconfinder" > 
                                 </p:commandButton>
-                                
+
                                 <p:commandButton title="Executada" style="ui-button" update="frmCadastro"
                                                  rendered="#{atividadeCursor.status != 'Executada'}"
                                                  actionListener="#{inicioView.mudaAtvParaExecutada(atividadeCursor)}"

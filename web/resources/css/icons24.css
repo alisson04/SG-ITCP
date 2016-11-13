@@ -175,6 +175,13 @@
     background-position: 0px 0x;
 }
 
+.See24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24See.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
 .Xls24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Xls24.png") !important;
     height: 24px;

@@ -1,6 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
+import br.ifnmg.januaria.fernandes.itcp.domain.AtividadeUsuario;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.util.ArrayList;
@@ -32,28 +33,28 @@ public class AtividadePlanejadaDAO extends DaoGenerico<AtividadePlanejada> {
         return listarObjsFiltradosIntGenerico("AtividadePlanejada", "meta.idMeta", obj.getIdMeta());
     }
 
-    public List<AtividadePlanejada> listarAtividadesPorUserDao(Usuario user) {//
+    public List<AtividadeUsuario> listarAtividadesPorUserDao(Usuario user) {//
         String PU = "sigitecPU";
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         EntityManager em = emf.createEntityManager();
 
-        List<AtividadePlanejada> listaObjsFiltrados;//Cria alista que será retornada
+        List<AtividadeUsuario> listaObjsFiltrados;//Cria alista que será retornada
         listaObjsFiltrados = new ArrayList();
 
         try {
             em = emf.createEntityManager();
             em.getTransaction().begin();
             Query consulta = em.createQuery("SELECT o FROM AtividadeUsuario o "
-                    + "WHERE o.empreendimentoIndicadorPK.idEmpreendimentoFk = :id " );
+                    + "WHERE o.idUsuarioFk = :id " );
             consulta.setParameter("id", user.getId());
             
-
+            listaObjsFiltrados = consulta.getResultList();//Pega a lista de objs
         } catch (Exception e) {
             em.getTransaction().rollback();
         } finally {
             em.close();
         }
-        System.out.println("TAMANANANANA: " + listaObjsFiltrados.size());
+        System.out.println("Quantidade de Atividades para o user: " + user.getId() + " :" + listaObjsFiltrados.size());
         return listaObjsFiltrados;
     }
 }
