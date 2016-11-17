@@ -3,6 +3,7 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 import br.ifnmg.januaria.fernandes.itcp.bean.AtividadePlanejadaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoIndicadorBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
@@ -11,6 +12,7 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
+import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
@@ -75,6 +77,9 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
     private BarChartModel barModel;
 
     private PieChartModel graficoAtividadesPlano;
+    private PieChartModel graficoMetasPlano;
+
+    private List<Meta> listaMetas;
 
     //Construtor
     public RelatoriosView() {
@@ -101,6 +106,9 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
         //User
         userlBean = new UsuarioBean();
         listaUser = userlBean.listarBean();
+
+        //Meta
+        listaMetas = new ArrayList();
     }
 
     //Metodos gráfico /barra
@@ -233,18 +241,51 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
     }
 
     //METODOS PIECHART
+    public void selecionaEes(){
+        filtraAtividadesPorEes();
+        graficoAtividadesPlano = null; //Limpa o gráfico
+        graficoAtividadesPlano = null; //Limpa o gráfico
+    }
     public void criaGraficoPieChatAtiviMetas() {
-        graficoAtividadesPlano = new PieChartModel();
+        filtraAtividadesPorPlano();
+        listaMetas = planoSelecionado.getMetaList();
 
-        for (int i = 0; i < listaAtividades.size(); i++) {
-            graficoAtividadesPlano.set("Brand 1", 10);
+        if (!listaMetas.isEmpty()) {//Verifica se a metas para o plano
+            graficoMetasPlano = new PieChartModel();
+            graficoMetasPlano.set("Não iniciadas", 10);
+            graficoMetasPlano.set("Iniciadas", 10);
+            graficoMetasPlano.set("Finalizadas", 10);
+
+            graficoMetasPlano.setTitle("Situação atual das metas  do plano de ação");
+            graficoMetasPlano.setLegendPosition("e");
+            graficoMetasPlano.setFill(false);
+            graficoMetasPlano.setShowDataLabels(true);
+            graficoMetasPlano.setDiameter(150);
+            if (!listaAtividades.isEmpty()) {//Verifica se a atividades para o plano
+                graficoAtividadesPlano = new PieChartModel();
+                graficoAtividadesPlano.set("Não iniciadas",
+                        (atividadeBean.filtraAtividadesPorStatus("Não iniciada", listaAtividades)).size());
+                graficoAtividadesPlano.set("Iniciadas",
+                        (atividadeBean.filtraAtividadesPorStatus("Iniciada", listaAtividades)).size());
+                graficoAtividadesPlano.set("Finalizadas",
+                        (atividadeBean.filtraAtividadesPorStatus("Finalizada", listaAtividades)).size());
+
+                graficoAtividadesPlano.setTitle("Situação atual das atividades  do plano de ação");
+                graficoAtividadesPlano.setLegendPosition("e");
+                graficoAtividadesPlano.setFill(false);
+                graficoAtividadesPlano.setShowDataLabels(true);
+                graficoAtividadesPlano.setDiameter(150);
+
+            } else {
+                msgGrowlInfoCustomizavel("", "Não há atividades para esse Plano de ação!");
+                graficoAtividadesPlano = null; //Recebe null, pois não a atividades para esse plano
+            }
+        } else {
+            msgGrowlInfoCustomizavel("", "Não há metas cadastradas para esse Plano de ação!");
+            graficoMetasPlano = null; //Recebe null, pois não a metas para esse plano
+            graficoAtividadesPlano = null; //Recebe null, pois não a atividades para esse plano
         }
 
-        graficoAtividadesPlano.setTitle("Custom Pie");
-        graficoAtividadesPlano.setLegendPosition("e");
-        graficoAtividadesPlano.setFill(false);
-        graficoAtividadesPlano.setShowDataLabels(true);
-        graficoAtividadesPlano.setDiameter(150);
     }
 
     //SETS E GETS
@@ -338,5 +379,13 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
 
     public PieChartModel getGraficoAtividadesPlano() {
         return graficoAtividadesPlano;
+    }
+
+    public PieChartModel getGraficoMetasPlano() {
+        return graficoMetasPlano;
+    }
+
+    public List<Meta> getListaMetas() {
+        return listaMetas;
     }
 }

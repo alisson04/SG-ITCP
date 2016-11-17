@@ -47,6 +47,13 @@ public class Meta implements Serializable, EntityConverter {
     @Column(name = "prazo")
     @Temporal(TemporalType.DATE)
     private Date prazo;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "situacao")
+    private String situacao;
+    
     @Size(max = 200)
     @Column(name = "descricao")
     private String descricao;
@@ -120,6 +127,14 @@ public class Meta implements Serializable, EntityConverter {
 
     public void setAtividadePlanejadaList(List<AtividadePlanejada> atividadePlanejadaList) {
         this.atividadePlanejadaList = atividadePlanejadaList;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
     }
 
     @Override

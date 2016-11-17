@@ -6,6 +6,7 @@ import br.ifnmg.januaria.fernandes.itcp.domain.AtividadeUsuario;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -40,5 +41,31 @@ public class AtividadePlanejadaBean implements Serializable{
     
     public List<AtividadeUsuario> listarAtividadesPorUserBean(Usuario user) {
         return dao.listarAtividadesPorUserDao(user);
+    }
+    
+    //Filtra atividade por Status
+    public List<AtividadePlanejada> filtraAtividadesPorStatus(String status, List<AtividadePlanejada> listaAtv) {
+        List<AtividadePlanejada> listaFiltrada;
+        listaFiltrada= new ArrayList();
+        
+        for(int i=0; i<listaAtv.size(); i++){
+            if(listaAtv.get(i).getStatus().equals(status)){
+                listaFiltrada.add(listaAtv.get(i));
+            }
+        }
+        return listaFiltrada;
+    }
+    
+    //Filtra metas por Status
+    public List<Meta> filtraMetasPorStatus(String status, List<Meta> listaAtv) {
+        List<Meta> listaFiltrada;
+        listaFiltrada= new ArrayList();
+        
+        for(int i=0; i<listaAtv.size(); i++){
+            if(listaAtv.get(i).getSituacao().equals(status)){
+                listaFiltrada.add(listaAtv.get(i));
+            }
+        }
+        return listaFiltrada;
     }
 }

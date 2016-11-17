@@ -268,7 +268,7 @@
                         <p:panel>
                             <p:selectOneMenu value="#{RelatoriosView.empreendimentoSelecionado}" converter="generic" >
                                 <p:ajax update="frmrelatorios" event="itemSelect" 
-                                        listener="#{RelatoriosView.filtraAtividadesPorEes()}"/>
+                                        listener="#{RelatoriosView.selecionaEes()}"/>
                                 <f:selectItem itemLabel="Escolha o empreendimento" itemValue="#{null}" 
                                               noSelectionOption="true" />
                                 <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
@@ -278,8 +278,7 @@
                             <p:selectOneMenu value="#{RelatoriosView.planoSelecionado}" converter="generic" 
                                              rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
                                 <p:ajax update="frmrelatorios" event="itemSelect" 
-                                        listener="#{RelatoriosView.filtraAtividadesPorPlano(); 
-                                                    RelatoriosView.criaGraficoPieChatAtiviMetas()}" />
+                                        listener="#{RelatoriosView.criaGraficoPieChatAtiviMetas()}" />
                                 <f:selectItem itemLabel="Escolha o plano" itemValue="#{null}" noSelectionOption="true" />
                                 <f:selectItems value="#{RelatoriosView.listaPlanos}" var="var" itemLabel="#{var.nome}" 
                                                itemValue="#{var}"/>
@@ -287,17 +286,23 @@
                         </p:panel>
                         <p:panelGrid columns="2" layout="grid">
                             <p:panel rendered="#{RelatoriosView.planoSelecionado != null 
-                                                 and RelatoriosView.empreendimentoSelecionado != null }" >
+                                                 and RelatoriosView.empreendimentoSelecionado != null 
+                                                 and RelatoriosView.graficoAtividadesPlano != null}" >
                                 <p:chart type="pie" model="#{RelatoriosView.graficoAtividadesPlano}" 
                                          style="width:400px;height:300px" />                            
                             </p:panel>
 
                             <p:panel rendered="#{RelatoriosView.planoSelecionado != null 
-                                                 and RelatoriosView.empreendimentoSelecionado != null }" >
-                                <p:chart type="pie" model="#{RelatoriosView.graficoAtividadesPlano}" 
+                                                 and RelatoriosView.empreendimentoSelecionado != null 
+                                                 and RelatoriosView.graficoMetasPlano != null}" >
+                                <p:chart type="pie" model="#{RelatoriosView.graficoMetasPlano}" 
                                          style="width:400px;height:300px" />
                             </p:panel>
                         </p:panelGrid>
+                    </p:tab>
+                    
+                    <p:tab id="tabForcaTrabalho" title="Execução do plano de ação">
+                        
                     </p:tab>
                 </p:tabView>
             </h:form>
