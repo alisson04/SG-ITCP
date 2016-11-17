@@ -122,19 +122,19 @@ public class inicioView extends MensagensGenericas implements Serializable {
     }
 
     public void mudaAtvParaNaoExecutada(AtividadePlanejada at) {//Muda Status da Atividade para "Não executada"
-        at.setStatus("Não executada");
+        at.setStatus("Não iniciada");
         bean.salvarBean(at);
         msgGrowSaveGeneric();
     }
 
     public void mudaAtvParaEmExecução(AtividadePlanejada at) {//Muda Status da Atividade para "Em execução"
-        at.setStatus("Em execução");
+        at.setStatus("Iniciada");
         bean.salvarBean(at);
         msgGrowSaveGeneric();
     }
 
     public void mudaAtvParaExecutada(AtividadePlanejada at) {//Muda Status da Atividade para "Executada"
-        at.setStatus("Executada");
+        at.setStatus("Finalizada");
         bean.salvarBean(at);
         msgGrowSaveGeneric();
     }

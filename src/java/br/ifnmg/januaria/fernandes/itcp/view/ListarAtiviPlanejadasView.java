@@ -29,7 +29,6 @@ import org.primefaces.context.RequestContext;
 @ManagedBean(name = "ListarAtiviPlanejadasView")
 @ViewScoped
 public class ListarAtiviPlanejadasView extends MensagensGenericas implements Serializable {
-
     private AtividadePlanejada objSelecionado;
     private AtividadePlanejada objSalvar = new AtividadePlanejada();
     private AtividadePlanejadaBean bean = new AtividadePlanejadaBean();

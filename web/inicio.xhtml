@@ -6,7 +6,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-
         <ui:define name="conteudo">
             <style type="text/css">
                 .AlturaLinhas {
@@ -40,32 +39,29 @@
                                 <f:facet name="filter">
                                     <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                         <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItem itemLabel="Não executada" itemValue="Não executada" noSelectionOption="true" />
-                                        <f:selectItem itemLabel="Em execução" itemValue="Em execução" noSelectionOption="true" />
-                                        <f:selectItem itemLabel="Executada" itemValue="Executada" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" noSelectionOption="true" />
                                     </p:selectOneMenu>
                                 </f:facet>
                                 <h:outputText value="#{atividadeCursor.status}"/>
                             </p:column>
 
                             <p:column headerText="Mudar situação para:" style="text-align: center" >
-                                <p:commandButton title="Não executada" update="frmCadastro" 
-                                                 rendered="#{atividadeCursor.status != 'Não executada'}"
+                                <p:commandButton title="Não iniciada" update="frmCadastro" 
+                                                 rendered="#{atividadeCursor.status != 'Não iniciada'}"
                                                  actionListener="#{inicioView.mudaAtvParaNaoExecutada(atividadeCursor)}" 
-                                                 icon="Cross24-iconfinder" > 
-                                </p:commandButton>
+                                                 icon="Cross24-iconfinder" />
 
-                                <p:commandButton title="Em execução" style="ui-button" update="frmCadastro"
-                                                 rendered="#{atividadeCursor.status != 'Em execução'}"
+                                <p:commandButton title="Iniciada" style="ui-button" update="frmCadastro"
+                                                 rendered="#{atividadeCursor.status != 'Iniciada'}"
                                                  actionListener="#{inicioView.mudaAtvParaEmExecução(atividadeCursor)}"
-                                                 icon="profile-iconfinder" > 
-                                </p:commandButton>
+                                                 icon="profile-iconfinder" />
 
-                                <p:commandButton title="Executada" style="ui-button" update="frmCadastro"
-                                                 rendered="#{atividadeCursor.status != 'Executada'}"
+                                <p:commandButton title="Finalizada" style="ui-button" update="frmCadastro"
+                                                 rendered="#{atividadeCursor.status != 'Finalizada'}"
                                                  actionListener="#{inicioView.mudaAtvParaExecutada(atividadeCursor)}"
-                                                 icon="BlackCheck24-iconfinder" >
-                                </p:commandButton>
+                                                 icon="BlackCheck24-iconfinder" />
                             </p:column>
 
                             <f:facet name="footer">

@@ -14,6 +14,7 @@ import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.mail.EmailException;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -76,7 +77,7 @@ public class LoginView extends MensagensGenericas implements Serializable {
             System.out.println("ERRO no Endereço de e-mail: " + ex);
             obj = new Usuario();//Limpa o usuário salvo
             msgPanelErroCustomizavel("Impossível salvar", "Verifique o e-mail e a conexão com a internet ");
-        } catch (NullPointerException | PropertyNotFoundException ex){
+        } catch (NullPointerException | PropertyNotFoundException ex) {
             System.out.println("ERRO no obj: " + ex);
             obj = new Usuario();//Limpa o usuário salvo
             msgPanelErroCustomizavel("E-mail desconhecido", "Esse e-mail não esta cadastrado no sistema!");
@@ -88,6 +89,10 @@ public class LoginView extends MensagensGenericas implements Serializable {
             usuarioLogado = bean.logar(usuarioLogado);
             if (usuarioLogado != null) {
                 SessionUtil.setParam("USUARIOLogado", usuarioLogado);
+
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('blockLogar').show()");
+
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/inicio.xhtml");
                 return "/sigitec/inicio.xhtml";
             } else {
