@@ -57,6 +57,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Tempo de existência do EES");
         obj.setCategoria(empreendimento);
         obj.setEixo(social);
+        obj.setNotaMax(2);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -66,6 +67,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Número de membros");
         obj.setCategoria(empreendimento);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -75,6 +77,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Gênese do empreendimento");
         obj.setCategoria(empreendimento);
         obj.setEixo(social);
+        obj.setNotaMax(2);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -84,6 +87,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Trabalhadores não-sócios");
         obj.setCategoria(empreendimento);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -93,6 +97,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Rotatividade nos cargos da coordenação");
         obj.setCategoria(empreendimento);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -104,6 +109,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Sede");
         obj.setCategoria(infraestrutura);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -113,6 +119,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Equipamentos");
         obj.setCategoria(infraestrutura);
         obj.setEixo(economico);
+        obj.setNotaMax(2);
         listaIndicadores.add(obj);
         
         //Indicador 8
@@ -121,6 +128,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Espaços de comercialização");
         obj.setCategoria(infraestrutura);
         obj.setEixo(economico);
+        obj.setNotaMax(2);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -130,6 +138,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Captação de crédito");
         obj.setCategoria(infraestrutura);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -141,6 +150,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Estatuto");
         obj.setCategoria(organizacao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -150,6 +160,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Ata");
         obj.setCategoria(organizacao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -159,6 +170,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Regimento interno");
         obj.setCategoria(organizacao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -168,6 +180,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Controle de caixa");
         obj.setCategoria(organizacao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -177,6 +190,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Planejamentos ou reuniões internas");
         obj.setCategoria(organizacao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -186,6 +200,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Registros/licenças");
         obj.setCategoria(organizacao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -197,6 +212,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Coletivização do trabalho/produção");
         obj.setCategoria(participacao);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -206,6 +222,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Boa convivência");
         obj.setCategoria(participacao);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -215,6 +232,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Decisão coletiva");
         obj.setCategoria(participacao);
         obj.setEixo(social);
+        obj.setNotaMax(2);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -224,6 +242,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Gestão de contas é transparente");
         obj.setCategoria(participacao);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -233,6 +252,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Divulgação interna");
         obj.setCategoria(participacao);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -242,6 +262,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Princípios da ecosol");
         obj.setCategoria(participacao);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -251,6 +272,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Participação cotidiana na gestão");
         obj.setCategoria(participacao);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -260,6 +282,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Ações de preservação/sustentabilidade");
         obj.setCategoria(participacao);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -271,6 +294,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Única fonte de renda");
         obj.setCategoria(remuneracao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -280,6 +304,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Distribuição justa das sobras");
         obj.setCategoria(remuneracao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -289,6 +314,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Benefício, INSS");
         obj.setCategoria(remuneracao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -298,6 +324,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Todos são remunerados");
         obj.setCategoria(remuneracao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -307,6 +334,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Férias");
         obj.setCategoria(remuneracao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -316,6 +344,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Constituem fundo");
         obj.setCategoria(remuneracao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -325,6 +354,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Todos trabalhadores conseguem 1 salário mínimo/mês");
         obj.setCategoria(remuneracao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -336,6 +366,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Número/variedade de produtos");
         obj.setCategoria(comercializacao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -345,6 +376,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Comercialização preocupada com os consumidores");
         obj.setCategoria(comercializacao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -354,6 +386,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Divulgação/propaganda adequada");
         obj.setCategoria(comercializacao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -363,6 +396,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Visão estratégica");
         obj.setCategoria(comercializacao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -372,6 +406,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Dificuldades na comercialização");
         obj.setCategoria(comercializacao);
         obj.setEixo(economico);
+        obj.setNotaMax(2);
         listaIndicadores.add(obj);
         obj = new Indicador();
 
@@ -383,6 +418,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Participação em espaços de diálogo");
         obj.setCategoria(redes);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -392,6 +428,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Participação em redes de comercialização");
         obj.setCategoria(redes);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -401,6 +438,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Participação em fóruns ou conselhos de ECOSOL");
         obj.setCategoria(redes);
         obj.setEixo(social);
+        obj.setNotaMax(2);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -410,6 +448,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Participação em qualquer movimento social");
         obj.setCategoria(redes);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -419,6 +458,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Participação em ações sociais/comunitárias");
         obj.setCategoria(redes);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -428,6 +468,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Compra ou venda de insumos para outro EES");
         obj.setCategoria(redes);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -439,6 +480,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Apoio de outras entidades");
         obj.setCategoria(apoio);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -448,6 +490,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Educação formal");
         obj.setCategoria(apoio);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -457,6 +500,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Capacitação técnica");
         obj.setCategoria(apoio);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -466,6 +510,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Inseridos em projetos");
         obj.setCategoria(apoio);
         obj.setEixo(social);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -477,6 +522,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Preocupação com a qualidade de vida dos trabalhadores");
         obj.setCategoria(producao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -486,6 +532,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Produção regular");
         obj.setCategoria(producao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         obj = new Indicador();
         
@@ -495,6 +542,7 @@ public class GerenciadorIndicadores {
         obj.setNome("Segue as normas vigentes");
         obj.setCategoria(producao);
         obj.setEixo(economico);
+        obj.setNotaMax(1);
         listaIndicadores.add(obj);
         return listaIndicadores;
     }

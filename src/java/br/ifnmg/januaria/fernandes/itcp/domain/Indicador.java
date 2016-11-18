@@ -13,6 +13,7 @@ public class Indicador implements Serializable {
     private String nome;
     private String categoria;
     private String eixo;
+    private int notaMax;
 
     public Indicador() {
     }
@@ -58,5 +59,13 @@ public class Indicador implements Serializable {
 
     public void setEixo(String eixo) {
         this.eixo = eixo;
+    }
+
+    public int getNotaMax() {
+        return notaMax;
+    }
+
+    public void setNotaMax(int notaMax) {
+        this.notaMax = notaMax;
     }
 }
