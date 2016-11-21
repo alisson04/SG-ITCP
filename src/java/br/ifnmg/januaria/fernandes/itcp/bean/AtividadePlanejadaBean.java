@@ -18,19 +18,23 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class AtividadePlanejadaBean implements Serializable{
-    private AtividadePlanejadaDAO dao = new AtividadePlanejadaDAO();
+    private AtividadePlanejadaDAO dao;
     
     public AtividadePlanejadaBean(){
+        dao = new AtividadePlanejadaDAO();
     }
     
+    //Salva uma atividade
     public AtividadePlanejada salvarBean(AtividadePlanejada obj) {
         return dao.salvarDao(obj);
     }
     
+    //Lita todas as atividades
     public List<AtividadePlanejada> listarBean() {
         return dao.listarDao();
     }
     
+    //Exclui uma atividade
     public void excluirBean(AtividadePlanejada obj){
         dao.excluirDao(obj);
     }

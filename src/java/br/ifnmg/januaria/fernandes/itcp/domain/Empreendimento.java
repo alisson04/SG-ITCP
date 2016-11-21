@@ -30,6 +30,9 @@ import javax.validation.constraints.Size;
 public class Empreendimento implements Serializable, EntityConverter {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
+    private List<NotaMaturidade> notaMaturidadeList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
     private List<EmpreendimentoIndicador> empreendimentoIndicadorList;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empreendimento")
@@ -286,6 +289,14 @@ public class Empreendimento implements Serializable, EntityConverter {
 
     public void setEmpreendimentoIndicadorList(List<EmpreendimentoIndicador> empreendimentoIndicadorList) {
         this.empreendimentoIndicadorList = empreendimentoIndicadorList;
+    }
+
+    public List<NotaMaturidade> getNotaMaturidadeList() {
+        return notaMaturidadeList;
+    }
+
+    public void setNotaMaturidadeList(List<NotaMaturidade> notaMaturidadeList) {
+        this.notaMaturidadeList = notaMaturidadeList;
     }
     
 }

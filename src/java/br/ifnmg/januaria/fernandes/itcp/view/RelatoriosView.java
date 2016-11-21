@@ -3,14 +3,11 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 import br.ifnmg.januaria.fernandes.itcp.bean.AtividadePlanejadaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoIndicadorBean;
-import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
-import br.ifnmg.januaria.fernandes.itcp.domain.AtividadeUsuario;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
-import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
@@ -41,7 +38,6 @@ import org.primefaces.model.chart.PieChartModel;
 @ManagedBean(name = "RelatoriosView")
 @ViewScoped
 public class RelatoriosView extends MensagensGenericas implements Serializable {
-
     //Empreendimento Vars
     private Empreendimento empreendimentoSelecionado;
     private List<Empreendimento> listaEmpreendimentos;
@@ -80,6 +76,9 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
     private PieChartModel graficoMetasPlano;
 
     private List<Meta> listaMetas;
+    
+    //Maturidade vars
+    private PieChartModel graficoMaturidade;
 
     //Construtor
     public RelatoriosView() {
@@ -252,9 +251,12 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
 
         if (!listaMetas.isEmpty()) {//Verifica se a metas para o plano
             graficoMetasPlano = new PieChartModel();
-            graficoMetasPlano.set("Não iniciadas", 10);
-            graficoMetasPlano.set("Iniciadas", 10);
-            graficoMetasPlano.set("Finalizadas", 10);
+            graficoMetasPlano.set("Não iniciadas", 
+                        (atividadeBean.filtraMetasPorStatus("Não iniciada", listaMetas)).size());
+            graficoMetasPlano.set("Iniciadas", 
+                        (atividadeBean.filtraMetasPorStatus("Iniciada", listaMetas)).size());
+            graficoMetasPlano.set("Finalizadas", 
+                        (atividadeBean.filtraMetasPorStatus("Finalizada", listaMetas)).size());
 
             graficoMetasPlano.setTitle("Situação atual das metas  do plano de ação");
             graficoMetasPlano.setLegendPosition("e");
@@ -280,6 +282,29 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
                 msgGrowlInfoCustomizavel("", "Não há atividades para esse Plano de ação!");
                 graficoAtividadesPlano = null; //Recebe null, pois não a atividades para esse plano
             }
+        } else {
+            msgGrowlInfoCustomizavel("", "Não há metas cadastradas para esse Plano de ação!");
+            graficoMetasPlano = null; //Recebe null, pois não a metas para esse plano
+            graficoAtividadesPlano = null; //Recebe null, pois não a atividades para esse plano
+        }
+    }
+    
+    //Metodos maturidade
+    public void criaGraficoPieChatMaturidade() {
+        filtraAtividadesPorPlano();
+        listaMetas = planoSelecionado.getMetaList();
+
+        if (!listaMetas.isEmpty()) {//Verifica se a metas para o plano
+            graficoMetasPlano = new PieChartModel();
+            graficoMetasPlano.set("Não iniciadas", 10);
+            graficoMetasPlano.set("Iniciadas", 10);
+            graficoMetasPlano.set("Finalizadas", 10);
+
+            graficoMetasPlano.setTitle("Situação atual das metas  do plano de ação");
+            graficoMetasPlano.setLegendPosition("e");
+            graficoMetasPlano.setFill(false);
+            graficoMetasPlano.setShowDataLabels(true);
+            graficoMetasPlano.setDiameter(150);
         } else {
             msgGrowlInfoCustomizavel("", "Não há metas cadastradas para esse Plano de ação!");
             graficoMetasPlano = null; //Recebe null, pois não a metas para esse plano
@@ -387,5 +412,13 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
 
     public List<Meta> getListaMetas() {
         return listaMetas;
+    }
+
+    public PieChartModel getGraficoMaturidade() {
+        return graficoMaturidade;
+    }
+
+    public void setGraficoMaturidade(PieChartModel graficoMaturidade) {
+        this.graficoMaturidade = graficoMaturidade;
     }
 }

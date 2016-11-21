@@ -1,34 +1,23 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.AtividadePlanejadaBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
+import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.imageio.ImageIO;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
-import org.primefaces.model.StreamedContent;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.PieDataset;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.LineChartModel;
@@ -41,13 +30,13 @@ import org.primefaces.model.chart.LineChartSeries;
 @ManagedBean(name = "inicioView")
 @ViewScoped
 public class inicioView extends MensagensGenericas implements Serializable {
-
     //VARIAVEIS
     private ScheduleModel eventModel;
     private ScheduleEvent event;
     private List<AtividadePlanejada> listaAtividades;
     private List<AtividadePlanejada> listaAtividadesFiltradas;
     private AtividadePlanejadaBean bean;
+    private MetaBean metaBean;
     
     private LineChartModel lineModel1;
 
@@ -58,6 +47,7 @@ public class inicioView extends MensagensGenericas implements Serializable {
         event = new DefaultScheduleEvent();
         bean = new AtividadePlanejadaBean();
         listaAtividades = bean.listarBean();
+        metaBean = new MetaBean();
 
         //Adiciona atividade ao calendário
         for (int i = 0; i < listaAtividades.size(); i++) {
@@ -120,22 +110,25 @@ public class inicioView extends MensagensGenericas implements Serializable {
             return "";
         }
     }
-
+    
     public void mudaAtvParaNaoExecutada(AtividadePlanejada at) {//Muda Status da Atividade para "Não executada"
         at.setStatus("Não iniciada");
-        bean.salvarBean(at);
+        bean.salvarBean(at);//Salva a Atividade
+        metaBean.atualizaStatusMeta(at.getMeta());//Atualiza o status da meta
         msgGrowSaveGeneric();
     }
 
     public void mudaAtvParaEmExecução(AtividadePlanejada at) {//Muda Status da Atividade para "Em execução"
         at.setStatus("Iniciada");
         bean.salvarBean(at);
+        metaBean.atualizaStatusMeta(at.getMeta());//Atualiza o status da meta
         msgGrowSaveGeneric();
     }
 
     public void mudaAtvParaExecutada(AtividadePlanejada at) {//Muda Status da Atividade para "Executada"
         at.setStatus("Finalizada");
         bean.salvarBean(at);
+        metaBean.atualizaStatusMeta(at.getMeta());//Atualiza o status da meta
         msgGrowSaveGeneric();
     }
 

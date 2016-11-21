@@ -8,6 +8,8 @@ import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.el.PropertyNotFoundException;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;

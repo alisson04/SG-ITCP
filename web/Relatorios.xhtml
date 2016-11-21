@@ -302,7 +302,16 @@
                     </p:tab>
                     
                     <p:tab id="tabForcaTrabalho" title="Execução do plano de ação">
-                        
+                        <p:panel>
+                            <p:selectOneMenu value="#{RelatoriosView.empreendimentoSelecionado}" converter="generic" >
+                                <p:ajax update="frmrelatorios" event="itemSelect" 
+                                        listener="#{RelatoriosView.selecionaEes()}"/>
+                                <f:selectItem itemLabel="Escolha o empreendimento" itemValue="#{null}" 
+                                              noSelectionOption="true" />
+                                <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
+                                               itemLabel="#{ept.nome}" itemValue="#{ept}"/>
+                            </p:selectOneMenu>
+                        </p:panel>
                     </p:tab>
                 </p:tabView>
             </h:form>
