@@ -46,7 +46,7 @@ public class MetaBean implements Serializable {
         return dao.buscarMetasPorPlanoDao(p);
     }
 
-    ///Muda o status da meta dependendo da mudança do status de alguma atividade modificada
+    //Muda o status da meta dependendo da mudança do status de alguma atividade modificada
     public void atualizaStatusMeta(Meta meta) {
         List<AtividadePlanejada> listaAtvMeta;
         listaAtvMeta = atvBean.buscarAtividadesPorMetaBean(meta);
@@ -76,7 +76,8 @@ public class MetaBean implements Serializable {
             
             salvarBean(meta);
         }else{
-            
+            System.out.println("Um comportamente inesperado aconteceu no método atualizaStatusMeta da classe"
+                    + "MetaBean");
         }
     }
 }
