@@ -53,6 +53,12 @@ public class Incubadora implements Serializable {
     @Size(max = 45)
     @Column(name = "universidade")
     private String universidade;
+    @Size(max = 255)
+    @Column(name = "fotoFundoLogin")
+    private String fotoFundoLogin;
+    @Size(max = 255)
+    @Column(name = "fotoTelaGeral")
+    private String fotoTelaGeral;
 
     public Incubadora() {
     }
@@ -130,6 +136,22 @@ public class Incubadora implements Serializable {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.Incubadora[ id=" + id + " ]";
+    }
+
+    public String getFotoFundoLogin() {
+        return fotoFundoLogin;
+    }
+
+    public void setFotoFundoLogin(String fotoFundoLogin) {
+        this.fotoFundoLogin = fotoFundoLogin;
+    }
+
+    public String getFotoTelaGeral() {
+        return fotoTelaGeral;
+    }
+
+    public void setFotoTelaGeral(String fotoTelaGeral) {
+        this.fotoTelaGeral = fotoTelaGeral;
     }
     
 }

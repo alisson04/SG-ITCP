@@ -91,6 +91,59 @@
                         </p:dialog>
                     </p:tab>
                 </p:tabView>
+                
+                <!--CADASTRO DE INCUBADORA-->
+                <p:dialog closable="false" draggable="false" resizable="false" visible="true"
+                          header="Cadastro de informações da incubadora" rendered="#{!inicioView.existeInc}"  >
+                    <p:panel id="panel" styleClass="corPanel" >
+                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                            <p:outputLabel for="nome" value="Nome: " />
+                            <p:inputText id="nome" value="#{inicioView.inc.nome}" required="true"
+                                         requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
+                            <p:message for="nome"/>
+
+                            <p:outputLabel for="universidade" value="Universidade: " />  
+                            <p:inputText id="universidade" value="#{inicioView.inc.universidade}" size="45" maxlength="45" />
+                            <p:message for="universidade"/>
+
+                            <p:outputLabel for="redeItcp" value="Rede ITCP " />
+                            <p:inputText id="redeItcp" value="#{inicioView.inc.redeItcp}" size="45" maxlength="45" />
+                            <p:message for="redeItcp"/>
+
+                            <p:outputLabel for="dataCriacao" value="Data de criação " />
+                            <p:calendar id="dataCriacao" value="#{inicioView.inc.dataCriacao}" pattern="dd/MM/yyyy" 
+                                        size="45" mask="true" locale="pt" required="true" 
+                                        requiredMessage="A data de criação é obrigatória." />
+                            <p:message for="dataCriacao"/>
+                        </h:panelGrid>
+                        
+                        <p:fileUpload fileUploadListener="#{inicioView.setaImagemLogin}" mode="simple" update="imgPerfil"
+                                          skinSimple="true"  label="Imagem do topo" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        
+                        <p:fileUpload fileUploadListener="#{inicioView.setaImagemGeral}" mode="simple" update="imgPerfil"
+                                          skinSimple="true"  label="Imagem do login" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+                        <br/>
+                        <p:outputLabel value="* Campos obrigatórios" />
+
+                        <p:separator />
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{inicioView.salvarInc()}" 
+                                         update="frmCadastro" >
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
+                                         style="text-align:center;" >
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
+                        </p:confirmDialog>
+
+                        <p:blockUI block="panel" trigger="btnSalvar" >
+                            SALVANDO<br />
+                            <p:graphicImage name="fotos/LoadingBar.gif" />
+                        </p:blockUI>
+                    </p:panel>
+                </p:dialog>
             </h:form>
         </ui:define>
     </ui:composition>

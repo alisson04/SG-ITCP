@@ -87,6 +87,7 @@
                 </p:dialog>
 
 
+                <!--CADASTRO DE COORDENADOR-->
                 <p:dialog closable="false" draggable="false" resizable="false" visible="true"
                           header="Cadastre o coordenador da Incubadora" rendered="#{!LoginView.existeUserBd}"  >
                     <p:panel id="panel" styleClass="corPanel" >
@@ -131,7 +132,7 @@
 
                         <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{LoginView.salvarCoordenador()}" 
-                                         icon="Save24-iconfinder" update="frmLogar" >
+                                         update="frmLogar" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
                         </p:commandButton>
 

@@ -1,18 +1,20 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.AtividadePlanejadaBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.IncubadoraBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
-import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
+import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
+import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -38,6 +40,12 @@ public class inicioView extends MensagensGenericas implements Serializable {
     private AtividadePlanejadaBean bean;
     private MetaBean metaBean;
     
+    //Incubadora VARS
+    private Incubadora inc;
+    private IncubadoraBean incBean;
+    private boolean existeInc;
+    private UploadArquivo arquivo;
+    
     private LineChartModel lineModel1;
 
     //CONSTRUTOR
@@ -59,6 +67,22 @@ public class inicioView extends MensagensGenericas implements Serializable {
         }
         
         createLineModels();
+        
+        //Incubadora CONTRU
+        inc = new Incubadora();
+        incBean = new IncubadoraBean();
+        existeInc = true;
+        
+        if (incBean.contarLinhasBean() == 0) {
+            System.out.println("Não incubadora cadastrada");
+            existeInc = false;
+        }
+    }
+    
+    public void salvarInc(){
+        incBean.salvarBean(inc);
+        msgGrowSaveGeneric();
+        existeInc = true;
     }
     
     public LineChartModel getLineModel1() {
@@ -163,5 +187,21 @@ public class inicioView extends MensagensGenericas implements Serializable {
 
     public void setListaAtividadesFiltradas(List<AtividadePlanejada> listaAtividadesFiltradas) {
         this.listaAtividadesFiltradas = listaAtividadesFiltradas;
+    }
+
+    public Incubadora getInc() {
+        return inc;
+    }
+
+    public void setInc(Incubadora inc) {
+        this.inc = inc;
+    }
+
+    public boolean isExisteInc() {
+        return existeInc;
+    }
+
+    public void setExisteInc(boolean existeInc) {
+        this.existeInc = existeInc;
     }
 }

@@ -98,6 +98,10 @@ public class Usuario implements Serializable, EntityConverter {
     @Column(name = "endereco")
     private String endereco;
     
+    @Size(max = 255)
+    @Column(name = "fotoPerfil")
+    private String fotoPerfil;
+    
     @ManyToMany(mappedBy = "usuarioList")
     private List<AcompanhamentoEpt> acompanhamentoEptList;
     
@@ -269,6 +273,14 @@ public class Usuario implements Serializable, EntityConverter {
 
     public void setAtividadePlanejadaList(List<AtividadePlanejada> atividadePlanejadaList) {
         this.atividadePlanejadaList = atividadePlanejadaList;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
     
     @Override

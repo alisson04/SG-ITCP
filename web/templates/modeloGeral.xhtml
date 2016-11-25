@@ -57,10 +57,13 @@
         <h:form id="frmMsgGenerico">
             <p:growl showDetail="true" life="5000" />
         </h:form>
-    
+
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="100" >
-                <p:graphicImage name="fotos/IfnmgTopoMenor.jpg" width="100%" height="100%" styleClass="semMargin"/>
+                <h:form id="ftmImagemTopoGeral">
+                    <p:graphicImage width="100%" height="100%" styleClass="semMargin"
+                                    value="./image/#{modeloGeralView.inc.getFotoTelaGeral()}"/>
+                </h:form>
             </p:layoutUnit>
 
             <p:layoutUnit position="south" size="40" resizable="false" closable="false" collapsible="false" >
@@ -75,29 +78,37 @@
                         <p:menuitem value="Início" icon="Home24-iconfinder" 
                                     action="/inicio.xhtml?faces-redirect=true" style="ui-widget"/>
 
+                        <p:menuitem value="teste" icon="Home24-iconfinder" 
+                                    action="/teste.xhtml?faces-redirect=true" style="ui-widget"/>
+
                         <p:submenu label="Incubadora" icon="Grafico24-iconfinder">
 
                             <p:menuitem value="Usuários" icon="Users24-iconfinder" 
                                         action="/listarUsuarios.xhtml?faces-redirect=true"/>
-                            
+
                             <p:menuitem value="Parceiros" icon="Parceria24-iconfinder" 
-                                    action="/listarParceiros.xhtml?faces-redirect=true"/>
-                            
+                                        action="/listarParceiros.xhtml?faces-redirect=true"/>
+
                             <p:menuitem value="Horários de trabalho" icon="Clock22-iconfinder" 
                                         action="/HorariosDeTrabalho.xhtml?faces-redirect=true" />
 
                             <p:menuitem value="Lista de contatos" icon="PhoneList24-iconfinder" 
                                         action="/listaContatos.xhtml?faces-redirect=true" />
+
+                            <p:menuitem value="Configurações" icon="PhoneList24-iconfinder" 
+                                        action="/ConfigurarSistema.xhtml?faces-redirect=true" />
                         </p:submenu>
 
-                        <p:menuitem value="Empreendimentos" icon="Mala24-iconfinder" 
-                                    action="/listarEmpreendimento.xhtml?faces-redirect=true" />
+                        <p:submenu label="Empreendimentos" icon="Grafico24-iconfinder">
+                            <p:menuitem value="Empreendimentos" icon="Mala24-iconfinder" 
+                                        action="/listarEmpreendimento.xhtml?faces-redirect=true" />
 
-                        <p:menuitem value="Membros de empreendimentos" icon="MembroEpt24-iconfinder" 
-                                    action="/listarMembroEmpreendimento.xhtml?faces-redirect=true" />
-                        
-                        <p:menuitem value="Indicadores" icon="MembroEpt24-iconfinder" 
-                                    action="/IndicadoresMaturidade.xhtml?faces-redirect=true" /> 
+                            <p:menuitem value="Membros" icon="MembroEpt24-iconfinder" 
+                                        action="/listarMembroEmpreendimento.xhtml?faces-redirect=true" />
+
+                            <p:menuitem value="Indicadores" icon="MembroEpt24-iconfinder" 
+                                        action="/IndicadoresMaturidade.xhtml?faces-redirect=true" /> 
+                        </p:submenu>
 
                         <p:menuitem value="Relatórios" icon="MembroEpt24-iconfinder" 
                                     action="/Relatorios.xhtml?faces-redirect=true" /> 
@@ -116,10 +127,8 @@
                         <p:menuitem value="Acompanhamentos" icon="Parceria24-iconfinder" 
                                     action="/listarAcompanhamentosEpt.xhtml?faces-redirect=true"/>
 
-
-
                         <f:facet name="options" >
-                            <p:commandButton id="btnMinhaConta" type="push" title="Minha conta" style="ui-button"
+                            <p:commandButton id="btnMinhaConta" type="push" value="Minha conta" style="ui-button"
                                              icon="profile-iconfinder" />
 
                             <p:slideMenu overlay="true" trigger="btnMinhaConta" my="left top" at="left bottom" >
@@ -189,6 +198,6 @@
                 <ui:insert name="conteudo" />
             </p:layoutUnit>
         </p:layout>
-        
+
     </h:body>
 </html>

@@ -44,7 +44,7 @@
                             <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicao"
                                              process="ListagemUsuarios" oncomplete="PF('wVarEditarDialog').show()"
                                              actionListener="#{ListarUsuariosView.reiniciaObj()}"/>
-                            
+
                             <p:commandButton id="btnInativarusr" actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}"
                                              value="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.objSelecionado)}" 
                                              icon="Refresh24-iconfinder" disabled="#{ListarUsuariosView.objSelecionado == null}" 
@@ -83,7 +83,7 @@
 
                             <h:outputText value="Cargo: "/>
                             <h:outputText value="#{ListarUsuariosView.objSelecionado.cargo}"/>
-                            
+
                             <h:outputText value="Situação no sistema: "/>
                             <h:outputText value="#{ListarUsuariosView.objSelecionado.statusSistema}"/>
 
@@ -114,8 +114,8 @@
 
             <p:dialog id="dlgEditar" header="Usuário " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
                       styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
-                <h:form id="frmEdicao">
-                    <p:panel id="panel" styleClass="corPanel" >
+                <h:form id="frmEdicao">                    
+                    <p:panel id="panel" style="margin-bottom:20px">
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
                             <p:inputText id="nome" value="#{ListarUsuariosView.objSalvar.nome}" required="true"
@@ -170,7 +170,7 @@
                             </p:selectOneMenu>
                             <p:message for="cargoItcp"/>
 
-                            <p:outputLabel for="sexo" value="Sexo: "/>
+                            <p:outputLabel for="sexo" value="Sexo: "/>  
                             <p:selectOneRadio id="sexo" required="true" requiredMessage="O sexo é obrigatório."
                                               value="#{ListarUsuariosView.objSalvar.sexo}">
                                 <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>

@@ -3,6 +3,7 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
+import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +16,7 @@ import javax.faces.view.ViewScoped;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 
 @ViewScoped
 @Named("ListarUsuariosView")
@@ -26,6 +28,7 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
     private List<Usuario> listaUsuarios;
     private List<Usuario> listaUsuariosFiltrados;
     private UsuarioBean bean;
+    private UploadArquivo arquivo = new UploadArquivo();
 
     public ListarUsuariosView() {
         objSalvar = new Usuario();
@@ -50,6 +53,7 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
 
     public void reiniciaObj() {//Para botão de cadastrar
         objSalvar = new Usuario();
+        objSalvar.setFotoPerfil("profileGeral.png");
     }
 
     public void salvarView() {
@@ -62,6 +66,9 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
                 objSalvar.setSenha(DigestUtils.md5Hex(objSalvar.getSenha()));//CRIPTOGRAFA A SENHA ALEATORIA
                 bean.salvarBean(objSalvar);//Salva o usuário
                 objSalvar = new Usuario();//Limpa o usuário salvo
+                objSalvar.setFotoPerfil("profileGeral.png");
+                this.arquivo.gravar();
+                this.arquivo = new UploadArquivo();
                 listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('wVarEditarDialog').hide()");
@@ -69,13 +76,17 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
             } else {
                 msgPanelErroCustomizavel("Erro no e-mail", "Este e-mail já esta cadastrado no sistema!");
             }
-        } catch(EmailException ex) {
+        } catch (EmailException ex) {
             msgPanelErroCustomizavel("Impossível salvar", "Verifique a validade do e-mail e a conexão com a internet ");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             msgPanelErroInesperadoGeneric();
         }
+    }
+
+    public void uploadAction(FileUploadEvent event) {
+        this.arquivo.fileUpload(event, ".jpg", "/image/");
+        this.objSalvar.setFotoPerfil(this.arquivo.getNome());
     }
 
     public String gerarSenhaAleatoria() {

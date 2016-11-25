@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/templates/modeloGeral.xhtml">
+        <ui:define name="conteudo">
+
+            <h:head>
+                <title>File Upload</title>
+            </h:head>
+            <h:body>
+                <h1>Inserir Produto</h1>
+                <h:form>
+                    <h:panelGrid columns="2">
+                        Nome: <h:inputText value="#{produtoMB.produto.nome}"/>
+                        Preço: <h:inputText value="#{produtoMB.produto.preco}"/>
+
+                        Foto: <p:fileUpload id="upload" 
+                                            fileUploadListener="#{produtoMB.uploadAction}" auto="true"/>
+
+                        <h:commandButton action="#{produtoMB.salvar}" value="Salvar" />
+                    </h:panelGrid>            
+                </h:form>
+
+                <h2>Produtos Cadastrados</h2>
+                <h:form id="foto">
+                    <h:dataTable var="produto" value="#{produtoMB.listarProdutos}" >
+                        <h:column>
+                            <f:facet name="header">Foto</f:facet>
+                            <h:graphicImage value="./image/#{produto.foto}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Nome</f:facet>
+                            <h:outputText value="#{produto.nome}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Preço</f:facet>
+                            <h:outputText value="#{produto.preco}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </h:body>
+        </ui:define>
+    </ui:composition>
+</html>

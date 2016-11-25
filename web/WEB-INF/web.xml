@@ -45,7 +45,7 @@
 		<param-value>true</param-value>
 	</context-param>
     
-    <!-- Correção de bug -->    
+    <!-- Correção de bug -->
     <mime-mapping>
         <extension>ttf</extension>
          <mime-type>application/font-sfnt</mime-type>
