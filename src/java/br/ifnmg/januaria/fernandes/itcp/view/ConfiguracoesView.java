@@ -47,19 +47,24 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
     
     //METODOS INC
     public void salvarInc(){
-        incBean.salvarBean(inc);
+        System.out.println("METD SALVAR");
+        inc = incBean.salvarBean(inc);
         msgGrowSaveGeneric();
     }
     
     public void setaImagemLogin(FileUploadEvent event) {
+        System.out.println("METD setaImagemLogin");
         arquivo.fileUpload(event, ".jpg", "/image/");
         inc.setFotoFundoLogin(arquivo.getNome());
+        arquivo.gravar();
         salvarInc();
     }
     
     public void setaImagemGeral(FileUploadEvent event) {
+        System.out.println("METD setaImagemGeral");
         arquivo.fileUpload(event, ".jpg", "/image/");
         inc.setFotoTelaGeral(arquivo.getNome());
+        arquivo.gravar();
         salvarInc();
     }
     

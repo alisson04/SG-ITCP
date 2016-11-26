@@ -24,7 +24,10 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     public void init() {
         //Incubadora CONTRU
         incBean = new IncubadoraBean();
+    }
 
+    //METODOS INC
+    public String geraFotoTopo(){
         if (incBean.contarLinhasBean() != 0) {//Caso existe INC cadastrada
             inc = incBean.listarBean().get(0);
             System.out.println("cadastrada: " + inc.getId());
@@ -36,9 +39,10 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
             inc.setFotoTelaGeral("fotoTopoGeral.jpg");
             System.out.println("Não incubadora cadastrada");
         }
+        
+        return inc.getFotoTelaGeral();
     }
-
-    //METODOS INC
+    
     //SETS E GETS
     public Incubadora getInc() {
         return inc;

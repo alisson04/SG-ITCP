@@ -2,6 +2,10 @@
     font-size: 20px !important;
 }
 
+.pgColumns50 {
+    width: 50%;
+}
+
 .tamanhoTexto15 .ui-widget {
     font-size: 20px !important;
 }

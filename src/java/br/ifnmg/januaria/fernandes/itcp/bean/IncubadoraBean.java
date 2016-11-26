@@ -20,8 +20,8 @@ public class IncubadoraBean implements Serializable{
         dao = new IncubadoraDAO();
     }
     
-    public void salvarBean(Incubadora obj){
-        dao.salvarDao(obj);
+    public Incubadora salvarBean(Incubadora obj){
+        return dao.salvarDao(obj);
     }
     
     public void excluirBean(Incubadora obj){

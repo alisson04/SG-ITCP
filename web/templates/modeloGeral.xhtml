@@ -60,10 +60,8 @@
 
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="100" >
-                <h:form id="ftmImagemTopoGeral">
-                    <p:graphicImage width="100%" height="100%" styleClass="semMargin"
-                                    value="./image/#{modeloGeralView.inc.getFotoTelaGeral()}"/>
-                </h:form>
+                <p:graphicImage id="ftmImagemTopoGeral" width="100%" height="100%" styleClass="semMargin"
+                                value="./image/#{modeloGeralView.geraFotoTopo()}"/>
             </p:layoutUnit>
 
             <p:layoutUnit position="south" size="40" resizable="false" closable="false" collapsible="false" >

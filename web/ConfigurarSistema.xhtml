@@ -14,74 +14,83 @@
             </style>
 
             <h:form id="frmConfiguracao" >
-                <p:panel>
-                    <!--CADASTRO DE INCUBADORA-->
-                    <p:fieldset id="panel" legend="Configurações da incubadora" toggleable="true" toggleSpeed="500" collapsed="true" >
-                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                            <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ConfiguracoesView.inc.nome}" required="true"
-                                         requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
-                            <p:message for="nome"/>
 
-                            <p:outputLabel for="universidade" value="Universidade: " />  
-                            <p:inputText id="universidade" value="#{ConfiguracoesView.inc.universidade}" size="45" maxlength="45" />
-                            <p:message for="universidade"/>
+                <!--CADASTRO DE INCUBADORA-->
+                <p:fieldset id="panel" legend="Configurações da incubadora" toggleable="true" toggleSpeed="500" collapsed="true" >
+                    <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                        <p:outputLabel for="nome" value="Nome: " />
+                        <p:inputText id="nome" value="#{ConfiguracoesView.inc.nome}" required="true"
+                                     requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
+                        <p:message for="nome"/>
 
-                            <p:outputLabel for="redeItcp" value="Rede ITCP " />
-                            <p:inputText id="redeItcp" value="#{ConfiguracoesView.inc.redeItcp}" size="45" maxlength="45" />
-                            <p:message for="redeItcp"/>
+                        <p:outputLabel for="universidade" value="Universidade: " />  
+                        <p:inputText id="universidade" value="#{ConfiguracoesView.inc.universidade}" size="45" maxlength="45" />
+                        <p:message for="universidade"/>
 
-                            <p:outputLabel for="dataCriacao" value="Data de criação " />
-                            <p:calendar id="dataCriacao" value="#{ConfiguracoesView.inc.dataCriacao}" pattern="dd/MM/yyyy" 
-                                        size="45" mask="true" locale="pt" required="true" 
-                                        requiredMessage="A data de criação é obrigatória." />
-                            <p:message for="dataCriacao"/>
-                        </h:panelGrid>
+                        <p:outputLabel for="redeItcp" value="Rede ITCP " />
+                        <p:inputText id="redeItcp" value="#{ConfiguracoesView.inc.redeItcp}" size="45" maxlength="45" />
+                        <p:message for="redeItcp"/>
 
-                        <br/>
-                        <p:outputLabel value="* Campos obrigatórios" />
+                        <p:outputLabel for="dataCriacao" value="Data de criação " />
+                        <p:calendar id="dataCriacao" value="#{ConfiguracoesView.inc.dataCriacao}" pattern="dd/MM/yyyy" 
+                                    size="45" mask="true" locale="pt" required="true" 
+                                    requiredMessage="A data de criação é obrigatória." />
+                        <p:message for="dataCriacao"/>
+                    </h:panelGrid>
 
-                        <p:separator />
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ConfiguracoesView.salvarInc()}" 
-                                         update="frmConfiguracao" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
-                        </p:commandButton>
+                    <br/>
+                    <p:outputLabel value="* Campos obrigatórios" />
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
-                                         style="text-align:center;" >
-                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
-                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
-                        </p:confirmDialog>
+                    <p:separator />
+                    <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ConfiguracoesView.salvarInc()}" 
+                                     update="frmConfiguracao" >
+                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
+                    </p:commandButton>
 
-                        <p:blockUI block="panel" trigger="btnSalvar" >
-                            SALVANDO<br />
-                            <p:graphicImage name="fotos/LoadingBar.gif" />
-                        </p:blockUI>
-                    </p:fieldset>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
+                                     style="text-align:center;" >
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
+                    </p:confirmDialog>
 
-                    <p:spacer height="30px"/>
+                    <p:blockUI block="panel" trigger="btnSalvar" >
+                        SALVANDO<br />
+                        <p:graphicImage name="fotos/LoadingBar.gif" />
+                    </p:blockUI>
+                </p:fieldset>
 
-                    <p:fieldset legend="Configurar imagem de topo" toggleable="true" toggleSpeed="500" collapsed="true" >
-                        <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemLogin}" mode="advanced" auto="true"
-                                      label="Imagem do topo" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="ftmImagemTopoGeral" />
-                        
-                        <p:graphicImage width="100%" height="100%" styleClass="semMargin"
-                                value="./image/#{modeloGeralView.inc.getFotoTelaGeral()}"/>
-                    </p:fieldset>
+                <p:spacer height="30px"/>
 
-                    <p:spacer height="30px"/>
+                <p:fieldset legend="Configurações do sistema" toggleable="true" toggleSpeed="500" collapsed="true" >
+                    <h:panelGrid columns="3" columnClasses="pgColumns50">
+                        <p:panel header="Configurar imagem de topo" >
+                            <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemGeral}" mode="advanced" auto="true"
+                                          label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                          update="ftmImagemTopoGeral frmConfiguracao" />
 
-                    <p:fieldset legend="Configurar imagem de topo" toggleable="true" toggleSpeed="500" collapsed="true" >
-                        <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemGeral}" mode="simple" 
-                                      skinSimple="true"  label="Imagem do login" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                    </p:fieldset>
+                            <p:spacer height="10px"/>
+                            <p:panel header="Imagem atual">
+                                <p:graphicImage width="50%" height="50%" styleClass="semMargin"
+                                                value="./image/#{ConfiguracoesView.inc.getFotoTelaGeral()}"/>
+                            </p:panel>
+                        </p:panel>
 
-                    <p:spacer height="30px"/>
-                    
-                    <p:fieldset legend="Configurar tema do sistema" toggleable="true" toggleSpeed="500" collapsed="true" >
-                        
-                    </p:fieldset>
-                </p:panel>
+                        <p:spacer width="30px" />
+
+                        <p:panel header="Configurar imagem de fundo da tela de login" >
+                            <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemLogin}" mode="advanced" auto="true"
+                                          label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                          update="ftmImagemTopoGeral frmConfiguracao" />
+
+                            <p:spacer height="10px"/>
+                            <p:panel header="Imagem atual">
+                                <p:graphicImage width="50%" height="50%" styleClass="semMargin"
+                                                value="./image/#{ConfiguracoesView.inc.getFotoFundoLogin()}"/>
+                            </p:panel>
+                        </p:panel>
+                        <p:spacer height="30px"/>
+                    </h:panelGrid>
+                </p:fieldset>
             </h:form>
         </ui:define>
     </ui:composition>
