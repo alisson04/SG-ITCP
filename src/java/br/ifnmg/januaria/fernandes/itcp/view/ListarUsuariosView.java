@@ -21,21 +21,25 @@ import org.primefaces.event.FileUploadEvent;
 @ViewScoped
 @Named("ListarUsuariosView")
 public class ListarUsuariosView extends MensagensGenericas implements Serializable {
-
+    //Variáveis
     private Usuario objSelecionado;
     private Usuario objSalvar;
 
     private List<Usuario> listaUsuarios;
     private List<Usuario> listaUsuariosFiltrados;
     private UsuarioBean bean;
+    private UploadArquivo arquivo;
 
+    //Construtor
     public ListarUsuariosView() {
         objSalvar = new Usuario();
         bean = new UsuarioBean();
 
         listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
+        arquivo = new UploadArquivo();
     }
 
+    //Metodos
     public void transfereObj() {//Para botão de editar
         objSalvar = objSelecionado;
     }
@@ -69,6 +73,14 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             msgPanelErroInesperadoGeneric();
         }
+    }
+
+    public void uploadAction(FileUploadEvent event) {//Upa a foto e seta no user
+        arquivo.fileUpload(event, ".jpg", "/image/");
+        System.out.println("Nomed o arquivo: " + arquivo.getNome());
+        objSalvar.setFotoPerfil(arquivo.getNome());
+        arquivo.gravar();
+        arquivo = new UploadArquivo();//Limpa a variável
     }
 
     public void excluirView() {
