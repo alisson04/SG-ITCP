@@ -1,13 +1,8 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
-import java.util.ArrayList;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 /**
@@ -26,8 +21,8 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         return listarObjsGenerico("Usuario");
     }
 
-    public void salvarUsr(Usuario usr) {
-        salvarGenerico(usr);
+    public Usuario salvarUsr(Usuario usr) {
+        return salvarGenerico(usr);
     }
 
     public void excluirUsrDao(Usuario usr) {

@@ -126,71 +126,123 @@
                                     action="/listarAcompanhamentosEpt.xhtml?faces-redirect=true"/>
 
                         <f:facet name="options" >
-                            <p:commandButton id="btnMinhaConta" type="push" value="Minha conta" style="ui-button"
-                                             icon="profile-iconfinder" />
-
-                            <p:slideMenu overlay="true" trigger="btnMinhaConta" my="left top" at="left bottom" >
-                                <p:menuitem value="Visualizar  conta" icon="Information16-iconfinder" oncomplete="PF('UserDia').show()"
-                                            update=":frmModeloGeral:outPaMostrarUsr" />
+                            <p:menuButton value="Minha conta">
                                 <p:menuitem value="Editar  conta" icon="Edit16-iconfinder"
-                                            />
-                                <p:menuitem value="Mudar senha" icon="Key16-iconfinder" oncomplete="PF('UserDia').show()"
-                                            update=":frmModeloGeral:outPaMostrarUsr" />
-                                <p:menuitem value=" Sair" icon="Exit16-iconfinder"
-                                            action="#{LoginView.sair()}"/>
-                            </p:slideMenu>
+                                            oncomplete="PF('UserDia').show()" update=":frmEditarMeusDados:outPaMostrarUsr" />
+                                <p:menuitem value=" Sair" icon="Exit16-iconfinder" action="#{LoginView.sair()}" />
+                            </p:menuButton>
                         </f:facet>
                     </p:menubar>
-
-                    <p:dialog id="diaShowUsr" header="Seus dados" widgetVar="UserDia" showEffect="fade" hideEffect="fade" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)">
-                        <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
-                            <p:panelGrid  columns="2" columnClasses="label,value" >
-                                <h:outputText value="Nome: " />
-                                <h:outputText value="#{InicioBean.usuarioLogado.nome}" />
-
-                                <h:outputText value="E-mail: " />
-                                <h:outputText value="#{InicioBean.usuarioLogado.email}" />
-
-                                <h:outputText value="Endereço: " />
-                                <h:outputText value="#{InicioBean.usuarioLogado.endereco}" />
-
-                                <h:outputText value="Cargo: "/>
-                                <h:outputText value="#{InicioBean.usuarioLogado.cargo}"/>
-
-                                <h:outputText value="Telefone: " />
-                                <h:outputText value="#{InicioBean.usuarioLogado.telefone}" />
-
-                                <h:outputText value="Telefone alternatico: " />
-                                <h:outputText value="#{InicioBean.usuarioLogado.telefoneAlternativo}" />
-
-                                <p:outputLabel value="RG: " />
-                                <p:outputLabel value="#{InicioBean.usuarioLogado.rg}"/>
-
-                                <p:outputLabel value="CPF: " />
-                                <p:outputLabel value="#{InicioBean.usuarioLogado.cpf}"/>
-
-                                <p:outputLabel value="Data de nascimento: " />
-                                <p:outputLabel value="#{InicioBean.usuarioLogado.dataNascimento}"/>
-
-                                <p:outputLabel value="Data de entrada na ITCP: " />
-                                <p:outputLabel value="#{InicioBean.usuarioLogado.dataEntrada}"/>
-
-                                <p:outputLabel value="Sexo: " />
-                                <p:outputLabel value="#{InicioBean.usuarioLogado.sexo}"/>
-                            </p:panelGrid>
-                        </p:outputPanel>
-                    </p:dialog>
-
-                    <p:dialog id="diaShowOptions" header="Opções de conta" widgetVar="userOptions" showEffect="fade" hideEffect="fade" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)">
-                        <p:outputPanel style="text-align:center;" >
-                            <p:panelGrid  columns="2" columnClasses="label,value" >
-
-                            </p:panelGrid>
-                        </p:outputPanel>
-                    </p:dialog>
                 </h:form>
+
+                <p:dialog id="diaShowUsr" header="Minha conta" widgetVar="UserDia" showEffect="fade" hideEffect="fade" 
+                          resizable="false" draggable="false" modal="true"  appendTo="@(body)">
+                    <h:form id="frmEditarMeusDados"><!--Necessário usar um formulária a parte, visto o bloqueio de validação-->
+                        <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
+                            <p:fileUpload id="upload" label="Mudar foto de perfil" mode="advanced" 
+                                          update="frmEditarMeusDados"
+                                          fileUploadListener="#{modeloGeralView.uploadAction}" auto="true"/>
+                            <p:panel >
+                                <p:graphicImage id="ftmImagemTopoGeral" width="150px" height="150px" styleClass="semMargin"
+                                                value="./image/#{modeloGeralView.usuarioLogado.fotoPerfil}"/>
+                            </p:panel>
+                            <p:spacer height="10px"/>
+
+                            <p:panel id="panel" style="margin-bottom:20px" >
+                                <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                                    <p:outputLabel for="nome" value="Nome: " />
+                                    <p:inputText id="nome" value="#{modeloGeralView.usuarioLogado.nome}" required="true"
+                                                 requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
+                                    <p:message for="nome"/>
+
+                                    <p:outputLabel for="e-mail" value="E-mail: " />  
+                                    <p:inputText id="e-mail" value="#{modeloGeralView.usuarioLogado.email}" required="true"
+                                                 requiredMessage="O e-mail é obrigatório." size="45" maxlength="50"/>
+                                    <p:message for="e-mail"/>
+
+                                    <p:outputLabel for="endereco" value="Endereço: "/>
+                                    <p:inputText id="endereco" value="#{modeloGeralView.usuarioLogado.endereco}" size="45" maxlength="50"/>
+                                    <p:message for="endereco"/>
+
+                                    <p:outputLabel for="telefone" value="Telefone: " />
+                                    <p:inputMask id="telefone" value="#{modeloGeralView.usuarioLogado.telefone}"
+                                                 mask="(99) ?9-9999-9999" size="45" maxlength="11" required="true"
+                                                 requiredMessage="O telefone é obrigatório."/>
+                                    <p:message for="telefone"/>
+
+                                    <p:outputLabel value="Telefone alternativo: " />
+                                    <p:inputMask id="telefoneAlternativo" value="#{modeloGeralView.usuarioLogado.telefoneAlternativo}"
+                                                 mask="(99) ?9-9999-9999" size="45" maxlength="11"/>
+                                    <p:message for="telefoneAlternativo"/>
+
+                                    <p:outputLabel for="rg" value="RG: " />
+                                    <p:inputText id="rg" value="#{modeloGeralView.usuarioLogado.rg}" size="45" maxlength="13"/>
+                                    <p:message for="rg"/>
+
+                                    <p:outputLabel for="cpf" value="CPF: " />
+                                    <p:inputMask id="cpf" value="#{modeloGeralView.usuarioLogado.cpf}"
+                                                 mask="999-999-999.99" size="45" maxlength="11" />   
+                                    <p:message for="cpf"/>
+
+                                    <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
+                                    <p:calendar id="dataNascimento" value="#{modeloGeralView.usuarioLogado.dataNascimento}" 
+                                                pattern="dd/MM/yyyy" size="45" mask="true" locale="pt" required="true" 
+                                                requiredMessage="A data de nascimento é obrigatória." />
+                                    <p:message for="dataNascimento"/>
+
+                                    <p:outputLabel for="dataEntrada" value="Entrada na ITCP: " />
+                                    <p:calendar id="dataEntrada" value="#{modeloGeralView.usuarioLogado.dataEntrada}" 
+                                                pattern="dd/MM/yyyy" mask="true" locale="pt" size="45" required="true" 
+                                                requiredMessage="A data de entrada é obrigatória." />
+                                    <p:message for="dataEntrada"/>
+
+                                    <p:outputLabel for="cargoItcp" value="Cargo: " 
+                                                   rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}" />
+                                    <p:selectOneMenu id="cargoItcp" required="true" requiredMessage="O cargo na ITCP é obrigatório."
+                                                     value="#{modeloGeralView.usuarioLogado.cargo}" style="width:435px"
+                                                     rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}">
+                                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{modeloGeralView.geraTiposDeCargosView()}" />
+                                    </p:selectOneMenu>
+                                    <p:message for="cargoItcp" rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}"/>
+
+                                    <p:outputLabel for="sexo" value="Sexo: "/>  
+                                    <p:selectOneRadio id="sexo" required="true" requiredMessage="O sexo é obrigatório."
+                                                      value="#{modeloGeralView.usuarioLogado.sexo}">
+                                        <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                        <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
+                                        <f:selectItem itemLabel="Outro" itemValue="Outro"/>
+                                    </p:selectOneRadio>
+                                    <p:message for="sexo" />
+                                </h:panelGrid>
+
+                                <p:outputLabel value="* Campos obrigatórios" />
+
+                                <p:blockUI block="outPaMostrarUsr" trigger="btnSalvar">
+                                    CARREGANDO<br />
+                                    <p:graphicImage name="fotos/LoadingBar.gif"/>
+                                </p:blockUI>
+                            </p:panel>
+
+                            <p:commandButton id="btnSalvar" value="Salvar" icon="Save24-iconfinder" update="frmEditarMeusDados"
+                                             actionListener="#{modeloGeralView.editarUserLogadoView()}" >
+                                <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                            </p:commandButton>
+                            <p:spacer width="20px" />
+
+                            <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                             onclick="PF('UserDia').hide()" />
+                        </p:outputPanel>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
+                                         style="text-align:center;">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
+                                             icon="BlackCheck24-iconfinder" />
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
+                                             icon="Cross24-iconfinder" />
+                        </p:confirmDialog>
+                    </h:form>
+                </p:dialog>
 
                 <br></br>
                 <ui:insert name="conteudo" />

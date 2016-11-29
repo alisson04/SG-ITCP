@@ -28,7 +28,7 @@
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarUsuariosView.cargos}" />
+                                    <f:selectItems value="#{ListarUsuariosView.geraTiposDeCargosView()}" />
                                 </p:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{usuarioCursor.cargo}" />
@@ -112,9 +112,10 @@
                 </p:panel>
             </h:form>
 
+            <!-- EDITAR USUÁRIO-->
             <p:dialog id="dlgEditar" header="Usuário " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
                       styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
-                <h:form id="frmEdicao">                    
+                <h:form id="frmEdicao">
                     <p:panel id="panel" style="margin-bottom:20px">
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
@@ -164,9 +165,9 @@
                             <p:outputLabel for="cargoItcp" value="Cargo: " />
                             <p:selectOneMenu id="cargoItcp" required="true" requiredMessage="O cargo na ITCP é obrigatório."
                                              value="#{ListarUsuariosView.objSalvar.cargo}" style="width:435px"
-                                             rendered="#{InicioBean.usuarioLogado.cargo == 'Coordenador'}">
+                                             rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarUsuariosView.cargos}" />
+                                <f:selectItems value="#{ListarUsuariosView.geraTiposDeCargosView()}" />
                             </p:selectOneMenu>
                             <p:message for="cargoItcp"/>
 

@@ -24,25 +24,14 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
 
     private Usuario objSelecionado;
     private Usuario objSalvar;
-    private String[] cargos;//para a tela de listar usuarios
+
     private List<Usuario> listaUsuarios;
     private List<Usuario> listaUsuariosFiltrados;
     private UsuarioBean bean;
-    private UploadArquivo arquivo = new UploadArquivo();
 
     public ListarUsuariosView() {
         objSalvar = new Usuario();
         bean = new UsuarioBean();
-
-        cargos = new String[8];
-        cargos[0] = "Coordenador";
-        cargos[1] = "Professor";
-        cargos[2] = "Técnico Administrativo";
-        cargos[3] = "Estagiário Remunerado";
-        cargos[4] = "Estagiário Voluntário";
-        cargos[5] = "Bolsista - PIBED";
-        cargos[6] = "Bolsista - PIBIC";
-        cargos[7] = "Bolsista - PROEXT";
 
         listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
     }
@@ -58,17 +47,15 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
 
     public void salvarView() {
         try {
-            if ((bean.buscarPorEmailBean(objSalvar) == null)) {//Verifica se o e-mail já esta cadastrado
-
+            if ((bean.buscarPorEmailBean(objSalvar) == null//Verifica se o e-mail já esta cadastrado
+                    ||bean.buscarPorEmailBean(objSalvar).getId().equals(objSalvar.getId()))) {
                 objSalvar.setStatusSistema("Ativo");//SETA O STATUS
-                objSalvar.setSenha(gerarSenhaAleatoria());//GERA A SENHA ALEATORIA
+                objSalvar.setSenha(bean.gerarSenhaAleatoria());//GERA A SENHA ALEATORIA
                 bean.enviarEmail(objSalvar.getEmail(), "Sistema Sigitec", "Sua senha é: " + objSalvar.getSenha());//Manda o emaill
                 objSalvar.setSenha(DigestUtils.md5Hex(objSalvar.getSenha()));//CRIPTOGRAFA A SENHA ALEATORIA
                 bean.salvarBean(objSalvar);//Salva o usuário
                 objSalvar = new Usuario();//Limpa o usuário salvo
                 objSalvar.setFotoPerfil("profileGeral.png");
-                this.arquivo.gravar();
-                this.arquivo = new UploadArquivo();
                 listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('wVarEditarDialog').hide()");
@@ -82,24 +69,6 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
             msgPanelErroInesperadoGeneric();
         }
-    }
-
-    public void uploadAction(FileUploadEvent event) {
-        this.arquivo.fileUpload(event, ".jpg", "/image/");
-        this.objSalvar.setFotoPerfil(this.arquivo.getNome());
-    }
-
-    public String gerarSenhaAleatoria() {
-        String letras = "ABCDEFGHIJKLMNOPQRSTUVYWXZabcdefghijklmnopqrstuvwxyz0123456789";
-        Random random = new Random();
-        String senhaAleatoria = "";
-        int index = -1;
-        for (int i = 0; i < 10; i++) {
-            index = random.nextInt(letras.length());
-            senhaAleatoria += letras.substring(index, index + 1);
-        }
-        System.out.println("SENHA: " + senhaAleatoria);
-        return senhaAleatoria;
     }
 
     public void excluirView() {
@@ -145,6 +114,10 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
         listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
     }
 
+    public String[] geraTiposDeCargosView() {
+        return bean.geraTiposDeCargosBean();
+    }
+
     //SETS E GETS
     public Usuario getObjSelecionado() {
         return objSelecionado;
@@ -152,14 +125,6 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
 
     public void setObjSelecionado(Usuario objSelecionado) {
         this.objSelecionado = objSelecionado;
-    }
-
-    public String[] getCargos() {
-        return cargos;
-    }
-
-    public void setCargos(String[] cargos) {
-        this.cargos = cargos;
     }
 
     public List<Usuario> getListaUsuarios() {

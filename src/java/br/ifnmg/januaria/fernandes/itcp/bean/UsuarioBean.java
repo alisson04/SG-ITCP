@@ -5,6 +5,7 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.EnviarEmail;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import org.apache.commons.mail.EmailException;
@@ -22,8 +23,8 @@ public class UsuarioBean implements Serializable{
         dao = new UsuarioDAO();
     }
     
-    public void salvarBean(Usuario user){
-        dao.salvarUsr(user);
+    public Usuario salvarBean(Usuario user){
+        return dao.salvarUsr(user);
     }
     
     public void excluirBean(Usuario usr){
@@ -60,5 +61,34 @@ public class UsuarioBean implements Serializable{
     
     public long contarLinhasBean(){
         return dao.contarLinhasDAO();
+    }
+
+    public String gerarSenhaAleatoria() {
+        String letras = "ABCDEFGHIJKLMNOPQRSTUVYWXZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        String senhaAleatoria = "";
+        int index = -1;
+        for (int i = 0; i < 10; i++) {
+            index = random.nextInt(letras.length());
+            senhaAleatoria += letras.substring(index, index + 1);
+        }
+        System.out.println("SENHA: " + senhaAleatoria);
+        return senhaAleatoria;
+    }
+    
+    public String[] geraTiposDeCargosBean(){
+        String[] cargos;//para a tela de listar usuarios
+        
+        cargos = new String[8];
+        cargos[0] = "Coordenador";
+        cargos[1] = "Professor";
+        cargos[2] = "Técnico Administrativo";
+        cargos[3] = "Estagiário Remunerado";
+        cargos[4] = "Estagiário Voluntário";
+        cargos[5] = "Bolsista - PIBED";
+        cargos[6] = "Bolsista - PIBIC";
+        cargos[7] = "Bolsista - PROEXT";
+        
+        return cargos;
     }
 }
