@@ -6,26 +6,12 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-
-        <ui:define name="metadata">
-            <f:metadata>
-                <f:event listener="#{ListarMembrosEptsView.ListarMembrosEpts()}" type="preRenderView"/>
-            </f:metadata>
-        </ui:define>
-
         <ui:define name="conteudo" >
             <h:form id="frmListagemEmpreendimentos" >
-                <p:growl id="msgs" showDetail="true" showSummary="false" />
-
-                <p:toolbar>
-                    <f:facet name="left" >
-                        <h:outputText value="" />
-                    </f:facet>
-                </p:toolbar>
-                <p:panel styleClass="corPanel" header="Lista de contatos:" >
+                <p:panel header="Lista de contatos:" >
                     <p:tabView>
                         <p:tab title="Usuários ativos" >
-                            <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." 
+                            <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário cadastrado." 
                                          value="#{ListarUsuariosView.listaUsuarios}" rows="12" paginator="true" 
                                          paginatorPosition="top" var="usuarioCursor" widgetVar="varGlobalUsuarios" >
                                 <f:facet name="footer" >
@@ -34,7 +20,7 @@
                                         <p:dataExporter type="pdf" target="ListagemUsuarios" fileName="Metas" encoding="ISO-8859-1" />
                                     </h:commandLink>
                                     
-                                    <p:spacer height="20px"/>
+                                    <p:spacer height="30px"/>
 
                                     <h:commandLink id="xlsUsr">
                                         <p:graphicImage name="icons24/Xls24.png" width="24"/>
@@ -45,22 +31,21 @@
                                     <p:tooltip for="xlsUsr" value="Exportar para Excel" />
                                 </f:facet>
 
-                                <p:column headerText="Nome: " filterBy="#{usuarioCursor.nome}" 
+                                <p:column headerText="Nome " filterBy="#{usuarioCursor.nome}" 
                                           sortBy="#{usuarioCursor.nome}" filterMatchMode="contains">
                                     <h:outputText value="#{usuarioCursor.nome}"/>
                                 </p:column>
 
-                                <p:column headerText="E-mail: " filterBy="#{usuarioCursor.email}" 
+                                <p:column headerText="E-mail " filterBy="#{usuarioCursor.email}" 
                                           sortBy="#{usuarioCursor.email}" filterMatchMode="contains">
                                     <h:outputText value="#{usuarioCursor.email}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone: " filterBy="#{usuarioCursor.telefone}" filterMatchMode="contains">
+                                <p:column headerText="Telefone " >
                                     <h:outputText value="#{usuarioCursor.telefone}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone alternativo: " filterBy="#{usuarioCursor.telefoneAlternativo}" 
-                                          filterMatchMode="contains">
+                                <p:column headerText="Telefone alternativo " >
                                     <h:outputText value="#{usuarioCursor.telefoneAlternativo}"/>
                                 </p:column>
 
@@ -68,7 +53,7 @@
                                     <f:facet name="filter">
                                         <p:selectOneMenu onchange="PF('varGlobalUsuarios').filter()" >
                                             <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                            <f:selectItems value="#{ListarUsuariosView.cargos}" />
+                                            <f:selectItems value="#{ListarUsuariosView.geraTiposDeCargosView()}" />
                                         </p:selectOneMenu>
                                     </f:facet>
                                     <h:outputText value="#{usuarioCursor.cargo}" />
@@ -77,7 +62,7 @@
                         </p:tab>
 
                         <p:tab title="Empreendimentos">
-                            <p:dataTable id="dtContatosEmpreendimentos" emptyMessage="Nenhum empreendimento encontrado." 
+                            <p:dataTable id="dtContatosEmpreendimentos" emptyMessage="Nenhum empreendimento cadastrado." 
                                          value="#{ListarEmpreendimentosView.listaEmpreendimentos}" rows="12" paginator="true" paginatorPosition="top"
                                          var="empreendimentoCursor" widgetVar="varGlobalEmpreendimentos">
                                 
@@ -87,7 +72,7 @@
                                         <p:dataExporter type="pdf" target="dtContatosEmpreendimentos" fileName="Metas" encoding="ISO-8859-1" />
                                     </h:commandLink>
                                     
-                                    <p:spacer height="20px"/>
+                                    <p:spacer height="30px"/>
 
                                     <h:commandLink id="xlsEpt">
                                         <p:graphicImage name="icons24/Xls24.png" width="24"/>
@@ -98,26 +83,26 @@
                                     <p:tooltip for="xlsEpt" value="Exportar para Excel" />
                                 </f:facet>
 
-                                <p:column headerText="Nome fantasia:" filterBy="#{empreendimentoCursor.nome}" 
+                                <p:column headerText="Nome fantasia" filterBy="#{empreendimentoCursor.nome}" 
                                           sortBy="#{empreendimentoCursor.nome}" filterMatchMode="contains">
                                     <h:outputText value="#{empreendimentoCursor.nome}"/>
                                 </p:column>
 
-                                <p:column headerText="E-mail: " filterBy="#{empreendimentoCursor.email}" 
+                                <p:column headerText="E-mail " filterBy="#{empreendimentoCursor.email}" 
                                           sortBy="#{empreendimentoCursor.email}" filterMatchMode="contains">
                                     <h:outputText value="#{empreendimentoCursor.email}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone: " filterBy="#{empreendimentoCursor.telefone}" filterMatchMode="contains">
+                                <p:column headerText="Telefone " >
                                     <h:outputText value="#{empreendimentoCursor.telefone}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone alternativo: " filterBy="#{empreendimentoCursor.telefoneAlternativo}"
-                                          filterMatchMode="contains">
+                                <p:column headerText="Telefone alternativo: " >
                                     <h:outputText value="#{empreendimentoCursor.telefoneAlternativo}"/>
                                 </p:column>
 
-                                <p:column filterBy="#{empreendimentoCursor.situacao}" headerText="Processo de Incubação" filterMatchMode="exact">
+                                <p:column filterBy="#{empreendimentoCursor.situacao}" headerText="Processo de Incubação" 
+                                          filterMatchMode="exact">
                                     <f:facet name="filter">
                                         <p:selectOneMenu onchange="PF('varGlobalEmpreendimentos').filter()" >
                                             <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
@@ -130,7 +115,7 @@
                         </p:tab>
 
                         <p:tab title="Membros de empreendimentos">
-                            <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento encontrado." 
+                            <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento cadastrado." 
                                          value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" rows="12" paginator="true"
                                          paginatorPosition="top" var="membroEmpreendimentoCursor"
                                          filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}"
@@ -142,7 +127,7 @@
                                         <p:dataExporter type="pdf" target="dtListagemMembrosEpts" fileName="Metas" encoding="ISO-8859-1" />
                                     </h:commandLink>
                                     
-                                    <p:spacer height="20px"/>
+                                    <p:spacer height="30px"/>
 
                                     <h:commandLink id="xlsMep">
                                         <p:graphicImage name="icons24/Xls24.png" width="24"/>
@@ -163,17 +148,16 @@
                                     <h:outputText value="#{membroEmpreendimentoCursor.apelido}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone" filterBy="#{membroEmpreendimentoCursor.telefone}" 
-                                          filterMatchMode="contains">
+                                <p:column headerText="Telefone" >
                                     <h:outputText value="#{membroEmpreendimentoCursor.telefone}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone alternativo" filterBy="#{membroEmpreendimentoCursor.telefoneAlternativo}" 
-                                          filterMatchMode="contains">
+                                <p:column headerText="Telefone alternativo" >
                                     <h:outputText value="#{membroEmpreendimentoCursor.telefoneAlternativo}"/>
                                 </p:column>
 
-                                <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento}" headerText="Empreendimento" filterMatchMode="exact">
+                                <p:column filterBy="#{membroEmpreendimentoCursor.empreendimento}" headerText="Empreendimento" 
+                                          filterMatchMode="exact">
                                     <f:facet name="filter">
                                         <p:selectOneMenu onchange="PF('varGlobalMembro').filter()" >
                                             <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
@@ -187,7 +171,7 @@
                         </p:tab>
 
                         <p:tab title="Parceiros">
-                            <p:dataTable id="dtParceiros" emptyMessage="Nenhum parceiro encontrado." rows="12" paginator="true" paginatorPosition="top"
+                            <p:dataTable id="dtParceiros" emptyMessage="Nenhum parceiro cadastrado." rows="12" paginator="true" paginatorPosition="top"
                                          value="#{ListarParceirosView.listaParceiros}" var="parceiroCursor" widgetVar="varGlobalParceiros">
                                 
                                 <f:facet name="footer" >
@@ -207,22 +191,21 @@
                                     <p:tooltip for="xlsPar" value="Exportar para Excel" />
                                 </f:facet>
 
-                                <p:column headerText="Nome: " filterBy="#{parceiroCursor.nome}" filterMatchMode="contains"
+                                <p:column headerText="Nome " filterBy="#{parceiroCursor.nome}" filterMatchMode="contains"
                                           sortBy="#{parceiroCursor.nome}" >
                                     <h:outputText value="#{parceiroCursor.nome}"/>
                                 </p:column>
 
-                                <p:column headerText="E-mail: " filterBy="#{parceiroCursor.email}" filterMatchMode="contains"
+                                <p:column headerText="E-mail:" filterBy="#{parceiroCursor.email}" filterMatchMode="contains"
                                           sortBy="#{parceiroCursor.email}" >
                                     <h:outputText value="#{parceiroCursor.email}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone: " filterBy="#{parceiroCursor.telefone}" filterMatchMode="contains">
+                                <p:column headerText="Telefone " >
                                     <h:outputText value="#{parceiroCursor.telefone}"/>
                                 </p:column>
 
-                                <p:column headerText="Telefone alternativo: " filterBy="#{parceiroCursor.telefoneAlternativo}" 
-                                          filterMatchMode="contains">
+                                <p:column headerText="Telefone alternativo " >
                                     <h:outputText value="#{parceiroCursor.telefoneAlternativo}"/>
                                 </p:column>
                                 <f:facet name="footer"/>

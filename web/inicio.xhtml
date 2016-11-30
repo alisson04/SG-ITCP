@@ -91,7 +91,7 @@
                         </p:dialog>
                     </p:tab>
                 </p:tabView>
-                
+
                 <!--CADASTRO DE INCUBADORA-->
                 <p:dialog closable="false" draggable="false" resizable="false" visible="true"
                           header="Cadastro de informações da incubadora" rendered="#{!inicioView.existeInc}"  >
@@ -116,12 +116,12 @@
                                         requiredMessage="A data de criação é obrigatória." />
                             <p:message for="dataCriacao"/>
                         </h:panelGrid>
-                        
+
                         <p:fileUpload fileUploadListener="#{inicioView.setaImagemLogin}" mode="simple" update="imgPerfil"
-                                          skinSimple="true"  label="Imagem do topo" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                        
+                                      skinSimple="true"  label="Imagem do topo" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
                         <p:fileUpload fileUploadListener="#{inicioView.setaImagemGeral}" mode="simple" update="imgPerfil"
-                                          skinSimple="true"  label="Imagem do login" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                                      skinSimple="true"  label="Imagem do login" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
                         <br/>
                         <p:outputLabel value="* Campos obrigatórios" />
