@@ -18,6 +18,10 @@
         <link rel="stylesheet" href="/resources/css/icons32.css"/>
 
         <link type="text/css" rel="stylesheet" href="dot-luv/skin.css"/>
+
+        <style>
+            .Bimage{background-image:url("./image/#{LoginView.geraImagemFundo()}")}
+        </style>
     </h:head>
 
     <script>
@@ -49,12 +53,13 @@
         };
     </script>
 
-    <h:body style="background-image: url(resources/fotos/IfnmgNatureClara1920.jpg) !important">        
+    <h:body styleClass="Bimage">      
         <h:form id="frmMsgGenerico">
             <p:growl showDetail="true" sticky="true" />
         </h:form>
 
         <h:form id="frmLogar">
+            
             <div class="ui-fluid">
                 <!--Dialogo de login-->
                 <p:dialog  header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" 

@@ -1,7 +1,9 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.IncubadoraBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
+import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
@@ -26,6 +28,11 @@ import org.primefaces.context.RequestContext;
 @Named("LoginView")
 public class LoginView extends MensagensGenericas implements Serializable {
 
+    //Incubadora VARS
+    private Incubadora inc;
+    private IncubadoraBean incBean;
+    private boolean existeInc;
+
     private Usuario usuarioLogado;
     private Usuario obj;
     private LoginBean bean;
@@ -33,6 +40,7 @@ public class LoginView extends MensagensGenericas implements Serializable {
     private boolean existeUserBd;
     private boolean existeUserLogado;
 
+    //CONSTRUTOR
     public LoginView() {
         bean = new LoginBean();
         obj = new Usuario();
@@ -44,6 +52,26 @@ public class LoginView extends MensagensGenericas implements Serializable {
         if (usrBean.contarLinhasBean() == 0) {
             System.out.println("Não há usuários cadastrados");
             existeUserBd = false;
+        }
+
+        //Incubadora CONSTRUTOR
+        inc = new Incubadora();
+        incBean = new IncubadoraBean();
+        existeInc = true;
+
+        if (incBean.contarLinhasBean() == 0) {
+            System.out.println("Não incubadora cadastrada");
+            existeInc = false;
+        }else{
+            inc = incBean.listarBean().get(0);
+        }
+    }
+    
+    public String geraImagemFundo(){
+        if(existeInc){
+            return inc.getFotoFundoLogin();
+        }else{
+            return "fotoFundoPadrao.jpg";
         }
     }
 
@@ -153,5 +181,21 @@ public class LoginView extends MensagensGenericas implements Serializable {
 
     public void setExisteUserLogado(boolean existeUserLogado) {
         this.existeUserLogado = existeUserLogado;
+    }
+
+    public Incubadora getInc() {
+        return inc;
+    }
+
+    public void setInc(Incubadora inc) {
+        this.inc = inc;
+    }
+
+    public boolean isExisteInc() {
+        return existeInc;
+    }
+
+    public void setExisteInc(boolean existeInc) {
+        this.existeInc = existeInc;
     }
 }

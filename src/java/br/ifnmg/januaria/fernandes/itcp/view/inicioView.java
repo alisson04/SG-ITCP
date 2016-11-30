@@ -68,7 +68,7 @@ public class inicioView extends MensagensGenericas implements Serializable {
         
         createLineModels();
         
-        //Incubadora CONTRU
+        //Incubadora CONTRUTOR
         inc = new Incubadora();
         incBean = new IncubadoraBean();
         existeInc = true;

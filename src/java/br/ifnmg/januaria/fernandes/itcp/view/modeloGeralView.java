@@ -33,6 +33,8 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     //Incubadora VARS
     private Incubadora inc;
     private IncubadoraBean incBean;
+    
+    
     private Usuario usuarioLogado;
     private UsuarioBean userBean;
     private UploadArquivo arquivo;
