@@ -4,6 +4,7 @@ import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
+import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,10 +23,9 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean(name = "ListarPlanoAcaoView")
 @ViewScoped
-public class ListarPlanoAcaoView implements Serializable {
-
-    PlanoAcaoBean bean;
-    EmpreendimentoBean empreendimentoBean;
+public class ListarPlanoAcaoView extends MensagensGenericas implements Serializable {
+    private PlanoAcaoBean bean;
+    private EmpreendimentoBean empreendimentoBean;
     private PlanoAcao planoSelecionado;
     private PlanoAcao objSalvar;
     private List<PlanoAcao> listaPlanoAcao;
@@ -42,6 +42,11 @@ public class ListarPlanoAcaoView implements Serializable {
         } catch (RuntimeException ex) {
             System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
         }
+    }
+    
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
     }
     
     public void transfereObj(){//Para botão de editar

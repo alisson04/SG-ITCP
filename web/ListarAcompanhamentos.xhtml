@@ -132,8 +132,8 @@
                         <p:tab id="tabInfo" title="Informações" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                                <p:selectOneMenu id="empreendimento" required="true" converter="generic"
-                                                 requiredMessage="O empreendimento é obrigatório." style="width:435px"
+                                <p:selectOneMenu id="empreendimento" required="true" converter="generic"  style="width:435px"
+                                                 requiredMessage="#{ListarAcompanhamentosView.geraMsgGenericaCampoObrigatorioView()}"
                                                  value="#{ListarAcompanhamentosView.objSalvar.empreendimento}" >
                                     <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarAcompanhamentosView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
@@ -143,25 +143,26 @@
 
                                 <p:outputLabel for="objetivo" value="Objetivo: " />
                                 <p:inputText id="objetivo" value="#{ListarAcompanhamentosView.objSalvar.objetivo}" required="true"
-                                             requiredMessage="O campo Nome é obrigatório." size="45" maxlength="255"/>
+                                             requiredMessage="#{ListarAcompanhamentosView.geraMsgGenericaCampoObrigatorioView()}" 
+                                             size="45" maxlength="255"/>
                                 <p:message for="objetivo" />
 
                                 <p:outputLabel for="data" value="Data: " />
                                 <p:calendar id="data" value="#{ListarAcompanhamentosView.objSalvar.dataAcompanhamento}" 
                                             pattern="dd/MM/yyyy" size="45" mask="true" locale="pt" required="true" 
-                                            requiredMessage="O campo data é obrigatório."/>
+                                            requiredMessage="#{ListarAcompanhamentosView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="data"/>
 
                                 <p:outputLabel for="horaInicio" value="Hora de início: " />
                                 <p:calendar id="horaInicio" value="#{ListarAcompanhamentosView.objSalvar.horaInicio}" 
                                             pattern="HH:mm" timeOnly="true" locale="pt" size="45" required="true" 
-                                            requiredMessage="O campo hora de início é obrigatório!" />
+                                            requiredMessage="#{ListarAcompanhamentosView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="horaInicio"/>
 
                                 <p:outputLabel for="Horafim" value="Hora de fim " />
                                 <p:calendar id="Horafim" value="#{ListarAcompanhamentosView.objSalvar.horaFim}" pattern="HH:mm" 
                                             timeOnly="true" locale="pt" size="45" required="true" 
-                                            requiredMessage="O campo hora de fim é obrigatório!" />
+                                            requiredMessage="#{ListarAcompanhamentosView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message  for="Horafim"/>
 
                                 <p:outputLabel for="descricao" value="Descrição: " />

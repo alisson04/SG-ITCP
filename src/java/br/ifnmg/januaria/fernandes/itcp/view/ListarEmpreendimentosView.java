@@ -59,6 +59,11 @@ public class ListarEmpreendimentosView extends MensagensGenericas implements Ser
         situacaoEpt[3] = "Desincubação";
         situacaoEpt[4] = "Desincubado";
     }
+    
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
+    }
 
     public void transfereObj() {//Para botão de editar
         objSalvar = empreendimentoSelecionado;

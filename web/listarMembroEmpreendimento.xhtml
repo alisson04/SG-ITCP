@@ -85,13 +85,10 @@
                         </f:facet>
                     </p:dataTable>
 
-                    <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" styleClass="corDialog"
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" style="text-align:center;" >
-                        <h:outputText value="Salvo com sucesso! " />
-                    </p:dialog>
-
+                    <!--Exibir EES-->
                     <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
+                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" 
+                              style="text-align:center;" >
 
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
@@ -138,6 +135,7 @@
                 </p:dialog>
             </h:form>
 
+            <!--Editar e cadastrar Membro de EES-->
             <p:dialog id="dlgEditar" header="Membro de empreedndimento" widgetVar="wVarDlgEditar" showEffect="fade" hideEffect="fade" 
                       styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
@@ -230,6 +228,5 @@
                 </h:form>
             </p:dialog>
         </ui:define>
-
     </ui:composition>
 </html>

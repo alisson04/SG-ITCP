@@ -10,7 +10,7 @@
         <ui:define name="conteudo">
 
             <h:form id="frmListagemPlanosAcao" >
-                <p:growl id="msgs" showDetail="true" showSummary="false" />
+                <!--Listagem de planos de ação-->
                 <p:panel id="panelListagemPlanosAcao" styleClass="corPanel" header="Planos de ação no sistema:" >
                     <p:dataTable id="dtListagemPlanosAcao" emptyMessage="Nenhum plano de ação encontrado." var="planoAcaoCursor"
                                  value="#{ListarPlanoAcaoView.listaPlanoAcao}" filteredValue="#{ListarPlanoAcaoView.listaPlanoAcaoFiltrados}" 
@@ -96,6 +96,7 @@
                 </p:panel>
             </h:form>
 
+            <!--Editar e cadastrar planos-->
             <p:dialog id="dlgEditarPlano" header="Plano de ação" widgetVar="wVarDlgEditar" showEffect="fade" hideEffect="fade" modal="true" 
                       styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicaoPlano" >
@@ -103,11 +104,13 @@
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome:" />
                             <p:inputText id="nome" value="#{ListarPlanoAcaoView.objSalvar.nome}" required="true"
-                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                                         requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
+                                         size="45" maxlength="45"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                            <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório."
+                            <p:selectOneMenu id="empreendimento" required="true" 
+                                             requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
                                              value="#{ListarPlanoAcaoView.objSalvar.empreendimento}" style="width:435px"
                                              converter="generic">
                                 <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
@@ -118,12 +121,14 @@
 
                             <p:outputLabel for="dataInicio" value="Data de início: " />
                             <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.objSalvar.dataInicio}" pattern="dd/MM/yyyy" 
-                                        size="45" mask="true" locale="pt" required="true" requiredMessage="O campo data de início é obrigatório."/>
+                                        size="45" mask="true" locale="pt" required="true" 
+                                        requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="dataInicio"/>
 
                             <p:outputLabel for="dataFim" value="Data de fim: " />
                             <p:calendar id="dataFim" value="#{ListarPlanoAcaoView.objSalvar.dataFim}" pattern="dd/MM/yyyy" 
-                                        size="45" mask="true" locale="pt" required="true" requiredMessage="O campo data de fim é obrigatório."/>
+                                        size="45" mask="true" locale="pt" required="true" 
+                                        requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="dataInicio"/>
 
                             <p:outputLabel for="descricao" value="Descrição: " />
@@ -138,7 +143,7 @@
                         
                         <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarPlanoAcaoView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicaoPlano, :frmListagemPlanosAcao:panelListagemPlanosAcao" >
+                                         icon="Save24-iconfinder" update=":frmEdicaoPlano, :frmListagemPlanosAcao" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
 

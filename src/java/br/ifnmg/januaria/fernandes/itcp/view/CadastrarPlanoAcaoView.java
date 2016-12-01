@@ -34,11 +34,11 @@ import org.primefaces.model.DualListModel;
 @ViewScoped
 @Named("CadastrarPlanoAcaoView")
 public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serializable {
-
-    PlanoAcaoBean bean;
-    EmpreendimentoBean empreendimentoBean;
-    MetaBean metaBean;
-    AtividadePlanejadaBean atividadeBean;
+    //Variáveis
+    private PlanoAcaoBean bean;
+    private EmpreendimentoBean empreendimentoBean;
+    private MetaBean metaBean;
+    private AtividadePlanejadaBean atividadeBean;
 
     private PlanoAcao objSalvar;
     private Meta metaSalvar;
@@ -97,6 +97,11 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             System.out.println("Cadastrar Plano(construtor): Erro no construtor: " + ex);
             msgPanelErroInesperadoGeneric();
         }
+    }
+    
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
     }
 
     public void excluirMeta() {

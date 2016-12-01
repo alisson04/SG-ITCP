@@ -6,16 +6,12 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-        <ui:define name="metadata">
-            <f:metadata>
-                <f:event listener="#{ListarMetasView.listarView()}" type="preRenderView"/>
-            </f:metadata>
-        </ui:define>
 
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
 
+                <!--Listagem de Metas-->
                 <p:panel styleClass="corPanel" header="Metas no sistema:" >
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." 
                                  value="#{ListarMetasView.listaMetas}" filteredValue="#{ListarMetasView.listaMetasFiltradas}" 
@@ -68,12 +64,6 @@
                         </f:facet>
                     </p:dataTable>
 
-                    <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
-                              styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
-                              style="text-align:center;" >
-                        <h:outputText value="Salvo com sucesso! " />
-                    </p:dialog>
-
                     <p:dialog id="diaShowUsr" header="Informações da meta" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
                               resizable="false" draggable="false" modal="true"  appendTo="@(body)">
                         <p:outputPanel id="carDetail" style="text-align:center;">
@@ -97,19 +87,21 @@
                 </p:panel>
             </h:form>
 
+            <!--Editar e cadastrar Metas-->
             <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
                       styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarMetasView.objSalvar.nome}" required="true" 
-                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                            <p:inputText id="nome" value="#{ListarMetasView.objSalvar.nome}" required="true" size="45" maxlength="45"
+                                         requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="nome" />
 
                             <p:outputLabel for="planoAcao" value="Plano de ação: "/>
-                            <p:selectOneMenu id="planoAcao" required="true" requiredMessage="O plano de ação é obrigatório."
-                                             value="#{ListarMetasView.objSalvar.planoAcao}" style="width:435px" converter="generic">
+                            <p:selectOneMenu id="planoAcao" required="true" value="#{ListarMetasView.objSalvar.planoAcao}"
+                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
+                                             style="width:435px" converter="generic">
                                 <f:selectItem itemLabel="Selecione o plano de ação" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nome}" 
                                                    itemValue="#{plano}"/>
@@ -118,8 +110,8 @@
 
                             <p:outputLabel for="dataInicio" value="Prazo:" />
                             <p:calendar id="dataInicio" value="#{ListarMetasView.objSalvar.prazo}" 
-                                        pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
-                                        mask="true" locale="pt"/>
+                                        pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
+                                        requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="dataInicio" />
                             
                             <p:outputLabel for="descricao" value="Descrição: " />
@@ -146,6 +138,5 @@
                 </h:form>
             </p:dialog>
         </ui:define>
-
     </ui:composition>
 </html>

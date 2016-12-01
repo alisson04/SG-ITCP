@@ -67,6 +67,11 @@ public class LoginView extends MensagensGenericas implements Serializable {
         }
     }
     
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
+    }
+    
     public String geraImagemFundo(){
         if(existeInc){
             return inc.getFotoFundoLogin();

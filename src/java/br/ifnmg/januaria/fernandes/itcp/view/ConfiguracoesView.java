@@ -42,7 +42,10 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
         
         arquivo = new UploadArquivo();
     }
-
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
+    }
     
     
     //METODOS INC

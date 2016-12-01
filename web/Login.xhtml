@@ -68,13 +68,13 @@
                         <h:panelGrid id="panelGridLogin" columns="3" cellpadding="5" style="ui-widget">
 
                             <p:outputLabel for="emailUsr" value="E-mail: " />
-                            <p:inputText id="emailUsr" value="#{LoginView.usuarioLogado.email}"
-                                         required="true" requiredMessage="Insira um e-mail!" size="25" maxlength="45" />
+                            <p:inputText id="emailUsr" value="#{LoginView.usuarioLogado.email}" size="25" maxlength="45"
+                                         required="true" requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="emailUsr"/>
 
                             <p:outputLabel for="senhaUsr" value="Senha: " />
-                            <p:password id="senhaUsr" value="#{LoginView.usuarioLogado.senha}"
-                                        required="true" requiredMessage="Insira uma senha!" size="25" maxlength="45" />
+                            <p:password id="senhaUsr" value="#{LoginView.usuarioLogado.senha}" size="25" maxlength="45"
+                                        required="true" requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="senhaUsr"/>
                         </h:panelGrid>
                         <p:commandButton id="btnLogar" value="Acessar" actionListener="#{LoginView.logar()}" 
@@ -98,29 +98,31 @@
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{LoginView.obj.nome}" required="true"
-                                         requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
+                            <p:inputText id="nome" value="#{LoginView.obj.nome}" required="true" size="45" maxlength="45"
+                                         requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="nome"/>
 
                             <p:outputLabel for="e-mail" value="E-mail: " />  
-                            <p:inputText id="e-mail" value="#{LoginView.obj.email}" required="true"
-                                         requiredMessage="O e-mail é obrigatório." size="45" maxlength="45" />
+                            <p:inputText id="e-mail" value="#{LoginView.obj.email}" required="true" size="45" maxlength="45"
+                                         requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="e-mail"/>
 
                             <p:outputLabel for="telefone" value="Telefone: " />
                             <p:inputMask id="telefone" value="#{LoginView.obj.telefone}"
                                          mask="(99) ?9-9999-9999" size="45" maxlength="11" required="true"
-                                         requiredMessage="O telefone é obrigatório."/>
+                                         requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="telefone"/>
 
                             <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
                             <p:calendar id="dataNascimento" value="#{LoginView.obj.dataNascimento}" pattern="dd/MM/yyyy" 
-                                        size="45" mask="true" locale="pt" required="true" requiredMessage="A data de nascimento é obrigatória." />
+                                        size="45" mask="true" locale="pt" required="true" 
+                                        requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="dataNascimento"/>
 
                             <p:outputLabel for="dataEntrada" value="Entrada na ITCP: " />
                             <p:calendar id="dataEntrada" value="#{LoginView.obj.dataEntrada}" pattern="dd/MM/yyyy" 
-                                        mask="true" locale="pt" size="45" required="true" requiredMessage="A data de entrada é obrigatória." />
+                                        mask="true" locale="pt" size="45" required="true" 
+                                        requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="dataEntrada"/>
 
                             <p:outputLabel for="sexo" value="Sexo: "/>
@@ -154,6 +156,7 @@
                     </p:panel>
                 </p:dialog>
 
+                <!--Caixa de mensagem de informação sobre cadastro-->
                 <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade"
                           header="Por que preciso cadastrar um coordenador?" modal="true"
                           resizable="false" draggable="false"   appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >

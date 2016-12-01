@@ -38,8 +38,12 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
         listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
         arquivo = new UploadArquivo();
     }
-
-    //Metodos
+    
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
+    }
+    
     public void transfereObj() {//Para botão de editar
         objSalvar = objSelecionado;
     }

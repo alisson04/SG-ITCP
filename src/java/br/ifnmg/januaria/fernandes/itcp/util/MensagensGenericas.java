@@ -10,6 +10,11 @@ import org.primefaces.context.RequestContext;
  * @author alisson
  */
 public abstract class MensagensGenericas implements Serializable {
+    
+    //Mensagem generica de campo obrigatório
+    public String msgGenericaCampoObrigatorio(){
+        return "Essa informação é obrigatória!";
+    }
 
     //Mensagens de GROW genéricas
     public void msgGrowSaveGeneric() {//Salvar

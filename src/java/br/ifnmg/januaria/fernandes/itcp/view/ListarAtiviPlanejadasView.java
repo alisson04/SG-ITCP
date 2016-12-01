@@ -64,6 +64,11 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
             msgPanelErroInesperadoGeneric();
         }
     }
+    
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
+    }
 
     public void filtraPlanosPorEes() {//Acontece ao selecionar um EES
         List<PlanoAcao> listaAux = new ArrayList();

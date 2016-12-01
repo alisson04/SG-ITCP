@@ -19,8 +19,8 @@
                     <p:fieldset id="panel" legend="Configurações da incubadora" toggleable="true" toggleSpeed="500" collapsed="true" >
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ConfiguracoesView.inc.nome}" required="true"
-                                         requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
+                            <p:inputText id="nome" value="#{ConfiguracoesView.inc.nome}" required="true" size="45" maxlength="45"
+                                         requiredMessage="#{ConfiguracoesView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="nome"/>
 
                             <p:outputLabel for="universidade" value="Universidade: " />  

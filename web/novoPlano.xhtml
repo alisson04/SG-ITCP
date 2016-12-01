@@ -14,7 +14,8 @@
                         <p:panel id="panel" header="Adicionar informações do plano">
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                                <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório."
+                                <p:selectOneMenu id="empreendimento" required="true"
+                                                 requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
                                                  value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento}" style="width:435px"
                                                  converter="generic">
                                     <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
@@ -25,22 +26,25 @@
 
                                 <p:outputLabel for="nome" value="Nome:" />
                                 <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.objSalvar.nome}" required="true"
-                                             requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                                             requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
+                                             size="45" maxlength="45"/>
                                 <p:message for="nome" />
 
                                 <p:outputLabel for="dataInicio" value="Data de início: " />
                                 <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.objSalvar.dataInicio}" pattern="dd/MM/yyyy" 
-                                            size="45" mask="true" locale="pt" required="true" requiredMessage="O campo data de início é obrigatório."/>
+                                            size="45" mask="true" locale="pt" required="true" 
+                                            requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="dataInicio"/>
 
                                 <p:outputLabel for="dataFim" value="Data de fim: " />
                                 <p:calendar id="dataFim" value="#{CadastrarPlanoAcaoView.objSalvar.dataFim}" pattern="dd/MM/yyyy" 
-                                            size="45" mask="true" locale="pt" required="true" requiredMessage="O campo data de fim é obrigatório."/>
+                                            size="45" mask="true" locale="pt" required="true" 
+                                            requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="dataInicio"/>
 
                                 <p:outputLabel for="descricao" value="Descrição: " />
-                                <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.objSalvar.descricao}" rows="5" cols="45" 
-                                                 maxlength="200" />
+                                <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.objSalvar.descricao}" rows="5" 
+                                                 cols="45" maxlength="200" />
                                 <p:message for="descricao" />
                             </h:panelGrid>
 
@@ -249,13 +253,14 @@
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
                             <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.metaSalvar.nome}" required="true" 
-                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                                         requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
+                                         size="45" maxlength="45"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="dataInicio" value="Prazo:" />
                             <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.metaSalvar.prazo}" 
-                                        pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo prazo é obrigatório."
-                                        mask="true" locale="pt"/>
+                                        pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
+                                        requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="dataInicio" />
 
                             <p:outputLabel for="descricao" value="Descrição: " />
@@ -272,7 +277,8 @@
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('wVarEditarDialog').hide()" />
                     </p:panel>
                 </h:form>
             </p:dialog>
@@ -285,7 +291,8 @@
                         <p:tab id="tabInfo" title="Informações" >
                             <h:panelGrid style="text-align:right;" columns="3">
                                 <p:outputLabel for="meta" value="Meta: "/>
-                                <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
+                                <p:selectOneMenu id="meta" required="true" 
+                                                 requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
                                                  value="#{CadastrarPlanoAcaoView.atividadeSalvar.meta}" style="width:435px" converter="generic" >
                                     <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{CadastrarPlanoAcaoView.listaSalvarMetas}" var="obj" 
@@ -296,18 +303,21 @@
 
                                 <p:outputLabel for="nome" value="Nome: " />
                                 <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.atividadeSalvar.nome}" required="true" 
-                                             requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                                             requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
+                                             size="45" maxlength="45"/>
                                 <p:message for="nome" />
 
                                 <p:outputLabel for="dataInicio" value="Prazo de início:" />
                                 <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.atividadeSalvar.dataInicio}" 
-                                            pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
+                                            pattern="dd/MM/yyyy" size="45" required="true" 
+                                            requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
                                             mask="true" locale="pt"/>
                                 <p:message for="dataInicio" />
 
                                 <p:outputLabel for="dataFim" value="Prazo de fim:" />
                                 <p:calendar id="dataFim" value="#{CadastrarPlanoAcaoView.atividadeSalvar.dataFim}" pattern="dd/MM/yyyy"
-                                            size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                                            size="45" required="true" mask="true" locale="pt"
+                                            requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="dataFim" />
 
                                 <p:outputLabel for="descricao" value="Descrição: " />
@@ -364,8 +374,8 @@
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                     </p:commandButton>
 
-                    <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarAtividadeDialog').hide()" />
-
+                    <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                     onclick="PF('wVarEditarAtividadeDialog').hide()" />
                 </h:form>
             </p:dialog>
         </ui:define>

@@ -10,20 +10,24 @@
             <h:form id="frmListagem" >
                 <p:panel styleClass="corPanel" header="Atividades planejadas no sistema:" >
                     <!--Listagem de usuários-->
-                    <p:dataTable id="dtListagem" emptyMessage="Nenhuma atividade encontrada." value="#{ListarAtiviPlanejadasView.listaObjs}" 
+                    <p:dataTable id="dtListagem" emptyMessage="Nenhuma atividade encontrada." 
+                                 value="#{ListarAtiviPlanejadasView.listaObjs}" paginatorPosition="top"
                                  filteredValue="#{ListarAtiviPlanejadasView.listaObjsFiltradas}" 
-                                 selectionMode="single" selection="#{ListarAtiviPlanejadasView.objSelecionado}" rowKey="#{objCursor.id}"
-                                 var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                                 selectionMode="single" selection="#{ListarAtiviPlanejadasView.objSelecionado}" 
+                                 rowKey="#{objCursor.id}" var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" >
 
                         <p:ajax event="rowSelect" update=":frmListagem"/>
 
-                        <p:column headerText="Nome" filterBy="#{objCursor.nome}" sortBy="#{objCursor.nome}" filterMatchMode="contains">
+                        <p:column headerText="Nome" filterBy="#{objCursor.nome}" sortBy="#{objCursor.nome}" 
+                                  filterMatchMode="contains" >
                             <h:outputText value="#{objCursor.nome}"/>
                         </p:column>
+                        
                         <p:column headerText="Data início" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" 
                                   filterMatchMode="contains">
                             <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" />
                         </p:column>
+                        
                         <p:column headerText="Data fim" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" 
                                   filterMatchMode="contains">
                             <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
@@ -126,12 +130,14 @@
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
                             <p:inputText id="nome" value="#{ListarAtiviPlanejadasView.objSalvar.nome}" required="true" 
-                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="255"/>
+                                         requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}"
+                                         size="45" maxlength="255"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="meta" value="Meta: "/>
-                            <p:selectOneMenu id="meta" required="true" requiredMessage="O campo Meta é obrigatório."
-                                             value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:435px" converter="generic">
+                            <p:selectOneMenu id="meta" required="true" converter="generic"
+                                             requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}"
+                                             value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:435px" >
                                 <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="obj" itemLabel="#{obj.nome}" 
                                                itemValue="#{obj}"/>
@@ -140,15 +146,14 @@
 
                             <p:outputLabel for="dataInicio" value="Data início:" />
                             <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSalvar.dataInicio}"
-                                        pattern="dd/MM/yyyy" size="45" required="true" 
-                                        requiredMessage="O campo Data início é obrigatório."
-                                        mask="true" locale="pt"/>
+                                        pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
+                                        requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="dataInicio" />
 
                             <p:outputLabel for="dataFim" value="Data fim:" />
                             <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSalvar.dataFim}" pattern="dd/MM/yyyy"
-                                        size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" 
-                                        locale="pt"/>
+                                        size="45" required="true"  mask="true" locale="pt"
+                                        requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="dataFim" />
 
                             <p:outputLabel for="descricao" value="Descrição: " />

@@ -4,6 +4,7 @@ import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
+import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,7 +23,7 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean(name="ListarMetasView")
 @ViewScoped
-public class ListarMetasView implements Serializable{
+public class ListarMetasView extends MensagensGenericas implements Serializable{
     private Meta metaSelecionada;
     private Meta objSalvar = new Meta();
     private List<PlanoAcao> listaPlanos;
@@ -32,6 +33,18 @@ public class ListarMetasView implements Serializable{
     private PlanoAcaoBean planoAcaoBean = new PlanoAcaoBean();
     
     public ListarMetasView() {
+        try {
+            listaMetas = bean.listarBean();
+            listaPlanos = planoAcaoBean.listarBean();
+        } catch (RuntimeException ex) {
+            //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
+            System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Empreendimentos: " + ex);
+        }
+    }
+    
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
     }
     
     public void salvarView() {
@@ -56,16 +69,6 @@ public class ListarMetasView implements Serializable{
     public void reiniciaObj(){//Para botão de editar
         System.out.println("objSalvar Reiniciado ====================== ");
         objSalvar = new Meta();
-    }
-    
-    public void listarView() {
-        try {
-            listaMetas = bean.listarBean();
-            listaPlanos = planoAcaoBean.listarBean();
-        } catch (RuntimeException ex) {
-            //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
-            System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Empreendimentos: " + ex);
-        }
     }
     
     public String conveteData(Date data) {

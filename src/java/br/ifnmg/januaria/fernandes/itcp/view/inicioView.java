@@ -79,6 +79,11 @@ public class inicioView extends MensagensGenericas implements Serializable {
         }
     }
     
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
+    }
+    
     public void salvarInc(){
         incBean.salvarBean(inc);
         msgGrowSaveGeneric();

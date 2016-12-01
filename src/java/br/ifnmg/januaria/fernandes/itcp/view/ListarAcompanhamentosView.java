@@ -77,6 +77,11 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
             System.out.println("Erro Inesperado no construtor: " + ex);
         }
     }
+    
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
+    }
 
     public void transfereObj() {//Para botão de editar
         try {

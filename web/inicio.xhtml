@@ -98,8 +98,8 @@
                     <p:panel id="panel" styleClass="corPanel" >
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{inicioView.inc.nome}" required="true"
-                                         requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
+                            <p:inputText id="nome" value="#{inicioView.inc.nome}" required="true" size="45" maxlength="45"
+                                         requiredMessage="#{inicioView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="nome"/>
 
                             <p:outputLabel for="universidade" value="Universidade: " />  
@@ -116,13 +116,7 @@
                                         requiredMessage="A data de criação é obrigatória." />
                             <p:message for="dataCriacao"/>
                         </h:panelGrid>
-
-                        <p:fileUpload fileUploadListener="#{inicioView.setaImagemLogin}" mode="simple" update="imgPerfil"
-                                      skinSimple="true"  label="Imagem do topo" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-
-                        <p:fileUpload fileUploadListener="#{inicioView.setaImagemGeral}" mode="simple" update="imgPerfil"
-                                      skinSimple="true"  label="Imagem do login" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-
+                        
                         <br/>
                         <p:outputLabel value="* Campos obrigatórios" />
 

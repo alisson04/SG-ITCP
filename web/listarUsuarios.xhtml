@@ -9,6 +9,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagemUsuarios" >
                 <p:panel header="Usuários no sistema:" >
+                    <!--Listagem de usuários-->
                     <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
                                  filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" selectionMode="single"
                                  selection="#{ListarUsuariosView.objSelecionado}" rowKey="#{usuarioCursor.id}"
@@ -69,6 +70,7 @@
                         </f:facet>
                     </p:dataTable>
 
+                    <!--Mostrar usuários-->
                     <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade" header="Informações do usuário" modal="true"
                               resizable="false" draggable="false"   appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
                         <p:panelGrid  id="carDetail" columns="2" columnClasses="label,value" >
@@ -113,8 +115,8 @@
             </h:form>
 
             <!-- EDITAR USUÁRIO-->
-            <p:dialog id="dlgEditar" header="Novo usuário " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
+            <p:dialog id="dlgEditar" header="Novo usuário " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
+                      appendTo="@(body)" styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
                         <p:fileUpload id="upload" label="Selecinar foto de perfil" mode="advanced" 
@@ -129,12 +131,14 @@
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="nome" value="Nome: " />
                                 <p:inputText id="nome" value="#{ListarUsuariosView.objSalvar.nome}" required="true"
-                                             requiredMessage="O nome é obrigatório." size="45" maxlength="45"/>
+                                             requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}"
+                                             size="45" maxlength="45"/>
                                 <p:message for="nome"/>
 
                                 <p:outputLabel for="e-mail" value="E-mail: " />  
                                 <p:inputText id="e-mail" value="#{ListarUsuariosView.objSalvar.email}" required="true"
-                                             requiredMessage="O e-mail é obrigatório." size="45" maxlength="50"/>
+                                             requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}"
+                                             size="45" maxlength="50"/>
                                 <p:message for="e-mail"/>
 
                                 <p:outputLabel for="endereco" value="Endereço: "/>
@@ -144,7 +148,7 @@
                                 <p:outputLabel for="telefone" value="Telefone: " />
                                 <p:inputMask id="telefone" value="#{ListarUsuariosView.objSalvar.telefone}"
                                              mask="(99) ?9-9999-9999" size="45" maxlength="11" required="true"
-                                             requiredMessage="O telefone é obrigatório."/>
+                                             requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="telefone"/>
 
                                 <p:outputLabel value="Telefone alternativo: " />
@@ -162,17 +166,21 @@
                                 <p:message for="cpf"/>
 
                                 <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
-                                <p:calendar id="dataNascimento" value="#{ListarUsuariosView.objSalvar.dataNascimento}" pattern="dd/MM/yyyy" 
-                                            size="45" mask="true" locale="pt" required="true" requiredMessage="A data de nascimento é obrigatória." />
+                                <p:calendar id="dataNascimento" value="#{ListarUsuariosView.objSalvar.dataNascimento}" 
+                                            pattern="dd/MM/yyyy" 
+                                            size="45" mask="true" locale="pt" required="true"
+                                            requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="dataNascimento"/>
 
                                 <p:outputLabel for="dataEntrada" value="Entrada na ITCP: " />
                                 <p:calendar id="dataEntrada" value="#{ListarUsuariosView.objSalvar.dataEntrada}" pattern="dd/MM/yyyy" 
-                                            mask="true" locale="pt" size="45" required="true" requiredMessage="A data de entrada é obrigatória." />
+                                            mask="true" locale="pt" size="45" required="true" 
+                                            requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="dataEntrada"/>
 
                                 <p:outputLabel for="cargoItcp" value="Cargo: " />
-                                <p:selectOneMenu id="cargoItcp" required="true" requiredMessage="O cargo na ITCP é obrigatório."
+                                <p:selectOneMenu id="cargoItcp" required="true" 
+                                                 requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}"
                                                  value="#{ListarUsuariosView.objSalvar.cargo}" style="width:435px"
                                                  rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
@@ -181,7 +189,8 @@
                                 <p:message for="cargoItcp"/>
 
                                 <p:outputLabel for="sexo" value="Sexo: "/>  
-                                <p:selectOneRadio id="sexo" required="true" requiredMessage="O sexo é obrigatório."
+                                <p:selectOneRadio id="sexo" required="true" 
+                                                  requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}"
                                                   value="#{ListarUsuariosView.objSalvar.sexo}">
                                     <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
                                     <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>

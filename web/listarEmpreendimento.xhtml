@@ -114,7 +114,8 @@
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
                             <p:outputLabel for="nomeFantasia" value="Nome: " />
                             <p:inputText id="nomeFantasia" value="#{ListarEmpreendimentosView.objSalvar.nome}" 
-                                         required="true" requiredMessage="O campo Nome é obrigatório." size="45" maxlength="255"/>
+                                         required="true" requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
+                                         size="45" maxlength="255"/>
                             <p:message for="nomeFantasia" />
 
                             <p:outputLabel for="e-mail" value="E-mail: " />  
@@ -157,8 +158,9 @@
                             <p:message for="dataIncubação" />
 
                             <p:outputLabel for="tipoEpt" value="Tipo de empreendimento: "/>
-                            <p:selectOneMenu id="tipoEpt" required="true" requiredMessage="O Tipo de empreendimento é obrigatório."
-                                             value="#{ListarEmpreendimentosView.objSalvar.tipo}" style="width:435px">
+                            <p:selectOneMenu id="tipoEpt" required="true" value="#{ListarEmpreendimentosView.objSalvar.tipo}"
+                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" 
+                                             style="width:435px" >
                                 <f:selectItem itemLabel="Selecione o tipo" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarEmpreendimentosView.tiposEpt}" />
                             </p:selectOneMenu>
@@ -171,16 +173,17 @@
                             <p:outputLabel for="atividadeExercida" value="Atividades exercidas: "/>
                             <p:inputText id="atividadeExercida" value="#{ListarEmpreendimentosView.objSalvar.atividadeExercida}" 
                                          size="45" maxlength="255" required="true" 
-                                         requiredMessage="O campo de Atividades exercidas é obrigatório."/>
+                                         requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
                             <p:message for="atividadeExercida"/>
 
                             <p:outputLabel for="situacaoEpt" value="Fase de Incubação: "/>
-                            <p:selectOneMenu id="situacaoEpt" required="true" requiredMessage="O Processo de incubação é obrigatório."
+                            <p:selectOneMenu id="situacaoEpt" required="true" 
+                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
                                              value="#{ListarEmpreendimentosView.objSalvar.situacao}" style="width:435px">
                                 <f:selectItem itemLabel="Selecione a situação" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ListarEmpreendimentosView.situacaoEpt}" />
                             </p:selectOneMenu>
-                            <p:message for="situacaoEpt"/>
+                            <p:message for="situacaoEpt" />
                         </h:panelGrid>
 
                         <p:blockUI block="panel" trigger="btnSalvar">

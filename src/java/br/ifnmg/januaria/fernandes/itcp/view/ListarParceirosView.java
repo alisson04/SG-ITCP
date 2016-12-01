@@ -2,6 +2,7 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.ParceiroBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
+import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,7 +19,7 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean(name="ListarParceirosView")
 @ViewScoped
-public class ListarParceirosView implements Serializable{
+public class ListarParceirosView extends MensagensGenericas implements Serializable{
     private Parceiro parceiroSelecionado;
     private Parceiro objSalvar = new Parceiro();
     private List<Parceiro> listaParceiros;
@@ -33,6 +34,11 @@ public class ListarParceirosView implements Serializable{
             //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
             System.out.println("VIEW(listarTodosParceiros): Erro ao Carregar lista de Parceiros: " + ex);
         }
+    }
+    
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
     }
     
     public void transfereObj(){//Para botão de editar
