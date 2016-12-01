@@ -9,6 +9,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
                 <p:panel styleClass="corPanel" header="Atividades planejadas no sistema:" >
+                    <!--Listagem de usuários-->
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma atividade encontrada." value="#{ListarAtiviPlanejadasView.listaObjs}" 
                                  filteredValue="#{ListarAtiviPlanejadasView.listaObjsFiltradas}" 
                                  selectionMode="single" selection="#{ListarAtiviPlanejadasView.objSelecionado}" rowKey="#{objCursor.id}"
@@ -94,12 +95,7 @@
                         </f:facet>
                     </p:dataTable>
 
-                    <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
-                              styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
-                              style="text-align:center;" >
-                        <h:outputText value="Salvo com sucesso! " />
-                    </p:dialog>
-
+                    <!--Exibir usuário-->
                     <p:dialog id="diaShowUsr" header="Informações da atividade" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
                               resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog">
                         <p:outputPanel id="carDetail" style="text-align:center;">
@@ -122,6 +118,7 @@
                 </p:panel>
             </h:form>
 
+            <!--Editar e cadastrar usuário-->
             <p:dialog id="dlgEditar" header="Atividade " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
                       styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
                 <h:form id="frmEdicao">
@@ -129,7 +126,7 @@
                         <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                             <p:outputLabel for="nome" value="Nome: " />
                             <p:inputText id="nome" value="#{ListarAtiviPlanejadasView.objSalvar.nome}" required="true" 
-                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                                         requiredMessage="O campo Nome é obrigatório." size="45" maxlength="255"/>
                             <p:message for="nome" />
 
                             <p:outputLabel for="meta" value="Meta: "/>
@@ -143,18 +140,20 @@
 
                             <p:outputLabel for="dataInicio" value="Data início:" />
                             <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSalvar.dataInicio}"
-                                        pattern="dd/MM/yyyy" size="45" required="true" requiredMessage="O campo Data início é obrigatório."
+                                        pattern="dd/MM/yyyy" size="45" required="true" 
+                                        requiredMessage="O campo Data início é obrigatório."
                                         mask="true" locale="pt"/>
                             <p:message for="dataInicio" />
 
                             <p:outputLabel for="dataFim" value="Data fim:" />
                             <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSalvar.dataFim}" pattern="dd/MM/yyyy"
-                                        size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" locale="pt"/>
+                                        size="45" required="true" requiredMessage="O campo Data fim é obrigatório." mask="true" 
+                                        locale="pt"/>
                             <p:message for="dataFim" />
 
                             <p:outputLabel for="descricao" value="Descrição: " />
                             <p:inputTextarea id="descricao" value="#{ListarAtiviPlanejadasView.objSalvar.descricao}"
-                                             rows="5" cols="45" maxlength="200" autoResize="false" />
+                                             rows="5" cols="45" maxlength="255" autoResize="false" />
                             <p:message for="descricao" />
                         </h:panelGrid>
 

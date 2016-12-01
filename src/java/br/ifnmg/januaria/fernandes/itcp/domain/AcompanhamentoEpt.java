@@ -39,10 +39,10 @@ public class AcompanhamentoEpt implements Serializable, EntityConverter {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "objetivo")
     private String objetivo;
-    @Size(max = 200)
+    @Size(max = 255)
     @Column(name = "descricao")
     private String descricao;
     @Basic(optional = false)

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
@@ -64,7 +59,7 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
@@ -77,12 +72,12 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
     @Column(name = "dataFim")
     @Temporal(TemporalType.DATE)
     private Date dataFim;
-    @Size(max = 200)
+    @Size(max = 255)
     @Column(name = "descricao")
     private String descricao;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 15)
+    @Size(min = 1, max = 255)
     @Column(name = "status")
     private String status;
     @JoinColumn(name = "metafk", referencedColumnName = "idMeta")

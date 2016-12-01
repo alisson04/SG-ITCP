@@ -9,6 +9,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagemEmpreendimentos" >
                 <p:panel header="Empreendimentos no sistema:" styleClass="corPanel">
+                    <!--Listagem de EES-->
                     <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento cadastrado." selectionMode="single"
                                  value="#{ListarEmpreendimentosView.listaEmpreendimentos}" var="empreendimentoCursor" widgetVar="varGlobal"
                                  filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}" rows="12" paginator="true"
@@ -68,6 +69,7 @@
                         </f:facet>
                     </p:dataTable>
 
+                    <!--Exibir EES-->
                     <p:dialog id="diaShowUsr" header="Informações do empreendimento" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
                               resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
                         <p:outputPanel id="carDetail" style="text-align:center;">
@@ -104,6 +106,7 @@
                 </p:panel>
             </h:form>
 
+            <!--Editar EES-->
             <p:dialog id="dlgEditarEpt" header="Empreendimento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
                       styleClass="corDialog" resizable="false" draggable="false"   appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicaoEpt">
@@ -111,15 +114,16 @@
                         <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
                             <p:outputLabel for="nomeFantasia" value="Nome: " />
                             <p:inputText id="nomeFantasia" value="#{ListarEmpreendimentosView.objSalvar.nome}" 
-                                         required="true" requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
+                                         required="true" requiredMessage="O campo Nome é obrigatório." size="45" maxlength="255"/>
                             <p:message for="nomeFantasia" />
 
                             <p:outputLabel for="e-mail" value="E-mail: " />  
-                            <p:inputText id="e-mail" value="#{ListarEmpreendimentosView.objSalvar.email}" size="45" maxlength="45"/>
+                            <p:inputText id="e-mail" value="#{ListarEmpreendimentosView.objSalvar.email}" size="45" maxlength="255"/>
                             <p:message for="e-mail" />
 
                             <p:outputLabel for="razaoSocial" value="Razão social: " />
-                            <p:inputText id="razaoSocial" value="#{ListarEmpreendimentosView.objSalvar.razaoSocial}" size="45" maxlength="45"/>
+                            <p:inputText id="razaoSocial" value="#{ListarEmpreendimentosView.objSalvar.razaoSocial}" size="45" 
+                                         maxlength="255"/>
                             <p:message for="razaoSocial" />
 
                             <p:outputLabel for="cnpj" value="CNPJ: "/>
@@ -129,7 +133,7 @@
 
                             <p:outputLabel for="endereco" value="Endereço: "/>
                             <p:inputText id="endereco" value="#{ListarEmpreendimentosView.objSalvar.endereco}" size="45" 
-                                         maxlength="45" required="true" requiredMessage="O campo Endereço é obrigatório."/>
+                                         maxlength="255" required="true" requiredMessage="O campo Endereço é obrigatório."/>
                             <p:message for="endereco" />
 
                             <p:outputLabel for="telefone" value="Telefone: " />
@@ -161,12 +165,13 @@
                             <p:message for="tipoEpt"/>
 
                             <p:outputLabel for="siteEpt" value="Site do empreendimento: "/>
-                            <p:inputText id="siteEpt" value="#{ListarEmpreendimentosView.objSalvar.site}" size="45" maxlength="45"/>
+                            <p:inputText id="siteEpt" value="#{ListarEmpreendimentosView.objSalvar.site}" size="45" maxlength="255"/>
                             <p:message for="siteEpt"/>
 
                             <p:outputLabel for="atividadeExercida" value="Atividades exercidas: "/>
                             <p:inputText id="atividadeExercida" value="#{ListarEmpreendimentosView.objSalvar.atividadeExercida}" 
-                                         size="45" maxlength="45" required="true" requiredMessage="O campo de Atividades exercidas é obrigatório."/>
+                                         size="45" maxlength="255" required="true" 
+                                         requiredMessage="O campo de Atividades exercidas é obrigatório."/>
                             <p:message for="atividadeExercida"/>
 
                             <p:outputLabel for="situacaoEpt" value="Fase de Incubação: "/>
@@ -188,7 +193,7 @@
 
                     <p:separator/>                    
                     <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarEmpreendimentosView.salvarView()}" 
-                                     icon="Save24-iconfinder" update=":frmEdicaoEpt, :frmListagemEmpreendimentos:dtListagemEmpreendimentos" >
+                                     icon="Save24-iconfinder" update=":frmEdicaoEpt, :frmListagemEmpreendimentos" >
                         <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                     </p:commandButton>
 

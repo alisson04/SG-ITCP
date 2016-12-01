@@ -52,14 +52,14 @@ public class Empreendimento implements Serializable, EntityConverter {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "nome")
     private String nome;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 45)
+    @Size(max = 255)
     @Column(name = "email")
     private String email;
-    @Size(max = 45)
+    @Size(max = 255)
     @Column(name = "telefone")
     private String telefone;
     @Size(max = 45)
@@ -70,12 +70,12 @@ public class Empreendimento implements Serializable, EntityConverter {
     private String cnpj;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "endereco")
     private String endereco;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "situacao")
     private String situacao;
     @Column(name = "dataCriacao")
@@ -84,20 +84,20 @@ public class Empreendimento implements Serializable, EntityConverter {
     @Column(name = "dataIncubacao")
     @Temporal(TemporalType.DATE)
     private Date dataIncubacao;
-    @Size(max = 45)
+    @Size(max = 255)
     @Column(name = "razaoSocial")
     private String razaoSocial;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "tipo")
     private String tipo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "AtividadeExercida")
     private String atividadeExercida;
-    @Size(max = 45)
+    @Size(max = 255)
     @Column(name = "site")
     private String site;
 
