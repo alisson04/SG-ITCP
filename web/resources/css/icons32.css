@@ -1,3 +1,52 @@
+.addUser-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AddUser32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.AddVerde32-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AddVerde32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.atualizarUser-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AtualizarUser16.png") !important;
+}
+
+.bussiness-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/Bussiness32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.cabecalho {
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
+}
+
+.dolar-icon {
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
+}
+
+.gravar {
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
+}
+
+.Information32-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons32/Information32.png") !important;   
+    height: 32px;
+    width: 32px;
+    margin-left: -10px;
+    margin-top: 0px;
+    background-position: 0px 0px;
+}
+
+.membrosEpt-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/MembrosEpt32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
 .Padlock32-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/Padlock32.png") !important;  
     margin-left: -10px;
@@ -11,59 +60,8 @@
     text-indent: -99999px;
 }
 
-.Information32-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons32/Information32.png") !important;   
-    height: 32px;
-    width: 32px;
-    margin-left: -10px;
-    margin-top: 0px;
-    background-position: 0px 0px;
-}
-
-.atualizarUser-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AtualizarUser16.png") !important;
-}
-
-.AddVerde32-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AddVerde32.png") !important;
-    height: 32px;
-    width: 32px;
-}
-
 .user-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/User32.png") !important;
-    height: 32px;
-    width: 32px;
-}
-
-.membrosEpt-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/MembrosEpt32.png") !important;
-    height: 32px;
-    width: 32px;
-}
-
-.bussiness-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/Bussiness32.png") !important;
-    height: 32px;
-    width: 32px;
-}
-
-.visualizarUser-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/VisualizarUser32.png") !important;
-    height: 32px;
-    width: 32px;
-}
-
-.visualizarList-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/VisualizarList32.png") !important;
-    height: 32px;
-    width: 32px;
-}
-
-
-
-.addUser-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AddUser32.png") !important;
     height: 32px;
     width: 32px;
 }
@@ -72,23 +70,6 @@
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/LoadingBar.gif") !important;
     height: 32px;
     width: 32px;
-}
-.gravar {
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
-}
-
-.ui-icon.meu-icone {
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/LoadingBar.gif") !important;
-    height: 16px;
-    width: 16px;
-}
-
-.cabecalho {
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
-}
-
-.dolar-icon {
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
 }
 
 .SetaCima32-iconfinder{
@@ -115,4 +96,22 @@
     display: block;
     overflow: hidden;
     text-indent: -99999px;
+}
+
+.ui-icon.meu-icone {
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/LoadingBar.gif") !important;
+    height: 16px;
+    width: 16px;
+}
+
+.visualizarUser-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/VisualizarUser32.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
+.visualizarList-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/VisualizarList32.png") !important;
+    height: 32px;
+    width: 32px;
 }

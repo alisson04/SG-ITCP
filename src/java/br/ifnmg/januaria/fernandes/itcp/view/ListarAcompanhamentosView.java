@@ -154,12 +154,6 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
         }
     }
 
-    public void teste() {
-        System.out.println("_____TESTE: Usuário esta na tab: " + tabview.getActiveIndex());
-        tabview.setActiveIndex(0);
-        RequestContext.getCurrentInstance().update("frmEdicao");
-    }
-
     public void testeOnclick() {
         System.out.println("_____TESTE ON CLICK: Usuário esta na tab: " + tabview.getActiveIndex());
         tabview.setActiveIndex(0);

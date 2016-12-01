@@ -10,29 +10,29 @@
             <h:form id="frmListagemParceiros" >
                 <p:growl id="msgs" showDetail="true" showSummary="false" />
 
-                <p:panel styleClass="corPanel" header="Parceiros no sistema:" >
+                <p:panel header="Parceiros no sistema:" >
                     <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhum parceiro encontrado." 
                                  value="#{ListarParceirosView.listaParceiros}" filteredValue="#{ListarParceirosView.listaParceirosFiltrados}" 
                                  selectionMode="single" selection="#{ListarParceirosView.parceiroSelecionado}" rowKey="#{parceiroCursor.id}" 
                                  var="parceiroCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
                         <p:ajax event="rowSelect" update=":frmListagemParceiros"/>
 
-                        <p:column headerText="Nome: " filterBy="#{parceiroCursor.nome}" filterMatchMode="contains"
+                        <p:column headerText="Nome " filterBy="#{parceiroCursor.nome}" filterMatchMode="contains"
                                   sortBy="#{parceiroCursor.nome}" >
                             <h:outputText value="#{parceiroCursor.nome}"/>
                         </p:column>
 
-                        <p:column headerText="E-mail: " filterBy="#{parceiroCursor.email}" filterMatchMode="contains"
+                        <p:column headerText="E-mail " filterBy="#{parceiroCursor.email}" filterMatchMode="contains"
                                   sortBy="#{parceiroCursor.email}" >
                             <h:outputText value="#{parceiroCursor.email}"/>
                         </p:column>
 
-                        <p:column headerText="Endereço: " filterBy="#{parceiroCursor.endereco}" filterMatchMode="contains"
+                        <p:column headerText="Endereço " filterBy="#{parceiroCursor.endereco}" filterMatchMode="contains"
                                   sortBy="#{parceiroCursor.endereco}" >
                             <h:outputText value="#{parceiroCursor.endereco}"/>
                         </p:column>
 
-                        <p:column headerText="Telefone: " filterBy="#{parceiroCursor.telefone}" filterMatchMode="contains">
+                        <p:column headerText="Telefone " >
                             <h:outputText value="#{parceiroCursor.telefone}"/>
                         </p:column>
 

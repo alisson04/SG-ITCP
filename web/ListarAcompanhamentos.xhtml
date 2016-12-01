@@ -9,6 +9,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
                 <p:panel styleClass="corPanel" header="Acompanhamentos cadastrados:" >
+                    <!--Listagem de acompanhamentos-->
                     <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhum acompanhamento cadastrado!." 
                                  value="#{ListarAcompanhamentosView.listaAcompanhamentosEpt}" 
                                  filteredValue="#{ListarAcompanhamentosView.listaAcompanhamentosFiltrados}" 
@@ -62,6 +63,7 @@
                         </f:facet>
                     </p:dataTable>
 
+                    <!--Exibir acompanhamento-->
                     <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
                               resizable="false" draggable="true" modal="true"  appendTo="@(body)" styleClass="corDialog" >
                         <p:outputPanel id="carDetail" style="text-align:center;">
@@ -121,6 +123,7 @@
                 </p:panel>
             </h:form>
 
+            <!-- Cadastro e edição de acompanhamento-->
             <p:dialog id="dlgEditar" header="Acompanhamento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
                       appendTo="@(body)" styleClass="corDialog" resizable="false" draggable="false" modal="true"  dynamic="true" >
                 <h:form id="frmEdicao">
@@ -129,9 +132,9 @@
                         <p:tab id="tabInfo" title="Informações" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                                <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório."
-                                                 value="#{ListarAcompanhamentosView.objSalvar.empreendimento}" style="width:435px"
-                                                 converter="generic">
+                                <p:selectOneMenu id="empreendimento" required="true" converter="generic"
+                                                 requiredMessage="O empreendimento é obrigatório." style="width:435px"
+                                                 value="#{ListarAcompanhamentosView.objSalvar.empreendimento}" >
                                     <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarAcompanhamentosView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
                                                    itemValue="#{ept}"/>
@@ -166,62 +169,65 @@
 
                             <p:outputLabel value="* Campos obrigatórios" />
                         </p:tab>
-                        <p:tab id="tabUsr" title="Usuários que participaram" >
-                            <p:pickList id="PojoPickList" value="#{ListarAcompanhamentosView.usuariosPickList}" var="objPickList" 
-                                        effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
-                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
-                                        removeLabel="Remover" removeAllLabel="Remover todos">
 
-                                <f:facet name="sourceCaption">Não participaram</f:facet>
-                                <f:facet name="targetCaption">Participaram</f:facet>
+                        <p:tab id="tabUsr" title="Usuários e parceiros que participaram" >
 
-                                <p:column >
-                                    <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
-                                </p:column>
+                            <h:panelGrid columns="2">
+                                <p:panel header="Usuários ">
+                                    <p:pickList id="PojoPickList" value="#{ListarAcompanhamentosView.usuariosPickList}" var="objPickList" 
+                                                effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
+                                                showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                                removeLabel="Remover" removeAllLabel="Remover todos">
 
-                                <p:column >
-                                    <h:outputText value="#{objPickList.nome}" />
-                                </p:column>
-                            </p:pickList>
-                        </p:tab>
+                                        <f:facet name="sourceCaption">Não participaram</f:facet>
+                                        <f:facet name="targetCaption">Participaram</f:facet>
 
-                        <p:tab id="tabPar" title="Parceiros que participaram" >
-                            <p:pickList value="#{ListarAcompanhamentosView.parceirosPickList}" var="objParceiroPickList" 
-                                        effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nome}" 
-                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
-                                        removeLabel="Remover" removeAllLabel="Remover todos">
+                                        <p:column  >
+                                            <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
+                                        </p:column>
 
-                                <f:facet name="sourceCaption">Não participaram</f:facet>
-                                <f:facet name="targetCaption">Participaram</f:facet>
+                                        <p:column >
+                                            <h:outputText value="#{objPickList.nome}" />
+                                        </p:column>
+                                    </p:pickList>
+                                </p:panel>
 
-                                <p:column >
-                                    <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nome}" />
-                                </p:column>
+                                <p:panel header="Parceiros">
+                                    <p:pickList value="#{ListarAcompanhamentosView.parceirosPickList}" var="objParceiroPickList" 
+                                                effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nome}" 
+                                                showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                                removeLabel="Remover" removeAllLabel="Remover todos">
 
-                                <p:column >
-                                    <h:outputText value="#{objParceiroPickList.nome}" />
-                                </p:column>
-                            </p:pickList>
+                                        <f:facet name="sourceCaption">Não participaram</f:facet>
+                                        <f:facet name="targetCaption">Participaram</f:facet>
+
+                                        <p:column >
+                                            <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nome}" />
+                                        </p:column>
+
+                                        <p:column >
+                                            <h:outputText value="#{objParceiroPickList.nome}" />
+                                        </p:column>
+                                    </p:pickList>
+                                </p:panel>
+                            </h:panelGrid>
                         </p:tab>
                     </p:tabView>
-
                     <p:separator/>
 
-                    <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAcompanhamentosView.salvarView()}" 
-                                     icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagemParceiros" >
-                    </p:commandButton>
-                    
-                    <p:commandButton value="IME" actionListener="#{ListarAcompanhamentosView.teste()}" type="button"
-                                     icon="Save24-iconfinder" >
-                    </p:commandButton>
+                    <p:outputPanel style="text-align:center;">
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAcompanhamentosView.salvarView()}" 
+                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagemParceiros" >
+                        </p:commandButton>
+                        <p:spacer width="20px" />
 
-                    <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
 
-                    <p:blockUI block="frmEdicao" trigger="btnSalvar">
-                        CARREGANDO<br />
-                        <p:graphicImage name="icons/LoadingBar.gif"/>
-                    </p:blockUI>
-
+                        <p:blockUI block="frmEdicao" trigger="btnSalvar">
+                            CARREGANDO<br />
+                            <p:graphicImage name="fotos/LoadingBar.gif"/>
+                        </p:blockUI>
+                    </p:outputPanel>
                 </h:form>
             </p:dialog>
         </ui:define>

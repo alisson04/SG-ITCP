@@ -1,5 +1,26 @@
+.Aceito24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Aceito.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Acompanhamento24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Acompanhamento.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
 .Add24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons32/Add24.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Atividade24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Atividade.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;
@@ -26,13 +47,6 @@
     background-position: 0px 0x;
 }
 
-.Edit24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Edit.png") !important;
-    height: 24px;
-    width: 34px;
-    background-position: 0px 0x;
-}
-
 .Check24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Check.png") !important;
     height: 24px;
@@ -40,8 +54,22 @@
     background-position: 0px 0x;
 }
 
+.Edit24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Edit.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
 .Email24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Email.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Empreendimento24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Empreendimento.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;
@@ -61,6 +89,13 @@
     background-position: 0px 0x;
 }
 
+.Ideia24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Ideia.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
 .Key24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Key24.png") !important;  
     height: 24px;
@@ -75,6 +110,14 @@
     background-position: 0px 0x;
 }
 
+.Indicador24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Indicador.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+
 .Mala24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Mala24.png") !important;
     height: 24px;
@@ -82,8 +125,15 @@
     background-position: 0px 0x;
 }
 
-.MembroEpt24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/MembroEpt24.png") !important;
+.My24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/My24.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Parceria24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Parceria24.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;
@@ -103,22 +153,8 @@
     background-position: 0px 0x;
 }
 
-.Parceria24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Parceria24.png") !important;
-    height: 24px;
-    width: 34px;
-    background-position: 0px 0x;
-}
-
 .Question24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Question.png") !important;
-    height: 24px;
-    width: 34px;
-    background-position: 0px 0x;
-}
-
-.Users24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Users24.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;
@@ -131,22 +167,15 @@
     background-position: 0px 0x;
 }
 
-.Atividade24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Atividade.png") !important;
+.Users24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Users24.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;
 }
 
-.Aceito24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Aceito.png") !important;
-    height: 24px;
-    width: 34px;
-    background-position: 0px 0x;
-}
-
-.Ideia24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Ideia.png") !important;
+.Relatorio24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Relatorio.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;
@@ -166,7 +195,19 @@
     background-position: 0px 0x;
 }
 
+.SaveEdit24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24SaveEdit.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
 
+.See24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24See.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
 
 .SimpleClock22-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/SimpleClock22.png") !important;
@@ -175,8 +216,15 @@
     background-position: 0px 0x;
 }
 
-.See24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24See.png") !important;
+.Telephone24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Telephone.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Membros24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons32/32Membros.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;
