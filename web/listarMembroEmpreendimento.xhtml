@@ -6,18 +6,12 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-
-        <ui:define name="metadata">
-            <f:metadata>
-                <f:event listener="#{ListarMembrosEptsView.ListarMembrosEpts()}" type="preRenderView"/>
-            </f:metadata>
-        </ui:define>
-
         <ui:define name="conteudo">
             <h:form id="frmListagemMembrosEpts" >
+                <!--Listar -->
                 <p:panel id="pnlListagem" styleClass="corPanel" header="Membros de empreendimentos no sistema" 
                          rendered="#{ListarMembrosEptsView.existeEptBd}" >
-                    <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento cadastrado!." 
+                    <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento cadastrado!" 
                                  value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
                                  filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}" selectionMode="single" 
                                  selection="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado}" 
@@ -124,12 +118,11 @@
 
                     <br/>
                     <p:outputLabel value="Antes de trabalhar os membros dos empreendimentos, cadastre algum primeiro!" />
-
                     <p:separator/>
-                    
+
                     <br/>
                     <p:commandButton   value="Ir para pagina de empreendimentos" type="button" immediate="true"
-                                     action="/listarEmpreendimento.xhtml?faces-redirect=true" >
+                                       action="/listarEmpreendimento.xhtml?faces-redirect=true" >
                         <!--<p:graphicImage name="fotos/64Question.png" />-->
                     </p:commandButton>
                 </p:dialog>
@@ -137,94 +130,98 @@
 
             <!--Editar e cadastrar Membro de EES-->
             <p:dialog id="dlgEditar" header="Membro de empreedndimento" widgetVar="wVarDlgEditar" showEffect="fade" hideEffect="fade" 
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" >
+                      resizable="false" draggable="false" modal="true"  appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
-                    <p:panel id="panel" styleClass="corPanel" >
-                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                            <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarMembrosEptsView.objSalvar.nome}" 
-                                         required="true" requiredMessage="O campo Nome é obrigatório." size="45" maxlength="45"/>
-                            <p:message for="nome" />
+                    <p:outputPanel id="panel"  style="text-align:center;">
+                        <p:panel styleClass="corPanel" style="margin-bottom:20px" >
+                            <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                                <p:outputLabel for="nome" value="Nome: " />
+                                <p:inputText id="nome" value="#{ListarMembrosEptsView.objSalvar.nome}" 
+                                             required="true" size="45" maxlength="45"
+                                             requiredMessage="#{ListarMembrosEptsView.geraMsgGenericaCampoObrigatorioView()}" />
+                                <p:message for="nome" />
 
-                            <p:outputLabel for="email" value="E-mail: " />
-                            <p:inputText id="email" value="#{ListarMembrosEptsView.objSalvar.email}" size="45" maxlength="45"/>
-                            <p:message for="email" />
+                                <p:outputLabel for="email" value="E-mail: " />
+                                <p:inputText id="email" value="#{ListarMembrosEptsView.objSalvar.email}" size="45" maxlength="45"/>
+                                <p:message for="email" />
 
-                            <p:outputLabel for="apelido" value="Apelido: " />
-                            <p:inputText id="apelido" value="#{ListarMembrosEptsView.objSalvar.apelido}" 
-                                         size="45" maxlength="45"/>
-                            <p:message for="apelido" />
+                                <p:outputLabel for="apelido" value="Apelido: " />
+                                <p:inputText id="apelido" value="#{ListarMembrosEptsView.objSalvar.apelido}" 
+                                             size="45" maxlength="45"/>
+                                <p:message for="apelido" />
 
-                            <p:outputLabel for="nomeMae" value="Nome da mãe: " />
-                            <p:inputText id="nomeMae" value="#{ListarMembrosEptsView.objSalvar.nomeMae}" 
-                                         size="45" maxlength="45"/>
-                            <p:message for="nomeMae" />
+                                <p:outputLabel for="nomeMae" value="Nome da mãe: " />
+                                <p:inputText id="nomeMae" value="#{ListarMembrosEptsView.objSalvar.nomeMae}" 
+                                             size="45" maxlength="45"/>
+                                <p:message for="nomeMae" />
 
-                            <p:outputLabel for="endereco" value="Endereco: " />
-                            <p:inputText id="endereco" value="#{ListarMembrosEptsView.objSalvar.endereco}" 
-                                         size="45" maxlength="45"/>
-                            <p:message for="endereco" />
+                                <p:outputLabel for="endereco" value="Endereco: " />
+                                <p:inputText id="endereco" value="#{ListarMembrosEptsView.objSalvar.endereco}" 
+                                             size="45" maxlength="45"/>
+                                <p:message for="endereco" />
 
-                            <p:outputLabel for="rg" value="RG: " />
-                            <p:inputText id="rg" value="#{ListarMembrosEptsView.objSalvar.rg}" 
-                                         size="45" maxlength="45"/>
-                            <p:message for="rg" />
+                                <p:outputLabel for="rg" value="RG: " />
+                                <p:inputText id="rg" value="#{ListarMembrosEptsView.objSalvar.rg}" 
+                                             size="45" maxlength="45"/>
+                                <p:message for="rg" />
 
-                            <p:outputLabel for="nis" value="NIS: " />
-                            <p:inputText id="nis" value="#{ListarMembrosEptsView.objSalvar.nis}" 
-                                         size="45" maxlength="45"/>
-                            <p:message for="nis" />
+                                <p:outputLabel for="nis" value="NIS: " />
+                                <p:inputText id="nis" value="#{ListarMembrosEptsView.objSalvar.nis}" 
+                                             size="45" maxlength="45"/>
+                                <p:message for="nis" />
 
-                            <p:outputLabel for="telefone" value="Telefone: " />
-                            <p:inputMask id="telefone" value="#{ListarMembrosEptsView.objSalvar.telefone}"
-                                         mask="(99) 9999-9999?9" size="45" maxlength="11"/>
-                            <p:message for="telefone" />
+                                <p:outputLabel for="telefone" value="Telefone: " />
+                                <p:inputMask id="telefone" value="#{ListarMembrosEptsView.objSalvar.telefone}"
+                                             mask="(99) 9999-9999?9" size="45" maxlength="11"/>
+                                <p:message for="telefone" />
 
-                            <p:outputLabel value="Telefone alternativo: " />
-                            <p:inputMask id="telefoneAlternativo" mask="(99) 9999-9999?9" size="45" maxlength="11"
-                                         value="#{ListarMembrosEptsView.objSalvar.telefoneAlternativo}" />
-                            <p:message for="telefoneAlternativo" />
+                                <p:outputLabel value="Telefone alternativo: " />
+                                <p:inputMask id="telefoneAlternativo" mask="(99) 9999-9999?9" size="45" maxlength="11"
+                                             value="#{ListarMembrosEptsView.objSalvar.telefoneAlternativo}" />
+                                <p:message for="telefoneAlternativo" />
 
-                            <p:outputLabel for="dataNascimento" value="Data Nascimento: "/>
-                            <p:calendar id="dataNascimento" mask="true" pattern="dd/MM/yyyy" size="45" locale="pt"
-                                        value="#{ListarMembrosEptsView.objSalvar.dataNascimento}" />
-                            <p:message for="dataNascimento" />
+                                <p:outputLabel for="dataNascimento" value="Data Nascimento: "/>
+                                <p:calendar id="dataNascimento" mask="true" pattern="dd/MM/yyyy" size="45" locale="pt"
+                                            value="#{ListarMembrosEptsView.objSalvar.dataNascimento}" />
+                                <p:message for="dataNascimento" />
 
-                            <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                            <p:selectOneMenu id="empreendimento" required="true" requiredMessage="O empreendimento é obrigatório." 
-                                             value="#{ListarMembrosEptsView.objSalvar.empreendimento}" style="width:435px" 
-                                             converter="generic">
-                                <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
-                                               itemValue="#{ept}"/>
-                            </p:selectOneMenu>
-                            <p:message for="empreendimento"/>
+                                <p:outputLabel for="empreendimento" value="Empreendimento: "/>
+                                <p:selectOneMenu id="empreendimento" required="true" 
+                                                 requiredMessage="#{ListarMembrosEptsView.geraMsgGenericaCampoObrigatorioView()}"
+                                                 value="#{ListarMembrosEptsView.objSalvar.empreendimento}" style="width:435px" 
+                                                 converter="generic">
+                                    <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
+                                                   itemValue="#{ept}"/>
+                                </p:selectOneMenu>
+                                <p:message for="empreendimento"/>
 
-                            <p:outputLabel for="sexo" value="Sexo: "/>
-                            <p:selectOneRadio id="sexo" required="true" requiredMessage="O campo Sexo é obrigatório."
-                                              value="#{ListarMembrosEptsView.objSalvar.sexo}">
-                                <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
-                                <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
-                                <f:selectItem itemLabel="Outro" itemValue="Outro"/>
-                            </p:selectOneRadio>
-                            <p:message for="sexo" />
-                        </h:panelGrid>
+                                <p:outputLabel for="sexo" value="Sexo: "/>
+                                <p:selectOneRadio id="sexo" required="true" value="#{ListarMembrosEptsView.objSalvar.sexo}"
+                                                  requiredMessage="#{ListarMembrosEptsView.geraMsgGenericaCampoObrigatorioView()}" >
+                                    <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                    <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
+                                    <f:selectItem itemLabel="Outro" itemValue="Outro"/>
+                                </p:selectOneRadio>
+                                <p:message for="sexo" />
+                            </h:panelGrid>
 
-                        <p:outputLabel value="* Campos obrigatórios" />
-
-                        <p:separator />
+                            <p:outputLabel value="* Campos obrigatórios" />
+                        </p:panel>
+                        
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMembrosEptsView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagemMembrosEpts:pnlListagem" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
+                        <p:spacer width="20px" />
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarDlgEditar').hide()" />
-
-                        <p:blockUI block="panel" trigger="btnSalvar">
-                            CARREGANDO<br />
-                            <p:graphicImage name="icons/LoadingBar.gif"/>
-                        </p:blockUI>
-                    </p:panel>
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('wVarDlgEditar').hide()" />
+                    </p:outputPanel>
+                    <p:blockUI block="panel" trigger="btnSalvar">
+                        CARREGANDO<br />
+                        <p:graphicImage name="icons/LoadingBar.gif"/>
+                    </p:blockUI>
                 </h:form>
             </p:dialog>
         </ui:define>

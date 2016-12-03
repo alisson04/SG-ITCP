@@ -57,8 +57,10 @@
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
+                                <p:outputPanel style="text-align:center;">
+                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
+                                </p:outputPanel>
                             </p:confirmDialog>
                         </f:facet>
                     </p:dataTable>
@@ -125,10 +127,10 @@
 
             <!-- Cadastro e edição de acompanhamento-->
             <p:dialog id="dlgEditar" header="Acompanhamento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
-                      appendTo="@(body)" styleClass="corDialog" resizable="false" draggable="false" modal="true"  dynamic="true" >
+                      appendTo="@(body)" resizable="false" draggable="false" modal="true"  dynamic="true" >
                 <h:form id="frmEdicao">
-                    <p:tabView id="tabGeral" activeIndex="#{ListarAcompanhamentosView.tabview.activeIndex}">
-                        <p:ajax event="tabChange" listener="#{ListarAcompanhamentosView.onTabChange}" />
+                    <p:tabView id="tabGeral" activeIndex="#{ListarAcompanhamentosView.tabview.activeIndex}" 
+                               style="margin-bottom:20px" >
                         <p:tab id="tabInfo" title="Informações" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
@@ -216,7 +218,6 @@
                             </h:panelGrid>
                         </p:tab>
                     </p:tabView>
-                    <p:separator/>
 
                     <p:outputPanel style="text-align:center;">
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAcompanhamentosView.salvarView()}" 

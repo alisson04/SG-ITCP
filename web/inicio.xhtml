@@ -48,21 +48,27 @@
                             </p:column>
 
                             <p:column headerText="Mudar situação para:" style="text-align: center" >
-                                <p:commandButton title="Não iniciada" update="frmCadastro" 
+                                <p:commandButton id="btnNaoIniciada" title="Não iniciada" update="frmCadastro" 
+                                                 style="background-image:none;background-color:white;"
                                                  rendered="#{atividadeCursor.status != 'Não iniciada'}"
                                                  actionListener="#{inicioView.mudaAtvParaNaoExecutada(atividadeCursor)}" 
-                                                 icon="Cross24-iconfinder" />
+                                                 icon="FlagRed24-iconfinder" />
 
-                                <p:commandButton title="Iniciada" style="ui-button" update="frmCadastro"
+                                <p:commandButton title="Iniciada"  update="frmCadastro"
+                                                 style="background-image:none;background-color:white;"
                                                  rendered="#{atividadeCursor.status != 'Iniciada'}"
                                                  actionListener="#{inicioView.mudaAtvParaEmExecução(atividadeCursor)}"
-                                                 icon="profile-iconfinder" />
+                                                 icon="FlagYellow24-iconfinder" />
 
-                                <p:commandButton title="Finalizada" style="ui-button" update="frmCadastro"
+                                <p:commandButton title="Finalizada"  update="frmCadastro"
+                                                 style="background-image:none;background-color:white;"
                                                  rendered="#{atividadeCursor.status != 'Finalizada'}"
                                                  actionListener="#{inicioView.mudaAtvParaExecutada(atividadeCursor)}"
-                                                 icon="BlackCheck24-iconfinder" />
+                                                 icon="FlagGreen24-iconfinder" />
                             </p:column>
+                            
+                            <p:tooltip id="toolTipGrow" for="btnNaoIniciada" value="This tooltip uses clip/explode effects for the animation"
+               showEffect="clip" hideEffect="explode" position="left"/>
 
                             <f:facet name="footer">
                             </f:facet>

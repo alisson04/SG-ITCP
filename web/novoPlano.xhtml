@@ -9,7 +9,8 @@
         <ui:define name="conteudo" >
             <h:form id="frmCadastro" >
                 <p:tabView  id="tabGeral" activeIndex="#{CadastrarPlanoAcaoView.tabview.activeIndex}" >
-                    <p:ajax event="tabChange" listener="#{CadastrarPlanoAcaoView.onTabChange}" update="frmCadastro"/>
+                    <p:ajax event="tabChange" listener="#{CadastrarPlanoAcaoView.onTabChange}" update="frmCadastro" />
+                    <!--TAB Cadastro de Plano-->
                     <p:tab id="tabPlano" title="Plano de ação" >
                         <p:panel id="panel" header="Adicionar informações do plano">
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
@@ -31,8 +32,8 @@
                                 <p:message for="nome" />
 
                                 <p:outputLabel for="dataInicio" value="Data de início: " />
-                                <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.objSalvar.dataInicio}" pattern="dd/MM/yyyy" 
-                                            size="45" mask="true" locale="pt" required="true" 
+                                <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.objSalvar.dataInicio}" 
+                                            pattern="dd/MM/yyyy" size="45" mask="true" locale="pt" required="true" 
                                             requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="dataInicio"/>
 
@@ -58,6 +59,7 @@
                         </p:panel>
                     </p:tab>
 
+                    <!--TAB Cadastro de Metas-->
                     <p:tab id="tabMetas" title="Metas" disabled="#{CadastrarPlanoAcaoView.objSalvar.id == null}">
                         <p:panel header="Adicionar metas ao plano" >
                             <p:panel header="Informações do plano">
@@ -118,6 +120,7 @@
                         </p:panel>
                     </p:tab>
 
+                    <!--TAB Cadastro de Atividades-->
                     <p:tab id="tabAtividades" title="Atividades" disabled="#{CadastrarPlanoAcaoView.listaSalvarMetas.size() == 0}" >
                         <p:panel styleClass="corPanel" header="Atividades cadastradas" style="margin-top: 30px">
                             <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada." 
@@ -247,46 +250,49 @@
             </h:form>
 
             <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
-                      styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
+                      resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
-                    <p:panel id="panel" styleClass="corPanel" >
-                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                            <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.metaSalvar.nome}" required="true" 
-                                         requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
-                                         size="45" maxlength="45"/>
-                            <p:message for="nome" />
+                    <p:outputPanel id="panel"  style="text-align:center;">
+                        <p:panel style="margin-bottom:20px" >
+                            <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                                <p:outputLabel for="nome" value="Nome: " />
+                                <p:inputText id="nome" value="#{CadastrarPlanoAcaoView.metaSalvar.nome}" required="true" 
+                                             requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
+                                             size="45" maxlength="45"/>
+                                <p:message for="nome" />
 
-                            <p:outputLabel for="dataInicio" value="Prazo:" />
-                            <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.metaSalvar.prazo}" 
-                                        pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
-                                        requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
-                            <p:message for="dataInicio" />
+                                <p:outputLabel for="dataInicio" value="Prazo:" />
+                                <p:calendar id="dataInicio" value="#{CadastrarPlanoAcaoView.metaSalvar.prazo}" 
+                                            pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
+                                            requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
+                                <p:message for="dataInicio" />
 
-                            <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.metaSalvar.descricao}"
-                                             rows="5" cols="45" maxlength="200" />
-                            <p:message for="descricao" />
-                        </h:panelGrid>
+                                <p:outputLabel for="descricao" value="Descrição: " />
+                                <p:inputTextarea id="descricao" value="#{CadastrarPlanoAcaoView.metaSalvar.descricao}"
+                                                 rows="5" cols="45" maxlength="200" />
+                                <p:message for="descricao" />
+                            </h:panelGrid>
 
-                        <p:outputLabel value="* Campos obrigatórios" />
+                            <p:outputLabel value="* Campos obrigatórios" />
+                        </p:panel>
 
-                        <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarMeta()}" 
                                          icon="Save24-iconfinder" update="frmCadastro, frmEdicao" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
+                        <p:spacer width="20px" />
 
                         <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
                                          onclick="PF('wVarEditarDialog').hide()" />
-                    </p:panel>
+                    </p:outputPanel>
                 </h:form>
             </p:dialog>
 
-            <p:dialog id="dlgEditarAtividade" header="Atividade" widgetVar="wVarEditarAtividadeDialog" showEffect="fade" hideEffect="fade" modal="true"
-                      styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
+            <p:dialog id="dlgEditarAtividade" header="Atividade" widgetVar="wVarEditarAtividadeDialog" showEffect="fade" 
+                      hideEffect="fade" modal="true" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicaoAtividade">
-                    <p:tabView id="tabGeral" activeIndex="#{CadastrarPlanoAcaoView.tabviewAtividades.activeIndex}">
+                    <p:tabView id="tabGeral" activeIndex="#{CadastrarPlanoAcaoView.tabviewAtividades.activeIndex}"
+                               style="margin-bottom:20px" >
                         <p:ajax event="tabChange" listener="#{CadastrarPlanoAcaoView.onTabAtividadesChange}" />
                         <p:tab id="tabInfo" title="Informações" >
                             <h:panelGrid style="text-align:right;" columns="3">
@@ -329,53 +335,59 @@
                             <p:outputLabel value="* Campos obrigatórios" />
                         </p:tab>
 
-                        <p:tab id="tabUsr" title="Usuários que participarão" >
-                            <p:pickList id="PojoPickList" value="#{CadastrarPlanoAcaoView.usuariosPickList}" var="objPickList" 
-                                        effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
-                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
-                                        removeLabel="Remover" removeAllLabel="Remover todos">
+                        <p:tab id="tabUsr" title="Usuários e parceiros que participarão" >
+                            <h:panelGrid columns="2">
+                                <p:panel header="Usuários" >
+                                    <p:pickList id="PojoPickList" value="#{CadastrarPlanoAcaoView.usuariosPickList}" var="objPickList" 
+                                                effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
+                                                showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                                removeLabel="Remover" removeAllLabel="Remover todos">
 
-                                <f:facet name="sourceCaption">Não participarão</f:facet>
-                                <f:facet name="targetCaption">Participarão</f:facet>
+                                        <f:facet name="sourceCaption">Não participarão</f:facet>
+                                        <f:facet name="targetCaption">Participarão</f:facet>
 
-                                <p:column >
-                                    <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
-                                </p:column>
+                                        <p:column >
+                                            <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
+                                        </p:column>
 
-                                <p:column >
-                                    <h:outputText value="#{objPickList.nome}" />
-                                </p:column>
-                            </p:pickList>
-                        </p:tab>
+                                        <p:column >
+                                            <h:outputText value="#{objPickList.nome}" />
+                                        </p:column>
+                                    </p:pickList>
+                                </p:panel>
 
-                        <p:tab id="tabPar" title="Parceiros que participarão" >
-                            <p:pickList value="#{CadastrarPlanoAcaoView.parceirosPickList}" var="objParceiroPickList" 
-                                        effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nome}" 
-                                        showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
-                                        removeLabel="Remover" removeAllLabel="Remover todos">
+                                <p:panel header="Parceiros" >
+                                    <p:pickList value="#{CadastrarPlanoAcaoView.parceirosPickList}" var="objParceiroPickList" 
+                                                effect="bounce" itemValue="#{objParceiroPickList}" itemLabel="#{objParceiroPickList.nome}" 
+                                                showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                                removeLabel="Remover" removeAllLabel="Remover todos">
 
-                                <f:facet name="sourceCaption">Não participarão</f:facet>
-                                <f:facet name="targetCaption">Participarão</f:facet>
+                                        <f:facet name="sourceCaption">Não participarão</f:facet>
+                                        <f:facet name="targetCaption">Participarão</f:facet>
 
-                                <p:column >
-                                    <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nome}" />
-                                </p:column>
+                                        <p:column >
+                                            <h:outputText styleClass="ui-theme ui-theme-#{objParceiroPickList.nome}" />
+                                        </p:column>
 
-                                <p:column >
-                                    <h:outputText value="#{objParceiroPickList.nome}" />
-                                </p:column>
-                            </p:pickList>
+                                        <p:column >
+                                            <h:outputText value="#{objParceiroPickList.nome}" />
+                                        </p:column>
+                                    </p:pickList>
+                                </p:panel>
+                            </h:panelGrid>
                         </p:tab>
                     </p:tabView>
-                    
-                    <p:separator />
-                    <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarAtividade()}" 
-                                     icon="Save24-iconfinder" update="frmCadastro, frmEdicaoAtividade" >
-                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
-                    </p:commandButton>
 
-                    <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
-                                     onclick="PF('wVarEditarAtividadeDialog').hide()" />
+                    <p:outputPanel style="text-align:center;">
+                        <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarAtividade()}" 
+                                         icon="Save24-iconfinder" update="frmCadastro, frmEdicaoAtividade" >
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                        </p:commandButton>
+                        <p:spacer width="20px" />
+
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('wVarEditarAtividadeDialog').hide()" />
+                    </p:outputPanel>
                 </h:form>
             </p:dialog>
         </ui:define>

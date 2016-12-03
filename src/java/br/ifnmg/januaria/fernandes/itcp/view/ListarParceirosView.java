@@ -17,60 +17,49 @@ import org.primefaces.context.RequestContext;
  *
  * @author alisson
  */
-@ManagedBean(name="ListarParceirosView")
+@ManagedBean(name = "ListarParceirosView")
 @ViewScoped
-public class ListarParceirosView extends MensagensGenericas implements Serializable{
+public class ListarParceirosView extends MensagensGenericas implements Serializable {
+
     private Parceiro parceiroSelecionado;
     private Parceiro objSalvar = new Parceiro();
     private List<Parceiro> listaParceiros;
     private List<Parceiro> listaParceirosFiltrados;
     private ParceiroBean bean = new ParceiroBean();
-    
-    public ListarParceirosView(){
-        System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
-        try {
-            listaParceiros = bean.listarBean();
-        } catch (RuntimeException ex) {
-            //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
-            System.out.println("VIEW(listarTodosParceiros): Erro ao Carregar lista de Parceiros: " + ex);
-        }
+
+    public ListarParceirosView() {
+        listaParceiros = bean.listarBean();
     }
-    
+
     //METODOS
-    public String geraMsgGenericaCampoObrigatorioView(){
+    public String geraMsgGenericaCampoObrigatorioView() {
         return msgGenericaCampoObrigatorio();
     }
-    
-    public void transfereObj(){//Para botão de editar
+
+    public void transfereObj() {//Para botão de editar
         objSalvar = parceiroSelecionado;
     }
 
-    public void reiniciaObj(){//Para botão de cadastrar
+    public void reiniciaObj() {//Para botão de cadastrar
         System.out.println("objSalvar Reiniciado ====================== ");
         objSalvar = new Parceiro();
     }
-    
+
     public void salvarView() {
         try {
             bean.salvarBean(objSalvar);
             objSalvar = new Parceiro();
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVarEditarDialog').hide()");
-            context.execute("PF('dlgEdicaoPronta').show()");
-
+            msgGrowSaveGeneric();
         } catch (Exception ex) {
             Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Erro inesperado", "Erro ao tentar editar o parceiro, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
-    
-    public void excluirParceiroView(){
+
+    public void excluirParceiroView() {
         bean.excluirBean(parceiroSelecionado);
         parceiroSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
-        FacesMessage msg = new FacesMessage("Parceiro excluido com sucesso!");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        listaParceiros = bean.listarBean();
+        msgGrowDeleteGeneric();
     }
 
     //SETS E GETS

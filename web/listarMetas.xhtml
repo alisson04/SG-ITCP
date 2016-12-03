@@ -9,8 +9,6 @@
 
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
-                <p:growl id="msgs" showDetail="true" showSummary="false" />
-
                 <!--Listagem de Metas-->
                 <p:panel styleClass="corPanel" header="Metas no sistema:" >
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." 
@@ -76,7 +74,7 @@
 
                                 <h:outputText value="Prazo de início: " />
                                 <h:outputText value="#{ListarMetasView.conveteData(ListarMetasView.metaSelecionada.prazo)}" />
-                                
+
                                 <h:outputText value="Descrição: " />
                                 <p:scrollPanel mode="native" style="width:435px;height:100px">
                                     <h:outputText value="#{ListarMetasView.metaSelecionada.descricao}" />
@@ -89,52 +87,54 @@
 
             <!--Editar e cadastrar Metas-->
             <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
-                      styleClass="corDialog" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
+                      resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
-                    <p:panel id="panel" styleClass="corPanel" >
-                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                            <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarMetasView.objSalvar.nome}" required="true" size="45" maxlength="45"
-                                         requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
-                            <p:message for="nome" />
+                    <p:outputPanel id="panel"  style="text-align:center;">
+                        <p:panel style="margin-bottom:20px" >
+                            <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                                <p:outputLabel for="nome" value="Nome: " />
+                                <p:inputText id="nome" value="#{ListarMetasView.objSalvar.nome}" required="true" size="45" maxlength="45"
+                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
+                                <p:message for="nome" />
 
-                            <p:outputLabel for="planoAcao" value="Plano de ação: "/>
-                            <p:selectOneMenu id="planoAcao" required="true" value="#{ListarMetasView.objSalvar.planoAcao}"
-                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
-                                             style="width:435px" converter="generic">
-                                <f:selectItem itemLabel="Selecione o plano de ação" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nome}" 
+                                <p:outputLabel for="planoAcao" value="Plano de ação: "/>
+                                <p:selectOneMenu id="planoAcao" required="true" value="#{ListarMetasView.objSalvar.planoAcao}"
+                                                 requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
+                                                 style="width:435px" converter="generic">
+                                    <f:selectItem itemLabel="Selecione o plano de ação" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemLabel="#{plano.nome}" 
                                                    itemValue="#{plano}"/>
-                            </p:selectOneMenu>
-                            <p:message for="planoAcao"/>
+                                </p:selectOneMenu>
+                                <p:message for="planoAcao"/>
 
-                            <p:outputLabel for="dataInicio" value="Prazo:" />
-                            <p:calendar id="dataInicio" value="#{ListarMetasView.objSalvar.prazo}" 
-                                        pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
-                                        requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
-                            <p:message for="dataInicio" />
-                            
-                            <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputTextarea id="descricao" value="#{ListarMetasView.objSalvar.descricao}"
-                                         rows="5" cols="45" maxlength="200" autoResize="false" />
-                            <p:message for="descricao" />
-                        </h:panelGrid>
+                                <p:outputLabel for="dataInicio" value="Prazo:" />
+                                <p:calendar id="dataInicio" value="#{ListarMetasView.objSalvar.prazo}" 
+                                            pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
+                                            requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
+                                <p:message for="dataInicio" />
 
-                        <p:outputLabel value="* Campos obrigatórios" />
+                                <p:outputLabel for="descricao" value="Descrição: " />
+                                <p:inputTextarea id="descricao" value="#{ListarMetasView.objSalvar.descricao}"
+                                                 rows="5" cols="45" maxlength="200" />
+                                <p:message for="descricao" />
+                            </h:panelGrid>
 
-                        <p:separator />
+                            <p:outputLabel value="* Campos obrigatórios" />
+                        </p:panel>
+
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMetasView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
+                        <p:spacer width="20px" />
 
                         <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
 
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />
-                            <p:graphicImage name="icons/LoadingBar.gif"/>
+                            <p:graphicImage name="fotos/LoadingBar.gif"/>
                         </p:blockUI>
-                    </p:panel>
+                    </p:outputPanel>
                 </h:form>
             </p:dialog>
         </ui:define>

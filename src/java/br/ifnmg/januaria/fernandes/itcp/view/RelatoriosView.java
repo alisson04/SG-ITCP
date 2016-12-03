@@ -82,6 +82,10 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
 
     //Construtor
     public RelatoriosView() {
+        InicializaVariaveis();
+    }
+    
+    public void InicializaVariaveis(){//Foi separado para ser chamado na tela também
         eptBean = new EmpreendimentoBean();
         EesIndBean = new EmpreendimentoIndicadorBean();
         listaEmpreendimentos = eptBean.listarBean();

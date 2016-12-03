@@ -73,7 +73,7 @@
             <p:layoutUnit position="center">                
                 <h:form id="frmModeloGeral">
                     <p:menubar style="ui-button" styleClass="textoMenuPrincipal semMargin">
-                        <p:menuitem value="Minha página" icon="My24-iconfinder" 
+                        <p:menuitem value="Início" icon="Location24-iconfinder" 
                                     action="/inicio.xhtml?faces-redirect=true" style="ui-widget"/>
 
                         <p:submenu label="Usuários" icon="Users24-iconfinder">
@@ -88,7 +88,7 @@
                             <p:menuitem value="Parceiros" icon="Parceria24-iconfinder" 
                                         action="/listarParceiros.xhtml?faces-redirect=true"/>
 
-                            <p:menuitem value="Configurações" icon="PhoneList24-iconfinder" 
+                            <p:menuitem value="Configurações" icon="Gear24-iconfinder" 
                                         action="/ConfigurarSistema.xhtml?faces-redirect=true" />
                         </p:submenu>
 
@@ -234,7 +234,6 @@
 
                             <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
                                              onclick="PF('UserDia').hide()" />
-                        </p:outputPanel>
 
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
                                          style="text-align:center;">
@@ -243,6 +242,7 @@
                             <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
                                              icon="Cross24-iconfinder" />
                         </p:confirmDialog>
+                        </p:outputPanel>
                     </h:form>
                 </p:dialog>
 

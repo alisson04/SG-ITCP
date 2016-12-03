@@ -108,99 +108,103 @@
 
             <!--Editar EES-->
             <p:dialog id="dlgEditarEpt" header="Empreendimento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
-                      styleClass="corDialog" resizable="false" draggable="false"   appendTo="@(body)" dynamic="true" >
+                      resizable="false" draggable="false"   appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicaoEpt">
-                    <p:panel id="panel" styleClass="corPanel" style="text-align:right;">
-                        <h:panelGrid id="pgEditar" style="margin-top:20px" columns="3">
-                            <p:outputLabel for="nomeFantasia" value="Nome: " />
-                            <p:inputText id="nomeFantasia" value="#{ListarEmpreendimentosView.objSalvar.nome}" 
-                                         required="true" requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
-                                         size="45" maxlength="255"/>
-                            <p:message for="nomeFantasia" />
+                    <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
+                        <p:panel style="margin-bottom:20px">
+                            <h:panelGrid id="pgEditar" columns="3" style="text-align:right;">
+                                <p:outputLabel for="nomeFantasia" value="Nome: " />
+                                <p:inputText id="nomeFantasia" value="#{ListarEmpreendimentosView.objSalvar.nome}" 
+                                             required="true" requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
+                                             size="45" maxlength="255"/>
+                                <p:message for="nomeFantasia" />
 
-                            <p:outputLabel for="e-mail" value="E-mail: " />  
-                            <p:inputText id="e-mail" value="#{ListarEmpreendimentosView.objSalvar.email}" size="45" maxlength="255"/>
-                            <p:message for="e-mail" />
+                                <p:outputLabel for="e-mail" value="E-mail: " />  
+                                <p:inputText id="e-mail" value="#{ListarEmpreendimentosView.objSalvar.email}" size="45" maxlength="255"/>
+                                <p:message for="e-mail" />
 
-                            <p:outputLabel for="razaoSocial" value="Razão social: " />
-                            <p:inputText id="razaoSocial" value="#{ListarEmpreendimentosView.objSalvar.razaoSocial}" size="45" 
-                                         maxlength="255"/>
-                            <p:message for="razaoSocial" />
+                                <p:outputLabel for="razaoSocial" value="Razão social: " />
+                                <p:inputText id="razaoSocial" value="#{ListarEmpreendimentosView.objSalvar.razaoSocial}" size="45" 
+                                             maxlength="255"/>
+                                <p:message for="razaoSocial" />
 
-                            <p:outputLabel for="cnpj" value="CNPJ: "/>
-                            <p:inputMask id="cnpj" value="#{ListarEmpreendimentosView.objSalvar.cnpj}"
-                                         mask="99.999.999/9999-99" size="45" maxlength="18"/>
-                            <p:message for="cnpj" />
+                                <p:outputLabel for="cnpj" value="CNPJ: "/>
+                                <p:inputMask id="cnpj" value="#{ListarEmpreendimentosView.objSalvar.cnpj}"
+                                             mask="99.999.999/9999-99" size="45" maxlength="18"/>
+                                <p:message for="cnpj" />
 
-                            <p:outputLabel for="endereco" value="Endereço: "/>
-                            <p:inputText id="endereco" value="#{ListarEmpreendimentosView.objSalvar.endereco}" size="45" 
-                                         maxlength="255" required="true" requiredMessage="O campo Endereço é obrigatório."/>
-                            <p:message for="endereco" />
+                                <p:outputLabel for="endereco" value="Endereço: "/>
+                                <p:inputText id="endereco" value="#{ListarEmpreendimentosView.objSalvar.endereco}" size="45" 
+                                             maxlength="255" required="true" 
+                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
+                                <p:message for="endereco" />
 
-                            <p:outputLabel for="telefone" value="Telefone: " />
-                            <p:inputMask id="telefone" value="#{ListarEmpreendimentosView.objSalvar.telefone}" mask="(99) 9999-9999?9" 
-                                         size="45" maxlength="11"/>
-                            <p:message for="telefone" />
+                                <p:outputLabel for="telefone" value="Telefone: " />
+                                <p:inputMask id="telefone" value="#{ListarEmpreendimentosView.objSalvar.telefone}" mask="(99) 9999-9999?9" 
+                                             size="45" maxlength="11"/>
+                                <p:message for="telefone" />
 
-                            <p:outputLabel value="Telefone alternativo: " />
-                            <p:inputMask id="telefoneAlternativo" value="#{ListarEmpreendimentosView.objSalvar.telefoneAlternativo}" 
-                                         mask="(99) 9999-9999?9" size="45"/>
-                            <p:message for="telefoneAlternativo" />
+                                <p:outputLabel value="Telefone alternativo: " />
+                                <p:inputMask id="telefoneAlternativo" value="#{ListarEmpreendimentosView.objSalvar.telefoneAlternativo}" 
+                                             mask="(99) 9999-9999?9" size="45"/>
+                                <p:message for="telefoneAlternativo" />
 
-                            <p:outputLabel for="dataCriacao" value="Data de criação do empreendimento: "/>
-                            <p:calendar id="dataCriacao" value="#{ListarEmpreendimentosView.objSalvar.dataCriacao}"
-                                        pattern="dd/MM/yyyy" size="45" mask="true" locale="pt"/>
-                            <p:message for="dataCriacao" />
+                                <p:outputLabel for="dataCriacao" value="Data de criação do empreendimento: "/>
+                                <p:calendar id="dataCriacao" value="#{ListarEmpreendimentosView.objSalvar.dataCriacao}"
+                                            pattern="dd/MM/yyyy" size="45" mask="true" locale="pt"/>
+                                <p:message for="dataCriacao" />
 
-                            <p:outputLabel for="dataIncubação" value="Data de início da incubação: "/>
-                            <p:calendar id="dataIncubação" value="#{ListarEmpreendimentosView.objSalvar.dataIncubacao}" 
-                                        pattern="dd/MM/yyyy" size="45" mask="true" locale="pt"/>
-                            <p:message for="dataIncubação" />
+                                <p:outputLabel for="dataIncubação" value="Data de início da incubação: "/>
+                                <p:calendar id="dataIncubação" value="#{ListarEmpreendimentosView.objSalvar.dataIncubacao}" 
+                                            pattern="dd/MM/yyyy" size="45" mask="true" locale="pt"/>
+                                <p:message for="dataIncubação" />
 
-                            <p:outputLabel for="tipoEpt" value="Tipo de empreendimento: "/>
-                            <p:selectOneMenu id="tipoEpt" required="true" value="#{ListarEmpreendimentosView.objSalvar.tipo}"
-                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" 
-                                             style="width:435px" >
-                                <f:selectItem itemLabel="Selecione o tipo" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarEmpreendimentosView.tiposEpt}" />
-                            </p:selectOneMenu>
-                            <p:message for="tipoEpt"/>
+                                <p:outputLabel for="tipoEpt" value="Tipo de empreendimento: "/>
+                                <p:selectOneMenu id="tipoEpt" required="true" value="#{ListarEmpreendimentosView.objSalvar.tipo}"
+                                                 requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" 
+                                                 style="width:435px" >
+                                    <f:selectItem itemLabel="Selecione o tipo" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarEmpreendimentosView.tiposEpt}" />
+                                </p:selectOneMenu>
+                                <p:message for="tipoEpt"/>
 
-                            <p:outputLabel for="siteEpt" value="Site do empreendimento: "/>
-                            <p:inputText id="siteEpt" value="#{ListarEmpreendimentosView.objSalvar.site}" size="45" maxlength="255"/>
-                            <p:message for="siteEpt"/>
+                                <p:outputLabel for="siteEpt" value="Site do empreendimento: "/>
+                                <p:inputText id="siteEpt" value="#{ListarEmpreendimentosView.objSalvar.site}" size="45" maxlength="255"/>
+                                <p:message for="siteEpt"/>
 
-                            <p:outputLabel for="atividadeExercida" value="Atividades exercidas: "/>
-                            <p:inputText id="atividadeExercida" value="#{ListarEmpreendimentosView.objSalvar.atividadeExercida}" 
-                                         size="45" maxlength="255" required="true" 
-                                         requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
-                            <p:message for="atividadeExercida"/>
+                                <p:outputLabel for="atividadeExercida" value="Atividades exercidas: "/>
+                                <p:inputText id="atividadeExercida" value="#{ListarEmpreendimentosView.objSalvar.atividadeExercida}" 
+                                             size="45" maxlength="255" required="true" 
+                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
+                                <p:message for="atividadeExercida"/>
 
-                            <p:outputLabel for="situacaoEpt" value="Fase de Incubação: "/>
-                            <p:selectOneMenu id="situacaoEpt" required="true" 
-                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
-                                             value="#{ListarEmpreendimentosView.objSalvar.situacao}" style="width:435px">
-                                <f:selectItem itemLabel="Selecione a situação" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarEmpreendimentosView.situacaoEpt}" />
-                            </p:selectOneMenu>
-                            <p:message for="situacaoEpt" />
-                        </h:panelGrid>
+                                <p:outputLabel for="situacaoEpt" value="Fase de Incubação: "/>
+                                <p:selectOneMenu id="situacaoEpt" required="true" 
+                                                 requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
+                                                 value="#{ListarEmpreendimentosView.objSalvar.situacao}" style="width:435px">
+                                    <f:selectItem itemLabel="Selecione a situação" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarEmpreendimentosView.situacaoEpt}" />
+                                </p:selectOneMenu>
+                                <p:message for="situacaoEpt" />
+                            </h:panelGrid>
 
-                        <p:blockUI block="panel" trigger="btnSalvar">
-                            CARREGANDO<br />
-                            <p:graphicImage name="fotos/LoadingBar.gif"/>
-                        </p:blockUI>
-                    </p:panel>
+                            <p:outputLabel value="* Campos obrigatórios" />
+                        </p:panel>
 
-                    <p:outputLabel value="* Campos obrigatórios" />
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarEmpreendimentosView.salvarView()}" 
+                                         icon="Save24-iconfinder" update=":frmEdicaoEpt, :frmListagemEmpreendimentos" >
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                        </p:commandButton>
+                        <p:spacer width="20px" />
 
-                    <p:separator/>                    
-                    <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarEmpreendimentosView.salvarView()}" 
-                                     icon="Save24-iconfinder" update=":frmEdicaoEpt, :frmListagemEmpreendimentos" >
-                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
-                    </p:commandButton>
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('wVarEditarDialog').hide()" />
+                    </p:outputPanel>
 
-                    <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                    <p:blockUI block="outPaMostrarUsr" trigger="btnSalvar">
+                        CARREGANDO<br />
+                        <p:graphicImage name="fotos/LoadingBar.gif"/>
+                    </p:blockUI>
                 </h:form>
             </p:dialog>
         </ui:define>

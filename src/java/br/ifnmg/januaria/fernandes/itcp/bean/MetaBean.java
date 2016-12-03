@@ -28,6 +28,9 @@ public class MetaBean implements Serializable {
 
     //Salva uma meta
     public Meta salvarBean(Meta metaSalvar) {
+        if(metaSalvar.getIdMeta() == null){
+            metaSalvar.setStatus("Não cumprida");
+        }
         return dao.salvarDao(metaSalvar);
     }
 
@@ -67,11 +70,11 @@ public class MetaBean implements Serializable {
             }
 
             if (quantidadeIniciada == 0 && finalizada == 0) {//Caso a meta esteja não iniciada
-                meta.setSituacao("Não iniciada");
+                meta.setStatus("Não iniciada");
             }else if(quantidadeNaoIniciada == 0 && quantidadeIniciada == 0){
-                meta.setSituacao("Finalizada");
+                meta.setStatus("Finalizada");
             }else{
-                meta.setSituacao("Iniciada");
+                meta.setStatus("Iniciada");
             }
             
             salvarBean(meta);

@@ -51,10 +51,10 @@ public class Meta implements Serializable, EntityConverter {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "situacao")
-    private String situacao;
+    @Column(name = "status")
+    private String status;
     
-    @Size(max = 200)
+    @Size(max = 255)
     @Column(name = "descricao")
     private String descricao;
     @JoinColumn(name = "idPlanoAcaoFk", referencedColumnName = "id")
@@ -129,12 +129,12 @@ public class Meta implements Serializable, EntityConverter {
         this.atividadePlanejadaList = atividadePlanejadaList;
     }
 
-    public String getSituacao() {
-        return situacao;
+    public String getStatus() {
+        return status;
     }
 
-    public void setSituacao(String situacao) {
-        this.situacao = situacao;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

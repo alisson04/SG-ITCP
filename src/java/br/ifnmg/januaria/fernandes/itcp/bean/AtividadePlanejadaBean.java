@@ -66,7 +66,7 @@ public class AtividadePlanejadaBean implements Serializable{
         listaFiltrada= new ArrayList();
         
         for(int i=0; i<listaAtv.size(); i++){
-            if(listaAtv.get(i).getSituacao().equals(status)){
+            if(listaAtv.get(i).getStatus().equals(status)){
                 listaFiltrada.add(listaAtv.get(i));
             }
         }

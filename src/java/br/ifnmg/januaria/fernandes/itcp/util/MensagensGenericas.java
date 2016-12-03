@@ -13,7 +13,7 @@ public abstract class MensagensGenericas implements Serializable {
     
     //Mensagem generica de campo obrigatório
     public String msgGenericaCampoObrigatorio(){
-        return "Essa informação é obrigatória!";
+        return "Campo obrigatório!";
     }
 
     //Mensagens de GROW genéricas

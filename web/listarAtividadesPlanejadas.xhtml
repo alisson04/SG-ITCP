@@ -22,12 +22,12 @@
                                   filterMatchMode="contains" >
                             <h:outputText value="#{objCursor.nome}"/>
                         </p:column>
-                        
+
                         <p:column headerText="Data início" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" 
                                   filterMatchMode="contains">
                             <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" />
                         </p:column>
-                        
+
                         <p:column headerText="Data fim" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" 
                                   filterMatchMode="contains">
                             <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
@@ -124,59 +124,62 @@
 
             <!--Editar e cadastrar usuário-->
             <p:dialog id="dlgEditar" header="Atividade " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
+                      resizable="false" draggable="false" modal="true" dynamic="true" >
                 <h:form id="frmEdicao">
-                    <p:panel id="panel" styleClass="corPanel" >
-                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                            <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarAtiviPlanejadasView.objSalvar.nome}" required="true" 
-                                         requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}"
-                                         size="45" maxlength="255"/>
-                            <p:message for="nome" />
-
-                            <p:outputLabel for="meta" value="Meta: "/>
-                            <p:selectOneMenu id="meta" required="true" converter="generic"
+                    <p:outputPanel id="panel"  style="text-align:center;">
+                        <p:panel style="margin-bottom:20px" >
+                            <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                                <p:outputLabel for="nome" value="Nome: " />
+                                <p:inputText id="nome" value="#{ListarAtiviPlanejadasView.objSalvar.nome}" required="true" 
                                              requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}"
-                                             value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:435px" >
-                                <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="obj" itemLabel="#{obj.nome}" 
-                                               itemValue="#{obj}"/>
-                            </p:selectOneMenu>
-                            <p:message for="meta"/>
+                                             size="45" maxlength="255"/>
+                                <p:message for="nome" />
 
-                            <p:outputLabel for="dataInicio" value="Data início:" />
-                            <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSalvar.dataInicio}"
-                                        pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
-                                        requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}" />
-                            <p:message for="dataInicio" />
+                                <p:outputLabel for="meta" value="Meta: "/>
+                                <p:selectOneMenu id="meta" required="true" converter="generic"
+                                                 requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}"
+                                                 value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:435px" >
+                                    <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="obj" itemLabel="#{obj.nome}" 
+                                                   itemValue="#{obj}"/>
+                                </p:selectOneMenu>
+                                <p:message for="meta"/>
 
-                            <p:outputLabel for="dataFim" value="Data fim:" />
-                            <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSalvar.dataFim}" pattern="dd/MM/yyyy"
-                                        size="45" required="true"  mask="true" locale="pt"
-                                        requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}" />
-                            <p:message for="dataFim" />
+                                <p:outputLabel for="dataInicio" value="Data início:" />
+                                <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSalvar.dataInicio}"
+                                            pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
+                                            requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}" />
+                                <p:message for="dataInicio" />
 
-                            <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputTextarea id="descricao" value="#{ListarAtiviPlanejadasView.objSalvar.descricao}"
-                                             rows="5" cols="45" maxlength="255" autoResize="false" />
-                            <p:message for="descricao" />
-                        </h:panelGrid>
+                                <p:outputLabel for="dataFim" value="Data fim:" />
+                                <p:calendar id="dataFim" value="#{ListarAtiviPlanejadasView.objSalvar.dataFim}" pattern="dd/MM/yyyy"
+                                            size="45" required="true"  mask="true" locale="pt"
+                                            requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}" />
+                                <p:message for="dataFim" />
 
-                        <p:outputLabel value="* Campos obrigatórios" />
+                                <p:outputLabel for="descricao" value="Descrição: " />
+                                <p:inputTextarea id="descricao" value="#{ListarAtiviPlanejadasView.objSalvar.descricao}"
+                                                 rows="5" cols="45" maxlength="255" />
+                                <p:message for="descricao" />
+                            </h:panelGrid>
 
-                        <p:separator />
+                            <p:outputLabel value="* Campos obrigatórios" />
+                        </p:panel>
+
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAtiviPlanejadasView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
+                        <p:spacer width="20px" />
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('wVarEditarDialog').hide()" />
 
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />
-                            <p:graphicImage name="icons/LoadingBar.gif"/>
+                            <p:graphicImage name="fotos/LoadingBar.gif"/>
                         </p:blockUI>
-                    </p:panel>
+                    </p:outputPanel>
                 </h:form>
             </p:dialog>
         </ui:define>

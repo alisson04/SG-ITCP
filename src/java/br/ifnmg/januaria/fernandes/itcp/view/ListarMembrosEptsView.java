@@ -33,44 +33,42 @@ public class ListarMembrosEptsView extends MensagensGenericas implements Seriali
     private boolean existeEptBd;
 
     public ListarMembrosEptsView() {
-        bean = new MembroEmpreendimentoBean();
+        //EES
         empreendimentoBean = new EmpreendimentoBean();
-        objSalvar = new MembroEmpreendimento();
+        listaEmpreendimentos = empreendimentoBean.listarBean();
         
+        //Membros
+        bean = new MembroEmpreendimentoBean();
+        objSalvar = new MembroEmpreendimento();
+        listaMembrosEmpreendimentos = bean.listarBean();
+
         //Verifica se existe Empreendimento no banco de dados
         existeEptBd = true;
         if (empreendimentoBean.contarLinhasBean() == 0) {
-            System.out.println("Não há EES cadastrados");
             existeEptBd = false;
         }
     }
-
-    public void ListarMembrosEpts() {
-        System.out.println("BEAN(ListarEmpreendimentosView): listarTodosEmpreendimentos: ");
-        try {
-            listaEmpreendimentos = empreendimentoBean.listarBean();
-            listaMembrosEmpreendimentos = bean.listarBean();
-            
-        } catch (RuntimeException ex) {
-            msgPanelErroInesperadoGeneric();
-        }
-    }
     
-    public void transfereObj(){//Para botão de editar
+    //METODOS
+    public String geraMsgGenericaCampoObrigatorioView(){
+        return msgGenericaCampoObrigatorio();
+    }
+
+    public void transfereObj() {//Para botão de editar
         objSalvar = membroEmpreendimentoSelecionado;
     }
-    
-    public void reiniciaObj(){//Para botão de editar
+
+    public void reiniciaObj() {//Para botão de editar
         System.out.println("objSalvar Reiniciado ====================== ");
         objSalvar = new MembroEmpreendimento();
     }
-    
-    public void excluirMembroView(){
+
+    public void excluirMembroView() {
         bean.excluirBean(membroEmpreendimentoSelecionado);
         membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
         msgGrowDeleteGeneric();
     }
-    
+
     public void salvarView() {
         try {
             bean.salvarBean(objSalvar);

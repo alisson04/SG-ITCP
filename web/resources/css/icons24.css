@@ -82,6 +82,41 @@
     background-position: 0px 0x;
 }
 
+.FlagRed24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24FlagRed.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.FlagBlue24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24FlagBlue.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.FlagGreen24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24FlagGreen.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.FlagYellow24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24FlagYellow.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Gear24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Gear.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
 .Grafico24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Grafico24.png") !important;
     height: 24px;
@@ -112,6 +147,13 @@
 
 .Indicador24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Indicador.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
+.Location24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Location.png") !important;
     height: 24px;
     width: 34px;
     background-position: 0px 0x;

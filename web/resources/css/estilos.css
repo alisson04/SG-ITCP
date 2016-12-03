@@ -2,6 +2,12 @@
     font-size: 20px !important;
 }
 
+.styleGreen {    
+    background-color: #8FBC8F !important;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 60px !important;
+}
+
 .pgColumns50 {
     width: 50%;
 }

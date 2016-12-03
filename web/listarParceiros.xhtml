@@ -8,8 +8,6 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmListagemParceiros" >
-                <p:growl id="msgs" showDetail="true" showSummary="false" />
-
                 <!--Listar Parceiros-->
                 <p:panel header="Parceiros no sistema:" >
                     <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhum parceiro encontrado." 
@@ -48,7 +46,8 @@
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}" process="dtListagemParceiros"
                                              oncomplete="PF('wVarEditarDialog').show()"
                                              actionListener="#{ListarParceirosView.transfereObj()}"/>
-                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" update=":frmListagemParceiros"
+                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" 
+                                             update=":frmListagemParceiros"
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}" 
                                              actionListener="#{ListarParceirosView.excluirParceiroView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" icon="Alert16-iconfinder" />
@@ -90,48 +89,50 @@
             </h:form>
 
             <!--Editar e cadastrar Parceiros-->
-            <p:dialog id="dlgEditar" header="Parceiro" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
-                      styleClass="corDialog" resizable="false" draggable="false" modal="true"  dynamic="true" >
+            <p:dialog id="dlgEditar" header="Parceiro" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
+                      appendTo="@(body)" resizable="false" draggable="false" modal="true"  dynamic="true" >
                 <h:form id="frmEdicao">
-                    <p:panel id="panel" styleClass="corPanel" >
-                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                            <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText id="nome" value="#{ListarParceirosView.objSalvar.nome}" required="true"
-                                         requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
-                                         size="57" maxlength="45"/>
-                            <p:message for="nome" />
+                    <p:outputPanel id="panel"  style="text-align:center;">
+                        <p:panel style="margin-bottom:20px" >
+                            <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                                <p:outputLabel for="nome" value="Nome: " />
+                                <p:inputText id="nome" value="#{ListarParceirosView.objSalvar.nome}" required="true"
+                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
+                                             size="57" maxlength="45"/>
+                                <p:message for="nome" />
 
-                            <p:outputLabel for="e-mail" value="E-mail: " />  
-                            <p:inputText id="e-mail" value="#{ListarParceirosView.objSalvar.email}" size="57" maxlength="45"/>
-                            <p:message for="e-mail" />
+                                <p:outputLabel for="e-mail" value="E-mail: " />  
+                                <p:inputText id="e-mail" value="#{ListarParceirosView.objSalvar.email}" size="57" maxlength="45"/>
+                                <p:message for="e-mail" />
 
-                            <p:outputLabel for="endereco" value="Endereço: "/>
-                            <p:inputText id="endereco" value="#{ListarParceirosView.objSalvar.endereco}"
-                                         size="57" maxlength="45"/>
-                            <p:message for="endereco" />
+                                <p:outputLabel for="endereco" value="Endereço: "/>
+                                <p:inputText id="endereco" value="#{ListarParceirosView.objSalvar.endereco}"
+                                             size="57" maxlength="45"/>
+                                <p:message for="endereco" />
 
-                            <p:outputLabel for="telefone" value="Telefone: " />
-                            <p:inputMask id="telefone" value="#{ListarParceirosView.objSalvar.telefone}" mask="(99) 9999-9999?9" 
-                                         size="57" maxlength="11"/>
-                            <p:message for="telefone" />
+                                <p:outputLabel for="telefone" value="Telefone: " />
+                                <p:inputMask id="telefone" value="#{ListarParceirosView.objSalvar.telefone}" mask="(99) 9999-9999?9" 
+                                             size="57" maxlength="11"/>
+                                <p:message for="telefone" />
 
-                            <p:outputLabel value="Telefone alternativo: " />
-                            <p:inputMask id="telefoneAlternativo" value="#{ListarParceirosView.objSalvar.telefoneAlternativo}" 
-                                         mask="(99) 9999-9999?9" size="57" maxlength="11"/>
-                            <p:message for="telefoneAlternativo" />
+                                <p:outputLabel value="Telefone alternativo: " />
+                                <p:inputMask id="telefoneAlternativo" value="#{ListarParceirosView.objSalvar.telefoneAlternativo}" 
+                                             mask="(99) 9999-9999?9" size="57" maxlength="11"/>
+                                <p:message for="telefoneAlternativo" />
 
-                            <p:outputLabel for="tipoParceiro" value="Tipo de parceiro: "/>
-                            <p:inputText id="tipoParceiro" value="#{ListarParceirosView.objSalvar.tipo}" size="57" maxlength="45"/>
-                            <p:message for="tipoParceiro"/>
-                        </h:panelGrid>
+                                <p:outputLabel for="tipoParceiro" value="Tipo de parceiro: "/>
+                                <p:inputText id="tipoParceiro" value="#{ListarParceirosView.objSalvar.tipo}" size="57" maxlength="45"/>
+                                <p:message for="tipoParceiro"/>
+                            </h:panelGrid>
 
-                        <p:outputLabel value="* Campos obrigatórios" />
+                            <p:outputLabel value="* Campos obrigatórios" />
+                        </p:panel>
 
-                        <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarParceirosView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagemParceiros" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
                         </p:commandButton>
+                        <p:spacer width="20px" />
 
                         <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
 
@@ -139,7 +140,7 @@
                             CARREGANDO<br />
                             <p:graphicImage name="icons/LoadingBar.gif"/>
                         </p:blockUI>
-                    </p:panel>
+                    </p:outputPanel>
                 </h:form>
             </p:dialog>
         </ui:define>

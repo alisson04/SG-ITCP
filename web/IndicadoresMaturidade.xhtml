@@ -8,57 +8,20 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmIndicadores" >
-                <p:panel header="Selecione um empreendimento para preencher ou visializar seus indicadores">
-                    <h:panelGrid columns="2">
-                        <p:selectOneMenu value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" converter="generic" >
-                            <p:ajax update="frmIndicadores frmEdicao" event="itemSelect" 
-                                    listener="#{IndicadoresMaturidadeView.liberaPainelIndicadores()}"/>
-                            <f:selectItem itemLabel="Selecione o empreendimento" itemValue="#{null}" 
-                                          noSelectionOption="true" />
-                            <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
-                                           itemValue="#{ept}"/>
-                        </p:selectOneMenu>
+                <p:panel header="Selecione um empreendimento para preencher ou visializar seus indicadores" >
+                    <p:selectOneMenu value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" converter="generic" >
+                        <p:ajax update="frmIndicadores frmEdicao" event="itemSelect" 
+                                listener="#{IndicadoresMaturidadeView.liberaPainelIndicadores()}"/>
+                        <f:selectItem itemLabel="Selecione o empreendimento" itemValue="#{null}" 
+                                      noSelectionOption="true" />
+                        <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
+                                       itemValue="#{ept}"/>
+                    </p:selectOneMenu>
+                    <p:spacer width="20px" />
 
-                        <p:selectOneMenu value="#{IndicadoresMaturidadeView.categoriaSelecionada}"
-                                         rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" >
-                            <p:ajax update="frmIndicadores frmEdicao" event="itemSelect" 
-                                    listener="#{IndicadoresMaturidadeView.criaGrafico()}" />
-
-                            <f:selectItem itemLabel="Selecione uma categoria de indicadores" itemValue="" noSelectionOption="true" />
-
-                            <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
-                                          itemValue="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
-
-                            <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
-                                          itemValue="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
-
-                            <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
-                                          itemValue="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
-
-                            <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
-                                          itemValue="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
-
-                            <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
-                                          itemValue="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
-
-                            <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
-                                          itemValue="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
-
-                            <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
-                                          itemValue="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
-
-                            <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
-                                          itemValue="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
-
-                            <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
-                                          itemValue="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
-                        </p:selectOneMenu>
-                    </h:panelGrid>
-
-                    <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" icon="Add24-iconfinder" 
-                                     update="frmIndicadores"
-                                     disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" 
-                                     oncomplete="PF('wVarEditarDialog').show()" />
+                    <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
+                                     update="frmIndicadores" oncomplete="PF('wVarEditarDialog').show()"
+                                     disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
 
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
                         <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
@@ -66,21 +29,55 @@
                     </p:confirmDialog>
                 </p:panel>
 
-                <p:separator/>
-                <p:panel id="panelGrafico" style="margin-bottom:20px"
-                         rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null
-                                     and IndicadoresMaturidadeView.listaEptIndGrafico.size() != 0
-                                     and IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
-                    <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:400px;" />
+                <p:panel id="panelGrafico" style="margin-bottom:20px" header="Selecione uma categoria para ver seus indicadores"
+                         rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" >
+                    <p:selectOneMenu value="#{IndicadoresMaturidadeView.categoriaSelecionada}"
+                                     rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" >
+                        <p:ajax update="frmIndicadores frmEdicao" event="itemSelect" 
+                                listener="#{IndicadoresMaturidadeView.criaGrafico()}" />
+
+                        <f:selectItem itemLabel="Selecione uma categoria de indicadores" itemValue="" noSelectionOption="true" />
+
+                        <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
+
+                        <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
+
+                        <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
+
+                        <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
+
+                        <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
+
+                        <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
+
+                        <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
+
+                        <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
+
+                        <f:selectItem itemLabel="Categoria #{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
+                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
+                    </p:selectOneMenu>
+
+                    <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:400px;" 
+                             rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != ''
+                                         and IndicadoresMaturidadeView.listaEptIndGrafico.size() != 0}"/>
                 </p:panel>
             </h:form>
 
             <!-- FORMULARIO DE PREENCHIMENTO DE INDICADORES -->
-            <p:dialog id="dlgEditar" header="Reponda as questões abaixo" widgetVar="wVarEditarDialog" 
-                      showEffect="clip" hideEffect="clip" modal="true"
-                      styleClass="corDialog" resizable="false" draggable="false"   appendTo="@(body)" dynamic="true" >
+            <p:dialog id="dlgEditar" header="Reponda as questões abaixo" widgetVar="wVarEditarDialog" showEffect="clip"
+                      hideEffect="clip" modal="true" resizable="false" draggable="false"   appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
-                    <p:tabView id="tabGeral"  activeIndex="#{IndicadoresMaturidadeView.tabview.activeIndex}">
+                    <p:tabView id="tabGeral"  activeIndex="#{IndicadoresMaturidadeView.tabview.activeIndex}"
+                               style="margin-bottom:20px" >
                         <p:tab id="tabCategoria1" title="Categoria 1">
                             <p:panel header="Questões sobre o Empreendimento">
                                 <h:panelGrid columns="2" >
@@ -530,13 +527,16 @@
                         <p:graphicImage name="fotos/LoadingBar.gif"/>
                     </p:blockUI>
 
-                    <p:separator/>                    
-                    <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{IndicadoresMaturidadeView.salvarView()}" 
-                                     icon="Save24-iconfinder" update="frmIndicadores frmEdicao" immediate="true" >
-                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
-                    </p:commandButton>
+                    <p:outputPanel style="text-align:center;">
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{IndicadoresMaturidadeView.salvarView()}" 
+                                         icon="Save24-iconfinder" update="frmIndicadores frmEdicao" immediate="true" >
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                        </p:commandButton>
+                        <p:spacer width="20px" />
 
-                    <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('wVarEditarDialog').hide()" /> 
+                    </p:outputPanel>
                 </h:form>
             </p:dialog>
         </ui:define>

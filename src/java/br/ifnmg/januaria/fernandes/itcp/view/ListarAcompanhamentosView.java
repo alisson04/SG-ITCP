@@ -77,9 +77,9 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
             System.out.println("Erro Inesperado no construtor: " + ex);
         }
     }
-    
+
     //METODOS
-    public String geraMsgGenericaCampoObrigatorioView(){
+    public String geraMsgGenericaCampoObrigatorioView() {
         return msgGenericaCampoObrigatorio();
     }
 
@@ -159,38 +159,10 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
         }
     }
 
-    public void testeOnclick() {
-        System.out.println("_____TESTE ON CLICK: Usuário esta na tab: " + tabview.getActiveIndex());
-        tabview.setActiveIndex(0);
-        //RequestContext.getCurrentInstance().update("frmEdicao");
-        RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('wVarEditarDialog').show()");
-
-    }
-
     public void excluirParceiroView() {
-        try {
-            bean.excluirBean(objSelecionado);
-            objSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
-            msgGrowDeleteGeneric();
-        } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            msgPanelErroInesperadoGeneric();
-        }
-    }
-
-    public void onTabChange(TabChangeEvent event) {//Esse método é necessário para que o "tabView" do bean esteja atualizado com o que esta na tela
-        System.out.println("Usuário esta na tab: " + event.getTab().getId());
-        if (event.getTab().getId().equals("tabInfo")) {
-            tabview.setActiveIndex(0);
-            System.out.println("Usuário esta na tab: " + tabview.getActiveIndex());
-        } else if (event.getTab().getId().equals("tabUsr")) {
-            tabview.setActiveIndex(1);
-            System.out.println("Usuário esta na tab: " + tabview.getActiveIndex());
-        } else {
-            tabview.setActiveIndex(2);
-            System.out.println("Usuário esta na tab: " + tabview.getActiveIndex());
-        }
+        bean.excluirBean(objSelecionado);
+        objSalvar = null;//Volta o usuario para o estado de nulo/ Não retire
+        msgGrowDeleteGeneric();
     }
 
     //SETS E GETS

@@ -1,7 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.HorarioTrabalhoBean;
-import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.HorarioTrabalho;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
@@ -14,7 +13,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.ConstraintViolationException;
 
 /**
  *
