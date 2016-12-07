@@ -16,38 +16,41 @@ import javax.servlet.http.HttpSession;
  *
  * @author alisson
  */
-public class SessionUtil implements Serializable{
-    
+public class SessionUtil implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
-    public static HttpSession getSession(){
+
+    public static HttpSession getSession() {
+        System.out.println("GetSession=============");
         FacesContext ctx = FacesContext.getCurrentInstance();
         HttpSession sessao = (HttpSession) ctx.getExternalContext().getSession(false);
         return sessao;
     }
-    
-    public List<String> addUsr(int size){
+
+    public List<String> addUsr(int size) {
+        System.out.println("AddUser============");
         List<String> list = new ArrayList<String>();
-        for(int i = 0 ; i < size ; i++) {
+        for (int i = 0; i < size; i++) {
             list.add("a");
         }
         return list;
     }
-    
-    public static void setParam(String key, Usuario value){
+
+    public static void setParam(String key, Usuario value) {
         getSession().setAttribute(key, value);
     }
-    
-    public static Object getParam(String key){
+
+    public static Object getParam(String key) {
         return getSession().getAttribute(key);
     }
-    
-    public static void remove(String key){
+
+    public static void remove(String key) {
+        System.out.println("Remove================");
         getSession().removeAttribute(key);
     }
-    
-    public static void invalidate(){
+
+    public static void invalidate() {
         getSession().invalidate();
     }
-    
+
 }

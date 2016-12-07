@@ -2,12 +2,11 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.IncubadoraBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
-import br.ifnmg.januaria.fernandes.itcp.dao.ProdutoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
-import br.ifnmg.januaria.fernandes.itcp.domain.Produto;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,8 +16,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
@@ -33,8 +30,7 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     //Incubadora VARS
     private Incubadora inc;
     private IncubadoraBean incBean;
-    
-    
+
     private Usuario usuarioLogado;
     private UsuarioBean userBean;
     private UploadArquivo arquivo;

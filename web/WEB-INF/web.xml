@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+<web-app version="3.1" 
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
@@ -18,7 +23,8 @@
     <filter> 
         <filter-name>controleDeAcesso</filter-name> 
         <filter-class>br.ifnmg.januaria.fernandes.itcp.util.controleDeAcesso</filter-class> 
-    </filter> 
+    </filter>
+     
     <filter-mapping> 
         <filter-name>controleDeAcesso</filter-name> 
         <url-pattern>/sigitec/*</url-pattern> 
@@ -26,11 +32,13 @@
     
     <session-config>
         <session-timeout>
-            30
+            -1
         </session-timeout>
     </session-config>
+    
+    <!--Pagina inicial-->
     <welcome-file-list>
-        <welcome-file>Login.xhtml</welcome-file>
+        <welcome-file>/sigitec/Login.xhtml</welcome-file>
     </welcome-file-list>
     
     <!-- Tema do Prime Faces -->
@@ -40,15 +48,15 @@
     </context-param>
     
     <!-- Botões do prime Faces -->
-	<context-param>
-		<param-name>primefaces.FONT_AWESOME</param-name>
-		<param-value>true</param-value>
-	</context-param>
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
     
     <!-- Correção de bug -->
     <mime-mapping>
         <extension>ttf</extension>
-         <mime-type>application/font-sfnt</mime-type>
+        <mime-type>application/font-sfnt</mime-type>
     </mime-mapping>
     <mime-mapping>
         <extension>woff</extension>
@@ -64,7 +72,7 @@
     </mime-mapping>
     <mime-mapping>
         <extension>eot?#iefix</extension>
-    <mime-type>application/vnd.ms-fontobject</mime-type>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
     </mime-mapping>
     <mime-mapping>
         <extension>svg</extension>
@@ -90,17 +98,4 @@
         <extension>svg#fontawesomeregular</extension>
         <mime-type>image/svg+xml</mime-type>
     </mime-mapping>
-    
-    
-    <!-- DEVEM SER COLOCADO NO FACES-CONFIG.XML
-    <converter>
-        <converter-id>converter.CpfConverter</converter-id>
-        <converter-class>br.com.converter.CpfConverter</converter-class>
-    </converter>
-    
-    <validator>
-        <validator-id>validator.CpfValidator</validator-id>
-        <validator-class>br.ifnmg.januaria.fernandes.itcp.validator.CpfValidator</validator-class>
-    </validator>
-    -->
 </web-app>

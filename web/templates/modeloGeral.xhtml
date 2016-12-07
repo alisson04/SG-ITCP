@@ -59,6 +59,10 @@
         </h:form>
 
         <p:layout fullPage="true">
+            <p:idleMonitor timeout="60000">
+                <p:ajax event="idle" listener="#{LoginView.sair()}" update="frmMsgGenerico" />
+            </p:idleMonitor>
+
             <p:layoutUnit position="north" size="100" >
                 <p:graphicImage id="ftmImagemTopoGeral" width="100%" height="100%" styleClass="semMargin"
                                 value="./image/#{modeloGeralView.geraFotoTopo()}"/>
@@ -235,13 +239,13 @@
                             <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
                                              onclick="PF('UserDia').hide()" />
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
-                                         style="text-align:center;">
-                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
-                                             icon="BlackCheck24-iconfinder" />
-                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
-                                             icon="Cross24-iconfinder" />
-                        </p:confirmDialog>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
+                                             style="text-align:center;">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
+                                                 icon="BlackCheck24-iconfinder" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
+                                                 icon="Cross24-iconfinder" />
+                            </p:confirmDialog>
                         </p:outputPanel>
                     </h:form>
                 </p:dialog>

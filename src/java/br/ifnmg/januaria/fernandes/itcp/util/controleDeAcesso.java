@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.servlet.Filter;
 import java.util.logging.LogRecord;
+import javax.faces.application.ViewExpiredException;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -28,30 +29,28 @@ public class controleDeAcesso implements Filter {
 
     }
 
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {//Metodo chamado em toda requisição de pagina
-
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
 
-        if ((req.getServletPath().endsWith("Login.xhtml"))
-                || (req.getServletPath().endsWith("EsqueciMinhaSenha.xhtml"))
-                || (req.getServletPath().contains("/javax.faces.resource"))
-                || session.getAttribute("USUARIOLogado") != null) {//Acessando login OU é componente OU esta logado
-            if (session.getAttribute("USUARIOLogado") != null) {
+        if ((req.getServletPath().endsWith("Login.xhtml"))//Acessando login
+                || (req.getServletPath().endsWith("EsqueciMinhaSenha.xhtml"))//Acessando esqueci senha
+                || (req.getServletPath().contains("/javax.faces.resource"))//Requisição de componente
+                || session.getAttribute("USUARIOLogado") != null) {
+            if (session.getAttribute("USUARIOLogado") != null) {//Se user esta logado
                 if (!"Coordenador".equals(((Usuario) session.getAttribute("USUARIOLogado")).getCargo())
                         && req.getServletPath().endsWith("CadastroUsuario.xhtml")) {
                     System.out.println("__________controleDeAcesso(doFilter): Usuario tentando acessar pagina restrita");
                     redireciona("/sigitec/inicio.xhtml", response);//redireciona para inicio
-                } else if((session.getAttribute("USUARIOLogado") != null)//usuario logado querendo acessar login
-                        && req.getServletPath().endsWith("Login.xhtml")){
+                } else if ((session.getAttribute("USUARIOLogado") != null)//usuario logado querendo acessar login
+                        && req.getServletPath().endsWith("Login.xhtml")) {
                     redireciona("/sigitec/inicio.xhtml", response);//redireciona para inicio
-                } 
-                else {//Usuario acessando paginas que tem permissão(Situação comum)
+                } else {//Usuario acessando paginas que tem permissão(Situação comum)
                     chain.doFilter(request, response);
                 }
             } else {
-                System.out.println("__________controleDeAcesso(doFilter): Usuario esta nulo");
                 chain.doFilter(request, response);
             }
         } else {
@@ -60,9 +59,11 @@ public class controleDeAcesso implements Filter {
         }
     }
 
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
+    @Override
     public void destroy() {
     }
 
