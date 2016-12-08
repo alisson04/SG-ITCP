@@ -89,19 +89,14 @@
                                              disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" 
                                              actionListener="#{ListarAtiviPlanejadasView.excluirView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert16-iconfinder" />
+                                           icon="Alert24-iconfinder" />
                             </p:commandButton>
-
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
-                            </p:confirmDialog>
                         </f:facet>
                     </p:dataTable>
 
                     <!--Exibir usuário-->
-                    <p:dialog id="diaShowUsr" header="Informações da atividade" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog">
+                    <p:dialog id="diaShowUsr" header="Informações da atividade" widgetVar="carDialog" showEffect="clip" 
+                              hideEffect="clip" resizable="false" draggable="false" modal="true"  appendTo="@(body)" >
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />
@@ -122,9 +117,9 @@
                 </p:panel>
             </h:form>
 
-            <!--Editar e cadastrar usuário-->
-            <p:dialog id="dlgEditar" header="Atividade " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" appendTo="@(body)"
-                      resizable="false" draggable="false" modal="true" dynamic="true" >
+            <!--Editar e cadastrar atividade-->
+            <p:dialog id="dlgEditar" header="Atividade " widgetVar="wVarEditarDialog" showEffect="clip" hideEffect="clip" 
+                      appendTo="@(body)" resizable="false" draggable="false" modal="true" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:outputPanel id="panel"  style="text-align:center;">
                         <p:panel style="margin-bottom:20px" >
@@ -168,7 +163,7 @@
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAtiviPlanejadasView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder"/>
                         </p:commandButton>
                         <p:spacer width="20px" />
 

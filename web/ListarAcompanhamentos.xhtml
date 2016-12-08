@@ -53,20 +53,14 @@
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" update=":frmListagem"
                                              disabled="#{ListarAcompanhamentosView.objSelecionado == null}" 
                                              actionListener="#{ListarAcompanhamentosView.excluirParceiroView()}">
-                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" icon="Alert16-iconfinder" />
+                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                           icon="Alert24-iconfinder" />
                             </p:commandButton>
-
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                <p:outputPanel style="text-align:center;">
-                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
-                                </p:outputPanel>
-                            </p:confirmDialog>
                         </f:facet>
                     </p:dataTable>
 
                     <!--Exibir acompanhamento-->
-                    <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                    <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="clip" hideEffect="clip" 
                               resizable="false" draggable="true" modal="true"  appendTo="@(body)" styleClass="corDialog" >
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:fieldset legend="Informações do acompanhamento" toggleable="true" toggleSpeed="500" >
@@ -126,7 +120,7 @@
             </h:form>
 
             <!-- Cadastro e edição de acompanhamento-->
-            <p:dialog id="dlgEditar" header="Acompanhamento" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
+            <p:dialog id="dlgEditar" header="Acompanhamento" widgetVar="wVarEditarDialog" showEffect="clip" hideEffect="clip" 
                       appendTo="@(body)" resizable="false" draggable="false" modal="true"  dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:tabView id="tabGeral" activeIndex="#{ListarAcompanhamentosView.tabview.activeIndex}" 
@@ -222,10 +216,12 @@
                     <p:outputPanel style="text-align:center;">
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAcompanhamentosView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagemParceiros" >
+                            <p:confirm  header="ATENÇÃO!" message="  Deseja salvar as informações? " icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('wVarEditarDialog').hide()" />
 
                         <p:blockUI block="frmEdicao" trigger="btnSalvar">
                             CARREGANDO<br />

@@ -54,7 +54,7 @@
                             <p:separator />
                             <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarView()}" 
                                              icon="Save24-iconfinder" update="frmCadastro" >
-                                <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                                <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                             </p:commandButton>
                         </p:panel>
                     </p:tab>
@@ -112,7 +112,7 @@
                                                          disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}" 
                                                          actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}">
                                             <p:confirm header="ATENÇÃO! " message="Todas as atividades dessa meta também serão excluidas, continuar?" 
-                                                       icon="Alert16-iconfinder" />
+                                                       icon="Alert24-iconfinder" />
                                         </p:commandButton>
                                     </f:facet>
                                 </p:dataTable>
@@ -162,7 +162,7 @@
                                                      disabled="#{CadastrarPlanoAcaoView.atividadeSelecionada == null}" 
                                                      actionListener="#{CadastrarPlanoAcaoView.excluirAtividade()}">
                                         <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                                   icon="Alert16-iconfinder" />
+                                                   icon="Alert24-iconfinder" />
                                     </p:commandButton>
                                 </f:facet>
                             </p:dataTable>
@@ -170,14 +170,8 @@
                     </p:tab>
                 </p:tabView>
 
-                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
-                                 style="text-align:center;">
-                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
-                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
-                </p:confirmDialog>
-
-                <p:dialog id="diaShowMeta" header="Informações da meta" widgetVar="widVarShowMeta" showEffect="fade" 
-                          hideEffect="fade" resizable="false" draggable="true" modal="true"  appendTo="@(body)" 
+                <p:dialog id="diaShowMeta" header="Informações da meta" widgetVar="widVarShowMeta" showEffect="clip" 
+                          hideEffect="clip" resizable="false" draggable="true" modal="true"  appendTo="@(body)" 
                           styleClass="corDialog" >
                     <p:outputPanel style="text-align:center;" >
                         <p:panelGrid  columns="2" columnClasses="label,value" >
@@ -196,7 +190,7 @@
                     </p:outputPanel>
                 </p:dialog>
 
-                <p:dialog id="diaShowAtividade" widgetVar="widVarShowAtividade" showEffect="fade" hideEffect="fade" 
+                <p:dialog id="diaShowAtividade" widgetVar="widVarShowAtividade" showEffect="clip" hideEffect="clip" 
                           resizable="false" draggable="true" modal="true"  appendTo="@(body)" styleClass="corDialog" >
                     <p:outputPanel style="text-align:center;">
                         <p:fieldset legend="Informações da atividade" toggleable="true" toggleSpeed="500" >
@@ -249,7 +243,8 @@
                 </p:dialog>
             </h:form>
 
-            <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
+            <!--Editar meta-->
+            <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="clip" hideEffect="clip" modal="true"
                       resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:outputPanel id="panel"  style="text-align:center;">
@@ -278,7 +273,7 @@
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarMeta()}" 
                                          icon="Save24-iconfinder" update="frmCadastro, frmEdicao" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
@@ -288,8 +283,9 @@
                 </h:form>
             </p:dialog>
 
-            <p:dialog id="dlgEditarAtividade" header="Atividade" widgetVar="wVarEditarAtividadeDialog" showEffect="fade" 
-                      hideEffect="fade" modal="true" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
+            <!--Editar ativiade-->
+            <p:dialog id="dlgEditarAtividade" header="Atividade" widgetVar="wVarEditarAtividadeDialog" showEffect="clip" 
+                      hideEffect="clip" modal="true" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicaoAtividade">
                     <p:tabView id="tabGeral" activeIndex="#{CadastrarPlanoAcaoView.tabviewAtividades.activeIndex}"
                                style="margin-bottom:20px" >
@@ -381,7 +377,7 @@
                     <p:outputPanel style="text-align:center;">
                         <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarAtividade()}" 
                                          icon="Save24-iconfinder" update="frmCadastro, frmEdicaoAtividade" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 

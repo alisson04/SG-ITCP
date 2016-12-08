@@ -19,6 +19,13 @@
     background-position: 0px 0x;
 }
 
+.Alert24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Alert.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 0px 0x;
+}
+
 .Atividade24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Atividade.png") !important;
     height: 24px;

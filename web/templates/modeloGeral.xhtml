@@ -59,8 +59,8 @@
         </h:form>
 
         <p:layout fullPage="true">
-            <p:idleMonitor timeout="60000">
-                <p:ajax event="idle" listener="#{LoginView.sair()}" update="frmMsgGenerico" />
+            <p:idleMonitor timeout="300000">
+                <p:ajax event="idle" listener="#{LoginView.sair()}"/>
             </p:idleMonitor>
 
             <p:layoutUnit position="north" size="100" >
@@ -74,7 +74,7 @@
                 </p:outputPanel>
             </p:layoutUnit>
 
-            <p:layoutUnit position="center">                
+            <p:layoutUnit position="center">
                 <h:form id="frmModeloGeral">
                     <p:menubar style="ui-button" styleClass="textoMenuPrincipal semMargin">
                         <p:menuitem value="Início" icon="Location24-iconfinder" 
@@ -138,10 +138,20 @@
                             </p:menuButton>
                         </f:facet>
                     </p:menubar>
+
+                    <p:confirmDialog global="true" showEffect="clip" hideEffect="clip" closeOnEscape="true" closable="false" >
+                        <div style="display:flex;justify-content:center;align-items:center;">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
+                                             icon="BlackCheck24-iconfinder" />
+                            <p:spacer width="10px" />
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
+                                             icon="Cross24-iconfinder" />
+                        </div>
+                    </p:confirmDialog>
                 </h:form>
 
                 <!--EDIÇÂO DA MINHA CONTA-->
-                <p:dialog id="diaShowUsr" header="Minha conta" widgetVar="UserDia" showEffect="fade" hideEffect="fade" 
+                <p:dialog id="diaShowUsr" header="Minha conta" widgetVar="UserDia" showEffect="clip" hideEffect="clip" 
                           resizable="false" draggable="false" modal="true"  appendTo="@(body)">
                     <h:form id="frmEditarMeusDados"><!--Necessário usar um formulária a parte, visto o bloqueio de validação-->
                         <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
@@ -232,20 +242,12 @@
 
                             <p:commandButton id="btnSalvar" value="Salvar" icon="Save24-iconfinder" update="frmEditarMeusDados"
                                              actionListener="#{modeloGeralView.editarUserLogadoView()}" >
-                                <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                                <p:confirm  header="ATENÇÃO!" message="  Deseja salvar as informações? " icon="Alert24-iconfinder" />
                             </p:commandButton>
                             <p:spacer width="20px" />
 
                             <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
                                              onclick="PF('UserDia').hide()" />
-
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
-                                             style="text-align:center;">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
-                                                 icon="BlackCheck24-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
-                                                 icon="Cross24-iconfinder" />
-                            </p:confirmDialog>
                         </p:outputPanel>
                     </h:form>
                 </p:dialog>

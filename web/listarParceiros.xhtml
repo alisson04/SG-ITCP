@@ -50,24 +50,15 @@
                                              update=":frmListagemParceiros"
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}" 
                                              actionListener="#{ListarParceirosView.excluirParceiroView()}">
-                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" icon="Alert16-iconfinder" />
+                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                           icon="Alert24-iconfinder" />
                             </p:commandButton>
-
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
-                            </p:confirmDialog>
                         </f:facet>
                     </p:dataTable>
 
-                    <p:dialog header="Sucesso" widgetVar="dlgEdicaoPronta" showEffect="fade" hideEffect="fade" 
-                              styleClass="corDialog" resizable="false" draggable="false" modal="true"  appendTo="@(body)"
+                    <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="clip" hideEffect="clip" 
+                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" 
                               style="text-align:center;" >
-                        <h:outputText value="Salvo com sucesso! " />
-                    </p:dialog>
-
-                    <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />                            
@@ -89,7 +80,7 @@
             </h:form>
 
             <!--Editar e cadastrar Parceiros-->
-            <p:dialog id="dlgEditar" header="Parceiro" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
+            <p:dialog id="dlgEditar" header="Parceiro" widgetVar="wVarEditarDialog" showEffect="clip" hideEffect="clip" 
                       appendTo="@(body)" resizable="false" draggable="false" modal="true"  dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:outputPanel id="panel"  style="text-align:center;">
@@ -130,11 +121,12 @@
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarParceirosView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagemParceiros" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('wVarEditarDialog').hide()" />
 
                         <p:blockUI block="panel" trigger="btnSalvar">
                             CARREGANDO<br />

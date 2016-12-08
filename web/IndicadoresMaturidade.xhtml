@@ -22,11 +22,6 @@
                     <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
                                      update="frmIndicadores" oncomplete="PF('wVarEditarDialog').show()"
                                      disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
-
-                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
-                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
-                    </p:confirmDialog>
                 </p:panel>
 
                 <p:panel id="panelGrafico" style="margin-bottom:20px" header="Selecione uma categoria para ver seus indicadores"
@@ -530,7 +525,7 @@
                     <p:outputPanel style="text-align:center;">
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{IndicadoresMaturidadeView.salvarView()}" 
                                          icon="Save24-iconfinder" update="frmIndicadores frmEdicao" immediate="true" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 

@@ -52,17 +52,12 @@
                                              disabled="#{ListarMetasView.metaSelecionada == null}" 
                                              actionListener="#{ListarMetasView.excluirView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert16-iconfinder" />
+                                           icon="Alert24-iconfinder" />
                             </p:commandButton>
-
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
-                            </p:confirmDialog>
                         </f:facet>
                     </p:dataTable>
 
-                    <p:dialog id="diaShowUsr" header="Informações da meta" widgetVar="carDialog" showEffect="fade" hideEffect="fade" 
+                    <p:dialog id="diaShowUsr" header="Informações da meta" widgetVar="carDialog" showEffect="clip" hideEffect="clip"
                               resizable="false" draggable="false" modal="true"  appendTo="@(body)">
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" columnClasses="label,value" >
@@ -86,7 +81,7 @@
             </h:form>
 
             <!--Editar e cadastrar Metas-->
-            <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" modal="true"
+            <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="clip" hideEffect="clip" modal="true"
                       resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:outputPanel id="panel"  style="text-align:center;">
@@ -124,7 +119,7 @@
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMetasView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 

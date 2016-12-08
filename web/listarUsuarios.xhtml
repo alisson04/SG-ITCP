@@ -50,20 +50,15 @@
                                              value="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.objSelecionado)}" 
                                              icon="Refresh24-iconfinder" disabled="#{ListarUsuariosView.objSelecionado == null}" 
                                              update=":frmListagemUsuarios" >
-                                <p:confirm header="ATENÇÃO!" message="Deseja confirmar a ação?" icon="Alert16-iconfinder"/>
+                                <p:confirm header="ATENÇÃO!" message="Deseja confirmar a ação?" icon="Alert24-iconfinder"/>
                             </p:commandButton>
 
-                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" update=":frmListagemUsuarios"
-                                             disabled="#{ListarUsuariosView.objSelecionado == null}" 
+                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" 
+                                             update=":frmListagemUsuarios" disabled="#{ListarUsuariosView.objSelecionado == null}" 
                                              actionListener="#{ListarUsuariosView.excluirView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert16-iconfinder" />
+                                           icon="Alert24-iconfinder" />
                             </p:commandButton>
-
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" style="text-align:center;">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
-                            </p:confirmDialog>
 
                             <p:tooltip for="btnVisualizarusr" value="Visualizar informações deste usuário!"
                                        showEffect="clip" hideEffect="explode" />
@@ -71,8 +66,9 @@
                     </p:dataTable>
 
                     <!--Mostrar usuários-->
-                    <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade" header="Informações do usuário" modal="true"
-                              resizable="false" draggable="false"   appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
+                    <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="clip" hideEffect="clip" 
+                              header="Informações do usuário" modal="true" resizable="false" draggable="false"   appendTo="@(body)" 
+                              styleClass="corDialog" style="text-align:center;" >
                         <p:panelGrid  id="carDetail" columns="2" columnClasses="label,value" >
                             <h:outputText value="Nome: " />
                             <h:outputText value="#{ListarUsuariosView.objSelecionado.nome}" />
@@ -115,7 +111,7 @@
             </h:form>
 
             <!-- EDITAR USUÁRIO-->
-            <p:dialog id="dlgEditar" header="Novo usuário " widgetVar="wVarEditarDialog" showEffect="fade" hideEffect="fade" 
+            <p:dialog id="dlgEditar" header="Novo usuário " widgetVar="wVarEditarDialog" showEffect="clip" hideEffect="clip" 
                       appendTo="@(body)" styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
@@ -203,7 +199,7 @@
                         </p:panel>
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarUsuariosView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagemUsuarios:ListagemUsuarios" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder"/>
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
