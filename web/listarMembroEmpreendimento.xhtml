@@ -9,7 +9,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagemMembrosEpts" >
                 <!--Listar -->
-                <p:panel id="pnlListagem" styleClass="corPanel" header="Membros de empreendimentos no sistema" 
+                <p:panel id="pnlListagem" header="Membros de empreendimentos cadastrados" 
                          rendered="#{ListarMembrosEptsView.existeEptBd}" >
                     <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento cadastrado!" 
                                  value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 

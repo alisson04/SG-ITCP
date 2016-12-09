@@ -132,7 +132,6 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
         } else {
             atividadeSalvar.setUsuarioList(usuariosPickList.getTarget());//Seta usuários na atividade
             atividadeSalvar.setParceiroList(parceirosPickList.getTarget());//Seta parceiros na atividade
-            atividadeSalvar.setStatus("não iniciada");//Seta o status
             atividadeSalvar = atividadeBean.salvarBean(atividadeSalvar);//Salva a atividade no BD
             
             atualizaMetasAtividades();//Atualiza atividades e metas

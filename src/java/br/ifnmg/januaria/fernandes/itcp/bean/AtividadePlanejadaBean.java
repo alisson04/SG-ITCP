@@ -26,6 +26,10 @@ public class AtividadePlanejadaBean implements Serializable{
     
     //Salva uma atividade
     public AtividadePlanejada salvarBean(AtividadePlanejada obj) {
+        if(obj.getId()==null){
+            obj.setStatus("Não iniciada");//Seta o status
+        }
+        
         return dao.salvarDao(obj);
     }
     

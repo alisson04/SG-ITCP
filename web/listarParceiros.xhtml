@@ -9,7 +9,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagemParceiros" >
                 <!--Listar Parceiros-->
-                <p:panel header="Parceiros no sistema:" >
+                <p:panel header="Parceiros cadastrados" >
                     <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhum parceiro encontrado." 
                                  value="#{ListarParceirosView.listaParceiros}" filteredValue="#{ListarParceirosView.listaParceirosFiltrados}" 
                                  selectionMode="single" selection="#{ListarParceirosView.parceiroSelecionado}" rowKey="#{parceiroCursor.id}" 

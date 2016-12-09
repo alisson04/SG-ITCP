@@ -10,7 +10,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
                 <!--Listagem de Metas-->
-                <p:panel styleClass="corPanel" header="Metas no sistema:" >
+                <p:panel styleClass="corPanel" header="Metas cadastradas" >
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." 
                                  value="#{ListarMetasView.listaMetas}" filteredValue="#{ListarMetasView.listaMetasFiltradas}" 
                                  selectionMode="single" selection="#{ListarMetasView.metaSelecionada}" rowKey="#{metaCursor.idMeta}"

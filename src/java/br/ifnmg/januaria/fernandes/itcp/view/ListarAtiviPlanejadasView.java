@@ -29,6 +29,7 @@ import org.primefaces.context.RequestContext;
 @ManagedBean(name = "ListarAtiviPlanejadasView")
 @ViewScoped
 public class ListarAtiviPlanejadasView extends MensagensGenericas implements Serializable {
+
     private AtividadePlanejada objSelecionado;
     private AtividadePlanejada objSalvar = new AtividadePlanejada();
     private AtividadePlanejadaBean bean = new AtividadePlanejadaBean();
@@ -64,9 +65,9 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
             msgPanelErroInesperadoGeneric();
         }
     }
-    
+
     //METODOS
-    public String geraMsgGenericaCampoObrigatorioView(){
+    public String geraMsgGenericaCampoObrigatorioView() {
         return msgGenericaCampoObrigatorio();
     }
 
@@ -87,7 +88,7 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
 
     public void filtraMetasPorPlano() {//Acontece ao selecionar um Plano
         List<Meta> listaAux = new ArrayList();
-        
+
         if (planoSelecionado != null) {
             for (int i = 0; i < listaMetas.size(); i++) {
                 if (listaMetas.get(i).getPlanoAcao().equals(planoSelecionado)) {
@@ -110,18 +111,11 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
     }
 
     public void salvarView() {
-        try {
-            bean.salvarBean(objSalvar);
-            objSalvar = new AtividadePlanejada();
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVarEditarDialog').hide()");
-            context.execute("PF('dlgEdicaoPronta').show()");
-        } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erro inesperado", "Erro ao tentar editar a atividade, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
-        }
+        bean.salvarBean(objSalvar);
+        objSalvar = new AtividadePlanejada();
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('wVarEditarDialog').hide()");
+        msgGrowSaveGeneric();
     }
 
     public void excluirView() {
