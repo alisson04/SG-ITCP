@@ -20,31 +20,31 @@ public abstract class MensagensGenericas implements Serializable {
     public void msgGrowSaveGeneric() {//Salvar
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "SUCESSO!", "Informações salvas."));
-        RequestContext.getCurrentInstance().update("frmMsgGenerico");
+        RequestContext.getCurrentInstance().update("frmComponentesGenerico");
     }
 
     public void msgGrowDeleteGeneric() {//Excluir
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "SUCESSO!", "Informações excluidas."));
-        RequestContext.getCurrentInstance().update("frmMsgGenerico");
+        RequestContext.getCurrentInstance().update("frmComponentesGenerico");
     }
 
     public void msgGrowUpdateGeneric() {//Atualizar
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "SUCESSO!", "Informações atualizadas."));
-        RequestContext.getCurrentInstance().update("frmMsgGenerico");
+        RequestContext.getCurrentInstance().update("frmComponentesGenerico");
     }
 
     public void msgGrowlErroCustomizavel(String title, String msg) {//Erro customizavel
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, title, msg));
-        RequestContext.getCurrentInstance().update("frmMsgGenerico");
+        RequestContext.getCurrentInstance().update("frmComponentesGenerico");
     }
 
     public void msgGrowlInfoCustomizavel(String title, String msg) {//Informação customizavel
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, title, msg));
-        RequestContext.getCurrentInstance().update("frmMsgGenerico");
+        RequestContext.getCurrentInstance().update("frmComponentesGenerico");
     }
 
     //Mensagem PAINEL genérica

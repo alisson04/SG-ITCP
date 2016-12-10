@@ -51,7 +51,7 @@ public class controleDeAcesso implements Filter {
                     chain.doFilter(request, response);
                 }
             } else {
-                chain.doFilter(request, response);
+                    chain.doFilter(request, response);
             }
         } else {
             System.out.println("__________controleDeAcesso(doFilter): Redirecionou para LOGIN");

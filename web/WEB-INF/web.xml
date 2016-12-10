@@ -38,7 +38,7 @@
     
     <!--Pagina inicial-->
     <welcome-file-list>
-        <welcome-file>/sigitec/Login.xhtml</welcome-file>
+        <welcome-file>Login.xhtml</welcome-file>
     </welcome-file-list>
     
     <!-- Tema do Prime Faces -->

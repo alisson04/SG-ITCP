@@ -93,7 +93,7 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             parceiros = parceiroBean.listarBean();
             parceirosSelecionados = new ArrayList<Parceiro>();
             parceirosPickList = new DualListModel<Parceiro>(parceiros, parceirosSelecionados);
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             System.out.println("Cadastrar Plano(construtor): Erro no construtor: " + ex);
             msgPanelErroInesperadoGeneric();
         }
