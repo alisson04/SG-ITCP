@@ -5,6 +5,7 @@ import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.FacesException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -61,14 +62,13 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
                     listaObjsFiltrados.add(indAux);
                 }
 
-            } catch (NoResultException e) {
+            } catch (NoResultException ex) {
                 em.getTransaction().rollback();
-                System.out.println("IND " + (i + 1) + " Não preenchido");
+                throw new FacesException(ex);
             } finally {
                 em.close();
             }
         }
-        System.out.println("TAMANANANANA: " + listaObjsFiltrados.size());
         return listaObjsFiltrados;
     }
 
@@ -92,13 +92,13 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
                 consulta.setParameter("id", ees.getId());//Seta o ID do EES como paramentro
                 consulta.setParameter("idIndicador", indisDaCategoria.get(i).getId());//Seta o ID do IND rodadno como paramentro
                 listaObjsFiltrados.addAll(consulta.getResultList());//Pega os EmpreendimentoIndicadores para aquele ESS da categoria recebida
-            } catch (Exception e) {
+            } catch (Exception ex) {
                 em.getTransaction().rollback();
+                throw new FacesException(ex);
             } finally {
                 em.close();
             }
         }
-        System.out.println("Encontrados DAO: " + listaObjsFiltrados.size());
         return listaObjsFiltrados;
     }
 

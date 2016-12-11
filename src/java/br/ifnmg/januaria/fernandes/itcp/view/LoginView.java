@@ -13,6 +13,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.el.PropertyNotFoundException;
+import javax.faces.FacesException;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -42,41 +43,53 @@ public class LoginView extends MensagensGenericas implements Serializable {
 
     //CONSTRUTOR
     public LoginView() {
-        bean = new LoginBean();
-        obj = new Usuario();
-        usuarioLogado = new Usuario();
+        try {
+            bean = new LoginBean();
+            obj = new Usuario();
+            usuarioLogado = new Usuario();
 
-        //Verifica se existe user no banco de dados
-        usrBean = new UsuarioBean();
-        existeUserBd = true;
-        if (usrBean.contarLinhasBean() == 0) {
-            System.out.println("Não há usuários cadastrados");
-            existeUserBd = false;
-        }
+            //Verifica se existe user no banco de dados
+            usrBean = new UsuarioBean();
+            existeUserBd = true;
+            if (usrBean.contarLinhasBean() == 0) {
+                System.out.println("Não há usuários cadastrados");
+                existeUserBd = false;
+            }
 
-        //Incubadora CONSTRUTOR
-        inc = new Incubadora();
-        incBean = new IncubadoraBean();
-        existeInc = true;
+            //Incubadora CONSTRUTOR
+            inc = new Incubadora();
+            incBean = new IncubadoraBean();
+            existeInc = true;
 
-        if (incBean.contarLinhasBean() == 0) {
-            System.out.println("Não incubadora cadastrada");
-            existeInc = false;
-        }else{
-            inc = incBean.listarBean().get(0);
+            if (incBean.contarLinhasBean() == 0) {
+                System.out.println("Não incubadora cadastrada");
+                existeInc = false;
+            } else {
+                inc = incBean.listarBean().get(0);
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
-    
+
     //METODOS
-    public String geraMsgGenericaCampoObrigatorioView(){
-        return msgGenericaCampoObrigatorio();
+    public String geraMsgGenericaCampoObrigatorioView() {
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-    
-    public String geraImagemFundo(){
-        if(existeInc){
-            return inc.getFotoFundoLogin();
-        }else{
-            return "fotoFundoPadrao.jpg";
+
+    public String geraImagemFundo() {
+        try {
+            if (existeInc) {
+                return inc.getFotoFundoLogin();
+            } else {
+                return "fotoFundoPadrao.jpg";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
@@ -92,9 +105,8 @@ public class LoginView extends MensagensGenericas implements Serializable {
             existeUserBd = true;//Atualiza variável para dizer q já existe um user no BD
             msgGrowSaveGeneric();//Mensagem de salvar
             msgGrowlInfoCustomizavel("Senha enviada", "A senha foi enviada ao seu e-mail!");
-        } catch (EmailException ex) {
-            System.out.println("ERRO no Endereço de e-mail: " + ex);
-            msgPanelErroCustomizavel("Impossível salvar", "Verifique a validade do e-mail e a conexão com a internet ");
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
@@ -135,10 +147,8 @@ public class LoginView extends MensagensGenericas implements Serializable {
                 msgGrowlErroCustomizavel("Erro", "E-mail ou senha incorretos!");
                 return "";
             }
-        } catch (RuntimeException | IOException ex) {
-            msgPanelErroInesperadoGeneric();
-            System.out.println("RuntimeException: " + ex);
-            return null;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
@@ -147,16 +157,20 @@ public class LoginView extends MensagensGenericas implements Serializable {
     }
 
     public String gerarSenhaAleatoria() {
-        String letras = "ABCDEFGHIJKLMNOPQRSTUVYWXZabcdefghijklmnopqrstuvwxyz0123456789";
-        Random random = new Random();
-        String senhaAleatoria = "";
-        int index = -1;
-        for (int i = 0; i < 10; i++) {
-            index = random.nextInt(letras.length());
-            senhaAleatoria += letras.substring(index, index + 1);
+        try {
+            String letras = "ABCDEFGHIJKLMNOPQRSTUVYWXZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            String senhaAleatoria = "";
+            int index = -1;
+            for (int i = 0; i < 10; i++) {
+                index = random.nextInt(letras.length());
+                senhaAleatoria += letras.substring(index, index + 1);
+            }
+            System.out.println("SENHA: " + senhaAleatoria);
+            return senhaAleatoria;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
-        System.out.println("SENHA: " + senhaAleatoria);
-        return senhaAleatoria;
     }
 
     //SETS E GETS

@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -21,32 +22,36 @@ import org.primefaces.context.RequestContext;
  *
  * @author alisson
  */
-@ManagedBean(name="ListarMetasView")
+@ManagedBean(name = "ListarMetasView")
 @ViewScoped
-public class ListarMetasView extends MensagensGenericas implements Serializable{
+public class ListarMetasView extends MensagensGenericas implements Serializable {
+
     private Meta metaSelecionada;
     private Meta objSalvar = new Meta();
     private List<PlanoAcao> listaPlanos;
     private List<Meta> listaMetas;
     private List<Meta> listaMetasFiltradas;
-    private MetaBean bean= new MetaBean();
+    private MetaBean bean = new MetaBean();
     private PlanoAcaoBean planoAcaoBean = new PlanoAcaoBean();
-    
+
     public ListarMetasView() {
         try {
             listaMetas = bean.listarBean();
             listaPlanos = planoAcaoBean.listarBean();
-        } catch (RuntimeException ex) {
-            //FacesUtil.adicionarMsgErro("Erro ao carregar pesquisa:" + ex.getMessage());
-            System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Empreendimentos: " + ex);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
-    
+
     //METODOS
-    public String geraMsgGenericaCampoObrigatorioView(){
-        return msgGenericaCampoObrigatorio();
+    public String geraMsgGenericaCampoObrigatorioView() {
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-    
+
     public void salvarView() {
         try {
             bean.salvarBean(objSalvar);
@@ -55,38 +60,50 @@ public class ListarMetasView extends MensagensGenericas implements Serializable{
             context.execute("PF('wVarEditarDialog').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
         } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Erro inesperado", "Erro ao tentar editar o empreendimento, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            throw new FacesException(ex);
         }
     }
-    
-    public void transfereObj(){//Para botão de editar
-        objSalvar = metaSelecionada;
+
+    public void transfereObj() {//Para botão de editar
+        try {
+            objSalvar = metaSelecionada;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
-    public void reiniciaObj(){//Para botão de editar
-        System.out.println("objSalvar Reiniciado ====================== ");
-        objSalvar = new Meta();
+    public void reiniciaObj() {//Para botão de editar
+        try {
+            objSalvar = new Meta();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-    
+
     public String conveteData(Date data) {
-        if (data != null) {
-            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-            return forma.format(data);
-        } else {
-            return "";
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
-    
-    public void excluirView(){
-        bean.excluirBean(metaSelecionada);
-        metaSelecionada = null;//Volta o usuario para o estado de nulo/ Não retire
-        FacesMessage msg = new FacesMessage("Meta excluida do sistema");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+    public void excluirView() {
+        try {
+            bean.excluirBean(metaSelecionada);
+            metaSelecionada = null;//Volta o usuario para o estado de nulo/ Não retire
+            msgGrowDeleteGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
+    //SETS e GETS
     public Meta getMetaSelecionada() {
         return metaSelecionada;
     }

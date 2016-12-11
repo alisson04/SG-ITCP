@@ -10,6 +10,12 @@
     width: 32px;
 }
 
+.Alert128-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/128Alert.png") !important;
+    height: 128px;
+    width: 128px;
+}
+
 .atualizarUser-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AtualizarUser16.png") !important;
 }

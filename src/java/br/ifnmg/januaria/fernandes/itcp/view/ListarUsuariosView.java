@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.FacesException;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -20,6 +21,7 @@ import org.primefaces.event.FileUploadEvent;
 @ViewScoped
 @Named("ListarUsuariosView")
 public class ListarUsuariosView extends MensagensGenericas implements Serializable {
+
     //Variáveis
     private Usuario objSelecionado;
     private Usuario objSalvar;
@@ -31,31 +33,47 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
 
     //Construtor
     public ListarUsuariosView() {
-        objSalvar = new Usuario();
-        bean = new UsuarioBean();
+        try {
+            objSalvar = new Usuario();
+            bean = new UsuarioBean();
 
-        listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
-        arquivo = new UploadArquivo();
+            listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
+            arquivo = new UploadArquivo();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-    
+
     //METODOS
-    public String geraMsgGenericaCampoObrigatorioView(){
-        return msgGenericaCampoObrigatorio();
+    public String geraMsgGenericaCampoObrigatorioView() {
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-    
+
     public void transfereObj() {//Para botão de editar
-        objSalvar = objSelecionado;
+        try {
+            objSalvar = objSelecionado;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void reiniciaObj() {//Para botão de cadastrar
-        objSalvar = new Usuario();
-        objSalvar.setFotoPerfil("profileGeral.png");
+        try {
+            objSalvar = new Usuario();
+            objSalvar.setFotoPerfil("profileGeral.png");
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void salvarView() {
         try {
             if ((bean.buscarPorEmailBean(objSalvar) == null//Verifica se o e-mail já esta cadastrado
-                    ||bean.buscarPorEmailBean(objSalvar).getId().equals(objSalvar.getId()))) {
+                    || bean.buscarPorEmailBean(objSalvar).getId().equals(objSalvar.getId()))) {
                 objSalvar.setStatusSistema("Ativo");//SETA O STATUS
                 objSalvar.setSenha(bean.gerarSenhaAleatoria());//GERA A SENHA ALEATORIA
                 bean.enviarEmail(objSalvar.getEmail(), "Sistema Sigitec", "Sua senha é: " + objSalvar.getSenha());//Manda o emaill
@@ -73,17 +91,20 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
         } catch (EmailException ex) {
             msgPanelErroCustomizavel("Impossível salvar", "Verifique a validade do e-mail e a conexão com a internet ");
         } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            msgPanelErroInesperadoGeneric();
+            throw new FacesException(ex);
         }
     }
 
     public void uploadAction(FileUploadEvent event) {//Upa a foto e seta no user
-        arquivo.fileUpload(event, ".jpg", "/image/");
-        System.out.println("Nomed o arquivo: " + arquivo.getNome());
-        objSalvar.setFotoPerfil(arquivo.getNome());
-        arquivo.gravar();
-        arquivo = new UploadArquivo();//Limpa a variável
+        try {
+            arquivo.fileUpload(event, ".jpg", "/image/");
+            System.out.println("Nomed o arquivo: " + arquivo.getNome());
+            objSalvar.setFotoPerfil(arquivo.getNome());
+            arquivo.gravar();
+            arquivo = new UploadArquivo();//Limpa a variável
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void excluirView() {
@@ -92,45 +113,60 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
             objSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
             listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
             msgGrowDeleteGeneric();
-        } catch (RuntimeException ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            msgPanelErroInesperadoGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     public String conveteData(Date data) {
-        if (data != null) {
-            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-            return forma.format(data);
-        } else {
-            return "";
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     public String btAtivarDesativarUser(Usuario userAtivarDesativar) {//Determina o nome do botão 
-        if (userAtivarDesativar == null) {
-            return "Ativar ou desativar";
-        } else if (userAtivarDesativar.getStatusSistema().equals("Ativo")) {
-            return "Desativar";
-        } else {
-            return "Ativar";
+        try {
+            if (userAtivarDesativar == null) {
+                return "Ativar ou desativar";
+            } else if (userAtivarDesativar.getStatusSistema().equals("Ativo")) {
+                return "Desativar";
+            } else {
+                return "Ativar";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     public void ativarDesativarUsrView() {
-        if (objSelecionado.getStatusSistema().equals("Ativo")) {
-            objSelecionado.setStatusSistema("Desativado");
-            bean.salvarBean(objSelecionado);
-        } else {
-            objSelecionado.setStatusSistema("Ativo");
-            bean.salvarBean(objSelecionado);
+        try {
+            if (objSelecionado.getStatusSistema().equals("Ativo")) {
+                objSelecionado.setStatusSistema("Desativado");
+                bean.salvarBean(objSelecionado);
+            } else {
+                objSelecionado.setStatusSistema("Ativo");
+                bean.salvarBean(objSelecionado);
+            }
+            msgGrowUpdateGeneric();
+            listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
-        msgGrowUpdateGeneric();
-        listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
     }
 
     public String[] geraTiposDeCargosView() {
-        return bean.geraTiposDeCargosBean();
+        try {
+            return bean.geraTiposDeCargosBean();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //SETS E GETS

@@ -56,6 +56,47 @@
     <h:body>
         <h:form id="frmComponentesGenerico">
             <p:growl showDetail="true" life="5000" />
+
+            <p:ajaxExceptionHandler type="java.lang.Exception"
+                                    update="exceptionDialog"
+                                    onexception="PF('exceptionDialog').show();" />
+            
+
+            <p:dialog id="exceptionDialog" widgetVar="exceptionDialog"  header="Houve um erro no sistema" closable="false"
+                      height="400px" width="1100px"
+                      showEffect="clip" hideEffect="clip" resizable="false" draggable="false" modal="true"  appendTo="@(body)" >
+                <h:form id="frmEditarMeusDados" >
+                    <p:outputPanel style="text-align:center;">
+                        <p:panel  >
+                            <p:graphicImage id="ftmImagemTopoGeral" width="150px" height="150px" styleClass="semMargin"
+                                            name="/fotos/128Alert.png"/>
+                            <p:separator/>
+                            <h:outputText value="Contate o administrador do sistema e informe o erro!" />
+                            <br/>
+                            <h:outputText value="Você pode recarregar a página clicando em 'Recarregar'ou
+                            ignorar o erro clicando em 'Fechar'." />
+                            
+                            <p:separator/>
+                            <p:button onclick="document.location.href = document.location.href;" icon="Refresh24-iconfinder"
+                                      value="Recarregar" />
+                            <p:spacer width="20px" />
+                            
+                            <p:commandButton value="Fechar" type="button" icon="Cross24-iconfinder" 
+                                             onclick="PF('exceptionDialog').hide()" />
+                        </p:panel>
+
+                    </p:outputPanel>
+                    <p:spacer height="10px" />
+
+                    <p:fieldset legend="Mais informações" toggleable="true" toggleSpeed="500" collapsed="true" >
+                        <p:outputPanel style="text-align:center;">
+                            <h:outputText value="Detalhes do erro:" />                            
+                            <p:separator/>
+                        </p:outputPanel>
+                        <h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" />
+                    </p:fieldset>
+                </h:form>
+            </p:dialog>
         </h:form>
 
         <p:layout fullPage="true">
@@ -75,10 +116,15 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
-                <h:form id="frmModeloGeral">
+                <h:form id="frmModeloGeral">      
+                    <p:commandButton value="Cancelar"  icon="Cross24-iconfinder"  actionListener="#{modeloGeralView.teste()}"
+                                     />
                     <p:menubar style="ui-button" styleClass="textoMenuPrincipal semMargin">
                         <p:menuitem value="Início" icon="Location24-iconfinder" 
                                     action="/inicio.xhtml?faces-redirect=true" style="ui-widget"/>
+
+                        <p:menuitem value="teste" icon="Location24-iconfinder" 
+                                    action="/teste.xhtml?faces-redirect=true" style="ui-widget"/>
 
                         <p:submenu label="Usuários" icon="Users24-iconfinder">
                             <p:menuitem value="Cadastro e edições" icon="SaveEdit24-iconfinder" 

@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -60,62 +61,84 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
 
             eptBean = new EmpreendimentoBean();
             listaEmpreendimentos = eptBean.listarBean();
-        } catch (RuntimeException ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            msgPanelErroInesperadoGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     //METODOS
     public String geraMsgGenericaCampoObrigatorioView() {
-        return msgGenericaCampoObrigatorio();
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void filtraPlanosPorEes() {//Acontece ao selecionar um EES
-        List<PlanoAcao> listaAux = new ArrayList();
+        try {
+            List<PlanoAcao> listaAux = new ArrayList();
 
-        if (eesSelecionado != null) {
-            for (int i = 0; i < listaPlanos.size(); i++) {
-                if (listaPlanos.get(i).getEmpreendimento().equals(eesSelecionado)) {
-                    listaAux.add(listaPlanos.get(i));
+            if (eesSelecionado != null) {
+                for (int i = 0; i < listaPlanos.size(); i++) {
+                    if (listaPlanos.get(i).getEmpreendimento().equals(eesSelecionado)) {
+                        listaAux.add(listaPlanos.get(i));
+                    }
                 }
+                listaPlanos = listaAux;
+            } else {
+                listaPlanos = planoBean.listarBean();
             }
-            listaPlanos = listaAux;
-        } else {
-            listaPlanos = planoBean.listarBean();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     public void filtraMetasPorPlano() {//Acontece ao selecionar um Plano
-        List<Meta> listaAux = new ArrayList();
+        try {
+            List<Meta> listaAux = new ArrayList();
 
-        if (planoSelecionado != null) {
-            for (int i = 0; i < listaMetas.size(); i++) {
-                if (listaMetas.get(i).getPlanoAcao().equals(planoSelecionado)) {
-                    listaAux.add(listaMetas.get(i));
+            if (planoSelecionado != null) {
+                for (int i = 0; i < listaMetas.size(); i++) {
+                    if (listaMetas.get(i).getPlanoAcao().equals(planoSelecionado)) {
+                        listaAux.add(listaMetas.get(i));
+                    }
                 }
+                listaMetas = listaAux;
+            } else {
+                listaMetas = metaBean.listarBean();
             }
-            listaMetas = listaAux;
-        } else {
-            listaMetas = metaBean.listarBean();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     public void transfereObj() {//Para botão de editar
-        objSalvar = objSelecionado;
+        try {
+            objSalvar = objSelecionado;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void reiniciaObj() {//Para botão de cadastrar
-        System.out.println("objSalvar Reiniciado ====================== ");
-        objSalvar = new AtividadePlanejada();
+        try {
+            objSalvar = new AtividadePlanejada();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void salvarView() {
-        bean.salvarBean(objSalvar);
-        objSalvar = new AtividadePlanejada();
-        RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('wVarEditarDialog').hide()");
-        msgGrowSaveGeneric();
+        try {
+            bean.salvarBean(objSalvar);
+            objSalvar = new AtividadePlanejada();
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('wVarEditarDialog').hide()");
+            msgGrowSaveGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void excluirView() {
@@ -124,20 +147,21 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
             objSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
             FacesMessage msg = new FacesMessage("Atividade excluida com sucesso!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
-        } catch (RuntimeException ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Erro inesperado", "Erro ao tentar excluir a atividade, contate o administrador do sistema!");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     public String conveteData(Date data) {
-        if (data != null) {
-            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-            return forma.format(data);
-        } else {
-            return "";
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 

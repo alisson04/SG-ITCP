@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
@@ -56,18 +57,30 @@ public class ListarEmpreendimentosView extends MensagensGenericas implements Ser
         situacaoEpt[3] = "Desincubação";
         situacaoEpt[4] = "Desincubado";
     }
-    
+
     //METODOS
-    public String geraMsgGenericaCampoObrigatorioView(){
-        return msgGenericaCampoObrigatorio();
+    public String geraMsgGenericaCampoObrigatorioView() {
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void transfereObj() {//Para botão de editar
-        objSalvar = empreendimentoSelecionado;
+        try {
+            objSalvar = empreendimentoSelecionado;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void reiniciaObj() {//Para botão de editar
-        objSalvar = new Empreendimento();
+        try {
+            objSalvar = new Empreendimento();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void salvarView() {
@@ -79,8 +92,7 @@ public class ListarEmpreendimentosView extends MensagensGenericas implements Ser
             context.execute("PF('wVarEditarDialog').hide()");
             msgGrowSaveGeneric();
         } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            msgPanelErroInesperadoGeneric();
+            throw new FacesException(ex);
         }
     }
 
@@ -91,17 +103,20 @@ public class ListarEmpreendimentosView extends MensagensGenericas implements Ser
             listaEmpreendimentos = bean.listarBean();//Atualiza a lista de empreendimentos
             msgGrowDeleteGeneric();
         } catch (Exception ex) {
-            System.out.println("Erro ao excluir: " + ex);
-            msgPanelErroInesperadoGeneric();
+            throw new FacesException(ex);
         }
     }
 
     public String conveteData(Date data) {
-        if (data != null) {
-            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-            return forma.format(data);
-        } else {
-            return "";
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 

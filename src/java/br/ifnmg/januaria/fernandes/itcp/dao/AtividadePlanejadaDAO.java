@@ -6,6 +6,7 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.FacesException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -41,20 +42,16 @@ public class AtividadePlanejadaDAO extends DaoGenerico<AtividadePlanejada> {
         List<AtividadeUsuario> listaObjsFiltrados;//Cria alista que será retornada
         listaObjsFiltrados = new ArrayList();
 
-        try {
-            em = emf.createEntityManager();
-            em.getTransaction().begin();
-            Query consulta = em.createQuery("SELECT o FROM AtividadeUsuario o "
-                    + "WHERE o.idUsuarioFk = :id " );
-            consulta.setParameter("id", user.getId());
-            
-            listaObjsFiltrados = consulta.getResultList();//Pega a lista de objs
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
-        System.out.println("Quantidade de Atividades para o user: " + user.getId() + " :" + listaObjsFiltrados.size());
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Query consulta = em.createQuery("SELECT o FROM AtividadeUsuario o "
+                + "WHERE o.idUsuarioFk = :id ");
+        consulta.setParameter("id", user.getId());
+
+        listaObjsFiltrados = consulta.getResultList();//Pega a lista de objs
+
+        em.close();
+
         return listaObjsFiltrados;
     }
 }

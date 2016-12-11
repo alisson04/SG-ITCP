@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.component.tabview.TabView;
@@ -72,15 +73,18 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
             listaEmpreendimentos = empreendimentoBean.listarBean();
             listaAcompanhamentosEpt = bean.listarBean();
 
-        } catch (RuntimeException ex) {
-            msgPanelErroInesperadoGeneric();
-            System.out.println("Erro Inesperado no construtor: " + ex);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     //METODOS
     public String geraMsgGenericaCampoObrigatorioView() {
-        return msgGenericaCampoObrigatorio();
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void transfereObj() {//Para botão de editar
@@ -111,26 +115,29 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
                 usuariosPickList.setTarget(usuariosSelecionados);
             }
         } catch (Exception ex) {
-            System.out.println("ERRO AO TRANSFERIR OBJ: " + ex);
+            throw new FacesException(ex);
         }
     }
 
     public void reiniciaObj() {//Para botão de cadastrar
-        tabview.setActiveIndex(0);
-        System.out.println("objSalvar Reiniciado ====================== ");
-        usuarios = usuarioBean.listarBean();
-        parceiros = parceiroBean.listarBean();
+        try {
+            tabview.setActiveIndex(0);
+            usuarios = usuarioBean.listarBean();
+            parceiros = parceiroBean.listarBean();
 
-        usuariosPickList.setSource(usuarios);
-        parceirosPickList.setSource(parceiros);
+            usuariosPickList.setSource(usuarios);
+            parceirosPickList.setSource(parceiros);
 
-        usuariosSelecionados = new ArrayList<Usuario>();
-        usuariosPickList.setTarget(usuariosSelecionados);
+            usuariosSelecionados = new ArrayList<Usuario>();
+            usuariosPickList.setTarget(usuariosSelecionados);
 
-        parceirosSelecionados = new ArrayList<Parceiro>();
-        parceirosPickList.setTarget(parceirosSelecionados);
+            parceirosSelecionados = new ArrayList<Parceiro>();
+            parceirosPickList.setTarget(parceirosSelecionados);
 
-        objSalvar = new AcompanhamentoEpt();
+            objSalvar = new AcompanhamentoEpt();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void salvarView() {
@@ -154,15 +161,18 @@ public class ListarAcompanhamentosView extends MensagensGenericas implements Ser
             context.execute("PF('wVarEditarDialog').hide()");
             msgGrowSaveGeneric();
         } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            msgPanelErroInesperadoGeneric();
+            throw new FacesException(ex);
         }
     }
 
     public void excluirParceiroView() {
-        bean.excluirBean(objSelecionado);
-        objSalvar = null;//Volta o usuario para o estado de nulo/ Não retire
-        msgGrowDeleteGeneric();
+        try {
+            bean.excluirBean(objSelecionado);
+            objSalvar = null;//Volta o usuario para o estado de nulo/ Não retire
+            msgGrowDeleteGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //SETS E GETS

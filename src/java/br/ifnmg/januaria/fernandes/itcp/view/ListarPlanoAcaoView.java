@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -24,6 +25,7 @@ import org.primefaces.context.RequestContext;
 @ManagedBean(name = "ListarPlanoAcaoView")
 @ViewScoped
 public class ListarPlanoAcaoView extends MensagensGenericas implements Serializable {
+
     private PlanoAcaoBean bean;
     private EmpreendimentoBean empreendimentoBean;
     private PlanoAcao planoSelecionado;
@@ -39,23 +41,35 @@ public class ListarPlanoAcaoView extends MensagensGenericas implements Serializa
             objSalvar = new PlanoAcao();
             listaEmpreendimentos = empreendimentoBean.listarBean();
             listaPlanoAcao = bean.listarBean();
-        } catch (RuntimeException ex) {
-            System.out.println("BEAN(ListarEmpreendimentosView): Erro ao Carregar lista de Planos: " + ex);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
-    
+
     //METODOS
-    public String geraMsgGenericaCampoObrigatorioView(){
-        return msgGenericaCampoObrigatorio();
-    }
-    
-    public void transfereObj(){//Para botão de editar
-        objSalvar = planoSelecionado;
+    public String geraMsgGenericaCampoObrigatorioView() {
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
-    public void reiniciaObj(){//Para botão de cadastrar
-        System.out.println("objSalvar Reiniciado ====================== ");
-        objSalvar = new PlanoAcao();
+    public void transfereObj() {//Para botão de editar
+        try {
+            objSalvar = planoSelecionado;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
+    public void reiniciaObj() {//Para botão de cadastrar
+        try {
+            System.out.println("objSalvar Reiniciado ====================== ");
+            objSalvar = new PlanoAcao();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void salvarView() {
@@ -66,9 +80,7 @@ public class ListarPlanoAcaoView extends MensagensGenericas implements Serializa
             context.execute("PF('wVarDlgEditar').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
         } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Erro de exceção:", ex.getMessage()));
+            throw new FacesException(ex);
         }
     }
 
@@ -79,18 +91,20 @@ public class ListarPlanoAcaoView extends MensagensGenericas implements Serializa
             FacesMessage msg = new FacesMessage("Plano de ação excluido com sucesso!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Erro de exceção:", ex.getMessage()));
+            throw new FacesException(ex);
         }
     }
 
     public String conveteData(Date data) {
-        if (data != null) {
-            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-            return forma.format(data);
-        } else {
-            return "";
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 

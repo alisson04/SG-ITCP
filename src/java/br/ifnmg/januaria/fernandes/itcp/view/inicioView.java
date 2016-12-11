@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -34,6 +35,7 @@ import org.primefaces.model.chart.LineChartSeries;
 @ManagedBean(name = "inicioView")
 @ViewScoped
 public class inicioView extends MensagensGenericas implements Serializable {
+
     //VARIAVEIS
     private ScheduleModel eventModel;
     private ScheduleEvent event;
@@ -41,130 +43,174 @@ public class inicioView extends MensagensGenericas implements Serializable {
     private List<AtividadePlanejada> listaAtividadesFiltradas;
     private AtividadePlanejadaBean bean;
     private MetaBean metaBean;
-    
+
     //Incubadora VARS
     private Incubadora inc;
     private IncubadoraBean incBean;
     private boolean existeInc;
     private UploadArquivo arquivo;
-    
+
     private LineChartModel lineModel1;
 
     //CONSTRUTOR
     @PostConstruct
     public void init() {
-        eventModel = new DefaultScheduleModel();
-        event = new DefaultScheduleEvent();
-        bean = new AtividadePlanejadaBean();
-        listaAtividades = bean.listarBean();
-        metaBean = new MetaBean();
+        try {
+            eventModel = new DefaultScheduleModel();
+            event = new DefaultScheduleEvent();
+            bean = new AtividadePlanejadaBean();
+            listaAtividades = bean.listarBean();
+            metaBean = new MetaBean();
 
-        //Adiciona atividade ao calendário
-        for (int i = 0; i < listaAtividades.size(); i++) {
-            eventModel.addEvent(new DefaultScheduleEvent(
-                    listaAtividades.get(i).getNome(),
-                    listaAtividades.get(i).getDataInicio(),
-                    listaAtividades.get(i).getDataFim(),
-                    "corDialog"));
-        }
-        
-        createLineModels();
-        
-        //Incubadora CONTRUTOR
-        inc = new Incubadora();
-        incBean = new IncubadoraBean();
-        existeInc = true;
-        
-        if (incBean.contarLinhasBean() == 0) {
-            System.out.println("Não incubadora cadastrada");
-            existeInc = false;
+            //Adiciona atividade ao calendário
+            for (int i = 0; i < listaAtividades.size(); i++) {
+                eventModel.addEvent(new DefaultScheduleEvent(
+                        listaAtividades.get(i).getNome(),
+                        listaAtividades.get(i).getDataInicio(),
+                        listaAtividades.get(i).getDataFim(),
+                        "corDialog"));
+            }
+
+            createLineModels();
+
+            //Incubadora CONTRUTOR
+            inc = new Incubadora();
+            incBean = new IncubadoraBean();
+            existeInc = true;
+
+            if (incBean.contarLinhasBean() == 0) {
+                System.out.println("Não incubadora cadastrada");
+                existeInc = false;
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
-    
+
     //METODOS
-    public String geraMsgGenericaCampoObrigatorioView(){
-        return msgGenericaCampoObrigatorio();
+    public String geraMsgGenericaCampoObrigatorioView() {
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-    
-    public void salvarInc(){
-        incBean.salvarBean(inc);
-        msgGrowSaveGeneric();
-        existeInc = true;
+
+    public void salvarInc() {
+        try {
+            incBean.salvarBean(inc);
+            msgGrowSaveGeneric();
+            existeInc = true;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-    
+
     public LineChartModel getLineModel1() {
-        return lineModel1;
+        try {
+            return lineModel1;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-     
+
     private void createLineModels() {
-        lineModel1 = initLinearModel();
-        lineModel1.setTitle("Linear Chart");
-        lineModel1.setLegendPosition("e");
-        Axis yAxis = lineModel1.getAxis(AxisType.Y);
-        yAxis.setMin(0);
-        yAxis.setMax(10);
+        try {
+            lineModel1 = initLinearModel();
+            lineModel1.setTitle("Linear Chart");
+            lineModel1.setLegendPosition("e");
+            Axis yAxis = lineModel1.getAxis(AxisType.Y);
+            yAxis.setMin(0);
+            yAxis.setMax(10);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-     
+
     private LineChartModel initLinearModel() {
-        LineChartModel model = new LineChartModel();
- 
-        LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Series 1");
- 
-        series1.set(1, 2);
-        series1.set(2, 1);
-        series1.set(3, 3);
-        series1.set(4, 6);
-        series1.set(5, 8);
- 
-        LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Series 2");
- 
-        series2.set(1, 6);
-        series2.set(2, 3);
-        series2.set(3, 2);
-        series2.set(4, 7);
-        series2.set(5, 9);
- 
-        model.addSeries(series1);
-        model.addSeries(series2);
-         
-        return model;
+        try {
+            LineChartModel model = new LineChartModel();
+
+            LineChartSeries series1 = new LineChartSeries();
+            series1.setLabel("Series 1");
+
+            series1.set(1, 2);
+            series1.set(2, 1);
+            series1.set(3, 3);
+            series1.set(4, 6);
+            series1.set(5, 8);
+
+            LineChartSeries series2 = new LineChartSeries();
+            series2.setLabel("Series 2");
+
+            series2.set(1, 6);
+            series2.set(2, 3);
+            series2.set(3, 2);
+            series2.set(4, 7);
+            series2.set(5, 9);
+
+            model.addSeries(series1);
+            model.addSeries(series2);
+
+            return model;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //METODOS
     public String conveteData(Date data) {
-        if (data != null) {
-            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-            return forma.format(data);
-        } else {
-            return "";
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
-    
+
     public void mudaAtvParaNaoExecutada(AtividadePlanejada at) {//Muda Status da Atividade para "Não executada"
-        at.setStatus("Não iniciada");
-        bean.salvarBean(at);//Salva a Atividade
-        metaBean.atualizaStatusMeta(at.getMeta());//Atualiza o status da meta
-        msgGrowSaveGeneric();
+        try {
+            at.setStatus("Não iniciada");
+            bean.salvarBean(at);//Salva a Atividade
+            metaBean.atualizaStatusMeta(at.getMeta());//Atualiza o status da meta
+            msgGrowSaveGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void mudaAtvParaEmExecução(AtividadePlanejada at) {//Muda Status da Atividade para "Em execução"
-        at.setStatus("Iniciada");
-        bean.salvarBean(at);
-        metaBean.atualizaStatusMeta(at.getMeta());//Atualiza o status da meta
-        msgGrowSaveGeneric();
+        try {
+            at.setStatus("Iniciada");
+            bean.salvarBean(at);
+            metaBean.atualizaStatusMeta(at.getMeta());//Atualiza o status da meta
+            msgGrowSaveGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void mudaAtvParaExecutada(AtividadePlanejada at) {//Muda Status da Atividade para "Executada"
-        at.setStatus("Finalizada");
-        bean.salvarBean(at);
-        metaBean.atualizaStatusMeta(at.getMeta());//Atualiza o status da meta
-        msgGrowSaveGeneric();
+        try {
+            at.setStatus("Finalizada");
+            bean.salvarBean(at);
+            metaBean.atualizaStatusMeta(at.getMeta());//Atualiza o status da meta
+            msgGrowSaveGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void onEventSelect(SelectEvent selectEvent) {
-        event = (ScheduleEvent) selectEvent.getObject();
+        try {
+            event = (ScheduleEvent) selectEvent.getObject();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //SETS E GETS

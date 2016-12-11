@@ -7,26 +7,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:composite="http://java.sun.com/jsf/composite" >
 
-    <composite:interface> 
-        <composite:attribute name="nameLabel" id="nameLabel" /> 
-        <composite:attribute name="nameValue" /> 
-        <composite:attribute name="passwordLabel" /> 
-        <composite:attribute name="passwordValue" /> 
-        <composite:attribute name="loginButtonText" /> 
-        <composite:attribute name="loginButtonAction" method-signature="java.lang.String action()" /> 
-    </composite:interface>   
-
-    <composite:implementation> 
-        <h:form> 
-            <h:message for="textPanel" /> 
-            <h:panelGrid columns="2" id="textPanel"> #{cc.attrs.nameLabel} 
-                <h:inputText id="name" value="#{cc.attrs.nameValue}" /> #{cc.attrs.passwordLabel} 
-                <h:inputSecret id="password" value="#{cc.attrs.passwordValue}" /> 
-            </h:panelGrid> 
-            <h:commandButton action="#{cc.attrs.loginButtonAction}" value="#{cc.attrs.loginButtonText}"/> 
-        </h:form> 
-    </composite:implementation>
-
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
 
@@ -37,7 +17,7 @@
 
                 <h:form>
 
-
+                    
 
                 </h:form>
             </h:body>

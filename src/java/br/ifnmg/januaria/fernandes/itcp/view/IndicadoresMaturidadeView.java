@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.component.tabview.TabView;
@@ -56,137 +57,160 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     //Construtor
     public IndicadoresMaturidadeView() {
-        listaEptIndSalvar = new ArrayList();
-        eptBean = new EmpreendimentoBean();
-        bean = new EmpreendimentoIndicadorBean();
-        listaEmpreendimentos = eptBean.listarBean();
+        try {
+            listaEptIndSalvar = new ArrayList();
+            eptBean = new EmpreendimentoBean();
+            bean = new EmpreendimentoIndicadorBean();
+            listaEmpreendimentos = eptBean.listarBean();
 
-        //Indicador
-        gerenIndicadores = new GerenciadorIndicadores();
-        listaIndicadores = gerenIndicadores.listarIndicadores();
+            //Indicador
+            gerenIndicadores = new GerenciadorIndicadores();
+            listaIndicadores = gerenIndicadores.listarIndicadores();
 
-        //Gráfico
-        listaEptIndGrafico = new ArrayList();
-        categoriaSelecionada = "";//Necessário, não retirar
-        tabview = new TabView();
+            //Gráfico
+            listaEptIndGrafico = new ArrayList();
+            categoriaSelecionada = "";//Necessário, não retirar
+            tabview = new TabView();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //METODOS    
     public void criaGrafico() {//Configurações do gráfico - Acontece ao selecionar uma categoria
-        Calendar calendar = Calendar.getInstance();//Pega a data atual
-        calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
-        Date dataAtual = calendar.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
+        try {
+            Calendar calendar = Calendar.getInstance();//Pega a data atual
+            calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
+            Date dataAtual = calendar.getTime();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
 
-        lineModel1 = preencheGrafico();
-        lineModel1.setTitle("Evolução dos indicadores por categoria");//Titulo do gráfico
-        lineModel1.setLegendPosition("e");
-        lineModel1.setAnimate(true);
+            lineModel1 = preencheGrafico();
+            lineModel1.setTitle("Evolução dos indicadores por categoria");//Titulo do gráfico
+            lineModel1.setLegendPosition("e");
+            lineModel1.setAnimate(true);
 
-        lineModel1.getAxis(AxisType.Y).setLabel("Nota");//Texto do eixo Y do gráfico
-        DateAxis axis = new DateAxis("Data de modificação do indicador");//Texto do eixo X do gráfico
-        axis.setTickAngle(-50);
-        System.out.println("DATA ATUAL: " + dateFormat.format(dataAtual));
-        axis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
-        axis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
+            lineModel1.getAxis(AxisType.Y).setLabel("Nota");//Texto do eixo Y do gráfico
+            DateAxis axis = new DateAxis("Data de modificação do indicador");//Texto do eixo X do gráfico
+            axis.setTickAngle(-50);
+            System.out.println("DATA ATUAL: " + dateFormat.format(dataAtual));
+            axis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
+            axis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
 
-        lineModel1.getAxes().put(AxisType.X, axis);
+            lineModel1.getAxes().put(AxisType.X, axis);
 
-        configuraCategoria();//SETA a Tab que deve estar ativa de acordo com categoria selecionada
+            configuraCategoria();//SETA a Tab que deve estar ativa de acordo com categoria selecionada
 
-        if (listaEptIndGrafico.isEmpty()) {
-            msgGrowlErroCustomizavel("", "Não há indicadores preenchidos para essa categoria.");
-        }else{
-            RequestContext.getCurrentInstance().update("frmMsgGenerico");//Atualiza para retirar a msg anterior
+            if (listaEptIndGrafico.isEmpty()) {
+                msgGrowlErroCustomizavel("", "Não há indicadores preenchidos para essa categoria.");
+            } else {
+                RequestContext.getCurrentInstance().update("frmMsgGenerico");//Atualiza para retirar a msg anterior
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     private LineChartModel preencheGrafico() {//Preenche as informações do gráfico - É chamado pelo método "Cria Gráfico"
-        listaEptIndGrafico = bean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
-        return bean.preencheGraficoBean(categoriaSelecionada, listaEptIndGrafico);
+        try {
+            listaEptIndGrafico = bean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
+            return bean.preencheGraficoBean(categoriaSelecionada, listaEptIndGrafico);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     private void configuraCategoria() {//SETA a Tab que deve estar ativa de acordo com categoria selecionada
-        if (categoriaSelecionada.equals(listaIndicadores.get(0).getCategoria())) {
-            tabview.setActiveIndex(0);//Ativa a TAB de sua categoria
-            System.out.println("0 Tab setada");
-        } else if (categoriaSelecionada.equals(listaIndicadores.get(6).getCategoria())) {
-            tabview.setActiveIndex(1);//Ativa a TAB de sua categoria
-            System.out.println("1 Tab setada");
-        } else if (categoriaSelecionada.equals(listaIndicadores.get(10).getCategoria())) {
-            tabview.setActiveIndex(2);//Ativa a TAB de sua categoria
-            System.out.println("2 Tab setada");
-        } else if (categoriaSelecionada.equals(listaIndicadores.get(16).getCategoria())) {
-            tabview.setActiveIndex(3);//Ativa a TAB de sua categoria
-            System.out.println("3 Tab setada");
-        } else if (categoriaSelecionada.equals(listaIndicadores.get(24).getCategoria())) {
-            tabview.setActiveIndex(4);//Ativa a TAB de sua categoria
-            System.out.println("4 Tab setada");
-        } else if (categoriaSelecionada.equals(listaIndicadores.get(31).getCategoria())) {
-            tabview.setActiveIndex(5);//Ativa a TAB de sua categoria
-            System.out.println("5 Tab setada");
-        } else if (categoriaSelecionada.equals(listaIndicadores.get(36).getCategoria())) {
-            tabview.setActiveIndex(6);//Ativa a TAB de sua categoria
-            System.out.println("6 Tab setada");
-        } else if (categoriaSelecionada.equals(listaIndicadores.get(42).getCategoria())) {
-            tabview.setActiveIndex(7);//Ativa a TAB de sua categoria
-            System.out.println("7 Tab setada");
-        } else if (categoriaSelecionada.equals(listaIndicadores.get(46).getCategoria())) {
-            tabview.setActiveIndex(8);//Ativa a TAB de sua categoria
-            System.out.println("8 Tab setada");
-        } else {
-            msgPanelErroInesperadoGeneric();
-            System.out.println("Estranho, nenhuma tab setada");
+        try {
+            if (categoriaSelecionada.equals(listaIndicadores.get(0).getCategoria())) {
+                tabview.setActiveIndex(0);//Ativa a TAB de sua categoria
+                System.out.println("0 Tab setada");
+            } else if (categoriaSelecionada.equals(listaIndicadores.get(6).getCategoria())) {
+                tabview.setActiveIndex(1);//Ativa a TAB de sua categoria
+                System.out.println("1 Tab setada");
+            } else if (categoriaSelecionada.equals(listaIndicadores.get(10).getCategoria())) {
+                tabview.setActiveIndex(2);//Ativa a TAB de sua categoria
+                System.out.println("2 Tab setada");
+            } else if (categoriaSelecionada.equals(listaIndicadores.get(16).getCategoria())) {
+                tabview.setActiveIndex(3);//Ativa a TAB de sua categoria
+                System.out.println("3 Tab setada");
+            } else if (categoriaSelecionada.equals(listaIndicadores.get(24).getCategoria())) {
+                tabview.setActiveIndex(4);//Ativa a TAB de sua categoria
+                System.out.println("4 Tab setada");
+            } else if (categoriaSelecionada.equals(listaIndicadores.get(31).getCategoria())) {
+                tabview.setActiveIndex(5);//Ativa a TAB de sua categoria
+                System.out.println("5 Tab setada");
+            } else if (categoriaSelecionada.equals(listaIndicadores.get(36).getCategoria())) {
+                tabview.setActiveIndex(6);//Ativa a TAB de sua categoria
+                System.out.println("6 Tab setada");
+            } else if (categoriaSelecionada.equals(listaIndicadores.get(42).getCategoria())) {
+                tabview.setActiveIndex(7);//Ativa a TAB de sua categoria
+                System.out.println("7 Tab setada");
+            } else if (categoriaSelecionada.equals(listaIndicadores.get(46).getCategoria())) {
+                tabview.setActiveIndex(8);//Ativa a TAB de sua categoria
+                System.out.println("8 Tab setada");
+            } else {
+                msgPanelErroInesperadoGeneric();
+                System.out.println("Estranho, nenhuma tab setada");
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     public void liberaPainelIndicadores() {//Acontece ao selecionar um empreendimento na lista
-        Date dataAtual = new Date();
-        listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
-        List<EmpreendimentoIndicador> listaEptIndAux = new ArrayList();//Lista auxiliar
+        try {
+            Date dataAtual = new Date();
+            listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
+            List<EmpreendimentoIndicador> listaEptIndAux = new ArrayList();//Lista auxiliar
 
-        System.out.println("===============================");
-        System.out.println("Quantidade de inds Cadastrados para esse EES: " + listaEptIndSalvar.size());
-        
-        for (int i = 0; i < listaIndicadores.size(); i++) {//Roda o total de indicaroes possiveis
-            EmpreendimentoIndicador indAux = new EmpreendimentoIndicador();
-            EmpreendimentoIndicadorPK EptIndPK = new EmpreendimentoIndicadorPK();
-            EptIndPK.setDataNota(dataAtual);//SETA a data
-            EptIndPK.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
-            EptIndPK.setIdIndicador(i + 1);//SETA o indicador
+            System.out.println("===============================");
+            System.out.println("Quantidade de inds Cadastrados para esse EES: " + listaEptIndSalvar.size());
 
-            indAux.setEmpreendimentoIndicadorPK(EptIndPK);//SETA as chaves
-            listaEptIndAux.add(indAux);//Adiciona o obj a lista p ser usado na tela e talvez salvo
-        }
-        System.out.println("Lista aux: " + listaEptIndAux.size());
-        
-        for (int i = 0; i < listaIndicadores.size(); i++) {//Roda o total de indicaroes possiveis
-            for (int x = 0; x < listaEptIndSalvar.size(); x++) {//Roda os inds Pegos do BD
-                if(listaEptIndSalvar.get(x).getEmpreendimentoIndicadorPK().getIdIndicador() == i+1){
-                    listaEptIndAux.set(i, listaEptIndSalvar.get(x));
+            for (int i = 0; i < listaIndicadores.size(); i++) {//Roda o total de indicaroes possiveis
+                EmpreendimentoIndicador indAux = new EmpreendimentoIndicador();
+                EmpreendimentoIndicadorPK EptIndPK = new EmpreendimentoIndicadorPK();
+                EptIndPK.setDataNota(dataAtual);//SETA a data
+                EptIndPK.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
+                EptIndPK.setIdIndicador(i + 1);//SETA o indicador
+
+                indAux.setEmpreendimentoIndicadorPK(EptIndPK);//SETA as chaves
+                listaEptIndAux.add(indAux);//Adiciona o obj a lista p ser usado na tela e talvez salvo
+            }
+            System.out.println("Lista aux: " + listaEptIndAux.size());
+
+            for (int i = 0; i < listaIndicadores.size(); i++) {//Roda o total de indicaroes possiveis
+                for (int x = 0; x < listaEptIndSalvar.size(); x++) {//Roda os inds Pegos do BD
+                    if (listaEptIndSalvar.get(x).getEmpreendimentoIndicadorPK().getIdIndicador() == i + 1) {
+                        listaEptIndAux.set(i, listaEptIndSalvar.get(x));
+                    }
                 }
             }
+            System.out.println("Lista Salvar oringin: " + listaEptIndSalvar.size());
+            System.out.println("Lista aux: " + listaEptIndAux.size());
+
+            listaEptIndSalvar = listaEptIndAux;
+            categoriaSelecionada = "";//Limpa a categoria
+            listaEptIndGrafico = new ArrayList();//Limpa o gráfico
+            tabview.setActiveIndex(0);//Volta para a primeira TAB do formulario da tela
+            msgGrowlInfoCustomizavel("", "Agora selecione uma categoria de indicadores.");
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
-        System.out.println("Lista Salvar oringin: " + listaEptIndSalvar.size());
-        System.out.println("Lista aux: " + listaEptIndAux.size());
-        
-        
-        listaEptIndSalvar=listaEptIndAux;
-        categoriaSelecionada = "";//Limpa a categoria
-        listaEptIndGrafico = new ArrayList();//Limpa o gráfico
-        tabview.setActiveIndex(0);//Volta para a primeira TAB do formulario da tela
-        msgGrowlInfoCustomizavel("", "Agora selecione uma categoria de indicadores.");
     }
 
     public void adicionaNota(int posicaoIndi) {
-        EmpreendimentoIndicador eptIndAux;//Cria este para guardar a nota
-        EmpreendimentoIndicadorPK EptIndPK;//Criar esta para receber a data nova
-        Date x = new Date();//Cria a nova data
-        EptIndPK = listaEptIndSalvar.get(posicaoIndi).getEmpreendimentoIndicadorPK();//SETA a chave
-        eptIndAux = listaEptIndSalvar.get(posicaoIndi);
-        EptIndPK.setDataNota(x);//SETA a data atual
-        eptIndAux.setEmpreendimentoIndicadorPK(EptIndPK);
-        listaEptIndSalvar.set(posicaoIndi, eptIndAux);//Coloca na lista com informações atualizadas
+        try {
+            EmpreendimentoIndicador eptIndAux;//Cria este para guardar a nota
+            EmpreendimentoIndicadorPK EptIndPK;//Criar esta para receber a data nova
+            Date x = new Date();//Cria a nova data
+            EptIndPK = listaEptIndSalvar.get(posicaoIndi).getEmpreendimentoIndicadorPK();//SETA a chave
+            eptIndAux = listaEptIndSalvar.get(posicaoIndi);
+            EptIndPK.setDataNota(x);//SETA a data atual
+            eptIndAux.setEmpreendimentoIndicadorPK(EptIndPK);
+            listaEptIndSalvar.set(posicaoIndi, eptIndAux);//Coloca na lista com informações atualizadas
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void salvarView() {
@@ -199,17 +223,20 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
             }
             msgGrowSaveGeneric();
         } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            msgPanelErroInesperadoGeneric();
+            throw new FacesException(ex);
         }
     }
-    
+
     public String conveteData(Date data) {
-        if (data != null) {
-            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-            return forma.format(data);
-        } else {
-            return "";
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 

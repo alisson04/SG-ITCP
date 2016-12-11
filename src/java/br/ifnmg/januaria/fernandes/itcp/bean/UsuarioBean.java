@@ -19,6 +19,10 @@ import org.apache.commons.mail.EmailException;
 public class UsuarioBean implements Serializable{
     private UsuarioDAO dao;
     
+    public void teste(){
+        dao.teste();
+    }
+    
     public UsuarioBean(){
         dao = new UsuarioDAO();
     }

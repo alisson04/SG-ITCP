@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
@@ -33,40 +34,59 @@ public class ListarMembrosEptsView extends MensagensGenericas implements Seriali
     private boolean existeEptBd;
 
     public ListarMembrosEptsView() {
-        //EES
-        empreendimentoBean = new EmpreendimentoBean();
-        listaEmpreendimentos = empreendimentoBean.listarBean();
-        
-        //Membros
-        bean = new MembroEmpreendimentoBean();
-        objSalvar = new MembroEmpreendimento();
-        listaMembrosEmpreendimentos = bean.listarBean();
+        try {
+            //EES
+            empreendimentoBean = new EmpreendimentoBean();
+            listaEmpreendimentos = empreendimentoBean.listarBean();
 
-        //Verifica se existe Empreendimento no banco de dados
-        existeEptBd = true;
-        if (empreendimentoBean.contarLinhasBean() == 0) {
-            existeEptBd = false;
+            //Membros
+            bean = new MembroEmpreendimentoBean();
+            objSalvar = new MembroEmpreendimento();
+            listaMembrosEmpreendimentos = bean.listarBean();
+
+            //Verifica se existe Empreendimento no banco de dados
+            existeEptBd = true;
+            if (empreendimentoBean.contarLinhasBean() == 0) {
+                existeEptBd = false;
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
-    
+
     //METODOS
-    public String geraMsgGenericaCampoObrigatorioView(){
-        return msgGenericaCampoObrigatorio();
+    public String geraMsgGenericaCampoObrigatorioView() {
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void transfereObj() {//Para botão de editar
-        objSalvar = membroEmpreendimentoSelecionado;
+        try {
+            objSalvar = membroEmpreendimentoSelecionado;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void reiniciaObj() {//Para botão de editar
-        System.out.println("objSalvar Reiniciado ====================== ");
-        objSalvar = new MembroEmpreendimento();
+        try {
+            objSalvar = new MembroEmpreendimento();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void excluirMembroView() {
-        bean.excluirBean(membroEmpreendimentoSelecionado);
-        membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
-        msgGrowDeleteGeneric();
+        try {
+            bean.excluirBean(membroEmpreendimentoSelecionado);
+            membroEmpreendimentoSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            msgGrowDeleteGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void salvarView() {
@@ -77,17 +97,20 @@ public class ListarMembrosEptsView extends MensagensGenericas implements Seriali
             context.execute("PF('wVarDlgEditar').hide()");
             context.execute("PF('dlgEdicaoPronta').show()");
         } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            msgPanelErroInesperadoGeneric();
+            throw new FacesException(ex);
         }
     }
 
     public String conveteData(Date data) {
-        if (data != null) {
-            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-            return forma.format(data);
-        } else {
-            return "";
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 

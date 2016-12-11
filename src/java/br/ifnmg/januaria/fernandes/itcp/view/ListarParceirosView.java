@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -28,21 +29,36 @@ public class ListarParceirosView extends MensagensGenericas implements Serializa
     private ParceiroBean bean = new ParceiroBean();
 
     public ListarParceirosView() {
-        listaParceiros = bean.listarBean();
+        try {
+            listaParceiros = bean.listarBean();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //METODOS
     public String geraMsgGenericaCampoObrigatorioView() {
-        return msgGenericaCampoObrigatorio();
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void transfereObj() {//Para botão de editar
-        objSalvar = parceiroSelecionado;
+        try {
+            objSalvar = parceiroSelecionado;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void reiniciaObj() {//Para botão de cadastrar
-        System.out.println("objSalvar Reiniciado ====================== ");
-        objSalvar = new Parceiro();
+        try {
+            objSalvar = new Parceiro();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void salvarView() {
@@ -51,15 +67,19 @@ public class ListarParceirosView extends MensagensGenericas implements Serializa
             objSalvar = new Parceiro();
             msgGrowSaveGeneric();
         } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
+            throw new FacesException(ex);
         }
     }
 
     public void excluirParceiroView() {
-        bean.excluirBean(parceiroSelecionado);
-        parceiroSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
-        listaParceiros = bean.listarBean();
-        msgGrowDeleteGeneric();
+        try {
+            bean.excluirBean(parceiroSelecionado);
+            parceiroSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
+            listaParceiros = bean.listarBean();
+            msgGrowDeleteGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //SETS E GETS

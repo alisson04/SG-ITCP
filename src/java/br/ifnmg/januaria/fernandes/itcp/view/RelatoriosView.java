@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
@@ -38,6 +39,7 @@ import org.primefaces.model.chart.PieChartModel;
 @ManagedBean(name = "RelatoriosView")
 @ViewScoped
 public class RelatoriosView extends MensagensGenericas implements Serializable {
+
     //Empreendimento Vars
     private Empreendimento empreendimentoSelecionado;
     private List<Empreendimento> listaEmpreendimentos;
@@ -76,245 +78,297 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
     private PieChartModel graficoMetasPlano;
 
     private List<Meta> listaMetas;
-    
+
     //Maturidade vars
     private PieChartModel graficoMaturidade;
 
     //Construtor
     public RelatoriosView() {
-        InicializaVariaveis();
+        try {
+            InicializaVariaveis();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-    
-    public void InicializaVariaveis(){//Foi separado para ser chamado na tela também
-        eptBean = new EmpreendimentoBean();
-        EesIndBean = new EmpreendimentoIndicadorBean();
-        listaEmpreendimentos = eptBean.listarBean();
 
-        //Gráfico
-        listaEptIndGrafico = new ArrayList();
-        categoriaSelecionada = "";//Necessário, não retirar
+    public void InicializaVariaveis() {//Foi separado para ser chamado na tela também
+        try {
+            eptBean = new EmpreendimentoBean();
+            EesIndBean = new EmpreendimentoIndicadorBean();
+            listaEmpreendimentos = eptBean.listarBean();
 
-        //Indicador
-        gerenIndicadores = new GerenciadorIndicadores();
-        listaIndicadores = gerenIndicadores.listarIndicadores();
+            //Gráfico
+            listaEptIndGrafico = new ArrayList();
+            categoriaSelecionada = "";//Necessário, não retirar
 
-        //Atividade Vars
-        atividadeBean = new AtividadePlanejadaBean();
-        listaAtividades = atividadeBean.listarBean();
+            //Indicador
+            gerenIndicadores = new GerenciadorIndicadores();
+            listaIndicadores = gerenIndicadores.listarIndicadores();
 
-        //Plano de ação
-        planoBean = new PlanoAcaoBean();
-        listaPlanos = planoBean.listarBean();
+            //Atividade Vars
+            atividadeBean = new AtividadePlanejadaBean();
+            listaAtividades = atividadeBean.listarBean();
 
-        //User
-        userlBean = new UsuarioBean();
-        listaUser = userlBean.listarBean();
+            //Plano de ação
+            planoBean = new PlanoAcaoBean();
+            listaPlanos = planoBean.listarBean();
 
-        //Meta
-        listaMetas = new ArrayList();
+            //User
+            userlBean = new UsuarioBean();
+            listaUser = userlBean.listarBean();
+
+            //Meta
+            listaMetas = new ArrayList();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //Metodos gráfico /barra
     public void criaGraficoBarras() {
-        Calendar calendar = Calendar.getInstance();//Pega a data atual
-        calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
+        try {
+            Calendar calendar = Calendar.getInstance();//Pega a data atual
+            calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
 
-        barModel = preencheGraficoBarras();
-        barModel.setTitle("Evolução dos indicadores da categoria " + categoriaSelecionada);
-        barModel.setLegendPosition("ne");
+            barModel = preencheGraficoBarras();
+            barModel.setTitle("Evolução dos indicadores da categoria " + categoriaSelecionada);
+            barModel.setLegendPosition("ne");
 
-        Axis xAxis = barModel.getAxis(AxisType.X);
-        xAxis.setLabel("Datas");
-        //xAxis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
-        //xAxis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
+            Axis xAxis = barModel.getAxis(AxisType.X);
+            xAxis.setLabel("Datas");
+            //xAxis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
+            //xAxis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
 
-        Axis yAxis = barModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Notas");
-        yAxis.setMin(0);
+            Axis yAxis = barModel.getAxis(AxisType.Y);
+            yAxis.setLabel("Notas");
+            yAxis.setMin(0);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
-    private BarChartModel preencheGraficoBarras() {//Preenche as informações do gráfico - 
-        listaEptIndGrafico = EesIndBean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
-        return EesIndBean.addSeriesBarraBean(categoriaSelecionada, listaEptIndGrafico);
+    private BarChartModel preencheGraficoBarras() {//Preenche as informações do gráfico -
+        try {
+            listaEptIndGrafico = EesIndBean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
+            return EesIndBean.addSeriesBarraBean(categoriaSelecionada, listaEptIndGrafico);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //METODOS de filtragem de atividadesAtividades
     public void filtraAtividadesPorUser() {
-        listaAtividades = atividadeBean.listarBean();
-        List<AtividadePlanejada> listaAux = new ArrayList();
+        try {
+            listaAtividades = atividadeBean.listarBean();
+            List<AtividadePlanejada> listaAux = new ArrayList();
 
-        if (userSelecionado != null) {
-            for (int i = 0; i < listaAtividades.size(); i++) {//Roda todas as atividades
-                boolean userIgual = false;
-                for (int x = 0; x < listaAtividades.get(i).getUsuarioList().size(); x++) {//Roda users de cada atividade
-                    if (listaAtividades.get(i).getUsuarioList().get(x).equals(userSelecionado)) {
-                        userIgual = true;
+            if (userSelecionado != null) {
+                for (int i = 0; i < listaAtividades.size(); i++) {//Roda todas as atividades
+                    boolean userIgual = false;
+                    for (int x = 0; x < listaAtividades.get(i).getUsuarioList().size(); x++) {//Roda users de cada atividade
+                        if (listaAtividades.get(i).getUsuarioList().get(x).equals(userSelecionado)) {
+                            userIgual = true;
+                        }
+                    }
+                    if (userIgual == true) {
+                        listaAux.add(listaAtividades.get(i));
                     }
                 }
-                if (userIgual == true) {
-                    listaAux.add(listaAtividades.get(i));
-                }
+                listaAtividades = listaAux;
             }
-            listaAtividades = listaAux;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     public void filtraAtividadesPorEes() {
-        //Filtra os planos
-        List<PlanoAcao> listaPlanoAux = new ArrayList();
-        listaPlanos = planoBean.listarBean();
-        for (int i = 0; i < listaPlanos.size(); i++) {
-            if (listaPlanos.get(i).getEmpreendimento().equals(empreendimentoSelecionado)) {
-                listaPlanoAux.add(listaPlanos.get(i));
-            }
-        }
-        listaPlanos = listaPlanoAux;
-
-        //Filtra as atividades
-        List<AtividadePlanejada> listaAux = new ArrayList();
-        if (empreendimentoSelecionado != null) {
-            listaAtividades = atividadeBean.listarBean();
-            for (int i = 0; i < listaAtividades.size(); i++) {
-                if (listaAtividades.get(i).getMeta().getPlanoAcao().getEmpreendimento().equals(empreendimentoSelecionado)) {
-                    listaAux.add(listaAtividades.get(i));
+        try {
+            //Filtra os planos
+            List<PlanoAcao> listaPlanoAux = new ArrayList();
+            listaPlanos = planoBean.listarBean();
+            for (int i = 0; i < listaPlanos.size(); i++) {
+                if (listaPlanos.get(i).getEmpreendimento().equals(empreendimentoSelecionado)) {
+                    listaPlanoAux.add(listaPlanos.get(i));
                 }
             }
-            listaAtividades = listaAux;
-        } else {
-            listaAtividades = atividadeBean.listarBean();
+            listaPlanos = listaPlanoAux;
+
+            //Filtra as atividades
+            List<AtividadePlanejada> listaAux = new ArrayList();
+            if (empreendimentoSelecionado != null) {
+                listaAtividades = atividadeBean.listarBean();
+                for (int i = 0; i < listaAtividades.size(); i++) {
+                    if (listaAtividades.get(i).getMeta().getPlanoAcao().getEmpreendimento().equals(empreendimentoSelecionado)) {
+                        listaAux.add(listaAtividades.get(i));
+                    }
+                }
+                listaAtividades = listaAux;
+            } else {
+                listaAtividades = atividadeBean.listarBean();
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     public void filtraAtividadesPorPlano() {
-        List<AtividadePlanejada> listaAux = new ArrayList();
+        try {
+            List<AtividadePlanejada> listaAux = new ArrayList();
 
-        if (planoSelecionado != null) {
-            for (int i = 0; i < listaAtividades.size(); i++) {
-                if (listaAtividades.get(i).getMeta().getPlanoAcao().equals(planoSelecionado)) {
-                    listaAux.add(listaAtividades.get(i));
+            if (planoSelecionado != null) {
+                for (int i = 0; i < listaAtividades.size(); i++) {
+                    if (listaAtividades.get(i).getMeta().getPlanoAcao().equals(planoSelecionado)) {
+                        listaAux.add(listaAtividades.get(i));
+                    }
                 }
+                listaAtividades = listaAux;
+            } else {
+                listaAtividades = atividadeBean.listarBean();
+                filtraAtividadesPorEes();
             }
-            listaAtividades = listaAux;
-        } else {
-            listaAtividades = atividadeBean.listarBean();
-            filtraAtividadesPorEes();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     //METODOS Indicadores
     public void criaGrafico() {//Configurações do gráfico - Acontece ao selecionar uma categoria da aba de indicadores
-        criaGraficoBarras();
-        Calendar calendar = Calendar.getInstance();//Pega a data atual
-        calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
-        Date dataAtual = calendar.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
+        try {
+            criaGraficoBarras();
+            Calendar calendar = Calendar.getInstance();//Pega a data atual
+            calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
+            Date dataAtual = calendar.getTime();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
 
-        graficoAtividades = preencheGraficoLinhas();
-        graficoAtividades.setTitle("Evolução dos indicadores da categoria " + categoriaSelecionada);//Titulo do gráfico
-        graficoAtividades.setLegendPosition("e");
-        graficoAtividades.setAnimate(true);
-        graficoAtividades.getAxis(AxisType.Y).setLabel("Nota");//Texto do eixo Y do gráfico
-        DateAxis axis = new DateAxis("Data de modificação do indicador");//Texto do eixo X do gráfico
-        axis.setTickAngle(-50);
-        System.out.println("DATA ATUAL: " + dateFormat.format(dataAtual));
-        axis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
-        axis.setTickFormat("%#d, %m, 20%y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
+            graficoAtividades = preencheGraficoLinhas();
+            graficoAtividades.setTitle("Evolução dos indicadores da categoria " + categoriaSelecionada);//Titulo do gráfico
+            graficoAtividades.setLegendPosition("e");
+            graficoAtividades.setAnimate(true);
+            graficoAtividades.getAxis(AxisType.Y).setLabel("Nota");//Texto do eixo Y do gráfico
+            DateAxis axis = new DateAxis("Data de modificação do indicador");//Texto do eixo X do gráfico
+            axis.setTickAngle(-50);
+            System.out.println("DATA ATUAL: " + dateFormat.format(dataAtual));
+            axis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
+            axis.setTickFormat("%#d, %m, 20%y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
 
-        graficoAtividades.getAxes().put(AxisType.X, axis);
+            graficoAtividades.getAxes().put(AxisType.X, axis);
 
-        if (listaEptIndGrafico.isEmpty()) {
-            msgGrowlErroCustomizavel("", "Não há indicadores preenchidos para essa categoria.");
-        } else {
-            RequestContext.getCurrentInstance().update("frmMsgGenerico");//Atualiza para retirar a msg anterior
+            if (listaEptIndGrafico.isEmpty()) {
+                msgGrowlErroCustomizavel("", "Não há indicadores preenchidos para essa categoria.");
+            } else {
+                RequestContext.getCurrentInstance().update("frmMsgGenerico");//Atualiza para retirar a msg anterior
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     private LineChartModel preencheGraficoLinhas() {//Preenche as informações do gráfico - É chamado pelo método "Cria Gráfico"
-        listaEptIndGrafico = EesIndBean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
-        return EesIndBean.preencheGraficoBean(categoriaSelecionada, listaEptIndGrafico);
+        try {
+            listaEptIndGrafico = EesIndBean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
+            return EesIndBean.preencheGraficoBean(categoriaSelecionada, listaEptIndGrafico);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void limpaPainelIndicadores() {//Acontece ao selecionar um empreendimento na lista
-        categoriaSelecionada = "";//Limpa a categoria
-        if (empreendimentoSelecionado != null) {
-            msgGrowlInfoCustomizavel("", "Agora selecione uma categoria de indicadores.");
-        } else {
-            msgGrowlInfoCustomizavel("", "Selecione um empreendimento.");
+        try {
+            categoriaSelecionada = "";//Limpa a categoria
+            if (empreendimentoSelecionado != null) {
+                msgGrowlInfoCustomizavel("", "Agora selecione uma categoria de indicadores.");
+            } else {
+                msgGrowlInfoCustomizavel("", "Selecione um empreendimento.");
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
     //METODOS PIECHART
-    public void selecionaEes(){
-        filtraAtividadesPorEes();
-        graficoAtividadesPlano = null; //Limpa o gráfico
-        graficoAtividadesPlano = null; //Limpa o gráfico
+    public void selecionaEes() {
+        try {
+            filtraAtividadesPorEes();
+            graficoAtividadesPlano = null; //Limpa o gráfico
+            graficoAtividadesPlano = null; //Limpa o gráfico
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
-    public void criaGraficoPieChatAtiviMetas() {
-        filtraAtividadesPorPlano();
-        listaMetas = planoSelecionado.getMetaList();
 
-        if (!listaMetas.isEmpty()) {//Verifica se a metas para o plano
-            graficoMetasPlano = new PieChartModel();
-            graficoMetasPlano.set("Não iniciadas", 
+    public void criaGraficoPieChatAtiviMetas() {
+        try {
+            filtraAtividadesPorPlano();
+            listaMetas = planoSelecionado.getMetaList();
+
+            if (!listaMetas.isEmpty()) {//Verifica se a metas para o plano
+                graficoMetasPlano = new PieChartModel();
+                graficoMetasPlano.set("Não iniciadas",
                         (atividadeBean.filtraMetasPorStatus("Não iniciada", listaMetas)).size());
-            graficoMetasPlano.set("Iniciadas", 
+                graficoMetasPlano.set("Iniciadas",
                         (atividadeBean.filtraMetasPorStatus("Iniciada", listaMetas)).size());
-            graficoMetasPlano.set("Finalizadas", 
+                graficoMetasPlano.set("Finalizadas",
                         (atividadeBean.filtraMetasPorStatus("Finalizada", listaMetas)).size());
 
-            graficoMetasPlano.setTitle("Situação atual das metas  do plano de ação");
-            graficoMetasPlano.setLegendPosition("e");
-            graficoMetasPlano.setFill(false);
-            graficoMetasPlano.setShowDataLabels(true);
-            graficoMetasPlano.setDiameter(150);
-            if (!listaAtividades.isEmpty()) {//Verifica se a atividades para o plano
-                graficoAtividadesPlano = new PieChartModel();
-                graficoAtividadesPlano.set("Não iniciadas",
-                        (atividadeBean.filtraAtividadesPorStatus("Não iniciada", listaAtividades)).size());
-                graficoAtividadesPlano.set("Iniciadas",
-                        (atividadeBean.filtraAtividadesPorStatus("Iniciada", listaAtividades)).size());
-                graficoAtividadesPlano.set("Finalizadas",
-                        (atividadeBean.filtraAtividadesPorStatus("Finalizada", listaAtividades)).size());
+                graficoMetasPlano.setTitle("Situação atual das metas  do plano de ação");
+                graficoMetasPlano.setLegendPosition("e");
+                graficoMetasPlano.setFill(false);
+                graficoMetasPlano.setShowDataLabels(true);
+                graficoMetasPlano.setDiameter(150);
+                if (!listaAtividades.isEmpty()) {//Verifica se a atividades para o plano
+                    graficoAtividadesPlano = new PieChartModel();
+                    graficoAtividadesPlano.set("Não iniciadas",
+                            (atividadeBean.filtraAtividadesPorStatus("Não iniciada", listaAtividades)).size());
+                    graficoAtividadesPlano.set("Iniciadas",
+                            (atividadeBean.filtraAtividadesPorStatus("Iniciada", listaAtividades)).size());
+                    graficoAtividadesPlano.set("Finalizadas",
+                            (atividadeBean.filtraAtividadesPorStatus("Finalizada", listaAtividades)).size());
 
-                graficoAtividadesPlano.setTitle("Situação atual das atividades  do plano de ação");
-                graficoAtividadesPlano.setLegendPosition("e");
-                graficoAtividadesPlano.setFill(false);
-                graficoAtividadesPlano.setShowDataLabels(true);
-                graficoAtividadesPlano.setDiameter(150);
+                    graficoAtividadesPlano.setTitle("Situação atual das atividades  do plano de ação");
+                    graficoAtividadesPlano.setLegendPosition("e");
+                    graficoAtividadesPlano.setFill(false);
+                    graficoAtividadesPlano.setShowDataLabels(true);
+                    graficoAtividadesPlano.setDiameter(150);
 
+                } else {
+                    msgGrowlInfoCustomizavel("", "Não há atividades para esse Plano de ação!");
+                    graficoAtividadesPlano = null; //Recebe null, pois não a atividades para esse plano
+                }
             } else {
-                msgGrowlInfoCustomizavel("", "Não há atividades para esse Plano de ação!");
+                msgGrowlInfoCustomizavel("", "Não há metas cadastradas para esse Plano de ação!");
+                graficoMetasPlano = null; //Recebe null, pois não a metas para esse plano
                 graficoAtividadesPlano = null; //Recebe null, pois não a atividades para esse plano
             }
-        } else {
-            msgGrowlInfoCustomizavel("", "Não há metas cadastradas para esse Plano de ação!");
-            graficoMetasPlano = null; //Recebe null, pois não a metas para esse plano
-            graficoAtividadesPlano = null; //Recebe null, pois não a atividades para esse plano
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
-    
+
     //Metodos maturidade
     public void criaGraficoPieChatMaturidade() {
-        filtraAtividadesPorPlano();
-        listaMetas = planoSelecionado.getMetaList();
+        try {
+            filtraAtividadesPorPlano();
+            listaMetas = planoSelecionado.getMetaList();
 
-        if (!listaMetas.isEmpty()) {//Verifica se a metas para o plano
-            graficoMetasPlano = new PieChartModel();
-            graficoMetasPlano.set("Não iniciadas", 10);
-            graficoMetasPlano.set("Iniciadas", 10);
-            graficoMetasPlano.set("Finalizadas", 10);
+            if (!listaMetas.isEmpty()) {//Verifica se a metas para o plano
+                graficoMetasPlano = new PieChartModel();
+                graficoMetasPlano.set("Não iniciadas", 10);
+                graficoMetasPlano.set("Iniciadas", 10);
+                graficoMetasPlano.set("Finalizadas", 10);
 
-            graficoMetasPlano.setTitle("Situação atual das metas  do plano de ação");
-            graficoMetasPlano.setLegendPosition("e");
-            graficoMetasPlano.setFill(false);
-            graficoMetasPlano.setShowDataLabels(true);
-            graficoMetasPlano.setDiameter(150);
-        } else {
-            msgGrowlInfoCustomizavel("", "Não há metas cadastradas para esse Plano de ação!");
-            graficoMetasPlano = null; //Recebe null, pois não a metas para esse plano
-            graficoAtividadesPlano = null; //Recebe null, pois não a atividades para esse plano
+                graficoMetasPlano.setTitle("Situação atual das metas  do plano de ação");
+                graficoMetasPlano.setLegendPosition("e");
+                graficoMetasPlano.setFill(false);
+                graficoMetasPlano.setShowDataLabels(true);
+                graficoMetasPlano.setDiameter(150);
+            } else {
+                msgGrowlInfoCustomizavel("", "Não há metas cadastradas para esse Plano de ação!");
+                graficoMetasPlano = null; //Recebe null, pois não a metas para esse plano
+                graficoAtividadesPlano = null; //Recebe null, pois não a atividades para esse plano
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
-
     }
 
     //SETS E GETS

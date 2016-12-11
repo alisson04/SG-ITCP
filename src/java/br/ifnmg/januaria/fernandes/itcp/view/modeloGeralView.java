@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.FacesException;
+import javax.faces.application.ViewExpiredException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -38,16 +40,28 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     //CONSTRUTOR
     @PostConstruct
     public void init() {
-        //Incubadora Constru
-        incBean = new IncubadoraBean();
+        try {
+            //Incubadora Constru
+            incBean = new IncubadoraBean();
 
-        //User logado Constru
-        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpSession session = (HttpSession) request.getSession();
-        usuarioLogado = (Usuario) session.getAttribute("USUARIOLogado");
-        userBean = new UsuarioBean();
-        arquivo = new UploadArquivo();
+            //User logado Constru
+            HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            HttpServletRequest request = (HttpServletRequest) req;
+            HttpSession session = (HttpSession) request.getSession();
+            usuarioLogado = (Usuario) session.getAttribute("USUARIOLogado");
+            userBean = new UsuarioBean();
+            arquivo = new UploadArquivo();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
+    public void teste() {
+        try {
+            userBean.teste();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //METODOS USUARIO
@@ -63,38 +77,49 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
                 msgPanelErroCustomizavel("Erro no e-mail", "Este e-mail já esta cadastrado no sistema!");
             }
         } catch (Exception ex) {
-            Logger.getLogger(ListarPlanoAcaoView.class.getName()).log(Level.SEVERE, null, ex);
-            msgPanelErroInesperadoGeneric();
+            throw new FacesException(ex);
         }
     }
 
     public String[] geraTiposDeCargosView() {
-        return userBean.geraTiposDeCargosBean();
+        try {
+            return userBean.geraTiposDeCargosBean();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     public void uploadAction(FileUploadEvent event) {//Upa a foto e seta no user
-        arquivo.fileUpload(event, ".jpg", "/image/");
-        System.out.println("Nomed o arquivo: " + arquivo.getNome());
-        usuarioLogado.setFotoPerfil(arquivo.getNome());
-        arquivo.gravar();
-        arquivo = new UploadArquivo();//Limpa a variável
+        try {
+            arquivo.fileUpload(event, ".jpg", "/image/");
+            System.out.println("Nomed o arquivo: " + arquivo.getNome());
+            usuarioLogado.setFotoPerfil(arquivo.getNome());
+            arquivo.gravar();
+            arquivo = new UploadArquivo();//Limpa a variável
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //METODOS INC
     public String geraFotoTopo() {
-        if (incBean.contarLinhasBean() != 0) {//Caso existe INC cadastrada
-            inc = incBean.listarBean().get(0);
-            System.out.println("cadastrada: " + inc.getId());
-            if (inc.getFotoTelaGeral() == null) {
+        try {
+            if (incBean.contarLinhasBean() != 0) {//Caso existe INC cadastrada
+                inc = incBean.listarBean().get(0);
+                System.out.println("cadastrada: " + inc.getId());
+                if (inc.getFotoTelaGeral() == null) {
+                    inc.setFotoTelaGeral("fotoTopoGeral.jpg");
+                }
+            } else {
+                inc = new Incubadora();
                 inc.setFotoTelaGeral("fotoTopoGeral.jpg");
+                System.out.println("Não incubadora cadastrada");
             }
-        } else {
-            inc = new Incubadora();
-            inc.setFotoTelaGeral("fotoTopoGeral.jpg");
-            System.out.println("Não incubadora cadastrada");
-        }
 
-        return inc.getFotoTelaGeral();
+            return inc.getFotoTelaGeral();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
     //SETS E GETS

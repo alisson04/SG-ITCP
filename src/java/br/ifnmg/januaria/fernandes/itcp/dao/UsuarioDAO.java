@@ -2,6 +2,7 @@ package br.ifnmg.januaria.fernandes.itcp.dao;
 
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.util.List;
+import javax.faces.FacesException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -14,7 +15,18 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
     EntityManagerCriador emc;
 
     public UsuarioDAO() {
+    }
 
+    public void teste() {
+        try {
+            Usuario u = new Usuario();
+            if (u.getId() > 1) {
+                System.out.println("ROLORLROLROLROLROLROLRO");
+            }
+        } catch (NullPointerException e) {
+            System.out.println("EXEXEXEXEXEXEXE");
+            throw new FacesException(e);
+        }
     }
 
     public List<Usuario> listarTodosUsuarios() {
@@ -32,20 +44,20 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
     public Usuario buscarPorEmail(Usuario user) {
         return listarSingleObjGenerico("Usuario", "email", user.getEmail());
     }
-    
+
     public Usuario buscarPorCpfDAO(Usuario user) {
         return listarSingleObjGenerico("Usuario", "cpf", user.getCpf());
     }
-    
+
     public Usuario buscarPorRgDAO(Usuario user) {
         return listarSingleObjGenerico("Usuario", "rg", user.getRg());
     }
 
     public Usuario buscarPorCodigo(Usuario usr) {
         List<Usuario> listaUsrs;
-        
+
         listaUsrs = listarObjsFiltradosIntGenerico("Usuario", "id", usr.getId());
-        
+
         if (listaUsrs.size() > 0) {
             usr = listaUsrs.get(0);
             System.out.println("NUM: " + listaUsrs.size());
@@ -55,7 +67,7 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         }
         return usr;
     }
-    
+
     public Usuario logar(String email, String senha) {
         EntityManager em = emc.gerarEntityManager();
         Usuario usuario;
@@ -75,8 +87,8 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
             return usuario;
         }
     }
-    
-    public long contarLinhasDAO(){
+
+    public long contarLinhasDAO() {
         return contarLinhasGenerico("Usuario");
     }
 }

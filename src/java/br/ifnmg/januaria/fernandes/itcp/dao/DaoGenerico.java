@@ -2,6 +2,7 @@ package br.ifnmg.januaria.fernandes.itcp.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.FacesException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
@@ -29,9 +30,9 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             objeto = em.merge(objeto);
             em.getTransaction().commit();
             return objeto;
-        } catch (Exception x) {
+        } catch (Exception ex) {
             em.getTransaction().rollback();
-            throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
+            throw new FacesException(ex);
         } finally {
             em.close();
         }
@@ -42,18 +43,14 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
         em = gerarEntityManager();
         try {
             em.getTransaction().begin();
-
-            System.out.println("TAMANHO lista: " + listaSalvar.size());
             for (int i = 0; i < listaSalvar.size(); i++) {
-                System.out.println("LISTA: " + i);
                 em.merge(listaSalvar.get(i));
-                System.out.println("LISTA: " + i);
             }
 
             em.getTransaction().commit();
-        } catch (Exception x) {
+        } catch (Exception ex) {
             em.getTransaction().rollback();
-            throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
+            throw new FacesException(ex);
         } finally {
             em.close();
         }
@@ -67,13 +64,9 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             objeto = em.merge(objeto);//Evita o bug de entidade sendo usada
             em.remove(objeto);
             em.getTransaction().commit();
-        } catch (ConstraintViolationException x) {
-            System.out.println("__________DAOGenerico(SalvarGenerico) - getConstraintViolations():");
-            System.out.println(x.getConstraintViolations());
-            System.out.println("__________DAOGenerico(SalvarGenerico) - getConstraintViolations():");
-
+        } catch (ConstraintViolationException ex) {
             em.getTransaction().rollback();
-            throw new RuntimeException("__________DAOGenerico(salvarGenerico): Erro ao salvar objetos: ", x);
+            throw new FacesException(ex);
         } finally {
             em.close();
         }
@@ -90,9 +83,10 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             consulta.setParameter("paramComparacao", paramComparacao);
 
             objResultado = (TipoClasse) consulta.getSingleResult();//Pega a lista de usuarios
-        } catch (Exception e) {
+        } catch (Exception ex) {
             objResultado = null;
             em.getTransaction().rollback();
+            throw new FacesException(ex);
         } finally {
             em.close();
         }
@@ -108,9 +102,9 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             em.getTransaction().begin();
             Query consulta = em.createQuery("SELECT o FROM " + classe + " o");
             listaObjs = consulta.getResultList();//Pega a lista de objs
-        } catch (Exception e) {
+        } catch (Exception ex) {
             em.getTransaction().rollback();
-            throw new RuntimeException("__________DAOGenerico(listarTudoGenerico): Erro a o buscar objetos: ", e);
+            throw new FacesException(ex);
         } finally {
             em.close();
         }
@@ -129,10 +123,9 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             consulta.setParameter("paramComparacao", paramComparacao);
 
             listaObjsFiltrados = consulta.getResultList();//Pega a lista de usuarios
-            System.out.println("__________DAOGenerico(listarObjsFiltradosGenerico): Numero de objs " + paramComparacao + " na lista: " + listaObjsFiltrados.size());
-        } catch (Exception e) {
+        } catch (Exception ex) {
             em.getTransaction().rollback();
-            System.out.println("__________DAOGenerico(listarObjsFiltradosGenerico): Erro ao buscar objetos filtrados: " + e);
+            throw new FacesException(ex);
         } finally {
             em.close();
         }
@@ -151,11 +144,9 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             consulta.setParameter("paramComparacao", paramComparacao);
 
             listaObjsFiltrados = consulta.getResultList();//Pega a lista de objetos
-            System.out.println("__________DAOGenerico(listarObjsFiltradosIntGenerico): Numero de objs com id " + paramComparacao
-                    + " na lista: " + listaObjsFiltrados.size());
-        } catch (Exception e) {
+        } catch (Exception ex) {
             em.getTransaction().rollback();
-            System.out.println("__________DAOGenerico(listarObjsFiltradosIntGenerico): Erro ao buscar objetos filtrados: " + e);
+            throw new FacesException(ex);
         } finally {
             em.close();
         }
@@ -171,11 +162,9 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             long numLinhas = (long) consulta.getSingleResult();//Pega a lista de usuarios
             System.out.println("__________DAOGenerico(contarLinhasGenerico) número de linhas: " + numLinhas);
             return numLinhas;
-        } catch (ConstraintViolationException x) {
-            System.out.println("__________DAOGenerico(contarLinhasGenerico) - getConstraintViolations():");
-            System.out.println(x.getConstraintViolations());
+        } catch (ConstraintViolationException ex) {
             em.getTransaction().rollback();
-            throw new RuntimeException("__________DAOGenerico(contarLinhasGenerico): Erro ao salvar objetos: ", x);
+            throw new FacesException(ex);
         } finally {
             em.close();
         }
