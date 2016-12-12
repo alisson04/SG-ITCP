@@ -140,8 +140,8 @@ public class LoginView extends MensagensGenericas implements Serializable {
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('blockLogar').show()");
 
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/inicio.xhtml");
-                return "/sigitec/inicio.xhtml";
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/Inicio.xhtml");
+                return "/sigitec/Inicio.xhtml";
             } else {
                 usuarioLogado = new Usuario();
                 msgGrowlErroCustomizavel("Erro", "E-mail ou senha incorretos!");

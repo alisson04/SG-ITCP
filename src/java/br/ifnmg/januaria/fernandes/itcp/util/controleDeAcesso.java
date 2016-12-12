@@ -43,10 +43,10 @@ public class controleDeAcesso implements Filter {
                 if (!"Coordenador".equals(((Usuario) session.getAttribute("USUARIOLogado")).getCargo())
                         && req.getServletPath().endsWith("CadastroUsuario.xhtml")) {
                     System.out.println("__________controleDeAcesso(doFilter): Usuario tentando acessar pagina restrita");
-                    redireciona("/sigitec/inicio.xhtml", response);//redireciona para inicio
+                    redireciona("/sigitec/Inicio.xhtml", response);//redireciona para inicio
                 } else if ((session.getAttribute("USUARIOLogado") != null)//usuario logado querendo acessar login
                         && req.getServletPath().endsWith("Login.xhtml")) {
-                    redireciona("/sigitec/inicio.xhtml", response);//redireciona para inicio
+                    redireciona("/sigitec/Inicio.xhtml", response);//redireciona para inicio
                 } else {//Usuario acessando paginas que tem permissão(Situação comum)
                     chain.doFilter(request, response);
                 }
