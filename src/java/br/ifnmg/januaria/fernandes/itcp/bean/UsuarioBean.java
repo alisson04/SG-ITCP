@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.mail.EmailException;
 
 /**
@@ -16,54 +17,87 @@ import org.apache.commons.mail.EmailException;
  */
 @SessionScoped
 @Named
-public class UsuarioBean implements Serializable{
+public class UsuarioBean implements Serializable {
+
     private UsuarioDAO dao;
-    
-    public void teste(){
+
+    public void teste() {
         dao.teste();
     }
-    
-    public UsuarioBean(){
+
+    public UsuarioBean() {
         dao = new UsuarioDAO();
     }
-    
-    public Usuario salvarBean(Usuario user){
-        return dao.salvarUsr(user);
+
+    public Usuario salvarBean(Usuario user) throws EmailException {
+        if (user.getId() == null) {// CASO ESTEJA CRIANDO UM USER
+            if (buscarPorEmailBean(user) == null) {//Não existe esse e-mail no BD: Prossiga
+                user.setStatusSistema("Ativo");//SETA O STATUS
+
+                user.setSenha(gerarSenhaAleatoria());//GERA UMA SENHA ALEATORIA
+                enviarEmail(user.getEmail(), "Sistema Sigitec", "Sua senha é: " + user.getSenha());//Manda o emaill
+                user.setSenha(DigestUtils.md5Hex(user.getSenha()));//CRIPTOGRAFA A SENHA ALEATORIA e seta
+
+                user.setFotoPerfil("profileGeral.png");
+
+                return dao.salvarUsr(user);//SAVA E RETORNA
+            } else {//Existe esse e-mail no BD: Volte
+                return null;
+            }
+
+        }
+        //CASO ESTEJA EDITANDO UM USER
+        else if (buscarPorEmailBean(user) == null) {//Não existe esse e-mail no BD: Prossiga
+            enviarEmail(user.getEmail(), "Sistema Sigitec", "Esse e-mail foi vinculado a conta do usuário "
+                    + user.getNome() + " com sucesso. O e-mail " + buscarPorCodigoBean(user).getEmail()
+                    + " não é mais válido para esse usuário!");//Manda o emaill avisando sobre o novo vinculo
+
+            enviarEmail(buscarPorCodigoBean(user).getEmail(), "Sistema Sigitec", "Esse e-mail não é mais válido para o"
+                    + "usuário " + user.getNome() + ". " + user.getEmail()
+                    + " é o novo e-mail válido para essa conta!");//Manda o emaill avisando sobre o novo vinculo
+            return dao.salvarUsr(user);//SAVA E RETORNA
+        } else {//Existe esse e-mail no BD: Teste abaixo
+            if ((buscarPorEmailBean(user).getId().equals(user.getId()))) {//O e-mail é dele(editou outra coisa)
+                return dao.salvarUsr(user);//SAVA E RETORNA
+            } else {
+                return null;//O e-mail NÃO é dele(Tentou usar o e-mail de outra pessoa)
+            }
+        }
     }
-    
-    public void excluirBean(Usuario usr){
+
+    public void excluirBean(Usuario usr) {
         dao.excluirUsrDao(usr);
     }
-    
+
     public List<Usuario> listarBean() {
         return dao.listarTodosUsuarios();
     }
-    
-    public Usuario buscarPorEmailBean(Usuario user){
+
+    public Usuario buscarPorEmailBean(Usuario user) {
         return dao.buscarPorEmail(user);
     }
-    
-    public Usuario buscarPorCpfBean(Usuario user){
+
+    public Usuario buscarPorCpfBean(Usuario user) {
         return dao.buscarPorCpfDAO(user);
     }
-    
-    public Usuario buscarPorRgBean(Usuario user){
+
+    public Usuario buscarPorRgBean(Usuario user) {
         return dao.buscarPorRgDAO(user);
     }
-    
-    public void enviarEmail(String enviarPara, String assunto, String mensagem) throws EmailException{
+
+    public void enviarEmail(String enviarPara, String assunto, String mensagem) throws EmailException {
         System.out.println("__________BEAN(enviarEmail): Para:" + enviarPara);
         System.out.println("__________BEAN(enviarEmail): Assunto" + assunto);
         System.out.println("__________BEAN(enviarEmail): Mensagem" + mensagem);
         EnviarEmail enviarEmail = new EnviarEmail();
         enviarEmail.enviarEmail(enviarPara, assunto, mensagem);
     }
-    
-    public Usuario buscarPorCodigoBean(Usuario user){
+
+    public Usuario buscarPorCodigoBean(Usuario user) {
         return dao.buscarPorCodigo(user);
     }
-    
-    public long contarLinhasBean(){
+
+    public long contarLinhasBean() {
         return dao.contarLinhasDAO();
     }
 
@@ -79,10 +113,10 @@ public class UsuarioBean implements Serializable{
         System.out.println("SENHA: " + senhaAleatoria);
         return senhaAleatoria;
     }
-    
-    public String[] geraTiposDeCargosBean(){
+
+    public String[] geraTiposDeCargosBean() {
         String[] cargos;//para a tela de listar usuarios
-        
+
         cargos = new String[8];
         cargos[0] = "Coordenador";
         cargos[1] = "Professor";
@@ -92,7 +126,7 @@ public class UsuarioBean implements Serializable{
         cargos[5] = "Bolsista - PIBED";
         cargos[6] = "Bolsista - PIBIC";
         cargos[7] = "Bolsista - PROEXT";
-        
+
         return cargos;
     }
 }

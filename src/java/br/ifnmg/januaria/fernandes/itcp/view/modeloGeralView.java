@@ -20,6 +20,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
@@ -61,18 +62,16 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     //METODOS USUARIO
     public void editarUserLogadoView() {
         try {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').show()");
-            if ((userBean.buscarPorEmailBean(usuarioLogado) == null//Verifica se o e-mail já esta cadastrado
-                    || userBean.buscarPorEmailBean(usuarioLogado).getId().equals(usuarioLogado.getId()))) {
-
+            if (userBean.salvarBean(usuarioLogado) != null){//Salvou com sucesso
                 usuarioLogado = userBean.salvarBean(usuarioLogado);//Salva o usuário
+                RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('UserDia').hide()");
-                context.execute("PF('blockUiGeral').hide()");
                 msgGrowSaveGeneric();
             } else {
                 msgPanelErroCustomizavel("Erro no e-mail", "Este e-mail já esta cadastrado no sistema!");
             }
+        }catch (EmailException ex) {
+            msgPanelErroCustomizavel("Impossível salvar", "Verifique a validade do e-mail e a conexão com a internet ");
         } catch (Exception ex) {
             throw new FacesException(ex);
         } finally {

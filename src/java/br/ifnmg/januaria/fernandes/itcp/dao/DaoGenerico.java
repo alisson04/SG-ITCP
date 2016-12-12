@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.FacesException;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
 import javax.transaction.Transactional;
@@ -83,6 +84,10 @@ public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {
             consulta.setParameter("paramComparacao", paramComparacao);
 
             objResultado = (TipoClasse) consulta.getSingleResult();//Pega a lista de usuarios
+        }  catch (NoResultException ex) {
+            objResultado = null;
+            em.getTransaction().rollback();
+            return objResultado;
         } catch (Exception ex) {
             objResultado = null;
             em.getTransaction().rollback();
