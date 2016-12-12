@@ -153,7 +153,14 @@ public class LoginView extends MensagensGenericas implements Serializable {
     }
 
     public String sair() {
-        return bean.sair(usuarioLogado);
+        try {
+            return bean.sair(usuarioLogado);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
+        }
     }
 
     public String gerarSenhaAleatoria() {

@@ -52,7 +52,8 @@
                                              actionListener="#{ListarAcompanhamentosView.transfereObj()}"/>
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" update=":frmListagem"
                                              disabled="#{ListarAcompanhamentosView.objSelecionado == null}" 
-                                             actionListener="#{ListarAcompanhamentosView.excluirParceiroView()}">
+                                             actionListener="#{ListarAcompanhamentosView.excluirParceiroView()}"
+                                             onclick="PF('blockUiGeral').show()" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert24-iconfinder" />
                             </p:commandButton>
@@ -215,18 +216,14 @@
 
                     <p:outputPanel style="text-align:center;">
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAcompanhamentosView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagemParceiros" >
+                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagemParceiros" 
+                                         onclick="PF('blockUiGeral').show()" >
                             <p:confirm  header="ATENÇÃO!" message="  Deseja salvar as informações? " icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
                         <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
                                          onclick="PF('wVarEditarDialog').hide()" />
-
-                        <p:blockUI block="frmEdicao" trigger="btnSalvar">
-                            CARREGANDO<br />
-                            <p:graphicImage name="fotos/LoadingBar.gif"/>
-                        </p:blockUI>
                     </p:outputPanel>
                 </h:form>
             </p:dialog>

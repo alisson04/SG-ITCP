@@ -8,6 +8,8 @@ import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -56,28 +58,26 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
         }
     }
 
-    public void teste() {
-        try {
-            userBean.teste();
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
     //METODOS USUARIO
     public void editarUserLogadoView() {
         try {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').show()");
             if ((userBean.buscarPorEmailBean(usuarioLogado) == null//Verifica se o e-mail já esta cadastrado
                     || userBean.buscarPorEmailBean(usuarioLogado).getId().equals(usuarioLogado.getId()))) {
+
                 usuarioLogado = userBean.salvarBean(usuarioLogado);//Salva o usuário
-                RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('UserDia').hide()");
+                context.execute("PF('blockUiGeral').hide()");
                 msgGrowSaveGeneric();
             } else {
                 msgPanelErroCustomizavel("Erro no e-mail", "Este e-mail já esta cadastrado no sistema!");
             }
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

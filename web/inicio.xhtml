@@ -52,22 +52,23 @@
                                                  style="background-image:none;background-color:white;"
                                                  rendered="#{atividadeCursor.status != 'Não iniciada'}"
                                                  actionListener="#{inicioView.mudaAtvParaNaoExecutada(atividadeCursor)}" 
-                                                 icon="FlagRed24-iconfinder" />
+                                                 icon="FlagRed24-iconfinder" onclick="PF('blockUiGeral').show()" />
 
                                 <p:commandButton title="Iniciada"  update="frmCadastro"
                                                  style="background-image:none;background-color:white;"
                                                  rendered="#{atividadeCursor.status != 'Iniciada'}"
                                                  actionListener="#{inicioView.mudaAtvParaEmExecução(atividadeCursor)}"
-                                                 icon="FlagYellow24-iconfinder" />
+                                                 icon="FlagYellow24-iconfinder" onclick="PF('blockUiGeral').show()" />
 
                                 <p:commandButton title="Finalizada"  update="frmCadastro"
                                                  style="background-image:none;background-color:white;"
                                                  rendered="#{atividadeCursor.status != 'Finalizada'}"
                                                  actionListener="#{inicioView.mudaAtvParaExecutada(atividadeCursor)}"
-                                                 icon="FlagGreen24-iconfinder" />
+                                                 icon="FlagGreen24-iconfinder" onclick="PF('blockUiGeral').show()" />
                             </p:column>
                             
-                            <p:tooltip id="toolTipGrow" for="btnNaoIniciada" value="This tooltip uses clip/explode effects for the animation"
+                            <p:tooltip id="toolTipGrow" for="btnNaoIniciada" value="This tooltip uses clip/explode effects 
+                                       for the animation"
                showEffect="clip" hideEffect="explode" position="left"/>
 
                             <f:facet name="footer">
@@ -128,7 +129,7 @@
 
                         <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{inicioView.salvarInc()}" 
-                                         update="frmCadastro" >
+                                         update="frmCadastro" onclick="PF('blockUiGeral').show()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
                         </p:commandButton>
 
@@ -137,11 +138,6 @@
                             <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="BlackCheck24-iconfinder" />
                             <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="Cross24-iconfinder" />
                         </p:confirmDialog>
-
-                        <p:blockUI block="panel" trigger="btnSalvar" >
-                            SALVANDO<br />
-                            <p:graphicImage name="fotos/LoadingBar.gif" />
-                        </p:blockUI>
                     </p:panel>
                 </p:dialog>
             </h:form>

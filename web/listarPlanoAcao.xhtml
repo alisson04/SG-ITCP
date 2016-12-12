@@ -54,7 +54,8 @@
                             
                             <p:commandButton id="btnExcluirPlano"  update=":frmListagemPlanosAcao" value="Excluir" 
                                              icon="Cross24-iconfinder" actionListener="#{ListarPlanoAcaoView.excluirView()}"
-                                             disabled="#{ListarPlanoAcaoView.planoSelecionado == null}" >
+                                             disabled="#{ListarPlanoAcaoView.planoSelecionado == null}" 
+                                             onclick="PF('blockUiGeral').show()" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert24-iconfinder" />
                             </p:commandButton>
@@ -129,18 +130,14 @@
                         </p:panel>
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarPlanoAcaoView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicaoPlano, :frmListagemPlanosAcao" >
+                                         icon="Save24-iconfinder" update=":frmEdicaoPlano, :frmListagemPlanosAcao" 
+                                         onclick="PF('blockUiGeral').show()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
                         <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
                                          onclick="PF('wVarDlgEditar').hide()" />
-
-                        <p:blockUI block="panel" trigger="btnSalvar">
-                            CARREGANDO<br />
-                            <p:graphicImage name="icons/LoadingBar.gif"/>
-                        </p:blockUI>
                     </p:outputPanel>
                 </h:form>
             </p:dialog>

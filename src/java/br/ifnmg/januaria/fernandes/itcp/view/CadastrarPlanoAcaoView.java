@@ -117,6 +117,9 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             msgGrowDeleteGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -128,6 +131,9 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             msgGrowDeleteGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -166,6 +172,9 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             }
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -187,6 +196,9 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             }
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -202,6 +214,9 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
             }
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

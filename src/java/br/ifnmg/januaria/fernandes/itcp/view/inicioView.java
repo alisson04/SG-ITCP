@@ -17,6 +17,7 @@ import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -103,6 +104,9 @@ public class inicioView extends MensagensGenericas implements Serializable {
             existeInc = true;
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -180,6 +184,9 @@ public class inicioView extends MensagensGenericas implements Serializable {
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -191,6 +198,9 @@ public class inicioView extends MensagensGenericas implements Serializable {
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -202,6 +212,9 @@ public class inicioView extends MensagensGenericas implements Serializable {
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

@@ -87,7 +87,8 @@
                                              actionListener="#{ListarAtiviPlanejadasView.transfereObj()}"/>
                             <p:commandButton id="btnExcluir" value="Excluir" icon="Cross24-iconfinder" update=":frmListagem"
                                              disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" 
-                                             actionListener="#{ListarAtiviPlanejadasView.excluirView()}">
+                                             actionListener="#{ListarAtiviPlanejadasView.excluirView()}" 
+                                             onclick="PF('blockUiGeral').show()" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert24-iconfinder" />
                             </p:commandButton>
@@ -162,7 +163,8 @@
                         </p:panel>
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarAtiviPlanejadasView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" >
+                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" 
+                                         onclick="PF('blockUiGeral').show()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder"/>
                         </p:commandButton>
                         <p:spacer width="20px" />

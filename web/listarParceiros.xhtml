@@ -47,7 +47,7 @@
                                              oncomplete="PF('wVarEditarDialog').show()"
                                              actionListener="#{ListarParceirosView.transfereObj()}"/>
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" 
-                                             update=":frmListagemParceiros"
+                                             update=":frmListagemParceiros" 
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}" 
                                              actionListener="#{ListarParceirosView.excluirParceiroView()}">
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
@@ -87,9 +87,8 @@
                         <p:panel style="margin-bottom:20px" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="nome" value="Nome: " />
-                                <p:inputText id="nome" value="#{ListarParceirosView.objSalvar.nome}" required="true"
-                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
-                                             size="57" maxlength="45"/>
+                                <p:inputText id="nome" value="#{ListarParceirosView.objSalvar.nome}" required="true" size="57"
+                                             requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" maxlength="45" />
                                 <p:message for="nome" />
 
                                 <p:outputLabel for="e-mail" value="E-mail: " />  
@@ -120,18 +119,14 @@
                         </p:panel>
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarParceirosView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagemParceiros" >
+                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagemParceiros" 
+                                         onclick="PF('blockUiGeral').show()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
                         <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
                                          onclick="PF('wVarEditarDialog').hide()" />
-
-                        <p:blockUI block="panel" trigger="btnSalvar">
-                            CARREGANDO<br />
-                            <p:graphicImage name="icons/LoadingBar.gif"/>
-                        </p:blockUI>
                     </p:outputPanel>
                 </h:form>
             </p:dialog>

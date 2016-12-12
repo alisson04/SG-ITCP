@@ -58,8 +58,6 @@
                             <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicao"
                                              process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
                                              actionListener="#{ListarMembrosEptsView.reiniciaObj()}" />
-
-
                             <p:commandButton id="btnEditarMembro" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
                                              process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
@@ -67,7 +65,8 @@
                             <p:commandButton id="btnExcluirMembro" value="Excluir" icon="Cross24-iconfinder" 
                                              update=":frmListagemMembrosEpts"
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
-                                             actionListener="#{ListarMembrosEptsView.excluirMembroView()}">
+                                             actionListener="#{ListarMembrosEptsView.excluirMembroView()}"
+                                             onclick="PF('blockUiGeral').show()" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert24-iconfinder" />
                             </p:commandButton>
@@ -206,7 +205,8 @@
                         </p:panel>
                         
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMembrosEptsView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagemMembrosEpts:pnlListagem" >
+                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagemMembrosEpts:pnlListagem" 
+                                         onclick="PF('blockUiGeral').show()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />

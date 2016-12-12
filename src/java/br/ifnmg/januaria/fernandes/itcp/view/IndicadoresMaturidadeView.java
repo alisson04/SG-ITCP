@@ -224,6 +224,9 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
+        } finally {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

@@ -517,14 +517,10 @@
                         </p:tab>
                     </p:tabView>
 
-                    <p:blockUI id="blockUiFormIndi" block="tabGeral" trigger="btnSalvar">
-                        CARREGANDO<br />
-                        <p:graphicImage name="fotos/LoadingBar.gif"/>
-                    </p:blockUI>
-
                     <p:outputPanel style="text-align:center;">
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{IndicadoresMaturidadeView.salvarView()}" 
-                                         icon="Save24-iconfinder" update="frmIndicadores frmEdicao" immediate="true" >
+                                         icon="Save24-iconfinder" update="frmIndicadores frmEdicao" immediate="true" 
+                                         onclick="PF('blockUiGeral').show()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />

@@ -53,55 +53,58 @@
         };
     </script>
 
-    <h:body>
+    <h:body id="bodyGeral">
+        <!--Bloqueador da tela, geral-->
+        <p:blockUI block="bodyGeral" widgetVar="blockUiGeral" >
+            AGUARDE UM MOMENTO...<br />
+            <p:graphicImage name="fotos/LoadingBar.gif"/>
+        </p:blockUI>
         <h:form id="frmComponentesGenerico">
+            <!--Mensagem Grow, geral-->
             <p:growl showDetail="true" life="5000" />
 
-            <p:ajaxExceptionHandler type="java.lang.Exception"
-                                    update="exceptionDialog"
-                                    onexception="PF('exceptionDialog').show();" />
-            
+            <!--Listener de excessões, Geral-->
+            <p:ajaxExceptionHandler type="java.lang.Exception" update="exceptionDialog" onexception="PF('exceptionDialog').show();" />
+
 
             <p:dialog id="exceptionDialog" widgetVar="exceptionDialog"  header="Houve um erro no sistema" closable="false"
                       height="400px" width="1100px"
-                      showEffect="clip" hideEffect="clip" resizable="false" draggable="false" modal="true"  appendTo="@(body)" >
-                <h:form id="frmEditarMeusDados" >
+                      showEffect="clip" hideEffect="clip" resizable="false" draggable="false" modal="true"  appendTo="@(body)" >    
+                <p:outputPanel style="text-align:center;">
+                    <p:panel  >
+                        <p:graphicImage id="ftmImagemTopoGeral" width="150px" height="150px" styleClass="semMargin"
+                                        name="/fotos/128Alert.png"/>
+                        <p:separator/>
+                        <h:outputText value="Contate o administrador do sistema e informe o erro!" />
+                        <br/>
+                        <h:outputText value="Você pode recarregar a página clicando em 'Recarregar'ou
+                                      ignorar o erro clicando em 'Fechar'." />
+
+                        <p:separator/>
+                        <p:button onclick="document.location.href = document.location.href;" icon="Refresh24-iconfinder"
+                                  value="Recarregar" />
+                        <p:spacer width="20px" />
+
+                        <p:commandButton value="Fechar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('exceptionDialog').hide()" />
+                    </p:panel>
+
+                </p:outputPanel>
+                <p:spacer height="10px" />
+
+                <p:fieldset legend="Mais informações" toggleable="true" toggleSpeed="500" collapsed="true" >
                     <p:outputPanel style="text-align:center;">
-                        <p:panel  >
-                            <p:graphicImage id="ftmImagemTopoGeral" width="150px" height="150px" styleClass="semMargin"
-                                            name="/fotos/128Alert.png"/>
-                            <p:separator/>
-                            <h:outputText value="Contate o administrador do sistema e informe o erro!" />
-                            <br/>
-                            <h:outputText value="Você pode recarregar a página clicando em 'Recarregar'ou
-                            ignorar o erro clicando em 'Fechar'." />
-                            
-                            <p:separator/>
-                            <p:button onclick="document.location.href = document.location.href;" icon="Refresh24-iconfinder"
-                                      value="Recarregar" />
-                            <p:spacer width="20px" />
-                            
-                            <p:commandButton value="Fechar" type="button" icon="Cross24-iconfinder" 
-                                             onclick="PF('exceptionDialog').hide()" />
-                        </p:panel>
-
+                        <h:outputText value="Detalhes do erro:" />                            
+                        <p:separator/>
                     </p:outputPanel>
-                    <p:spacer height="10px" />
-
-                    <p:fieldset legend="Mais informações" toggleable="true" toggleSpeed="500" collapsed="true" >
-                        <p:outputPanel style="text-align:center;">
-                            <h:outputText value="Detalhes do erro:" />                            
-                            <p:separator/>
-                        </p:outputPanel>
-                        <h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" />
-                    </p:fieldset>
-                </h:form>
+                    <h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" />
+                </p:fieldset>
             </p:dialog>
         </h:form>
 
         <p:layout fullPage="true">
             <p:idleMonitor timeout="300000">
-                <p:ajax event="idle" listener="#{LoginView.sair()}"/>
+                <p:ajax event="idle" listener="#{LoginView.sair()}" />
             </p:idleMonitor>
 
             <p:layoutUnit position="north" size="100" >
@@ -116,9 +119,7 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
-                <h:form id="frmModeloGeral">      
-                    <p:commandButton value="Cancelar"  icon="Cross24-iconfinder"  actionListener="#{modeloGeralView.teste()}"
-                                     />
+                <h:form id="frmModeloGeral">
                     <p:menubar style="ui-button" styleClass="textoMenuPrincipal semMargin">
                         <p:menuitem value="Início" icon="Location24-iconfinder" 
                                     action="/inicio.xhtml?faces-redirect=true" style="ui-widget"/>
@@ -280,15 +281,11 @@
                                 </h:panelGrid>
 
                                 <p:outputLabel value="* Campos obrigatórios" />
-
-                                <p:blockUI block="outPaMostrarUsr" trigger="btnSalvar">
-                                    CARREGANDO<br />
-                                    <p:graphicImage name="fotos/LoadingBar.gif"/>
-                                </p:blockUI>
                             </p:panel>
 
                             <p:commandButton id="btnSalvar" value="Salvar" icon="Save24-iconfinder" update="frmEditarMeusDados"
-                                             actionListener="#{modeloGeralView.editarUserLogadoView()}" >
+                                             actionListener="#{modeloGeralView.editarUserLogadoView()}" 
+                                             onclick="PF('blockUiGeral').show()" >
                                 <p:confirm  header="ATENÇÃO!" message="  Deseja salvar as informações? " icon="Alert24-iconfinder" />
                             </p:commandButton>
                             <p:spacer width="20px" />

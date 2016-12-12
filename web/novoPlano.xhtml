@@ -53,7 +53,8 @@
 
                             <p:separator />
                             <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarView()}" 
-                                             icon="Save24-iconfinder" update="frmCadastro" >
+                                             icon="Save24-iconfinder" update="frmCadastro" 
+                                             onclick="PF('blockUiGeral').show()" >
                                 <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                             </p:commandButton>
                         </p:panel>
@@ -110,9 +111,10 @@
                                         <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cross24-iconfinder" 
                                                          update="frmCadastro" 
                                                          disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}" 
-                                                         actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}">
-                                            <p:confirm header="ATENÇÃO! " message="Todas as atividades dessa meta também serão excluidas, continuar?" 
-                                                       icon="Alert24-iconfinder" />
+                                                         actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}"
+                                                         onclick="PF('blockUiGeral').show()" >
+                                            <p:confirm header="ATENÇÃO! " message="Todas as atividades dessa meta também serão 
+                                                       excluidas, continuar?" icon="Alert24-iconfinder" />
                                         </p:commandButton>
                                     </f:facet>
                                 </p:dataTable>
@@ -160,7 +162,8 @@
                                                      actionListener="#{CadastrarPlanoAcaoView.transfereObj()}"/>
                                     <p:commandButton value="Excluir" icon="Cross24-iconfinder" update="frmCadastro"
                                                      disabled="#{CadastrarPlanoAcaoView.atividadeSelecionada == null}" 
-                                                     actionListener="#{CadastrarPlanoAcaoView.excluirAtividade()}">
+                                                     actionListener="#{CadastrarPlanoAcaoView.excluirAtividade()}"
+                                                     onclick="PF('blockUiGeral').show()" >
                                         <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                                    icon="Alert24-iconfinder" />
                                     </p:commandButton>
@@ -272,7 +275,8 @@
                         </p:panel>
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarMeta()}" 
-                                         icon="Save24-iconfinder" update="frmCadastro, frmEdicao" >
+                                         icon="Save24-iconfinder" update="frmCadastro, frmEdicao" 
+                                         onclick="PF('blockUiGeral').show()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
@@ -376,7 +380,8 @@
 
                     <p:outputPanel style="text-align:center;">
                         <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarAtividade()}" 
-                                         icon="Save24-iconfinder" update="frmCadastro, frmEdicaoAtividade" >
+                                         icon="Save24-iconfinder" update="frmCadastro, frmEdicaoAtividade" 
+                                         onclick="PF('blockUiGeral').show()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />

@@ -49,13 +49,14 @@
                             <p:commandButton id="btnInativarusr" actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}"
                                              value="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.objSelecionado)}" 
                                              icon="Refresh24-iconfinder" disabled="#{ListarUsuariosView.objSelecionado == null}" 
-                                             update=":frmListagemUsuarios" >
+                                             update=":frmListagemUsuarios" onclick="PF('blockUiGeral').show()" >
                                 <p:confirm header="ATENÇÃO!" message="Deseja confirmar a ação?" icon="Alert24-iconfinder"/>
                             </p:commandButton>
 
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" 
                                              update=":frmListagemUsuarios" disabled="#{ListarUsuariosView.objSelecionado == null}" 
-                                             actionListener="#{ListarUsuariosView.excluirView()}">
+                                             actionListener="#{ListarUsuariosView.excluirView()}"
+                                             onclick="PF('blockUiGeral').show()" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert24-iconfinder" />
                             </p:commandButton>
@@ -198,17 +199,14 @@
                             <p:outputLabel value="* Campos obrigatórios" />
                         </p:panel>
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarUsuariosView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagemUsuarios:ListagemUsuarios" >
+                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagemUsuarios:ListagemUsuarios" 
+                                         onclick="PF('blockUiGeral').show()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" onclick="PF('wVarEditarDialog').hide()" />
-
-                        <p:blockUI block="outPaMostrarUsr" trigger="btnSalvar">
-                            CARREGANDO<br />
-                            <p:graphicImage name="fotos/LoadingBar.gif"/>
-                        </p:blockUI>
+                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('wVarEditarDialog').hide()" />
                     </p:outputPanel>
                 </h:form>
             </p:dialog>

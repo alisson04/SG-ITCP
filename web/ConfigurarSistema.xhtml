@@ -44,14 +44,9 @@
 
                             <p:separator />
                             <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ConfiguracoesView.salvarInc()}" 
-                                             update="frmConfiguracao" icon="Save24-iconfinder" >
+                                             update="frmConfiguracao" icon="Save24-iconfinder" onclick="PF('blockUiGeral').show()" >
                                 <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                             </p:commandButton>
-
-                            <p:blockUI block="panel" trigger="btnSalvar" >
-                                SALVANDO<br />
-                                <p:graphicImage name="fotos/LoadingBar.gif" />
-                            </p:blockUI>
                         </p:tab>
 
                         <p:tab title="Configurações do sistema">
