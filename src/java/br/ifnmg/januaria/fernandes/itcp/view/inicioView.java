@@ -104,9 +104,6 @@ public class inicioView extends MensagensGenericas implements Serializable {
             existeInc = true;
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -184,9 +181,6 @@ public class inicioView extends MensagensGenericas implements Serializable {
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -198,9 +192,6 @@ public class inicioView extends MensagensGenericas implements Serializable {
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -212,9 +203,6 @@ public class inicioView extends MensagensGenericas implements Serializable {
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

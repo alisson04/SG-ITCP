@@ -84,9 +84,6 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
             }
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

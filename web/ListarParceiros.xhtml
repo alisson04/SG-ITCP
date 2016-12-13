@@ -49,7 +49,8 @@
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" 
                                              update=":frmListagemParceiros" 
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}" 
-                                             actionListener="#{ListarParceirosView.excluirParceiroView()}">
+                                             actionListener="#{ListarParceirosView.excluirParceiroView()}"
+                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert24-iconfinder" />
                             </p:commandButton>
@@ -120,7 +121,7 @@
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarParceirosView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagemParceiros" 
-                                         onclick="PF('blockUiGeral').show()" >
+                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />

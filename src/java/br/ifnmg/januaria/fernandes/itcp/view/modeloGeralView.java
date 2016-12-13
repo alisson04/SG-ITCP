@@ -74,9 +74,6 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
             msgPanelErroCustomizavel("Impossível salvar", "Verifique a validade do e-mail e a conexão com a internet ");
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

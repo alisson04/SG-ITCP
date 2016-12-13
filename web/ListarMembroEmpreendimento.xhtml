@@ -66,7 +66,7 @@
                                              update=":frmListagemMembrosEpts"
                                              disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
                                              actionListener="#{ListarMembrosEptsView.excluirMembroView()}"
-                                             onclick="PF('blockUiGeral').show()" >
+                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert24-iconfinder" />
                             </p:commandButton>
@@ -206,7 +206,7 @@
                         
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMembrosEptsView.salvarView()}" 
                                          icon="Save24-iconfinder" update=":frmEdicao, :frmListagemMembrosEpts:pnlListagem" 
-                                         onclick="PF('blockUiGeral').show()" >
+                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
@@ -214,10 +214,6 @@
                         <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
                                          onclick="PF('wVarDlgEditar').hide()" />
                     </p:outputPanel>
-                    <p:blockUI block="panel" trigger="btnSalvar">
-                        CARREGANDO<br />
-                        <p:graphicImage name="icons/LoadingBar.gif"/>
-                    </p:blockUI>
                 </h:form>
             </p:dialog>
         </ui:define>

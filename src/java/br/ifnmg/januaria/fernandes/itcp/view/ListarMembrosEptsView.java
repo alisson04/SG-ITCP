@@ -86,9 +86,6 @@ public class ListarMembrosEptsView extends MensagensGenericas implements Seriali
             msgGrowDeleteGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -101,9 +98,6 @@ public class ListarMembrosEptsView extends MensagensGenericas implements Seriali
             context.execute("PF('dlgEdicaoPronta').show()");
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

@@ -61,9 +61,6 @@ public class ListarMetasView extends MensagensGenericas implements Serializable 
             context.execute("PF('dlgEdicaoPronta').show()");
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -103,9 +100,6 @@ public class ListarMetasView extends MensagensGenericas implements Serializable 
             msgGrowDeleteGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

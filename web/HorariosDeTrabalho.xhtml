@@ -146,7 +146,8 @@
 
                         <p:separator/>
                         <p:commandButton icon="Save24-iconfinder" value="Salvar" update="frmHorarios" 
-                                         actionListener="#{HorarioTrabalhoView.salvar()}"/>
+                                         actionListener="#{HorarioTrabalhoView.salvar()}"
+                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"/>
                     </p:panel>
                 </p:panelGrid>
             </h:form>

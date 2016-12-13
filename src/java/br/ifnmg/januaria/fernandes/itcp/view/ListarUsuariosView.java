@@ -85,9 +85,6 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
             msgPanelErroCustomizavel("Impossível salvar", "Verifique a validade do e-mail e a conexão com a internet ");
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -111,9 +108,6 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
             msgGrowDeleteGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -147,7 +141,7 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
     public void ativarDesativarUsrView() {
         try {
             if (objSelecionado.getStatusSistema().equals("Ativo")) {
-                objSelecionado.setStatusSistema("Desativado");
+                objSelecionado.setStatusSistema("Inativo");
                 bean.salvarBean(objSelecionado);
             } else {
                 objSelecionado.setStatusSistema("Ativo");
@@ -157,9 +151,6 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
             listaUsuarios = bean.listarBean();//Atualiza a lista de usuários
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

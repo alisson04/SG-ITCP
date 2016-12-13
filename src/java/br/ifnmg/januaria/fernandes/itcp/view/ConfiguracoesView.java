@@ -66,9 +66,6 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
             msgGrowSaveGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

@@ -81,9 +81,6 @@ public class ListarPlanoAcaoView extends MensagensGenericas implements Serializa
             context.execute("PF('dlgEdicaoPronta').show()");
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 
@@ -95,9 +92,6 @@ public class ListarPlanoAcaoView extends MensagensGenericas implements Serializa
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } catch (Exception ex) {
             throw new FacesException(ex);
-        } finally {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('blockUiGeral').hide()");
         }
     }
 

@@ -52,24 +52,26 @@
                                                  style="background-image:none;background-color:white;"
                                                  rendered="#{atividadeCursor.status != 'Não iniciada'}"
                                                  actionListener="#{inicioView.mudaAtvParaNaoExecutada(atividadeCursor)}" 
-                                                 icon="FlagRed24-iconfinder" onclick="PF('blockUiGeral').show()" />
+                                                 icon="FlagRed24-iconfinder" 
+                                                 onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
 
                                 <p:commandButton title="Iniciada"  update="frmCadastro"
                                                  style="background-image:none;background-color:white;"
                                                  rendered="#{atividadeCursor.status != 'Iniciada'}"
                                                  actionListener="#{inicioView.mudaAtvParaEmExecução(atividadeCursor)}"
-                                                 icon="FlagYellow24-iconfinder" onclick="PF('blockUiGeral').show()" />
+                                                 icon="FlagYellow24-iconfinder" 
+                                                 onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
 
                                 <p:commandButton title="Finalizada"  update="frmCadastro"
                                                  style="background-image:none;background-color:white;"
                                                  rendered="#{atividadeCursor.status != 'Finalizada'}"
                                                  actionListener="#{inicioView.mudaAtvParaExecutada(atividadeCursor)}"
-                                                 icon="FlagGreen24-iconfinder" onclick="PF('blockUiGeral').show()" />
+                                                 icon="FlagGreen24-iconfinder" 
+                                                 onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
                             </p:column>
                             
                             <p:tooltip id="toolTipGrow" for="btnNaoIniciada" value="This tooltip uses clip/explode effects 
-                                       for the animation"
-               showEffect="clip" hideEffect="explode" position="left"/>
+                                       for the animation" showEffect="clip" hideEffect="explode" position="left"/>
 
                             <f:facet name="footer">
                             </f:facet>
@@ -128,8 +130,8 @@
                         <p:outputLabel value="* Campos obrigatórios" />
 
                         <p:separator />
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{inicioView.salvarInc()}" 
-                                         update="frmCadastro" onclick="PF('blockUiGeral').show()" >
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{inicioView.salvarInc()}" update="frmCadastro" 
+                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
                         </p:commandButton>
 
