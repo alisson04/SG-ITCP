@@ -73,6 +73,31 @@ public class LoginView extends MensagensGenericas implements Serializable {
     }
 
     //METODOS
+    public void teste() {
+        try {
+            Usuario u = new Usuario();
+            if (u.getId() > 1) {
+
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
+    public void MostraCaixaReenvioSenha() {
+        System.out.println("==============================================================");
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('wvDlLogin').hide()");
+        context.execute("PF('dlReenviarSenha').show()");
+    }
+    
+    public void MostraCaixaLogin() {
+        System.out.println("==============================================================");
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dlReenviarSenha').hide()");
+        context.execute("PF('wvDlLogin').show()");
+    }
+
     public String geraMsgGenericaCampoObrigatorioView() {
         try {
             return msgGenericaCampoObrigatorio();
@@ -112,7 +137,6 @@ public class LoginView extends MensagensGenericas implements Serializable {
 
     public void gerarNovaSenha() {
         try {
-            System.out.println("TESTE--------------------");
             obj = usrBean.buscarPorEmailBean(obj);//Busca o user no BD
             obj.setSenha(gerarSenhaAleatoria());//GERA A SENHA ALEATORIA e SETA
             usrBean.enviarEmail(obj.getEmail(), "Sistema Sigitec", "Sua nova senha é: " + obj.getSenha());//Manda o emaill
@@ -121,30 +145,32 @@ public class LoginView extends MensagensGenericas implements Serializable {
             obj = new Usuario();//Limpa o usuário salvo
             msgGrowlInfoCustomizavel("Nova senha", "A nova senha foi enviada ao seu e-mail!");
         } catch (EmailException ex) {
-            System.out.println("ERRO no Endereço de e-mail: " + ex);
-            obj = new Usuario();//Limpa o usuário salvo
-            msgPanelErroCustomizavel("Impossível salvar", "Verifique o e-mail e a conexão com a internet ");
+            msgGrowlErroCustomizavel("Impossível salvar", "Verifique o e-mail e a conexão com a internet ");
         } catch (NullPointerException | PropertyNotFoundException ex) {
-            System.out.println("ERRO no obj: " + ex);
-            obj = new Usuario();//Limpa o usuário salvo
-            msgPanelErroCustomizavel("E-mail desconhecido", "Esse e-mail não esta cadastrado no sistema!");
+            msgGrowlErroCustomizavel("E-mail desconhecido", "Esse e-mail não esta cadastrado no sistema!");
         }
     }
 
     public String logar() {
         try {
+            Usuario userTemp = usuarioLogado;
             usuarioLogado = bean.logar(usuarioLogado);
-            if (usuarioLogado != null) {
-                SessionUtil.setParam("USUARIOLogado", usuarioLogado);
+            if (usuarioLogado != null) {//Existe esse user
+                if (usuarioLogado.getStatusSistema().equals("Ativo")) {//Ele esta ativo
+                    SessionUtil.setParam("USUARIOLogado", usuarioLogado);
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("PF('blockLogar').show()");
 
-                RequestContext context = RequestContext.getCurrentInstance();
-                context.execute("PF('blockLogar').show()");
-
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/Inicio.xhtml");
-                return "/sigitec/Inicio.xhtml";
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/Inicio.xhtml");
+                    return "/sigitec/Inicio.xhtml";
+                } else {
+                    usuarioLogado = userTemp;//para manter o dados digitados na tela
+                    msgGrowlErroCustomizavel("Acesso negado", "Esse usuário esta desativado!");
+                    return "";
+                }
             } else {
-                usuarioLogado = new Usuario();
-                msgGrowlErroCustomizavel("Erro", "E-mail ou senha incorretos!");
+                usuarioLogado = userTemp;//para manter o dados digitados na tela
+                msgGrowlErroCustomizavel("Acesso negado", "E-mail ou senha incorretos!");
                 return "";
             }
         } catch (Exception ex) {

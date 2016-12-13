@@ -36,7 +36,6 @@ public class controleDeAcesso implements Filter {
         HttpSession session = req.getSession();
 
         if ((req.getServletPath().endsWith("Login.xhtml"))//Acessando login
-                || (req.getServletPath().endsWith("EsqueciMinhaSenha.xhtml"))//Acessando esqueci senha
                 || (req.getServletPath().contains("/javax.faces.resource"))//Requisição de componente
                 || session.getAttribute("USUARIOLogado") != null) {
             if (session.getAttribute("USUARIOLogado") != null) {//Se user esta logado

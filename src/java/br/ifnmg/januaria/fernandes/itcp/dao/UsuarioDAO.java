@@ -83,8 +83,7 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
             usuario = listaObjs.get(0);
             return usuario;
         } else {
-            usuario = null;
-            return usuario;
+            return null;
         }
     }
 

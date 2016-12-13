@@ -54,7 +54,7 @@
     </script>
 
     <h:body id="bodyGeral">
-        <!--Bloqueador da tela, geral-->
+        <!--Bloqueador da tela, geral (Não colocar dentro de um formulário: GERA BUG DE TELA BRANCA AO ATUALIZAR O FORM-->
         <p:blockUI block="bodyGeral" widgetVar="blockUiGeral" >
             AGUARDE UM MOMENTO...<br />
             <p:graphicImage name="fotos/LoadingBar.gif"/>
@@ -77,7 +77,7 @@
                         <p:separator/>
                         <h:outputText value="Contate o administrador do sistema e informe o erro!" />
                         <br/>
-                        <h:outputText value="Você pode recarregar a página clicando em 'Recarregar'ou
+                        <h:outputText value="Você pode recarregar a página clicando em 'Recarregar' ou
                                       ignorar o erro clicando em 'Fechar'." />
 
                         <p:separator/>

@@ -52,18 +52,55 @@
             allDayText: 'Todo o Dia'
         };
     </script>
+    <h:body  styleClass="Bimage">
+        <!-- FORM DE COMPONENTES GENERICOS-->
+        <h:form id="frmComponentesGenerico" >
+            <!--Mensagem Grow, geral-->
+            <p:growl showDetail="true" life="5000" />
+            
+            <!--Listener de excessões, Geral-->
+            <p:ajaxExceptionHandler type="java.lang.Exception" update="exceptionDialog" onexception="PF('exceptionDialog').show();" />
 
-    <h:body styleClass="Bimage">      
-        <h:form id="frmComponentesGenerico">
-            <p:growl showDetail="true" sticky="true" />
+            <p:dialog id="exceptionDialog" widgetVar="exceptionDialog"  header="Houve um erro no sistema" closable="false"
+                      height="400px" width="1100px"
+                      showEffect="clip" hideEffect="clip" resizable="false" draggable="false" modal="true"  appendTo="@(body)" >    
+                <p:outputPanel style="text-align:center;">
+                    <p:panel  >
+                        <p:graphicImage id="ftmImagemTopoGeral" width="150px" height="150px" styleClass="semMargin"
+                                        name="/fotos/128Alert.png"/>
+                        <p:separator/>
+                        <h:outputText value="Contate o administrador do sistema e informe o erro!" />
+                        <br/>
+                        <h:outputText value="Você pode recarregar a página clicando em 'Recarregar' ou
+                                      ignorar o erro clicando em 'Fechar'." />
+
+                        <p:separator/>
+                        <p:button onclick="document.location.href = document.location.href;" icon="Refresh24-iconfinder"
+                                  value="Recarregar" />
+                        <p:spacer width="20px" />
+
+                        <p:commandButton value="Fechar" type="button" icon="Cross24-iconfinder" 
+                                         onclick="PF('exceptionDialog').hide()" />
+                    </p:panel>
+
+                </p:outputPanel>
+                <p:spacer height="10px" />
+
+                <p:fieldset legend="Mais informações" toggleable="true" toggleSpeed="500" collapsed="true" >
+                    <p:outputPanel style="text-align:center;">
+                        <h:outputText value="Detalhes do erro:" />                            
+                        <p:separator/>
+                    </p:outputPanel>
+                    <h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" />
+                </p:fieldset>
+            </p:dialog>
         </h:form>
 
-        <h:form id="frmLogar">
-            
+        <h:form id="frmLogar" >
             <div class="ui-fluid">
                 <!--Dialogo de login-->
-                <p:dialog  header="Acesso ao sistema SIGITEC" visible="true" closable="false" draggable="false" 
-                           resizable="false" rendered="#{LoginView.existeUserBd}" widgetVar="tes">
+                <p:dialog  header="Acesso ao sistema SIGITEC" closable="false" draggable="false" visible="true" showEffect="clip"
+                           resizable="false" rendered="#{LoginView.existeUserBd}" widgetVar="wvDlLogin" hideEffect="clip" >
                     <p:panel id="panelLogin">
                         <h:panelGrid id="panelGridLogin" columns="3" cellpadding="5" style="ui-widget">
 
@@ -80,17 +117,14 @@
                         <p:commandButton id="btnLogar" value="Acessar" actionListener="#{LoginView.logar()}" 
                                          style="ui-button" styleClass="ui-button-text" update="frmLogar" />
 
-                        <p:commandLink   id="clReenviarSenha" update="frmLogar" value="Esqueci minha senha" type="button" 
-                                         immediate="true" action="/EsqueciMinhaSenha.xhtml?faces-redirect=true" >
-                            <!--<p:graphicImage name="fotos/64Question.png" />-->
-                        </p:commandLink>
-                    </p:panel>  
+                        <p:commandLink id="clReenviarSenha" update="frmLogar frmReenviarSenha" value="Esqueci minha senha" 
+                                       immediate="true" actionListener="#{LoginView.MostraCaixaReenvioSenha()}" />
+                    </p:panel>
 
                     <p:blockUI block="panelLogin"  widgetVar="blockLogar">
                         ACESSANDO
                     </p:blockUI>
                 </p:dialog>
-
 
                 <!--CADASTRO DE COORDENADOR-->
                 <p:dialog closable="false" draggable="false" resizable="false" visible="true"
@@ -139,7 +173,7 @@
 
                         <p:separator />
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{LoginView.salvarCoordenador()}" 
-                                         update="frmLogar" >
+                                         update="frmLogar frmComponentesGenerico" onclick="PF('blockUiGeral').show()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Information32-iconfinder" />
                         </p:commandButton>
 
@@ -150,7 +184,7 @@
                         </p:confirmDialog>
 
                         <p:blockUI block="panel" trigger="btnSalvar" >
-                            SALVANDO<br />
+                            AGUARDE UM MOMENTO...<br />
                             <p:graphicImage name="fotos/LoadingBar.gif" />
                         </p:blockUI>
                     </p:panel>
@@ -158,7 +192,7 @@
 
                 <!--Caixa de mensagem de informação sobre cadastro-->
                 <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="fade" hideEffect="fade"
-                          header="Por que preciso cadastrar um coordenador?" modal="true"
+                          header="Por que preciso cadastrar um coordenador?" modal="true" 
                           resizable="false" draggable="false"   appendTo="@(body)" styleClass="corDialog" style="text-align:center;" >
                     <p:scrollPanel mode="native" style="width:435px;height:100px">
                         <h:outputText value="O coordenador da incubadora é aquele que cadastra outros usuários no sistema,
@@ -173,7 +207,31 @@
                 </p:commandLink>
                 <p:tooltip for="clWhy" value="Porque tenho que fazer isso?" />
             </div>
-
         </h:form>
+
+        <!--Não colocar no mesmo formulário da caixa de login: Gera bug-->
+        <p:dialog id="diaReenviarSenha" showEffect="clip" hideEffect="clip" header="Gerar nova senha" 
+                  widgetVar="dlReenviarSenha" 
+                  resizable="false" draggable="false" >
+            <h:form id="frmReenviarSenha">
+                <div class="ui-fluid">
+                    <p:panel id="panelReenviarSenha">
+                        <h:panelGrid id="panelGridReenviarSenha" columns="3" cellpadding="5" style="ui-widget">
+                            <p:outputLabel for="emailReen" value="E-mail: " />  
+                            <p:inputText id="emailReen" value="#{LoginView.obj.email}" required="true" size="45" maxlength="99"
+                                         requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
+                            <p:message for="emailReen"/>
+                        </h:panelGrid>
+
+                        <p:separator />
+                        <p:commandButton id="btnReenviarSenha" value="Gerar nova senha" actionListener="#{LoginView.gerarNovaSenha()}" 
+                                         update="frmReenviarSenha" />
+
+                        <p:commandLink id="clReenviarSenha" update="frmLogar frmReenviarSenha" value="Voltar para login" 
+                                       immediate="true" actionListener="#{LoginView.MostraCaixaLogin()}" />
+                    </p:panel>
+                </div>
+            </h:form>
+        </p:dialog>
     </h:body>
 </html>
