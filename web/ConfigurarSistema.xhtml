@@ -20,16 +20,16 @@
                         <p:tab id="panel" title="Configurações da incubadora" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="nome" value="Nome: " />
-                                <p:inputText id="nome" value="#{ConfiguracoesView.inc.nome}" required="true" size="45" maxlength="45"
+                                <p:inputText id="nome" value="#{ConfiguracoesView.inc.nome}" required="true" size="45" maxlength="255"
                                              requiredMessage="#{ConfiguracoesView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="nome"/>
 
                                 <p:outputLabel for="universidade" value="Universidade: " />  
-                                <p:inputText id="universidade" value="#{ConfiguracoesView.inc.universidade}" size="45" maxlength="45" />
+                                <p:inputText id="universidade" value="#{ConfiguracoesView.inc.universidade}" size="45" maxlength="255" />
                                 <p:message for="universidade"/>
 
                                 <p:outputLabel for="redeItcp" value="Rede ITCP " />
-                                <p:inputText id="redeItcp" value="#{ConfiguracoesView.inc.redeItcp}" size="45" maxlength="45" />
+                                <p:inputText id="redeItcp" value="#{ConfiguracoesView.inc.redeItcp}" size="45" maxlength="255" />
                                 <p:message for="redeItcp"/>
 
                                 <p:outputLabel for="dataCriacao" value="Data de criação " />

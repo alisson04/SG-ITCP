@@ -39,7 +39,7 @@ public class Incubadora implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
@@ -47,10 +47,10 @@ public class Incubadora implements Serializable {
     @Column(name = "dataCriacao")
     @Temporal(TemporalType.DATE)
     private Date dataCriacao;
-    @Size(max = 45)
+    @Size(max = 255)
     @Column(name = "redeItcp")
     private String redeItcp;
-    @Size(max = 45)
+    @Size(max = 255)
     @Column(name = "universidade")
     private String universidade;
     @Size(max = 255)

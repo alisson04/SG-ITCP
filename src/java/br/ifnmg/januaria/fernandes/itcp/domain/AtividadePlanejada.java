@@ -59,7 +59,7 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 45)
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)

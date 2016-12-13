@@ -52,7 +52,7 @@ public class PlanoAcao implements Serializable, EntityConverter {
     @Column(name = "dataFim")
     @Temporal(TemporalType.DATE)
     private Date dataFim;
-    @Size(max = 200)
+    @Size(max = 255)
     @Column(name = "descricao")
     private String descricao;
     
