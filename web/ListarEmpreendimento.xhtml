@@ -12,7 +12,7 @@
                     <!--Listagem de EES-->
                     <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento cadastrado." selectionMode="single"
                                  value="#{ListarEmpreendimentosView.listaEmpreendimentos}" var="empreendimentoCursor" widgetVar="varGlobal"
-                                 filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}" rows="12" paginator="true"
+                                 filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}" rows="10" paginator="true"
                                  selection="#{ListarEmpreendimentosView.empreendimentoSelecionado}" rowKey="#{empreendimentoCursor.id}"
                                  paginatorPosition="top">
 

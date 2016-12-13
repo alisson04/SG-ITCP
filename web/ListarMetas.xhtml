@@ -14,7 +14,7 @@
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." 
                                  value="#{ListarMetasView.listaMetas}" filteredValue="#{ListarMetasView.listaMetasFiltradas}" 
                                  selectionMode="single" selection="#{ListarMetasView.metaSelecionada}" rowKey="#{metaCursor.idMeta}"
-                                 var="metaCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                                 var="metaCursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top">
 
                         <p:ajax event="rowSelect" update=":frmListagem"/>
 

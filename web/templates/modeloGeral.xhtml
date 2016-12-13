@@ -59,7 +59,19 @@
             AGUARDE UM MOMENTO...<br />
             <p:graphicImage name="fotos/LoadingBar.gif"/>
         </p:blockUI>
+
         <h:form id="frmComponentesGenerico">
+            <!--Caixa de confimação global: PRecisa estar dentro de um form-->
+            <p:confirmDialog global="true" showEffect="clip" hideEffect="clip" closeOnEscape="true" closable="false" >
+                <div style="display:flex;justify-content:center;align-items:center;">
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
+                                     icon="BlackCheck24-iconfinder" />
+                    <p:spacer width="10px" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
+                                     icon="Cross24-iconfinder" />
+                </div>
+            </p:confirmDialog>
+
             <!--Mensagem Grow, geral-->
             <p:growl showDetail="true" life="5000" />
 
@@ -112,7 +124,7 @@
                                 value="./image/#{modeloGeralView.geraFotoTopo()}"/>
             </p:layoutUnit>
 
-            <p:layoutUnit position="south" size="40" resizable="false" closable="false" collapsible="false" >
+            <p:layoutUnit position="south" size="40" resizable="false" closable="false" collapsible="false" rendered="false">
                 <p:outputPanel style="text-align:center;" >
                     <h:outputText value="Todos os direitos reservados ao IFNMG - Campus Januária" />
                 </p:outputPanel>
@@ -185,17 +197,6 @@
                             </p:menuButton>
                         </f:facet>
                     </p:menubar>
-
-
-                    <p:confirmDialog global="true" showEffect="clip" hideEffect="clip" closeOnEscape="true" closable="false" >
-                        <div style="display:flex;justify-content:center;align-items:center;">
-                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
-                                             icon="BlackCheck24-iconfinder" />
-                            <p:spacer width="10px" />
-                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
-                                             icon="Cross24-iconfinder" />
-                        </div>
-                    </p:confirmDialog>
                 </h:form>
 
                 <!--EDIÇÂO DA MINHA CONTA-->

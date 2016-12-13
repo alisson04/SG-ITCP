@@ -59,6 +59,15 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
     }
 
     //METODOS
+    public String geraPrimeiroNomeUser(HorarioTrabalho u) {
+        int i = u.getUsuario().getNome().indexOf(" ");
+        int x = u.getUsuario().getNome().lastIndexOf(" ");
+        /* Busca na string, a posição do ' ' espaço, e retorna o indice dele */
+        return (u.getUsuario().getNome().substring(0, i) 
+                + u.getUsuario().getNome().substring(x));
+        /* Aqui é separada a String do primeiro caractere até o primeiro espaço*/
+    }
+
     public void salvar() {
         try {
             if (verificaHorario()) {
@@ -213,7 +222,7 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
             throw new FacesException(ex);
         }
     }
-    
+
     //SETS E GETS
     public HorarioTrabalho getObj() {
         return obj;

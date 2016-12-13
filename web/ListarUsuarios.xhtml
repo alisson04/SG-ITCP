@@ -10,10 +10,11 @@
             <h:form id="frmListagemUsuarios" >
                 <p:panel header="Usuários cadastrados" >
                     <!--Listagem de usuários-->
-                    <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." value="#{ListarUsuariosView.listaUsuarios}" 
-                                 filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" selectionMode="single"
+                    <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." selectionMode="single"
+                                 value="#{ListarUsuariosView.listaUsuarios}" 
+                                 filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" 
                                  selection="#{ListarUsuariosView.objSelecionado}" rowKey="#{usuarioCursor.id}"
-                                 var="usuarioCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                                 var="usuarioCursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top">
 
                         <p:ajax event="rowSelect" update=":frmListagemUsuarios"/>
 

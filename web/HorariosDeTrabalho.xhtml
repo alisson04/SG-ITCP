@@ -20,7 +20,7 @@
                         <p:dataTable id="listaHorarios" emptyMessage="Nenhum horário cadastrado." 
                                      value="#{HorarioTrabalhoView.listaHorarios}" 
                                      filteredValue="#{HorarioTrabalhoView.listaHorariosFiltrados}" style="text-align: center"
-                                     var="horarioCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                                     var="horarioCursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top">
 
                             <f:facet name="footer" >
                                 <h:commandLink id="pdfHoras">
@@ -39,9 +39,9 @@
                                 <p:tooltip for="xlsHoras" value="Exportar para Excel" />
                             </f:facet>
 
-                            <p:column headerText="Nome" filterBy="#{horarioCursor.usuario.nome}"
-                                      sortBy="#{horarioCursor.usuario.nome}" filterMatchMode="contains">
-                                <h:outputText value="#{horarioCursor.usuario.nome}"/>
+                            <p:column headerText="Nome" filterBy="#{HorarioTrabalhoView.geraPrimeiroNomeUser(horarioCursor)}"
+                                      sortBy="#{HorarioTrabalhoView.geraPrimeiroNomeUser(horarioCursor)}" filterMatchMode="contains">
+                                <h:outputText value="#{HorarioTrabalhoView.geraPrimeiroNomeUser(horarioCursor)}"/>
                             </p:column>
 
                             <p:column headerText="Domingo" >

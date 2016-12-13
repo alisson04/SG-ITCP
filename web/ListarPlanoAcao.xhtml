@@ -14,7 +14,7 @@
                     <p:dataTable id="dtListagemPlanosAcao" emptyMessage="Nenhum plano de ação cadastrado." var="planoAcaoCursor"
                                  value="#{ListarPlanoAcaoView.listaPlanoAcao}" filteredValue="#{ListarPlanoAcaoView.listaPlanoAcaoFiltrados}" 
                                  selectionMode="single" selection="#{ListarPlanoAcaoView.planoSelecionado}" paginatorPosition="top"
-                                 rowKey="#{planoAcaoCursor.id}"  widgetVar="varGlobal" rows="12" paginator="true" >
+                                 rowKey="#{planoAcaoCursor.id}"  widgetVar="varGlobal" rows="10" paginator="true" >
 
                         <p:ajax event="rowSelect" update=":frmListagemPlanosAcao"/>
 
