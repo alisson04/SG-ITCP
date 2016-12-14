@@ -131,11 +131,23 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
 
     public void salvarView() {
         try {
-            bean.salvarBean(objSalvar);
-            objSalvar = new AtividadePlanejada();
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVarEditarDialog').hide()");
-            msgGrowSaveGeneric();
+            Date inicioAtividade = objSalvar.getDataInicio();
+            Date fimAtividade = objSalvar.getDataFim();
+            Date inicioPlano = objSalvar.getMeta().getPlanoAcao().getDataInicio();
+
+            if (fimAtividade.before(inicioAtividade)) { //SE o FIM antes deINICIO
+                msgPanelErroCustomizavel("Verifique a data", "A 'data de início' da atividade deve ser igual ou maior a sua data de fim!");
+            } else if (inicioAtividade.before(inicioPlano)) {//SE INICIO ATIVIDADE antes INICIO PLANO
+                msgPanelErroCustomizavel("Verifique a data", "A 'data de início' da atividade deve ser maior ou igual a 'data de iníco' do plano!");
+            } else if (fimAtividade.after(objSalvar.getMeta().getPrazo())) {//SE FIM ATIVIDADE depois PRAZO META
+                msgPanelErroCustomizavel("Verifique a data", "A 'data de fim' da atividade deve ser antes ou igual ao prazo de sua meta!");
+            } else {
+                bean.salvarBean(objSalvar);
+                objSalvar = new AtividadePlanejada();
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('wVarEditarDialog').hide()");
+                msgGrowSaveGeneric();
+            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }

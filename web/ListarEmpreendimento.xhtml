@@ -23,9 +23,9 @@
                             <h:outputText value="#{empreendimentoCursor.nome}"/>
                         </p:column>
 
-                        <p:column headerText="Razão social" filterBy="#{empreendimentoCursor.razaoSocial}" 
-                                  sortBy="#{empreendimentoCursor.razaoSocial}" filterMatchMode="contains">
-                            <h:outputText value="#{empreendimentoCursor.razaoSocial}"/>
+                        <p:column headerText="Sigla" filterBy="#{empreendimentoCursor.sigla}" 
+                                  sortBy="#{empreendimentoCursor.sigla}" filterMatchMode="contains">
+                            <h:outputText value="#{empreendimentoCursor.sigla}"/>
                         </p:column>
 
                         <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.email}" 
@@ -76,7 +76,7 @@
                                 <p:outputLabel value="E-mail: " />  
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.email}" />
                                 <p:outputLabel value="Razão social: " />
-                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.razaoSocial}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.sigla}" />
                                 <p:outputLabel value="CNPJ: "/>
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.cnpj}" />
                                 <p:outputLabel value="Endereço: "/>
@@ -120,9 +120,10 @@
                                 <p:inputText id="e-mail" value="#{ListarEmpreendimentosView.objSalvar.email}" size="45" maxlength="255"/>
                                 <p:message for="e-mail" />
 
-                                <p:outputLabel for="razaoSocial" value="Razão social: " />
-                                <p:inputText id="razaoSocial" value="#{ListarEmpreendimentosView.objSalvar.razaoSocial}" size="45" 
-                                             maxlength="255"/>
+                                <p:outputLabel for="razaoSocial" value="Sigla/Abreviação: " />
+                                <p:inputText id="razaoSocial" value="#{ListarEmpreendimentosView.objSalvar.sigla}" size="45" 
+                                             required="true" requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
+                                             maxlength="45"/>
                                 <p:message for="razaoSocial" />
 
                                 <p:outputLabel for="cnpj" value="CNPJ: "/>

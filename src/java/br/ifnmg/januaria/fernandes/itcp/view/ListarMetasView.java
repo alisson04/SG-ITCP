@@ -1,7 +1,9 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
+import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
@@ -33,9 +35,13 @@ public class ListarMetasView extends MensagensGenericas implements Serializable 
     private List<Meta> listaMetasFiltradas;
     private MetaBean bean = new MetaBean();
     private PlanoAcaoBean planoAcaoBean = new PlanoAcaoBean();
+    
+    private List<Empreendimento> listaEmpreendimentos;
+    private EmpreendimentoBean eptbean = new EmpreendimentoBean();
 
     public ListarMetasView() {
         try {
+            listaEmpreendimentos = eptbean.listarBean();
             listaMetas = bean.listarBean();
             listaPlanos = planoAcaoBean.listarBean();
         } catch (Exception ex) {
@@ -54,11 +60,17 @@ public class ListarMetasView extends MensagensGenericas implements Serializable 
 
     public void salvarView() {
         try {
-            bean.salvarBean(objSalvar);
-            objSalvar = new Meta();
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVarEditarDialog').hide()");
-            context.execute("PF('dlgEdicaoPronta').show()");
+            if (objSalvar.getPrazo().before(objSalvar.getPlanoAcao().getDataInicio())) {
+                msgPanelErroCustomizavel("Erro na data", "O prazo da meta deve ser maior ou igual a 'data de início' do plano de ação!");
+            } else if (objSalvar.getPrazo().after(objSalvar.getPlanoAcao().getDataFim())) {
+                msgPanelErroCustomizavel("Erro na data", "O prazo da meta deve ser menor ou igual a 'data de fim' do plano de ação'!");
+            } else {
+                bean.salvarBean(objSalvar);
+                objSalvar = new Meta();
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('wVarEditarDialog').hide()");
+                msgGrowSaveGeneric();
+            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -80,7 +92,7 @@ public class ListarMetasView extends MensagensGenericas implements Serializable 
         }
     }
 
-    public String conveteData(Date data) {
+    public String converteData(Date data) {
         try {
             if (data != null) {
                 SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
@@ -142,5 +154,13 @@ public class ListarMetasView extends MensagensGenericas implements Serializable 
 
     public void setObjSalvar(Meta objSalvar) {
         this.objSalvar = objSalvar;
+    }
+
+    public List<Empreendimento> getListaEmpreendimentos() {
+        return listaEmpreendimentos;
+    }
+
+    public void setListaEmpreendimentos(List<Empreendimento> listaEmpreendimentos) {
+        this.listaEmpreendimentos = listaEmpreendimentos;
     }
 }

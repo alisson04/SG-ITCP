@@ -136,8 +136,9 @@
                                                  requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}"
                                                  value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:435px" >
                                     <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="obj" itemLabel="#{obj.nome}" 
-                                                   itemValue="#{obj}"/>
+                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="obj" 
+                                                   itemLabel="#{obj.nome} - #{obj.planoAcao.empreendimento.sigla} 
+                                                   - Prazo:#{ListarAtiviPlanejadasView.conveteData(obj.prazo)}" itemValue="#{obj}"/>
                                 </p:selectOneMenu>
                                 <p:message for="meta"/>
 

@@ -84,9 +84,11 @@ public class Empreendimento implements Serializable, EntityConverter {
     @Column(name = "dataIncubacao")
     @Temporal(TemporalType.DATE)
     private Date dataIncubacao;
-    @Size(max = 255)
-    @Column(name = "razaoSocial")
-    private String razaoSocial;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "sigla")
+    private String sigla;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -202,12 +204,12 @@ public class Empreendimento implements Serializable, EntityConverter {
         this.dataIncubacao = dataIncubacao;
     }
 
-    public String getRazaoSocial() {
-        return razaoSocial;
+    public String getSigla() {
+        return sigla;
     }
 
-    public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
     public String getTipo() {
