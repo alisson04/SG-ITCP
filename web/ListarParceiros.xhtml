@@ -12,7 +12,8 @@
                 <p:panel header="Parceiros cadastrados" >
                     <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhum parceiro encontrado." 
                                  value="#{ListarParceirosView.listaParceiros}" filteredValue="#{ListarParceirosView.listaParceirosFiltrados}" 
-                                 selectionMode="single" selection="#{ListarParceirosView.parceiroSelecionado}" rowKey="#{parceiroCursor.id}" 
+                                 selectionMode="single" selection="#{ListarParceirosView.parceiroSelecionado}" 
+                                 rowKey="#{parceiroCursor.id}" 
                                  var="parceiroCursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top">
                         <p:ajax event="rowSelect" update=":frmListagemParceiros"/>
 

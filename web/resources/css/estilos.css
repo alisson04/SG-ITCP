@@ -12,6 +12,10 @@
     width: 50%;
 }
 
+.colunasDeDatas200PX{
+    width: 200px;
+}
+
 .tamanhoTexto15 .ui-widget {
     font-size: 20px !important;
 }

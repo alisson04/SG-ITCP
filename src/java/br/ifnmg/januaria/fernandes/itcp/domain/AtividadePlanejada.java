@@ -33,6 +33,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "AtividadePlanejada.findAll", query = "SELECT a FROM AtividadePlanejada a")})
 public class AtividadePlanejada implements Serializable, EntityConverter {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "atividadePlanejada")
+    private List<HorasTrabalhadas> horasTrabalhadasList;
+
     @JoinTable(name = "AtividadeUsuario", joinColumns = {
         @JoinColumn(name = "idAtividadeFk", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "idUsuarioFk", referencedColumnName = "id")})
@@ -214,5 +217,13 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
 
     public void setUsuarioList(List<Usuario> usuarioList) {
         this.usuarioList = usuarioList;
+    }
+
+    public List<HorasTrabalhadas> getHorasTrabalhadasList() {
+        return horasTrabalhadasList;
+    }
+
+    public void setHorasTrabalhadasList(List<HorasTrabalhadas> horasTrabalhadasList) {
+        this.horasTrabalhadasList = horasTrabalhadasList;
     }
 }

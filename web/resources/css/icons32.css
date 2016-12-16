@@ -30,6 +30,12 @@
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
 }
 
+.Clock32-iconfinder {
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons32/32Clock.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
 .dolar-icon {
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
 }

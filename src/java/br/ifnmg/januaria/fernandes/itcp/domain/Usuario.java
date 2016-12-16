@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,6 +30,9 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable, EntityConverter {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<HorasTrabalhadas> horasTrabalhadasList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -315,5 +319,12 @@ public class Usuario implements Serializable, EntityConverter {
     public void setHorarioTrabalho(HorarioTrabalho horarioTrabalho) {
         this.horarioTrabalho = horarioTrabalho;
     }
-    
+
+    public List<HorasTrabalhadas> getHorasTrabalhadasList() {
+        return horasTrabalhadasList;
+    }
+
+    public void setHorasTrabalhadasList(List<HorasTrabalhadas> horasTrabalhadasList) {
+        this.horasTrabalhadasList = horasTrabalhadasList;
+    }
 }

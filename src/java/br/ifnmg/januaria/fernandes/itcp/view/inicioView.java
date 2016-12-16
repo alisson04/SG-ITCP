@@ -1,24 +1,26 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.AtividadePlanejadaBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.HorasTrabalhadasBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.IncubadoraBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
+import br.ifnmg.januaria.fernandes.itcp.domain.HorasTrabalhadas;
 import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
+import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -43,6 +45,15 @@ public class inicioView extends MensagensGenericas implements Serializable {
     private List<AtividadePlanejada> listaAtividades;
     private List<AtividadePlanejada> listaAtividadesFiltradas;
     private AtividadePlanejadaBean bean;
+    private Date dataFiltroInicioAtv;
+    private Date dataFiltroFimAtv;
+
+    //Horas trabalhadas
+    private HorasTrabalhadas horasTrabalhadas;//Variáves q recebe a atividade q esta tendo horas lancadas
+    private HorasTrabalhadasBean horasBean;
+    private List<HorasTrabalhadas> listaHorasTrabalhadas;
+    private Date totalHorasAtividade = new Date();//Total de horas trabalhados em uma atividade
+
     private MetaBean metaBean;
 
     //Incubadora VARS
@@ -83,6 +94,129 @@ public class inicioView extends MensagensGenericas implements Serializable {
                 System.out.println("Não incubadora cadastrada");
                 existeInc = false;
             }
+
+            //Filtro de datas na listagem de atividades
+            Calendar x = Calendar.getInstance();//Pega a data atual
+            dataFiltroInicioAtv = x.getTime();//Seta a data atual
+            x.add((Calendar.DAY_OF_MONTH), 7);//soma 7 a data atual
+            dataFiltroFimAtv = x.getTime();//Seta a data somada
+            filtraAtividadesPorData();//Filtra as atividades
+
+            //Horas trabalhadas
+            horasBean = new HorasTrabalhadasBean();
+            horasTrabalhadas = new HorasTrabalhadas();
+            totalHorasAtividade.setTime(0);
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
+    //METODOS LANÇAR HORAS
+    public void setaPrimaryKeyHoras(AtividadePlanejada atv, Usuario user) {//Chamdo pelo botão de lancar horas
+        horasTrabalhadas.setUsuario(user);
+        horasTrabalhadas.setAtividadePlanejada(atv);
+
+        listaHorasTrabalhadas = horasBean.listarPorUserAtividadeBean(user, atv);
+    }
+
+    public void salvarLancamentoHoras() {//Chamado pelo botão de salvar horas lancadas
+        try {
+            horasBean.salvarBean(horasTrabalhadas);
+            horasTrabalhadas = new HorasTrabalhadas();
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('wVLancarHorasDialog').hide()");
+            msgGrowSaveGeneric();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
+    public void filtraAtividadesPorData() {
+        Date inicioAtv;
+        Date fimAtv;
+        List<AtividadePlanejada> listaAux = new ArrayList();
+        listaAtividades = bean.listarBean();
+
+        for (int i = 0; i < listaAtividades.size(); i++) {
+            inicioAtv = listaAtividades.get(i).getDataInicio();
+            fimAtv = listaAtividades.get(i).getDataFim();
+
+            if ((inicioAtv.after(dataFiltroInicioAtv) || inicioAtv.equals(dataFiltroInicioAtv))
+                    && (fimAtv.before(dataFiltroFimAtv) || fimAtv.equals(dataFiltroFimAtv))) {
+                listaAux.add(listaAtividades.get(i));
+            }
+        }
+        listaAtividades = listaAux;
+    }
+
+    public String geraHorasTotalAtividade() {
+        if (listaHorasTrabalhadas != null) {
+            HorasTrabalhadas obj;
+            int segundos = 0;
+            for (int i = 0; i < listaHorasTrabalhadas.size(); i++) {
+                obj = listaHorasTrabalhadas.get(i);
+                segundos = (int) Math.floor(segundos + (((int) (long) 
+                         (obj.getHorasFim().getTime() - obj.getHorasInicio().getTime())) / 1000));
+            }
+            int minutos = (segundos / 60);
+            int horas = minutos / 60;
+            int minutosRestantes = minutos % 60;
+
+            if (minutosRestantes == 0
+                    || minutosRestantes == 1
+                    || minutosRestantes == 2
+                    || minutosRestantes == 3
+                    || minutosRestantes == 4
+                    || minutosRestantes == 5
+                    || minutosRestantes == 6
+                    || minutosRestantes == 7
+                    || minutosRestantes == 8
+                    || minutosRestantes == 9) {
+                return (horas + ":0" + minutosRestantes);
+            } else {
+                return (horas + ":" + minutosRestantes);
+            }
+        } else {
+            return "0";
+        }
+    }
+
+    public String geraHorasAtividade(HorasTrabalhadas h) {
+        try {
+            if (h.getId() != null) {
+                int segundos = (int) Math.floor(((int) (long) (h.getHorasFim().getTime()
+                        - h.getHorasInicio().getTime())) / 1000);
+                int minutos = (segundos / 60);
+                int horas = minutos / 60;
+                int minutosRestantes = minutos % 60;
+
+                if (minutosRestantes == 0
+                        || minutosRestantes == 1
+                        || minutosRestantes == 2
+                        || minutosRestantes == 3
+                        || minutosRestantes == 4
+                        || minutosRestantes == 5
+                        || minutosRestantes == 6
+                        || minutosRestantes == 7
+                        || minutosRestantes == 8
+                        || minutosRestantes == 9) {
+                    return (horas + ":0" + minutosRestantes);
+                } else {
+                    return (horas + ":" + minutosRestantes);
+                }
+            } else {
+                return "0";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
+    public void excluirHorasTrabalhadasView(HorasTrabalhadas h, Usuario u) {
+        try {
+            horasBean.excluirBean(h);
+            setaPrimaryKeyHoras(h.getAtividadePlanejada(), u);
+            msgGrowDeleteGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -160,19 +294,6 @@ public class inicioView extends MensagensGenericas implements Serializable {
     }
 
     //METODOS
-    public String conveteData(Date data) {
-        try {
-            if (data != null) {
-                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-                return forma.format(data);
-            } else {
-                return "";
-            }
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
     public void mudaAtvParaNaoExecutada(AtividadePlanejada at) {//Muda Status da Atividade para "Não executada"
         try {
             at.setStatus("Não iniciada");
@@ -209,6 +330,20 @@ public class inicioView extends MensagensGenericas implements Serializable {
     public void onEventSelect(SelectEvent selectEvent) {
         try {
             event = (ScheduleEvent) selectEvent.getObject();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
+    //METODOS GERAIS
+    public String conveteData(Date data) {
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -257,5 +392,45 @@ public class inicioView extends MensagensGenericas implements Serializable {
 
     public void setExisteInc(boolean existeInc) {
         this.existeInc = existeInc;
+    }
+
+    public Date getDataFiltroInicioAtv() {
+        return dataFiltroInicioAtv;
+    }
+
+    public void setDataFiltroInicioAtv(Date dataFiltroInicioAtv) {
+        this.dataFiltroInicioAtv = dataFiltroInicioAtv;
+    }
+
+    public Date getDataFiltroFimAtv() {
+        return dataFiltroFimAtv;
+    }
+
+    public void setDataFiltroFimAtv(Date dataFiltroFimAtv) {
+        this.dataFiltroFimAtv = dataFiltroFimAtv;
+    }
+
+    public HorasTrabalhadas getHorasTrabalhadas() {
+        return horasTrabalhadas;
+    }
+
+    public void setHorasTrabalhadas(HorasTrabalhadas atividadeLancarHoras) {
+        this.horasTrabalhadas = atividadeLancarHoras;
+    }
+
+    public List<HorasTrabalhadas> getListaHorasTrabalhadas() {
+        return listaHorasTrabalhadas;
+    }
+
+    public void setListaHorasTrabalhadas(List<HorasTrabalhadas> listaHorasTrabalhadas) {
+        this.listaHorasTrabalhadas = listaHorasTrabalhadas;
+    }
+
+    public Date getTotalHorasAtividade() {
+        return totalHorasAtividade;
+    }
+
+    public void setTotalHorasAtividade(Date totalHorasAtividade) {
+        this.totalHorasAtividade = totalHorasAtividade;
     }
 }
