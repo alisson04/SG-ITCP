@@ -25,24 +25,25 @@
                                 <h:outputText value="#{atividadeCursor.nome}"/>
                             </p:column>
 
-                            <p:column headerText="Data início" styleClass="colunasDeDatas200PX" >
+                            <p:column headerText="Data início" styleClass="colunasTabela200PX" >
                                 <h:outputText value="#{inicioView.conveteData(atividadeCursor.dataInicio)}" />
                             </p:column>
 
-                            <p:column headerText="Data fim" styleClass="colunasDeDatas200PX" >
+                            <p:column headerText="Data fim" styleClass="colunasTabela200PX" >
                                 <h:outputText value="#{inicioView.conveteData(atividadeCursor.dataFim)}" />
                             </p:column>
 
                             <p:column headerText="Situação"  filterBy="#{atividadeCursor.status}" filterMatchMode="exact" 
-                                      styleClass="colunasDeDatas200PX" >
+                                      styleClass="colunasTabela200PX" >
                                 <f:facet name="filter">
                                     <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                         <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" noSelectionOption="true" />
-                                        <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" noSelectionOption="true" />
-                                        <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" />
+                                        <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" />
+                                        <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" />
                                     </p:selectOneMenu>
                                 </f:facet>
+
                                 <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagRed.png"
                                                 rendered="#{atividadeCursor.status == 'Não iniciada'}" />
                                 <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagYellow.png"
@@ -51,7 +52,7 @@
                                                 rendered="#{atividadeCursor.status == 'Finalizada'}" />
                             </p:column>
 
-                            <p:column headerText="Mudar situação para:" style="text-align: center;" styleClass="colunasDeDatas200PX" >
+                            <p:column headerText="Mudar situação para:" style="text-align: center;" styleClass="colunasTabela200PX" >
                                 <p:commandButton id="btnNaoIniciada" title="Não iniciada" update="frmCadastro" 
                                                  style="background-image:none;background-color:white;"
                                                  rendered="#{atividadeCursor.status != 'Não iniciada'}"
@@ -75,7 +76,7 @@
                             </p:column>
 
                             <p:column headerText="Lançar horas trabalhadas" style="text-align: center;" 
-                                      styleClass="colunasDeDatas200PX" >
+                                      styleClass="colunasTabela100PX" >
                                 <p:commandLink title="Lançar horas"  update="frmCadastro frmLancarHoras" actionListener="#{
                                                inicioView.setaPrimaryKeyHoras(atividadeCursor, modeloGeralView.usuarioLogado)}"
                                                oncomplete="PF('wVLancarHorasDialog').show()">
@@ -83,8 +84,17 @@
                                 </p:commandLink>
                             </p:column>
 
+                            <p:column headerText="Atribuir atividade" style="text-align: center;" 
+                                      styleClass="colunasTabela100PX" >
+                                <p:commandLink title="Atribuir atividade"  update="frmCadastro frmAtribuirAtv"
+                                               actionListener="#{inicioView.configuraPickList(atividadeCursor)}"
+                                               oncomplete="PF('wVAtribuirAtvDialog').show()" >
+                                    <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32AddUser.png" />
+                                </p:commandLink>
+                            </p:column>
+
                             <f:facet name="footer">
-                                <p:outputLabel value="Atividades que iniciam de " />
+                                <p:outputLabel value="Atividades que iniciam a partir de " />
                                 <p:calendar value="#{inicioView.dataFiltroInicioAtv}" locale="pt" navigator="true" 
                                             pattern="dd/MM/yyyy" size="10" mask="true" >
                                     <p:ajax event="dateSelect" listener="#{inicioView.filtraAtividadesPorData}" 
@@ -168,10 +178,34 @@
             </h:form>
 
             <!-- Precisa estar fora do form principal: Todo dialog com input precisa ter se próprio FOR-->
-            <p:dialog widgetVar="wVLancarHorasDialog" header="Lançar horas trabalhadas na atividade" 
-                      showEffect="clip" hideEffect="clip" closeOnEscape="true" modal="true"  appendTo="@(body)"
-                      draggable="false" resizable="false" style="text-align: center;" >
+            <p:dialog widgetVar="wVLancarHorasDialog" showEffect="clip" hideEffect="clip" closeOnEscape="true" modal="true"  
+                      appendTo="@(body)" draggable="false" resizable="false" style="text-align: center;" >
                 <h:form id="frmLancarHoras">
+
+                    <p:outputPanel style="text-align:center;" >
+                        <p:panel  header="Lançar horas trabalhadas na atividade" >
+                            <p:outputLabel for="dataInicio" value="Data: " />
+                            <p:calendar id="dataInicio" value="#{inicioView.horasTrabalhadas.dataTrabalho}" 
+                                        pattern="dd/MM/yyyy" size="8" mask="true" locale="pt" required="true"  />
+                            <p:spacer width="20px" />
+
+                            <p:outputLabel for="horaIni" value="Início: " />
+                            <p:calendar id="horaIni" value="#{inicioView.horasTrabalhadas.horasInicio}" pattern="HH:mm" 
+                                        timeOnly="true" mask="true" locale="pt" size="5" required="true" />
+                            <p:spacer width="20px" />
+
+                            <p:outputLabel for="horaFim" value="Fim: " />
+                            <p:calendar id="horaFim" value="#{inicioView.horasTrabalhadas.horasFim}" pattern="HH:mm" 
+                                        timeOnly="true" mask="true" locale="pt" size="5" required="true" />
+                            <p:separator/>
+
+                            <p:commandButton value="Lançar horas"  update="frmLancarHoras frmCadastro" icon="Save24-iconfinder" 
+                                             actionListener="#{inicioView.salvarLancamentoHoras()}"
+                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
+                        </p:panel>
+                    </p:outputPanel>
+                    <p:spacer width="30px" />
+
                     <p:dataTable emptyMessage="Nenhum lançamento!" value="#{inicioView.listaHorasTrabalhadas}"
                                  style="text-align: center; width: 600px" 
                                  var="horas" rows="5" paginator="true" paginatorPosition="top" >
@@ -180,15 +214,15 @@
                             Meus últimos lançamentos para essa atividade
                         </f:facet>
 
-                        <p:column headerText="Data" styleClass="colunasDeDatas200PX" >
+                        <p:column headerText="Data" styleClass="colunasTabela200PX" >
                             <h:outputText value="#{inicioView.conveteData(horas.dataTrabalho)}"   />
                         </p:column>
 
-                        <p:column headerText="Horas lançadas" styleClass="colunasDeDatas200PX" >
+                        <p:column headerText="Horas lançadas" styleClass="colunasTabela200PX" >
                             <h:outputText value="#{inicioView.geraHorasAtividade(horas)}"  />
                         </p:column>
 
-                        <p:column headerText="Excluir" styleClass="colunasDeDatas200PX" style="width: 50px" >
+                        <p:column headerText="Excluir" style="width: 50px" >
                             <p:commandLink id="btnExcluirrusr" update="frmLancarHoras" title="Excluir" immediate="true"
                                            actionListener="#{inicioView.excluirHorasTrabalhadasView(horas, 
                                                              modeloGeralView.usuarioLogado)}"
@@ -204,35 +238,37 @@
                             <h:outputText value="Total de horas trabalhadas na atividade: #{inicioView.geraHorasTotalAtividade()}" />
                         </f:facet>
                     </p:dataTable>
-                    <p:spacer height="10px" />
-                    <p:outputPanel style="text-align:center;">
-                        <p:panel >
-                            <h:panelGrid columns="3">
-                                <p:outputLabel for="dataInicio" value="Data de início: " />
-                                <p:calendar id="dataInicio" value="#{inicioView.horasTrabalhadas.dataTrabalho}" 
-                                            pattern="dd/MM/yyyy" size="10" mask="true" locale="pt" required="true" 
-                                            requiredMessage="#{inicioView.geraMsgGenericaCampoObrigatorioView()}" />
-                                <p:message for="dataInicio"/>
+                </h:form>
+            </p:dialog>
 
+            <!-- Precisa estar fora do form principal: Todo dialog com input precisa ter se próprio FOR-->
+            <p:dialog widgetVar="wVAtribuirAtvDialog" showEffect="clip" hideEffect="clip" closeOnEscape="true" modal="true"  
+                      appendTo="@(body)" draggable="false" resizable="false" style="text-align: left;" header="Atribuir atividade" >
+                <h:form id="frmAtribuirAtv">
+                    <p:pickList id="PojoPickList" value="#{inicioView.usuariosPickList}" var="objPickList" 
+                                effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
+                                showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
+                                removeLabel="Remover" removeAllLabel="Remover todos">
 
-                                <p:outputLabel value="Início atividade: " />
-                                <p:calendar id="horaIni" value="#{inicioView.horasTrabalhadas.horasInicio}" pattern="HH:mm" 
-                                            timeOnly="true" locale="pt" size="10" required="true" 
-                                            requiredMessage="#{inicioView.geraMsgGenericaCampoObrigatorioView()}"/>
-                                <p:message for="horaIni"/>
+                        <f:facet name="sourceCaption">Não vinculados</f:facet>
+                        <f:facet name="targetCaption">Já vinculados</f:facet>
 
-                                <p:outputLabel value="Fim atividade: " />
-                                <p:calendar id="horaFim" value="#{inicioView.horasTrabalhadas.horasFim}" pattern="HH:mm" timeOnly="true" 
-                                            locale="pt" size="10" required="true" 
-                                            requiredMessage="#{inicioView.geraMsgGenericaCampoObrigatorioView()}"/>
-                                <p:message for="horaFim"/>
-                            </h:panelGrid>
-                            <p:separator/>
+                        <p:column >
+                            <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
+                        </p:column>
 
-                            <p:commandButton value="Lançar horas"  update="frmLancarHoras frmCadastro" icon="Save24-iconfinder" 
-                                             actionListener="#{inicioView.salvarLancamentoHoras()}"
-                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
-                        </p:panel>
+                        <p:column >
+                            <h:outputText value="#{objPickList.nome}" />
+                        </p:column>
+                    </p:pickList>
+
+                    <p:separator/>
+                    <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
+                        <p:commandButton value="Salvar" icon="Save24-iconfinder" update="frmEditarMeusDados"
+                                         actionListener="#{inicioView.salvarAtribuicaoAtividade()}" 
+                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
+                            <p:confirm  header="ATENÇÃO!" message="  Deseja salvar as informações? " icon="Alert24-iconfinder" />
+                        </p:commandButton>
                     </p:outputPanel>
                 </h:form>
             </p:dialog>

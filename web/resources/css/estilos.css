@@ -12,7 +12,11 @@
     width: 50%;
 }
 
-.colunasDeDatas200PX{
+.colunasTabela100PX{
+    width: 100px;
+}
+
+.colunasTabela200PX{
     width: 200px;
 }
 

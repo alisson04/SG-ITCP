@@ -1,5 +1,5 @@
-.addUser-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/AddUser32.png") !important;
+.AddUser32-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons32/32AddUser.png") !important;
     height: 32px;
     width: 32px;
 }

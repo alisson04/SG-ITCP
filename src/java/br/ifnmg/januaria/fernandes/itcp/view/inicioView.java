@@ -4,6 +4,7 @@ import br.ifnmg.januaria.fernandes.itcp.bean.AtividadePlanejadaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.HorasTrabalhadasBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.IncubadoraBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
 import br.ifnmg.januaria.fernandes.itcp.domain.HorasTrabalhadas;
 import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
@@ -24,6 +25,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.DualListModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 import org.primefaces.model.chart.Axis;
@@ -47,6 +49,7 @@ public class inicioView extends MensagensGenericas implements Serializable {
     private AtividadePlanejadaBean bean;
     private Date dataFiltroInicioAtv;
     private Date dataFiltroFimAtv;
+    private AtividadePlanejada atividadeSelecionada;
 
     //Horas trabalhadas
     private HorasTrabalhadas horasTrabalhadas;//Variáves q recebe a atividade q esta tendo horas lancadas
@@ -64,6 +67,12 @@ public class inicioView extends MensagensGenericas implements Serializable {
 
     private LineChartModel lineModel1;
 
+    //PickList Usuario
+    private UsuarioBean usuarioBean;
+    private List<Usuario> listaUsuarios;
+    private List<Usuario> usuariosSelecionados;
+    private DualListModel<Usuario> usuariosPickList;
+
     //CONSTRUTOR
     @PostConstruct
     public void init() {
@@ -73,6 +82,7 @@ public class inicioView extends MensagensGenericas implements Serializable {
             bean = new AtividadePlanejadaBean();
             listaAtividades = bean.listarBean();
             metaBean = new MetaBean();
+            atividadeSelecionada = new AtividadePlanejada();
 
             //Adiciona atividade ao calendário
             for (int i = 0; i < listaAtividades.size(); i++) {
@@ -97,6 +107,7 @@ public class inicioView extends MensagensGenericas implements Serializable {
 
             //Filtro de datas na listagem de atividades
             Calendar x = Calendar.getInstance();//Pega a data atual
+            x.add((Calendar.DAY_OF_MONTH), -3);//soma 7 a data atual
             dataFiltroInicioAtv = x.getTime();//Seta a data atual
             x.add((Calendar.DAY_OF_MONTH), 7);//soma 7 a data atual
             dataFiltroFimAtv = x.getTime();//Seta a data somada
@@ -106,9 +117,46 @@ public class inicioView extends MensagensGenericas implements Serializable {
             horasBean = new HorasTrabalhadasBean();
             horasTrabalhadas = new HorasTrabalhadas();
             totalHorasAtividade.setTime(0);
+
+            //PickList Usuario
+            usuarioBean = new UsuarioBean();
+            listaUsuarios = usuarioBean.listarBean();
+            usuariosSelecionados = new ArrayList<Usuario>();
+            usuariosPickList = new DualListModel<Usuario>(listaUsuarios, usuariosSelecionados);
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
+    }
+
+    //METODOS USUARIO PICK LIST
+    public void configuraPickList(AtividadePlanejada atv) {
+        atividadeSelecionada = atv;//copia o obj para ser usado ao salvar a atv
+        listaUsuarios = usuarioBean.listarBean();
+
+        if (!atv.getUsuarioList().isEmpty()) {
+            System.out.println("Lista cheio");
+            usuariosPickList.setTarget(atv.getUsuarioList());
+            listaUsuarios.removeAll(atv.getUsuarioList());
+
+            usuariosPickList.setSource(listaUsuarios);
+        } else {
+            System.out.println("Lista vazia!");
+            usuariosSelecionados = new ArrayList<Usuario>();
+            usuariosPickList.setTarget(usuariosSelecionados);
+            usuariosPickList.setSource(listaUsuarios);
+        }
+    }
+
+    public void salvarAtribuicaoAtividade() {
+        atividadeSelecionada.setUsuarioList(usuariosPickList.getTarget());//Seta usuários na atividade
+        bean.salvarBean(atividadeSelecionada);//Salva a atividade no BD
+        filtraAtividadesPorData();//Atualiza as atividades filtrando por data estabelecida no construtor    
+        listaUsuarios = usuarioBean.listarBean();
+        usuariosSelecionados = new ArrayList<Usuario>();
+        usuariosPickList = new DualListModel<Usuario>(listaUsuarios, usuariosSelecionados);//Limpa a pickList
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('wVAtribuirAtvDialog').hide()");
+        msgGrowSaveGeneric();
     }
 
     //METODOS LANÇAR HORAS
@@ -121,11 +169,15 @@ public class inicioView extends MensagensGenericas implements Serializable {
 
     public void salvarLancamentoHoras() {//Chamado pelo botão de salvar horas lancadas
         try {
-            horasBean.salvarBean(horasTrabalhadas);
-            horasTrabalhadas = new HorasTrabalhadas();
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('wVLancarHorasDialog').hide()");
-            msgGrowSaveGeneric();
+            if (horasTrabalhadas.getHorasInicio().before(horasTrabalhadas.getHorasFim())) {
+                horasBean.salvarBean(horasTrabalhadas);
+                horasTrabalhadas = new HorasTrabalhadas();
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('wVLancarHorasDialog').hide()");
+                msgGrowSaveGeneric();
+            } else {
+                msgGrowlErroCustomizavel("Verifique os horários", "A hora de início deve ser antes da hora de fim!");
+            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -155,8 +207,7 @@ public class inicioView extends MensagensGenericas implements Serializable {
             int segundos = 0;
             for (int i = 0; i < listaHorasTrabalhadas.size(); i++) {
                 obj = listaHorasTrabalhadas.get(i);
-                segundos = (int) Math.floor(segundos + (((int) (long) 
-                         (obj.getHorasFim().getTime() - obj.getHorasInicio().getTime())) / 1000));
+                segundos = (int) Math.floor(segundos + (((int) (long) (obj.getHorasFim().getTime() - obj.getHorasInicio().getTime())) / 1000));
             }
             int minutos = (segundos / 60);
             int horas = minutos / 60;
@@ -432,5 +483,21 @@ public class inicioView extends MensagensGenericas implements Serializable {
 
     public void setTotalHorasAtividade(Date totalHorasAtividade) {
         this.totalHorasAtividade = totalHorasAtividade;
+    }
+
+    public DualListModel<Usuario> getUsuariosPickList() {
+        return usuariosPickList;
+    }
+
+    public void setUsuariosPickList(DualListModel<Usuario> usuariosPickList) {
+        this.usuariosPickList = usuariosPickList;
+    }
+
+    public AtividadePlanejada getAtividadeSelecionada() {
+        return atividadeSelecionada;
+    }
+
+    public void setAtividadeSelecionada(AtividadePlanejada atividadeSelecionada) {
+        this.atividadeSelecionada = atividadeSelecionada;
     }
 }
