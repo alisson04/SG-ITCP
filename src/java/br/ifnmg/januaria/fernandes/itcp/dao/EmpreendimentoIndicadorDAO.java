@@ -40,9 +40,8 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
 
         List<EmpreendimentoIndicador> listaObjsFiltrados;//Cria alista que será retornada
         listaObjsFiltrados = new ArrayList<>();//Instancia  a lista
-
         for (int i = 0; i < 48; i++) {//Roda 48 vezes coletando os indicadores do ESS com maior data
-            try {
+            try {//Precisa estar dentro do FOR
                 em = emf.createEntityManager();
                 em.getTransaction().begin();
                 EmpreendimentoIndicador indAux;//Cria o OBJ que receberá p resultado da consulta
@@ -61,14 +60,13 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
                 if (indAux != null) {
                     listaObjsFiltrados.add(indAux);
                 }
-
             } catch (NoResultException ex) {
-                em.getTransaction().rollback();
+                System.out.println("IND " + i + " não cadastrado nesse EES");
+            } catch (Exception ex) {
                 throw new FacesException(ex);
-            } finally {
-                em.close();
             }
         }
+        em.close();
         return listaObjsFiltrados;
     }
 

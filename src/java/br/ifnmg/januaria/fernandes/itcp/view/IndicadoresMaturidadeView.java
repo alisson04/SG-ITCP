@@ -101,7 +101,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
             if (listaEptIndGrafico.isEmpty()) {
                 msgGrowlErroCustomizavel("", "Não há indicadores preenchidos para essa categoria.");
             } else {
-                RequestContext.getCurrentInstance().update("frmMsgGenerico");//Atualiza para retirar a msg anterior
+                RequestContext.getCurrentInstance().update("frmComponentesGenerico");//Atualiza para retirar a msg anterior
             }
         } catch (Exception ex) {
             throw new FacesException(ex);
@@ -157,40 +157,44 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     public void liberaPainelIndicadores() {//Acontece ao selecionar um empreendimento na lista
         try {
-            Date dataAtual = new Date();
-            listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
-            List<EmpreendimentoIndicador> listaEptIndAux = new ArrayList();//Lista auxiliar
+            if (empreendimentoSelecionado != null) {
+                Date dataAtual = new Date();
+                listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
+                List<EmpreendimentoIndicador> listaEptIndAux = new ArrayList();//Lista auxiliar
 
-            System.out.println("===============================");
-            System.out.println("Quantidade de inds Cadastrados para esse EES: " + listaEptIndSalvar.size());
+                System.out.println("===============================");
+                System.out.println("Quantidade de inds Cadastrados para esse EES: " + listaEptIndSalvar.size());
 
-            for (int i = 0; i < listaIndicadores.size(); i++) {//Roda o total de indicaroes possiveis
-                EmpreendimentoIndicador indAux = new EmpreendimentoIndicador();
-                EmpreendimentoIndicadorPK EptIndPK = new EmpreendimentoIndicadorPK();
-                EptIndPK.setDataNota(dataAtual);//SETA a data
-                EptIndPK.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
-                EptIndPK.setIdIndicador(i + 1);//SETA o indicador
+                for (int i = 0; i < listaIndicadores.size(); i++) {//Roda o total de indicaroes possiveis
+                    EmpreendimentoIndicador indAux = new EmpreendimentoIndicador();
+                    EmpreendimentoIndicadorPK EptIndPK = new EmpreendimentoIndicadorPK();
+                    EptIndPK.setDataNota(dataAtual);//SETA a data
+                    EptIndPK.setIdEmpreendimentoFk(empreendimentoSelecionado.getId());//SETA o empreendimento
+                    EptIndPK.setIdIndicador(i + 1);//SETA o indicador
 
-                indAux.setEmpreendimentoIndicadorPK(EptIndPK);//SETA as chaves
-                listaEptIndAux.add(indAux);//Adiciona o obj a lista p ser usado na tela e talvez salvo
-            }
-            System.out.println("Lista aux: " + listaEptIndAux.size());
+                    indAux.setEmpreendimentoIndicadorPK(EptIndPK);//SETA as chaves
+                    listaEptIndAux.add(indAux);//Adiciona o obj a lista p ser usado na tela e talvez salvo
+                }
+                System.out.println("Lista aux: " + listaEptIndAux.size());
 
-            for (int i = 0; i < listaIndicadores.size(); i++) {//Roda o total de indicaroes possiveis
-                for (int x = 0; x < listaEptIndSalvar.size(); x++) {//Roda os inds Pegos do BD
-                    if (listaEptIndSalvar.get(x).getEmpreendimentoIndicadorPK().getIdIndicador() == i + 1) {
-                        listaEptIndAux.set(i, listaEptIndSalvar.get(x));
+                for (int i = 0; i < listaIndicadores.size(); i++) {//Roda o total de indicaroes possiveis
+                    for (int x = 0; x < listaEptIndSalvar.size(); x++) {//Roda os inds Pegos do BD
+                        if (listaEptIndSalvar.get(x).getEmpreendimentoIndicadorPK().getIdIndicador() == i + 1) {
+                            listaEptIndAux.set(i, listaEptIndSalvar.get(x));
+                        }
                     }
                 }
-            }
-            System.out.println("Lista Salvar oringin: " + listaEptIndSalvar.size());
-            System.out.println("Lista aux: " + listaEptIndAux.size());
+                System.out.println("Lista Salvar oringin: " + listaEptIndSalvar.size());
+                System.out.println("Lista aux: " + listaEptIndAux.size());
 
-            listaEptIndSalvar = listaEptIndAux;
-            categoriaSelecionada = "";//Limpa a categoria
-            listaEptIndGrafico = new ArrayList();//Limpa o gráfico
-            tabview.setActiveIndex(0);//Volta para a primeira TAB do formulario da tela
-            msgGrowlInfoCustomizavel("", "Agora selecione uma categoria de indicadores.");
+                listaEptIndSalvar = listaEptIndAux;
+                categoriaSelecionada = "";//Limpa a categoria
+                listaEptIndGrafico = new ArrayList();//Limpa o gráfico
+                tabview.setActiveIndex(0);//Volta para a primeira TAB do formulario da tela
+                msgGrowlInfoCustomizavel("", "Agora selecione uma categoria de indicadores.");
+            } else {
+                System.out.println("ERRO CRITICO NA PASSAGEM DE EES");
+            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
