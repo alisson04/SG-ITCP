@@ -6,7 +6,7 @@ import java.io.Serializable;
  *
  * @author alisson
  */
-public class Indicador implements Serializable {
+public class Indicador implements Serializable, EntityConverter {
 
     private static final long serialVersionUID = 1L;
     private Integer id;
@@ -27,6 +27,11 @@ public class Indicador implements Serializable {
         this.nome = nome;
         this.categoria = categoria;
         this.eixo = eixo;
+    }
+    
+    @Override
+    public Integer getIdConverter(){
+        return id;
     }
 
     public Integer getId() {

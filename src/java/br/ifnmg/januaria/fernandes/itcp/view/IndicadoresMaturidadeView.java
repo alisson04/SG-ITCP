@@ -51,7 +51,23 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     private String categoriaSelecionada;//Para receber o valor que representa a categoria selecionada
     private List<EmpreendimentoIndicador> listaEptIndGrafico;
 
+    //Gráfico Inds
+    List<Indicador> listaTodosInds;
+    List<Indicador> listaIndsSelecionados;//Lista de inds que terão gráficos
+    List<LineChartModel> listaGraficoInds;//Lista de gráficos dos inds
+
     private TabView tabview;
+
+    //CheckBox var
+    private boolean eptCheckBox;
+    private boolean cateCheckBox;
+    private boolean indCheckBox;
+    
+    //Tamanho dos gráficos Var
+    private int tamanhoGraficos;
+    
+    //CheckBox Indicadores
+    private boolean selecionaTodosInds;//Variavel que define que todos os indicadores do check box serão selecionados
 
     //Construtor
     public IndicadoresMaturidadeView() {
@@ -69,49 +85,118 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
             listaEptIndGrafico = new ArrayList();
             categoriaSelecionada = "";//Necessário, não retirar
             tabview = new TabView();
+
+            //Gráfico Inds
+            listaIndsSelecionados = new ArrayList();
+            listaTodosInds = gerenIndicadores.listarIndicadores();//Para ser filtrada na tela - precisa ser exclusiva
+
+            //CheckBox var
+            eptCheckBox = false;
+            cateCheckBox = false;
+            indCheckBox = false;
+            
+            //Tamanho dos gráficos Var
+            tamanhoGraficos = 2;//2 significa que é tamanho médio o inicial
+            
+            selecionaTodosInds = false;
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
+    //Metodos tamanho dos gráficos
+    public void configuraTamanhoGrafico(int tamanho){
+        if(tamanho == 1){
+            tamanhoGraficos = 1;
+        }else if(tamanho == 2){
+            tamanhoGraficos = 2;
+        }else{
+            tamanhoGraficos = 3;
+        }
+    }
+    
+    //Metodos CheckBox
+    public void configuraCheckBox(int tipo) {
+        if (tipo == 1) {
+            eptCheckBox = true;
+        } else if (tipo == 2) {
+            cateCheckBox = true;
+        } else {
+            indCheckBox = true;
+        }
+    }
+    
+    public void selecionaTodosInds(){
+        listaIndsSelecionados = listaTodosInds;
+        criaGraficoInd();
+    }
 
-    //METODOS    
-    public void criaGrafico() {//Configurações do gráfico - Acontece ao selecionar uma categoria
+    // Metodos de tela
+    public void selecionaCategoriaTela() {
+        //Limpa vars
+        listaGraficoInds = new ArrayList();//Limpa a lista de gráficos
+        listaIndicadores = gerenIndicadores.listarIndicadores();//Pega todos os inds
+        listaIndsSelecionados = new ArrayList();//Limpa os inds selecionados
+        
+        //Filtra
+        filtraIndsPorCategoria();
+    }
+    
+    public void selecionaEptTela(){
+        eptCheckBox = true;//Fecha o painel de empreendimentos: melhora a usabilidade
+        liberaPainelIndicadores();
+    }
+
+    //METODOS gráfico
+    public void filtraIndsPorCategoria() {
+        listaTodosInds = gerenIndicadores.listarIndicadoresPorCategoria(categoriaSelecionada);
+    }
+
+    //Cria uma lista com os gráficos dos inds selecionados
+    public void criaGraficoInd() {
         try {
+            if(listaTodosInds.size() == listaIndsSelecionados.size()){
+                selecionaTodosInds=true;
+            }else{
+                selecionaTodosInds=false;
+            }
             Calendar calendar = Calendar.getInstance();//Pega a data atual
             calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
             Date dataAtual = calendar.getTime();
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
 
-            lineModel1 = preencheGrafico();
-            lineModel1.setTitle("Evolução dos indicadores por categoria");//Titulo do gráfico
-            lineModel1.setLegendPosition("e");
-            lineModel1.setAnimate(true);
+            listaGraficoInds = preencheGraficoInd();//Preenche a lista com os gráficos dos inds
 
-            lineModel1.getAxis(AxisType.Y).setLabel("Nota");//Texto do eixo Y do gráfico
-            DateAxis axis = new DateAxis("Data de modificação do indicador");//Texto do eixo X do gráfico
-            axis.setTickAngle(-50);
-            System.out.println("DATA ATUAL: " + dateFormat.format(dataAtual));
-            axis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
-            axis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
+            for (int i = 0; i < listaGraficoInds.size(); i++) {
+                LineChartModel graficoAux = listaGraficoInds.get(i);
+                graficoAux.setLegendPosition("e");
+                graficoAux.setAnimate(true);
 
-            lineModel1.getAxes().put(AxisType.X, axis);
+                graficoAux.getAxis(AxisType.Y).setLabel("Nota");//Texto do eixo Y do gráfico
+                DateAxis axis = new DateAxis("");//Texto do eixo X do gráfico
+                axis.setTickAngle(-50);
+                System.out.println("DATA ATUAL: " + dateFormat.format(dataAtual));
+                axis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
+                axis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
 
-            configuraCategoria();//SETA a Tab que deve estar ativa de acordo com categoria selecionada
+                graficoAux.getAxes().put(AxisType.X, axis);
 
-            if (listaEptIndGrafico.isEmpty()) {
-                msgGrowlErroCustomizavel("", "Não há indicadores preenchidos para essa categoria.");
-            } else {
-                RequestContext.getCurrentInstance().update("frmComponentesGenerico");//Atualiza para retirar a msg anterior
+                configuraCategoria();//SETA a Tab que deve estar ativa de acordo com categoria selecionada
+
+                listaGraficoInds.set(i, graficoAux);
+                System.out.println("QUANTI: " + listaIndsSelecionados.size());
             }
+
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
 
-    private LineChartModel preencheGrafico() {//Preenche as informações do gráfico - É chamado pelo método "Cria Gráfico"
+    //Preenche uma lista com os gráficos dos inds selecionados
+    private List<LineChartModel> preencheGraficoInd() {//Preenche as informações do gráfico - É chamado pelo método "Cria Gráfico"
         try {
+            System.out.println("QUANTI: " + listaIndsSelecionados.size());
             listaEptIndGrafico = bean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
-            return bean.preencheGraficoBean(categoriaSelecionada, listaEptIndGrafico);
+            return bean.preencheGraficoIndBean(listaIndsSelecionados, listaEptIndGrafico);
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -155,7 +240,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         }
     }
 
-    public void liberaPainelIndicadores() {//Acontece ao selecionar um empreendimento na lista
+    public void liberaPainelIndicadores() {
         try {
             if (empreendimentoSelecionado != null) {
                 Date dataAtual = new Date();
@@ -192,6 +277,12 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
                 listaEptIndGrafico = new ArrayList();//Limpa o gráfico
                 tabview.setActiveIndex(0);//Volta para a primeira TAB do formulario da tela
                 msgGrowlInfoCustomizavel("", "Agora selecione uma categoria de indicadores.");
+
+                //Limpa vars
+                categoriaSelecionada = ""; //Limpa a categoria
+                listaGraficoInds = new ArrayList();//Limpa a lista de gráficos
+                listaIndicadores = gerenIndicadores.listarIndicadores();//Pega todos os inds
+                listaIndsSelecionados = new ArrayList();//Limpa os inds selecionados
             } else {
                 System.out.println("ERRO CRITICO NA PASSAGEM DE EES");
             }
@@ -221,7 +312,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");//fecha o panel de "formulario de indicadores"
             if (!categoriaSelecionada.equals("")) {//Caso algum gráfico esteja sendo mostrado na tela durante o salvamento
-                criaGrafico();//Chama o gráfico para atualização
+                criaGraficoInd();//Chama o gráfico para atualização
             }
             msgGrowSaveGeneric();
         } catch (Exception ex) {
@@ -309,5 +400,69 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     public void setTabview(TabView tabview) {
         this.tabview = tabview;
+    }
+
+    public List<Indicador> getListaIndsSelecionados() {
+        return listaIndsSelecionados;
+    }
+
+    public void setListaIndsSelecionados(List<Indicador> listaIndsSelecionados) {
+        this.listaIndsSelecionados = listaIndsSelecionados;
+    }
+
+    public List<LineChartModel> getListaGraficoInds() {
+        return listaGraficoInds;
+    }
+
+    public void setListaGraficoInds(List<LineChartModel> listaGraficoInds) {
+        this.listaGraficoInds = listaGraficoInds;
+    }
+
+    public List<Indicador> getListaTodosInds() {
+        return listaTodosInds;
+    }
+
+    public void setListaTodosInds(List<Indicador> listaTodosInds) {
+        this.listaTodosInds = listaTodosInds;
+    }
+
+    public boolean isEptCheckBox() {
+        return eptCheckBox;
+    }
+
+    public void setEptCheckBox(boolean eptCheckBox) {
+        this.eptCheckBox = eptCheckBox;
+    }
+
+    public boolean isCateCheckBox() {
+        return cateCheckBox;
+    }
+
+    public void setCateCheckBox(boolean cateCheckBox) {
+        this.cateCheckBox = cateCheckBox;
+    }
+
+    public boolean isIndCheckBox() {
+        return indCheckBox;
+    }
+
+    public void setIndCheckBox(boolean indCheckBox) {
+        this.indCheckBox = indCheckBox;
+    }
+
+    public int getTamanhoGraficos() {
+        return tamanhoGraficos;
+    }
+
+    public void setTamanhoGraficos(int tamanhoGraficos) {
+        this.tamanhoGraficos = tamanhoGraficos;
+    }
+
+    public boolean isSelecionaTodosInds() {
+        return selecionaTodosInds;
+    }
+
+    public void setSelecionaTodosInds(boolean selecionaTodosInds) {
+        this.selecionaTodosInds = selecionaTodosInds;
     }
 }

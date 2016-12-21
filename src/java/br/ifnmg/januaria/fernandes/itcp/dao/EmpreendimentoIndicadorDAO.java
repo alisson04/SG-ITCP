@@ -79,7 +79,7 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
         List<EmpreendimentoIndicador> listaObjsFiltrados;//Cria a lista que será retornada
         listaObjsFiltrados = new ArrayList<>();//Instancia  a lista
 
-        for (int i = 0; i < indisDaCategoria.size(); i++) {//Roda 48 vezes coletando os indicadores do ESS com maior data
+        for (int i = 0; i < indisDaCategoria.size(); i++) {//Roda a quantidade de indicadores
             try {
                 em = emf.createEntityManager();
                 em.getTransaction().begin();

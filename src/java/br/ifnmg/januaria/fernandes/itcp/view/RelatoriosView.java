@@ -124,38 +124,6 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
         }
     }
 
-    //Metodos gráfico /barra
-    public void criaGraficoBarras() {
-        try {
-            Calendar calendar = Calendar.getInstance();//Pega a data atual
-            calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
-
-            barModel = preencheGraficoBarras();
-            barModel.setTitle("Evolução dos indicadores da categoria " + categoriaSelecionada);
-            barModel.setLegendPosition("ne");
-
-            Axis xAxis = barModel.getAxis(AxisType.X);
-            xAxis.setLabel("Datas");
-            //xAxis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
-            //xAxis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
-
-            Axis yAxis = barModel.getAxis(AxisType.Y);
-            yAxis.setLabel("Notas");
-            yAxis.setMin(0);
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
-    private BarChartModel preencheGraficoBarras() {//Preenche as informações do gráfico -
-        try {
-            listaEptIndGrafico = EesIndBean.listarEesIndisPorcategoriaBean(empreendimentoSelecionado, categoriaSelecionada);
-            return EesIndBean.addSeriesBarraBean(categoriaSelecionada, listaEptIndGrafico);
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
     //METODOS de filtragem de atividadesAtividades
     public void filtraAtividadesPorUser() {
         try {
@@ -234,7 +202,6 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
     //METODOS Indicadores
     public void criaGrafico() {//Configurações do gráfico - Acontece ao selecionar uma categoria da aba de indicadores
         try {
-            criaGraficoBarras();
             Calendar calendar = Calendar.getInstance();//Pega a data atual
             calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
             Date dataAtual = calendar.getTime();

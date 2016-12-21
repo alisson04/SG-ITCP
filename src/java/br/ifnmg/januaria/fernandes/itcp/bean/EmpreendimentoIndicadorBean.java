@@ -33,26 +33,23 @@ public class EmpreendimentoIndicadorBean implements Serializable {
         gerenIndicadores = new GerenciadorIndicadores();
     }
 
-    //Adiciona as séries de um gráfico de barra e o retorna
-    public BarChartModel addSeriesBarraBean(String categoriaSelecionada, List<EmpreendimentoIndicador> listaEptIndGrafico) {
+    public List<LineChartModel> preencheGraficoIndBean(List<Indicador> listaIndsSelecionados,
+            List<EmpreendimentoIndicador> listaEptIndGrafico) {
         //MES DIA ANO é a sequencia que as datas devem ser setadas
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");//Cria o formato q data sera mostrada
 
-        List<Indicador> listaIndicadoresCategoria;
-        listaIndicadoresCategoria = listarIndicadoresPorCategoriaBean(categoriaSelecionada);
+        List<LineChartModel> modelList = new ArrayList();
+        LineChartSeries series1;
 
-        BarChartModel model = new BarChartModel();
-        /*ChartSeries series1;
-        
-        for (int i = 0; i < listaIndicadoresCategoria.size(); i++) {//Roda a quantidade de indicadores da categoria
-            series1 = new ChartSeries();
-            series1.setLabel(listaIndicadoresCategoria.get(i).getNome());//Seta o nome da série como o nome do indicador
+        for (int i = 0; i < listaIndsSelecionados.size(); i++) {//Roda a quantidade de indicadores da categoria
+            LineChartModel model = new LineChartModel();
+            model.setTitle("Evolução do indicador: " + listaIndsSelecionados.get(i).getNome());//Titulo do gráfico
+            series1 = new LineChartSeries();
+            series1.setLabel(listaIndsSelecionados.get(i).getNome());//Seta o nome da série como o nome do indicador
             int verificador = 0;
             for (int x = 0; x < listaEptIndGrafico.size(); x++) {
-                if (listaIndicadoresCategoria.get(i).getId().equals(
+                if (listaIndsSelecionados.get(i).getId().equals(
                         listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getIdIndicador())) {
-                    
-                    System.out.println("DATA: " + dateFormat.format(listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getDataNota()));
                     series1.set(dateFormat.format(listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getDataNota()),
                             listaEptIndGrafico.get(x).getNota());
                     verificador = 1;
@@ -61,29 +58,14 @@ public class EmpreendimentoIndicadorBean implements Serializable {
 
             if (verificador != 0) {
                 model.addSeries(series1);
-                System.out.println("Adicionou o indicador " + listaIndicadoresCategoria.get(i).getNome() + " ao gráfico!");
+                modelList.add(model);
+                System.out.println("Adicionou o indicador " + listaIndsSelecionados.get(i).getNome() + " ao gráfico!");
             } else {
-                System.out.println("Não adicionou o indicador " + listaIndicadoresCategoria.get(i).getNome() + " ao gráfico!");
+                System.out.println("Não adicionou o indicador " + listaIndsSelecionados.get(i).getNome() + " ao gráfico!");
             }
-        }*/
-        
-
-        ChartSeries boys = new ChartSeries();
-        boys.setLabel("Boys");
-        boys.set("11/13/2004", 12);
-        boys.set("11/13/2005", 10);
-
-        ChartSeries girls = new ChartSeries();
-        girls.setLabel("Girls");
-        girls.set("11/13/2004", 5);
-        girls.set("11/13/2005", 6);
-        girls.set("11/13/2006", 10);
-        girls.set("11/13/2007", 15);
-        girls.set("11/13/2008", 10);
-        model.addSeries(boys);
-        model.addSeries(girls);
-
-        return model;
+        }
+        System.out.println("QUANTI: " + listaIndsSelecionados.size());
+        return modelList;
     }
 
     //Adiciona as séries de um gráfico de linhas e o retorna

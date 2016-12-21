@@ -8,95 +8,115 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmIndicadores" >
-                <p:layout style="min-height:700px;" >
+                <p:layout style="min-height:700px;max-height:700px;" >
                     <p:layoutUnit position="west" size="325" >
-                        <p:accordionPanel multiple="true">
-                            <p:tab title="Empreendimentos">
-                                <p:selectOneRadio value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
-                                                  converter="generic" layout="grid" columns="1" >
-                                    <p:ajax update="frmIndicadores frmEdicao" event="change"  
-                                            listener="#{IndicadoresMaturidadeView.liberaPainelIndicadores()}"/>  
-                                    <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
-                                                   itemLabel="#{ept.nome}" itemValue="#{ept}"/>
-                                </p:selectOneRadio>
-                            </p:tab>
+                        <p:panel header="Empreendimentos" toggleable="true" styleClass="painelBordas"
+                                 collapsed="#{IndicadoresMaturidadeView.eptCheckBox}" >
 
-                            <p:tab title="Categorias de Indicadores">
-                                <p:outputPanel style="text-align:center;">
-                                    <p:outputLabel value="Selecione um empreendimento primeiro!" style="text-align:center;"
-                                                   rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
-                                </p:outputPanel>
+                            <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(1)}" />
+                            <p:selectOneRadio value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
+                                              converter="generic" layout="grid" columns="1" onclick="PF('blockUiGeral').show()" 
+                                              onchange="PF('blockUiGeral').hide()" >
+                                <p:ajax update="frmIndicadores frmEdicao" event="change"  
+                                        listener="#{IndicadoresMaturidadeView.selecionaEptTela()}"/>
+                                <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
+                                               itemLabel="#{ept.nome}" itemValue="#{ept}"/>
+                            </p:selectOneRadio>
 
-                                <p:selectOneRadio value="#{IndicadoresMaturidadeView.categoriaSelecionada}"
-                                                  rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}"
-                                                  layout="grid" columns="1" >
-                                    <p:ajax update="frmIndicadores frmEdicao" event="change"  
-                                            listener="#{IndicadoresMaturidadeView.criaGrafico()}" />
+                            <p:separator rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" />
+                            <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
+                                <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
+                                                 update="frmIndicadores" oncomplete="PF('wVarEditarDialog').show()"
+                                                 rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" />
+                            </p:outputPanel>
+                        </p:panel>
+                        <p:spacer height="10px"/>
 
-                                    <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
+                        <p:panel header="Categoria de Indicadores" collapsed="#{IndicadoresMaturidadeView.cateCheckBox}"
+                                 rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" toggleable="true" >
+                            <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(2)}" />
+                            <p:selectOneRadio value="#{IndicadoresMaturidadeView.categoriaSelecionada}" layout="grid" columns="1" 
+                                              onclick="PF('blockUiGeral').show()" onchange="PF('blockUiGeral').hide()">
+                                <p:ajax update="frmIndicadores frmEdicao" event="change"
+                                        listener="#{IndicadoresMaturidadeView.selecionaCategoriaTela()}" />
 
-                                    <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
 
-                                    <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
 
-                                    <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
 
-                                    <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
 
-                                    <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
 
-                                    <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
 
-                                    <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
 
-                                    <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
-                                                  itemValue="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
-                                </p:selectOneRadio>
-                            </p:tab>
-                            <p:tab title="Indicadores">
-                                <p:outputPanel style="text-align:center;">
-                                    <p:outputLabel value="Selecione uma categoria primeiro!" style="text-align:center;"
-                                                   rendered="#{IndicadoresMaturidadeView.categoriaSelecionada == ''}" />
-                                </p:outputPanel>
-                                
-                                <p:selectManyCheckbox value="#{checkboxView.selectedConsoles}"
-                                                      rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
-                                    <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-                                    <f:selectItem itemLabel="PS4" itemValue="PS4" />
-                                    <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
-                                </p:selectManyCheckbox>
-                            </p:tab>
-                        </p:accordionPanel>
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
 
-                        <p:spacer width="20px" />
-                        <div class="ui-fluid">
-                            <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
-                                             update="frmIndicadores" oncomplete="PF('wVarEditarDialog').show()"
-                                             disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
-                        </div>
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
+                            </p:selectOneRadio>
+                        </p:panel>
+                        <p:spacer height="10px"/>
+
+                        <p:panel header="Indicadores" toggleable="true"
+                                 collapsed="#{IndicadoresMaturidadeView.indCheckBox}"
+                                 rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
+
+                            <f:facet name="options" >
+                                <p:menu  >
+                                    <p:submenu label="Tamanho dos gráficos">
+                                        <p:menuitem value="Pequeno" update="frmIndicadores frmEdicao"
+                                                    onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
+                                                    actionListener="#{IndicadoresMaturidadeView.configuraTamanhoGrafico(3)}" />
+                                        <p:menuitem value="Médio" update="frmIndicadores frmEdicao"
+                                                    onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
+                                                    actionListener="#{IndicadoresMaturidadeView.configuraTamanhoGrafico(2)}" />
+                                        <p:menuitem value="Grande" update="frmIndicadores frmEdicao"
+                                                    onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
+                                                    actionListener="#{IndicadoresMaturidadeView.configuraTamanhoGrafico(1)}" />
+                                    </p:submenu>
+                                </p:menu>
+                            </f:facet>
+
+                            <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(3)}" />
+                            <p:outputPanel style="text-align:center;">
+                                <p:selectBooleanCheckbox value="#{IndicadoresMaturidadeView.selecionaTodosInds}">
+                                    <p:ajax update="frmIndicadores frmEdicao" 
+                                            listener="#{IndicadoresMaturidadeView.selecionaTodosInds}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value=" Todos" />
+                                <p:separator/>
+                            </p:outputPanel>
+                            <p:selectManyCheckbox value="#{IndicadoresMaturidadeView.listaIndsSelecionados}" layout="grid" 
+                                                  converter="generic" columns="1" >
+                                <p:ajax listener="#{IndicadoresMaturidadeView.criaGraficoInd()}" update="frmIndicadores frmEdicao"
+                                        onstart="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"/>
+                                <f:selectItems value="#{IndicadoresMaturidadeView.listaTodosInds}" 
+                                               var="ind" itemLabel="#{ind.nome}" itemValue="#{ind}" />
+                            </p:selectManyCheckbox>
+                        </p:panel>
                     </p:layoutUnit>
 
-                    <p:layoutUnit position="center">
-                        <p:panel header="Selecione um empreendimento para preencher ou visializar seus indicadores" >
-                            <h:panelGrid columns="4" >
-                                <p:panel id="panelGrafico" style="margin-bottom:20px" header="Selecione uma categoria para ver seus indicadores"
-                                         rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" >
-
-
-                                    <p:chart type="line" model="#{IndicadoresMaturidadeView.lineModel1}" style="height:400px;" 
-                                             rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != ''
-                                                         and IndicadoresMaturidadeView.listaEptIndGrafico.size() != 0}"/>
-                                </p:panel>
-                            </h:panelGrid>
-                        </p:panel>
+                    <p:layoutUnit position="center" >
+                        <p:dataGrid var="graInd" value="#{IndicadoresMaturidadeView.listaGraficoInds}" layout="grid"
+                                    columns="#{IndicadoresMaturidadeView.tamanhoGraficos}"
+                                    rendered="#{IndicadoresMaturidadeView.listaGraficoInds.size() > 0}" >
+                            <p:panel >
+                                <p:chart type="line" model="#{graInd}" />
+                            </p:panel>
+                        </p:dataGrid>
                     </p:layoutUnit>
                 </p:layout>
             </h:form>
