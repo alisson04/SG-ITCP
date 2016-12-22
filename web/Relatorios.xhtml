@@ -49,257 +49,355 @@
                 <p:tabView id="tbGeral" dynamic="true" cache="true">
                     <p:ajax event="tabChange" listener="#{RelatoriosView.InicializaVariaveis()}" />
                     <p:tab id="tabIndis" title="Indicadores de maturidade">
-                        <p:panel header="Selecione um empreendimento para preencher ou visializar seus indicadores">
-                            <h:panelGrid columns="2">
-                                <p:selectOneMenu value="#{RelatoriosView.empreendimentoSelecionado}" converter="generic" >
-                                    <p:ajax update="frmrelatorios" event="itemSelect" 
-                                            listener="#{RelatoriosView.limpaPainelIndicadores()}"/>
-                                    <f:selectItem itemLabel="Selecione o empreendimento" itemValue="#{null}" 
-                                                  noSelectionOption="true" />
-                                    <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
-                                                   itemLabel="#{ept.nome}" itemValue="#{ept}"/>
-                                </p:selectOneMenu>
+                        <p:layout style="min-height:700px;max-height:700px;" >
+                            <p:layoutUnit position="west" size="325" >
+                                <p:panel header="Empreendimentos" toggleable="true" styleClass="painelBordas"
+                                         collapsed="#{IndicadoresMaturidadeView.eptCheckBox}" >
 
-                                <p:selectOneMenu value="#{RelatoriosView.categoriaSelecionada}"
-                                                 rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
-                                    <p:ajax update="frmrelatorios" event="itemSelect" 
-                                            listener="#{RelatoriosView.criaGrafico()}" />
+                                    <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(1)}" />
+                                    <p:selectOneRadio value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
+                                                      converter="generic" layout="grid" columns="1" >
+                                        <p:ajax update="frmrelatorios" event="change"  
+                                                listener="#{IndicadoresMaturidadeView.selecionaEptTela()}"/>
+                                        <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
+                                                       itemLabel="#{ept.nome}" itemValue="#{ept}"/>
+                                    </p:selectOneRadio>
 
-                                    <f:selectItem itemLabel="Selecione uma categoria de indicadores" itemValue="" 
-                                                  noSelectionOption="true" />
+                                    <p:separator rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" />
+                                    <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
+                                        <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
+                                                         update="frmrelatorios" oncomplete="PF('wVarEditarDialog').show()"
+                                                         rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" />
+                                    </p:outputPanel>
+                                </p:panel>
+                                <p:spacer height="10px"/>
 
-                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[0].categoria}" 
-                                                  itemValue="#{RelatoriosView.listaIndicadores[0].categoria}"  />
+                                <p:panel header="Categoria de Indicadores" collapsed="#{IndicadoresMaturidadeView.cateCheckBox}"
+                                         rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" toggleable="true" >
+                                    <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(2)}" />
+                                    <p:selectOneRadio value="#{IndicadoresMaturidadeView.categoriaSelecionada}" layout="grid" 
+                                                      columns="1" >
+                                        <p:ajax update="frmrelatorios" event="change"
+                                                listener="#{IndicadoresMaturidadeView.selecionaCategoriaTela()}" />
 
-                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[6].categoria}" 
-                                                  itemValue="#{RelatoriosView.listaIndicadores[6].categoria}"  />
+                                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
+                                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[10].categoria}" 
-                                                  itemValue="#{RelatoriosView.listaIndicadores[10].categoria}"  />
+                                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
+                                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[16].categoria}" 
-                                                  itemValue="#{RelatoriosView.listaIndicadores[16].categoria}"  />
+                                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
+                                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[24].categoria}" 
-                                                  itemValue="#{RelatoriosView.listaIndicadores[24].categoria}"  />
+                                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
+                                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[31].categoria}" 
-                                                  itemValue="#{RelatoriosView.listaIndicadores[31].categoria}"  />
+                                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
+                                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[36].categoria}" 
-                                                  itemValue="#{RelatoriosView.listaIndicadores[36].categoria}"  />
+                                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
+                                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[42].categoria}" 
-                                                  itemValue="#{RelatoriosView.listaIndicadores[42].categoria}"  />
+                                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
+                                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
 
-                                    <f:selectItem itemLabel="Categoria #{RelatoriosView.listaIndicadores[46].categoria}" 
-                                                  itemValue="#{RelatoriosView.listaIndicadores[46].categoria}"  />
-                                </p:selectOneMenu>
-                            </h:panelGrid>
+                                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
+                                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
 
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="corDialog" 
-                                             style="text-align:center;">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
-                                                 icon="BlackCheck24-iconfinder" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
-                                                 icon="Cross24-iconfinder" />
-                            </p:confirmDialog>
-                        </p:panel>
+                                        <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
+                                                      itemValue="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
+                                    </p:selectOneRadio>
+                                </p:panel>
+                                <p:spacer height="10px"/>
 
-                        <p:panel id="panelGrafico" style="margin-bottom:20px"
-                                 rendered="#{RelatoriosView.empreendimentoSelecionado != null
-                                             and RelatoriosView.categoriaSelecionada != ''}" >
-                            <p:chart type="line" model="#{RelatoriosView.graficoAtividades}" style="height:400px;"
-                                     widgetVar="chartEvolucaoInds" />
+                                <p:panel header="Indicadores" toggleable="true"
+                                         collapsed="#{IndicadoresMaturidadeView.indCheckBox}"
+                                         rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
 
-                            <p:commandButton value="Visualizar imagem " icon="See24-iconfinder" onclick="exportChart()" />
-                        </p:panel>
+                                    <f:facet name="options" >
+                                        <p:menu  >
+                                            <p:submenu label="Tamanho dos gráficos">
+                                                <p:menuitem value="Pequeno" update="frmrelatorios"
+                                                            onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
+                                                            actionListener="#{IndicadoresMaturidadeView.configuraTamanhoGrafico(3)}" />
+                                                <p:menuitem value="Médio" update="frmrelatorios"
+                                                            onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
+                                                            actionListener="#{IndicadoresMaturidadeView.configuraTamanhoGrafico(2)}" />
+                                                <p:menuitem value="Grande" update="frmrelatorios"
+                                                            onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
+                                                            actionListener="#{IndicadoresMaturidadeView.configuraTamanhoGrafico(1)}" />
+                                            </p:submenu>
+                                        </p:menu>
+                                    </f:facet>
 
-                        <p:panel id="panelGraficoBarra" style="margin-bottom:20px"
-                                 rendered="#{RelatoriosView.empreendimentoSelecionado != null
-                                             and RelatoriosView.categoriaSelecionada != ''}" >                                    
-                            <p:chart type="bar" model="#{RelatoriosView.barModel}" style="height:300px"
-                                     widgetVar="chartEvolucaoIndsBarra"/>
+                                    <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(3)}" />
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:selectBooleanCheckbox value="#{IndicadoresMaturidadeView.selecionaTodosInds}">
+                                            <p:ajax update="frmrelatorios" 
+                                                    listener="#{IndicadoresMaturidadeView.selecionaTodosIndsView()}" />
+                                        </p:selectBooleanCheckbox>
+                                        <h:outputText value=" Todos" />
+                                        <p:separator/>
+                                    </p:outputPanel>
+                                    <p:selectManyCheckbox value="#{IndicadoresMaturidadeView.listaIndsSelecionados}" layout="grid" 
+                                                          converter="generic" columns="1" >
+                                        <p:ajax listener="#{IndicadoresMaturidadeView.criaGraficoInd()}" update="frmrelatorios"
+                                                onstart="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"/>
+                                        <f:selectItems value="#{IndicadoresMaturidadeView.listaTodosInds}" 
+                                                       var="ind" itemLabel="#{ind.nome}" itemValue="#{ind}" />
+                                    </p:selectManyCheckbox>
+                                </p:panel>
+                            </p:layoutUnit>
 
-                            <p:commandButton value="Visualizar imagem " icon="See24-iconfinder" onclick="exportChartBarra()" />
-                        </p:panel>
+                            <p:layoutUnit position="center" >
+                                <p:dataGrid var="graInd" value="#{IndicadoresMaturidadeView.listaGraficoInds}" layout="grid"
+                                            columns="#{IndicadoresMaturidadeView.tamanhoGraficos}"
+                                            rendered="#{IndicadoresMaturidadeView.listaGraficoInds.size() > 0}" >
+                                    <p:panel >
+                                        <p:chart type="line" model="#{graInd}" />
+                                    </p:panel>
+                                </p:dataGrid>
+                            </p:layoutUnit>
+                        </p:layout>
                     </p:tab>
 
+                    <!--ABA RELATÓRIO DE ATIVIDADES POR EMPREENDIMENTO-->
                     <p:tab id="tabTeste" title="Atividades por empreendimento">
-                        <p:panel>
-                            <p:selectOneMenu value="#{RelatoriosView.empreendimentoSelecionado}" converter="generic" >
-                                <p:ajax update="frmrelatorios" event="itemSelect" 
-                                        listener="#{RelatoriosView.filtraAtividadesPorEes()}"/>
-                                <f:selectItem itemLabel="Filtrar por empreendimento" itemValue="#{null}" 
-                                              noSelectionOption="true" />
-                                <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
-                                               itemLabel="#{ept.nome}" itemValue="#{ept}"/>
-                            </p:selectOneMenu>
+                        <p:layout style="min-height:700px;max-height:700px;" >
+                            <p:layoutUnit position="west" size="325" >
+                                <p:outputPanel style="text-align:center;" >
+                                    <p:outputLabel value="Filtrar por: " />
+                                </p:outputPanel>
+                                <p:spacer height="10px"/>
 
-                            <p:selectOneMenu value="#{RelatoriosView.planoSelecionado}" converter="generic" 
-                                             rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
-                                <p:ajax update="frmrelatorios" event="itemSelect" 
-                                        listener="#{RelatoriosView.filtraAtividadesPorPlano()}" />
-                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{RelatoriosView.listaPlanos}" var="var" itemLabel="#{var.nome}" 
-                                               itemValue="#{var}"/>
-                            </p:selectOneMenu>
-                        </p:panel>
+                                <p:panel header="Empreendimentos" toggleable="true" styleClass="painelBordas" >
+                                    <p:selectOneRadio value="#{RelatoriosView.empreendimentoSelecionado}" 
+                                                      converter="generic" layout="grid" columns="1" >
+                                        <p:ajax update="frmrelatorios" event="change"  
+                                                listener="#{RelatoriosView.filtraAtividadesPorEes()}"/>
+                                        <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
+                                                       itemLabel="#{ept.nome}" itemValue="#{ept}"/>
+                                    </p:selectOneRadio>
+                                </p:panel>
+                                <p:spacer height="10px"/>
 
-                        <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada " 
-                                     value="#{RelatoriosView.listaAtividades}" 
-                                     filteredValue="#{RelatoriosView.listaAtividadesFiltradas}" rowKey="#{objCursor.id}"
-                                     var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                                <p:panel header="Plano de ação" rendered="#{RelatoriosView.empreendimentoSelecionado != null}">
+                                    <p:selectOneRadio value="#{RelatoriosView.planoSelecionado}" 
+                                                      converter="generic" layout="grid" columns="1" >
+                                        <p:ajax update="frmrelatorios" event="change"  
+                                                listener="#{RelatoriosView.filtraAtividadesPorPlano()}" />
+                                        <f:selectItems value="#{RelatoriosView.listaPlanos}" var="plano" itemLabel="#{plano.nome} 
+                                                       / Início em: #{modeloGeralView.converteData(plano.dataInicio)}" itemValue="#{plano}"/>
+                                    </p:selectOneRadio>
+                                </p:panel>
+                            </p:layoutUnit>
 
-                            <p:column headerText="Nome" filterBy="#{objCursor.nome}" sortBy="#{objCursor.nome}" 
-                                      filterMatchMode="contains" >
-                                <h:outputText value="#{objCursor.nome}"/>
-                            </p:column>
+                            <p:layoutUnit position="center" >
+                                <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada " 
+                                             value="#{RelatoriosView.listaAtividades}" style="text-align: center"
+                                             filteredValue="#{RelatoriosView.listaAtividadesFiltradas}" rowKey="#{objCursor.id}"
+                                             var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
-                            <p:column headerText="Data início" filterMatchMode="contains"
-                                      filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" >
-                                <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" />
-                            </p:column>
+                                    <p:column headerText="Nome" filterBy="#{objCursor.nome}" sortBy="#{objCursor.nome}" 
+                                              filterMatchMode="contains" >
+                                        <h:outputText value="#{objCursor.nome}"/>
+                                    </p:column>
 
-                            <p:column headerText="Data fim" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" 
-                                      filterMatchMode="contains">
-                                <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
-                            </p:column>
+                                    <p:column headerText="Data início" styleClass="colunasTabela100PX" >
+                                        <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" />
+                                    </p:column>
 
-                            <p:column headerText="Situação" filterBy="#{objCursor.status}" sortBy="#{objCursor.status}" 
-                                      filterMatchMode="contains" >
-                                <h:outputText value="#{objCursor.status}"/>
-                            </p:column>
+                                    <p:column headerText="Data fim" styleClass="colunasTabela100PX" >
+                                        <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
+                                    </p:column>
 
-                            <p:column filterBy="#{objCursor.meta}" headerText="Meta" filterMatchMode="exact">
-                                <f:facet name="filter">
-                                    <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                        <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="var" itemLabel="#{var.nome}" 
-                                                       itemValue="#{var}"/>
-                                    </p:selectOneMenu>
-                                </f:facet>
-                                <h:outputText value="#{objCursor.meta.nome}" />
-                            </p:column>
+                                    <p:column headerText="Situação"  filterBy="#{objCursor.status}" filterMatchMode="exact" 
+                                              styleClass="colunasTabela200PX" >
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" />
+                                                <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" />
+                                                <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
 
-                            <f:facet name="footer">
-                                <h:commandLink id="pdfUsr">
-                                    <p:graphicImage name="icons24/Pdf24.png" width="24"/>
-                                    <p:dataExporter type="pdf" target="dtListagemAtividades" fileName="Metas" encoding="ISO-8859-1" />
-                                </h:commandLink> 
+                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagRed.png"
+                                                        rendered="#{objCursor.status == 'Não iniciada'}" />
+                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagYellow.png"
+                                                        rendered="#{objCursor.status == 'Iniciada'}" />
+                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagGreen.png"
+                                                        rendered="#{objCursor.status == 'Finalizada'}" />
+                                    </p:column>
 
-                                <p:spacer height="20px"/>
+                                    <p:column filterBy="#{objCursor.meta}" headerText="Meta" filterMatchMode="exact">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="var"
+                                                               itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                        <h:outputText value="#{objCursor.meta.nome}" />
+                                    </p:column>
 
-                                <h:commandLink id="xlsUsr">
-                                    <p:graphicImage name="icons24/Xls24.png" width="24"/>
-                                    <p:dataExporter type="xls" target="dtListagemAtividades" fileName="Metas" />
-                                </h:commandLink>
+                                    <f:facet name="footer">
+                                        <h:commandLink id="pdfUsr">
+                                            <p:graphicImage name="icons24/Pdf24.png" width="24"/>
+                                            <p:dataExporter type="pdf" target="dtListagemAtividades" fileName="Metas" encoding="ISO-8859-1" />
+                                        </h:commandLink> 
 
-                                <p:tooltip for="pdfUsr" value="Exportar para PDF" />
-                                <p:tooltip for="xlsUsr" value="Exportar para Excel" />
-                            </f:facet>
-                        </p:dataTable>
+                                        <p:spacer height="20px"/>
+
+                                        <h:commandLink id="xlsUsr">
+                                            <p:graphicImage name="icons24/Xls24.png" width="24"/>
+                                            <p:dataExporter type="xls" target="dtListagemAtividades" fileName="Metas" />
+                                        </h:commandLink>
+
+                                        <p:tooltip for="pdfUsr" value="Exportar para PDF" />
+                                        <p:tooltip for="xlsUsr" value="Exportar para Excel" />
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:layoutUnit>
+                        </p:layout>
                     </p:tab>
 
                     <p:tab id="tabAtividadesPorUser" title="Atividades por usuário">
-                        <p:selectOneMenu value="#{RelatoriosView.userSelecionado}" converter="generic" >
-                            <p:ajax update="frmrelatorios" event="itemSelect" 
-                                    listener="#{RelatoriosView.filtraAtividadesPorUser()}" />
-                            <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                            <f:selectItems value="#{RelatoriosView.listaUser}" var="var" itemLabel="#{var.nome}" 
-                                           itemValue="#{var}"/>
-                        </p:selectOneMenu>
+                        <p:layout style="min-height:700px;max-height:700px;" >
+                            <p:layoutUnit position="west" size="325" >
+                                <p:outputPanel style="text-align:center;" >
+                                    <p:outputLabel value="Filtrar por: " />
+                                </p:outputPanel>
+                                <p:spacer height="10px"/>
 
-                        <p:dataTable emptyMessage="Nenhuma atividade cadastrada " 
-                                     value="#{RelatoriosView.listaAtividades}" 
-                                     filteredValue="#{RelatoriosView.listaAtividadesFiltradas}" rowKey="#{objCursor.id}"
-                                     var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
+                                <p:panel header="Usuários" >
+                                    <p:selectOneRadio value="#{RelatoriosView.userSelecionado}" 
+                                                      converter="generic" layout="grid" columns="1" >
+                                        <p:ajax update="frmrelatorios" event="change"  
+                                                listener="#{RelatoriosView.filtraAtividadesPorUser()}"/>
+                                        <f:selectItems value="#{RelatoriosView.listaUser}" var="var" 
+                                                       itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                    </p:selectOneRadio>
+                                </p:panel>
+                            </p:layoutUnit>
 
-                            <p:column headerText="Nome" filterBy="#{objCursor.nome}" sortBy="#{objCursor.nome}" 
-                                      filterMatchMode="contains" >
-                                <h:outputText value="#{objCursor.nome}"/>
-                            </p:column>
+                            <p:layoutUnit position="center" >
+                                <p:dataTable emptyMessage="Nenhuma atividade cadastrada " 
+                                             value="#{RelatoriosView.listaAtividades}" style="text-align: center"
+                                             filteredValue="#{RelatoriosView.listaAtividadesFiltradas}" rowKey="#{objCursor.id}"
+                                             var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
 
-                            <p:column headerText="Data início" filterMatchMode="contains"
-                                      filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" >
-                                <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" />
-                            </p:column>
+                                    <p:column headerText="Nome" filterBy="#{objCursor.nome}" sortBy="#{objCursor.nome}" 
+                                              filterMatchMode="contains" >
+                                        <h:outputText value="#{objCursor.nome}"/>
+                                    </p:column>
 
-                            <p:column headerText="Data fim" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" 
-                                      filterMatchMode="contains">
-                                <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
-                            </p:column>
+                                    <p:column headerText="Data início" styleClass="colunasTabela100PX" >
+                                        <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" />
+                                    </p:column>
 
-                            <p:column headerText="Situação" filterBy="#{objCursor.status}" sortBy="#{objCursor.status}" 
-                                      filterMatchMode="contains" >
-                                <h:outputText value="#{objCursor.status}"/>
-                            </p:column>
+                                    <p:column headerText="Data fim" styleClass="colunasTabela100PX" >
+                                        <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
+                                    </p:column>
 
-                            <p:column filterBy="#{objCursor.meta}" headerText="Meta" filterMatchMode="exact">
-                                <f:facet name="filter">
-                                    <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                        <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="var" itemLabel="#{var.nome}" 
-                                                       itemValue="#{var}"/>
-                                    </p:selectOneMenu>
-                                </f:facet>
-                                <h:outputText value="#{objCursor.meta.nome}" />
-                            </p:column>
+                                    <p:column headerText="Situação"  filterBy="#{objCursor.status}" filterMatchMode="exact" 
+                                              styleClass="colunasTabela200PX" >
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" />
+                                                <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" />
+                                                <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
 
-                            <f:facet name="footer">
-                                <h:commandLink id="pdfUsr">
-                                    <p:graphicImage name="icons24/Pdf24.png" width="24"/>
-                                    <p:dataExporter type="pdf" target="dtListagemAtividades" fileName="Metas" encoding="ISO-8859-1" />
-                                </h:commandLink> 
+                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagRed.png"
+                                                        rendered="#{objCursor.status == 'Não iniciada'}" />
+                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagYellow.png"
+                                                        rendered="#{objCursor.status == 'Iniciada'}" />
+                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagGreen.png"
+                                                        rendered="#{objCursor.status == 'Finalizada'}" />
+                                    </p:column>
 
-                                <p:spacer height="20px"/>
+                                    <p:column filterBy="#{objCursor.meta}" headerText="Meta" filterMatchMode="exact">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="var"
+                                                               itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                        <h:outputText value="#{objCursor.meta.nome}" />
+                                    </p:column>
 
-                                <h:commandLink id="xlsUsr">
-                                    <p:graphicImage name="icons24/Xls24.png" width="24"/>
-                                    <p:dataExporter type="xls" target="dtListagemAtividades" fileName="Metas" />
-                                </h:commandLink>
+                                    <f:facet name="footer">
+                                        <h:commandLink id="pdfUsr">
+                                            <p:graphicImage name="icons24/Pdf24.png" width="24"/>
+                                            <p:dataExporter type="pdf" target="dtListagemAtividades" fileName="Metas" encoding="ISO-8859-1" />
+                                        </h:commandLink> 
 
-                                <p:tooltip for="pdfUsr" value="Exportar para PDF" />
-                                <p:tooltip for="xlsUsr" value="Exportar para Excel" />
-                            </f:facet>
-                        </p:dataTable>
+                                        <p:spacer height="20px"/>
+
+                                        <h:commandLink id="xlsUsr">
+                                            <p:graphicImage name="icons24/Xls24.png" width="24"/>
+                                            <p:dataExporter type="xls" target="dtListagemAtividades" fileName="Metas" />
+                                        </h:commandLink>
+
+                                        <p:tooltip for="pdfUsr" value="Exportar para PDF" />
+                                        <p:tooltip for="xlsUsr" value="Exportar para Excel" />
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:layoutUnit>
+                        </p:layout>
                     </p:tab>
 
                     <p:tab id="tabExecucaoPlano" title="Execução do plano de ação">
-                        <p:panel>
-                            <p:selectOneMenu value="#{RelatoriosView.empreendimentoSelecionado}" converter="generic" >
-                                <p:ajax update="frmrelatorios" event="itemSelect" 
-                                        listener="#{RelatoriosView.selecionaEes()}"/>
-                                <f:selectItem itemLabel="Escolha o empreendimento" itemValue="#{null}" 
-                                              noSelectionOption="true" />
-                                <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
-                                               itemLabel="#{ept.nome}" itemValue="#{ept}"/>
-                            </p:selectOneMenu>
+                        <p:layout style="min-height:700px;max-height:700px;" >
+                            <p:layoutUnit position="west" size="325" >
+                                <p:panel header="Empreendimentos" >
+                                    <p:selectOneRadio value="#{RelatoriosView.empreendimentoSelecionado}" 
+                                                      converter="generic" layout="grid" columns="1" >
+                                        <p:ajax update="frmrelatorios" event="change"  
+                                                listener="#{RelatoriosView.selecionaEes()}"/>
+                                        <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="var" 
+                                                       itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                    </p:selectOneRadio>
+                                </p:panel>
+                                <p:spacer height="10px" />
+                                
+                                <p:panel header="Planos de ação" rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
+                                    <p:outputPanel style="text-align:center;" rendered="#{RelatoriosView.listaPlanos.size() == 0}" >
+                                        <p:outputLabel value="Não há planos de ação cadastrados para esse empreendimento!" />
+                                        <p:separator/>
+                                    </p:outputPanel>
+                                    <p:selectOneRadio value="#{RelatoriosView.planoSelecionado}" 
+                                                      converter="generic" layout="grid" columns="1" >
+                                        <p:ajax update="frmrelatorios" event="change"  
+                                                listener="#{RelatoriosView.criaGraficoPieChatAtiviMetas()}"/>
+                                        <f:selectItems value="#{RelatoriosView.listaPlanos}" var="var" 
+                                                       itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                    </p:selectOneRadio>
+                                </p:panel>
+                            </p:layoutUnit>
 
-                            <p:selectOneMenu value="#{RelatoriosView.planoSelecionado}" converter="generic" 
-                                             rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
-                                <p:ajax update="frmrelatorios" event="itemSelect" 
-                                        listener="#{RelatoriosView.criaGraficoPieChatAtiviMetas()}" />
-                                <f:selectItem itemLabel="Escolha o plano" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{RelatoriosView.listaPlanos}" var="var" itemLabel="#{var.nome}" 
-                                               itemValue="#{var}"/>
-                            </p:selectOneMenu>
-                        </p:panel>
-                        <p:panelGrid columns="2" layout="grid">
-                            <p:panel rendered="#{RelatoriosView.planoSelecionado != null 
-                                                 and RelatoriosView.empreendimentoSelecionado != null 
-                                                 and RelatoriosView.graficoAtividadesPlano != null}" >
-                                <p:chart type="pie" model="#{RelatoriosView.graficoAtividadesPlano}" 
-                                         style="width:400px;height:300px" />                            
-                            </p:panel>
+                            <p:layoutUnit position="center" >
+                                <p:panelGrid columns="2" layout="grid">
+                                    <p:panel rendered="#{RelatoriosView.planoSelecionado != null 
+                                                         and RelatoriosView.empreendimentoSelecionado != null 
+                                                         and RelatoriosView.graficoAtividadesPlano != null}" >
+                                        <p:chart type="pie" model="#{RelatoriosView.graficoAtividadesPlano}" 
+                                                 style="width:400px;height:300px" />                            
+                                    </p:panel>
 
-                            <p:panel rendered="#{RelatoriosView.planoSelecionado != null 
-                                                 and RelatoriosView.empreendimentoSelecionado != null 
-                                                 and RelatoriosView.graficoMetasPlano != null}" >
-                                <p:chart type="pie" model="#{RelatoriosView.graficoMetasPlano}" 
-                                         style="width:400px;height:300px" />
-                            </p:panel>
-                        </p:panelGrid>
+                                    <p:panel rendered="#{RelatoriosView.planoSelecionado != null 
+                                                         and RelatoriosView.empreendimentoSelecionado != null 
+                                                         and RelatoriosView.graficoMetasPlano != null}" >
+                                        <p:chart type="pie" model="#{RelatoriosView.graficoMetasPlano}" 
+                                                 style="width:400px;height:300px" />
+                                    </p:panel>
+                                </p:panelGrid>
+                            </p:layoutUnit>
+                        </p:layout>
                     </p:tab>
                 </p:tabView>
             </h:form>

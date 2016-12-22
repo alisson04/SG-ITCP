@@ -15,8 +15,7 @@
 
                             <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(1)}" />
                             <p:selectOneRadio value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
-                                              converter="generic" layout="grid" columns="1" onclick="PF('blockUiGeral').show()" 
-                                              onchange="PF('blockUiGeral').hide()" >
+                                              converter="generic" layout="grid" columns="1" >
                                 <p:ajax update="frmIndicadores frmEdicao" event="change"  
                                         listener="#{IndicadoresMaturidadeView.selecionaEptTela()}"/>
                                 <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
@@ -35,8 +34,7 @@
                         <p:panel header="Categoria de Indicadores" collapsed="#{IndicadoresMaturidadeView.cateCheckBox}"
                                  rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" toggleable="true" >
                             <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(2)}" />
-                            <p:selectOneRadio value="#{IndicadoresMaturidadeView.categoriaSelecionada}" layout="grid" columns="1" 
-                                              onclick="PF('blockUiGeral').show()" onchange="PF('blockUiGeral').hide()">
+                            <p:selectOneRadio value="#{IndicadoresMaturidadeView.categoriaSelecionada}" layout="grid" columns="1" >
                                 <p:ajax update="frmIndicadores frmEdicao" event="change"
                                         listener="#{IndicadoresMaturidadeView.selecionaCategoriaTela()}" />
 
@@ -94,7 +92,7 @@
                             <p:outputPanel style="text-align:center;">
                                 <p:selectBooleanCheckbox value="#{IndicadoresMaturidadeView.selecionaTodosInds}">
                                     <p:ajax update="frmIndicadores frmEdicao" 
-                                            listener="#{IndicadoresMaturidadeView.selecionaTodosInds}" />
+                                            listener="#{IndicadoresMaturidadeView.selecionaTodosIndsView()}" />
                                 </p:selectBooleanCheckbox>
                                 <h:outputText value=" Todos" />
                                 <p:separator/>

@@ -6,15 +6,11 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
-import javax.faces.application.ViewExpiredException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -54,6 +50,19 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
             usuarioLogado = (Usuario) session.getAttribute("USUARIOLogado");
             userBean = new UsuarioBean();
             arquivo = new UploadArquivo();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+    //METODOS GERAIS
+    public String converteData(Date data) {
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }

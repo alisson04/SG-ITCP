@@ -31,7 +31,7 @@ import org.primefaces.model.chart.LineChartModel;
 @ManagedBean(name = "IndicadoresMaturidadeView")
 @ViewScoped
 public class IndicadoresMaturidadeView extends MensagensGenericas implements Serializable {
-
+    
     //Empreendimento Vars
     private Empreendimento empreendimentoSelecionado;
     private List<Empreendimento> listaEmpreendimentos;
@@ -125,7 +125,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         }
     }
     
-    public void selecionaTodosInds(){
+    public void selecionaTodosIndsView(){
         listaIndsSelecionados = listaTodosInds;
         criaGraficoInd();
     }
@@ -136,6 +136,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         listaGraficoInds = new ArrayList();//Limpa a lista de gráficos
         listaIndicadores = gerenIndicadores.listarIndicadores();//Pega todos os inds
         listaIndsSelecionados = new ArrayList();//Limpa os inds selecionados
+        selecionaTodosInds=false;//Diz que todos os inds não estão selecionados
         
         //Filtra
         filtraIndsPorCategoria();
@@ -144,6 +145,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     public void selecionaEptTela(){
         eptCheckBox = true;//Fecha o painel de empreendimentos: melhora a usabilidade
         liberaPainelIndicadores();
+        selecionaTodosInds=false;//Diz que todos os inds não estão selecionados
     }
 
     //METODOS gráfico
@@ -176,7 +178,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
                 axis.setTickAngle(-50);
                 System.out.println("DATA ATUAL: " + dateFormat.format(dataAtual));
                 axis.setMax(dateFormat.format(dataAtual));//Seta a data máxima para ser mostrada no gráfico
-                axis.setTickFormat("%#d %b, %y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
+                axis.setTickFormat("%#d, %m, 20%y");//Define a ordem dia, mes, ano q é mostrada na parte baixo do gráfico
 
                 graficoAux.getAxes().put(AxisType.X, axis);
 

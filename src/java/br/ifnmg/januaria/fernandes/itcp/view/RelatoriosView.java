@@ -222,8 +222,6 @@ public class RelatoriosView extends MensagensGenericas implements Serializable {
 
             if (listaEptIndGrafico.isEmpty()) {
                 msgGrowlErroCustomizavel("", "Não há indicadores preenchidos para essa categoria.");
-            } else {
-                RequestContext.getCurrentInstance().update("frmMsgGenerico");//Atualiza para retirar a msg anterior
             }
         } catch (Exception ex) {
             throw new FacesException(ex);
