@@ -3,6 +3,7 @@ package br.ifnmg.januaria.fernandes.itcp.bean;
 import br.ifnmg.januaria.fernandes.itcp.dao.UsuarioDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.EnviarEmail;
+import br.ifnmg.januaria.fernandes.itcp.util.RelatoriosManager;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
@@ -17,7 +18,7 @@ import org.apache.commons.mail.EmailException;
  */
 @SessionScoped
 @Named
-public class UsuarioBean implements Serializable {
+public class UsuarioBean implements Serializable  {
 
     private UsuarioDAO dao;
 

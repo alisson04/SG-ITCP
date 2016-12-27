@@ -78,7 +78,6 @@ public class ListarPlanoAcaoView extends MensagensGenericas implements Serializa
             objSalvar = new PlanoAcao();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarDlgEditar').hide()");
-            context.execute("PF('dlgEdicaoPronta').show()");
         } catch (Exception ex) {
             throw new FacesException(ex);
         }

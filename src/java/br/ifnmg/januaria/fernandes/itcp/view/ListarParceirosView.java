@@ -5,13 +5,9 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.FacesException;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -37,6 +33,19 @@ public class ListarParceirosView extends MensagensGenericas implements Serializa
     }
 
     //METODOS
+    public void gerarRelatorio() {
+        try {
+            if (!listaParceiros.isEmpty()) {
+                System.out.println("Não Filtrados");
+                bean.gerarRelatorio(listaParceiros);
+            } else {
+                msgGrowlErroCustomizavel(null, "Não ha parceiros listados");
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
     public String geraMsgGenericaCampoObrigatorioView() {
         try {
             return msgGenericaCampoObrigatorio();
@@ -66,6 +75,8 @@ public class ListarParceirosView extends MensagensGenericas implements Serializa
             bean.salvarBean(objSalvar);
             objSalvar = new Parceiro();
             msgGrowSaveGeneric();
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('wVarEditarDialog').hide()");
         } catch (Exception ex) {
             throw new FacesException(ex);
         }

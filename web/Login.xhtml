@@ -57,7 +57,7 @@
         <h:form id="frmComponentesGenerico" >
             <!--Mensagem Grow, geral-->
             <p:growl showDetail="true" life="5000" />
-            
+
             <!--Listener de excessões, Geral-->
             <p:ajaxExceptionHandler type="java.lang.Exception" update="exceptionDialog" onexception="PF('exceptionDialog').show();" />
 
@@ -95,10 +95,10 @@
                 </p:fieldset>
             </p:dialog>
         </h:form>
-
+        
+        <!--Dialogo de login-->
         <h:form id="frmLogar" >
             <div class="ui-fluid">
-                <!--Dialogo de login-->
                 <p:dialog  header="Acesso ao sistema SIGITEC" closable="false" draggable="false" visible="true" showEffect="clip"
                            resizable="false" rendered="#{LoginView.existeUserBd}" widgetVar="wvDlLogin" hideEffect="clip" >
                     <p:panel id="panelLogin">
@@ -119,6 +119,10 @@
 
                         <p:commandLink id="clReenviarSenha" update="frmLogar frmReenviarSenha" value="Esqueci minha senha" 
                                        immediate="true" actionListener="#{LoginView.MostraCaixaReenvioSenha()}" />
+                        
+                        <p:commandButton value="TESTE" actionListener="#{LoginView.teste()}" immediate="true" ajax="false"
+                                         onclick="this.form.target='_blank'" 
+                                         style="ui-button" styleClass="ui-button-text" update="frmLogar" />
                     </p:panel>
 
                     <p:blockUI block="panelLogin"  widgetVar="blockLogar">

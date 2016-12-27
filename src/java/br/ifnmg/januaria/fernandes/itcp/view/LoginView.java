@@ -7,16 +7,16 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.el.PropertyNotFoundException;
 import javax.faces.FacesException;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
@@ -40,6 +40,11 @@ public class LoginView extends MensagensGenericas implements Serializable {
     private UsuarioBean usrBean;
     private boolean existeUserBd;
     private boolean existeUserLogado;
+
+    private HttpServletResponse response;
+    private FacesContext context;
+    private ByteArrayOutputStream baos;
+    private InputStream stream;
 
     //CONSTRUTOR
     public LoginView() {
@@ -67,6 +72,9 @@ public class LoginView extends MensagensGenericas implements Serializable {
             } else {
                 inc = incBean.listarBean().get(0);
             }
+
+            context = FacesContext.getCurrentInstance();
+            response = (HttpServletResponse) context.getExternalContext().getResponse();
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -75,10 +83,7 @@ public class LoginView extends MensagensGenericas implements Serializable {
     //METODOS
     public void teste() {
         try {
-            Usuario u = new Usuario();
-            if (u.getId() > 1) {
-
-            }
+           
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -90,7 +95,7 @@ public class LoginView extends MensagensGenericas implements Serializable {
         context.execute("PF('wvDlLogin').hide()");
         context.execute("PF('dlReenviarSenha').show()");
     }
-    
+
     public void MostraCaixaLogin() {
         System.out.println("==============================================================");
         RequestContext context = RequestContext.getCurrentInstance();

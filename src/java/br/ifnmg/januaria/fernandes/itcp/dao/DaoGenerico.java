@@ -13,6 +13,7 @@ import javax.validation.ConstraintViolationException;
 /**
  *
  * @author alisson
+ * @param <TipoClasse>
  */
 @Transactional
 public abstract class DaoGenerico<TipoClasse> extends EntityManagerCriador {

@@ -15,7 +15,7 @@
                                  selectionMode="single" selection="#{ListarParceirosView.parceiroSelecionado}" 
                                  rowKey="#{parceiroCursor.id}" 
                                  var="parceiroCursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top">
-                        <p:ajax event="rowSelect" update=":frmListagemParceiros"/>
+                        <p:ajax event="rowSelect" update="frmListagemParceiros"/>
 
                         <p:column headerText="Nome " filterBy="#{parceiroCursor.nome}" filterMatchMode="contains"
                                   sortBy="#{parceiroCursor.nome}" >
@@ -36,25 +36,35 @@
                             <h:outputText value="#{parceiroCursor.telefone}"/>
                         </p:column>
 
+                        <p:column headerText="Telefone alternativo" >
+                            <h:outputText value="#{parceiroCursor.telefoneAlternativo}"/>
+                        </p:column>
+
                         <f:facet name="footer">
-                            <p:commandButton id="btnVisualizarParceiro" process="dtListagemParceiros" update=":frmListagemParceiros:carDetail" 
+                            <p:commandButton id="btnVisualizarParceiro" update=":frmListagemParceiros:carDetail" 
                                              icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()"
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}"/>
                             <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicao"
-                                             process="dtListagemParceiros" oncomplete="PF('wVarEditarDialog').show()"
+                                             oncomplete="PF('wVarEditarDialog').show()"
                                              actionListener="#{ListarParceirosView.reiniciaObj()}"/>
                             <p:commandButton id="btnEditar" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
-                                             disabled="#{ListarParceirosView.parceiroSelecionado == null}" process="dtListagemParceiros"
+                                             disabled="#{ListarParceirosView.parceiroSelecionado == null}"
                                              oncomplete="PF('wVarEditarDialog').show()"
                                              actionListener="#{ListarParceirosView.transfereObj()}"/>
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" 
-                                             update=":frmListagemParceiros" 
+                                             update="frmListagemParceiros" 
                                              disabled="#{ListarParceirosView.parceiroSelecionado == null}" 
                                              actionListener="#{ListarParceirosView.excluirParceiroView()}"
                                              onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert24-iconfinder" />
                             </p:commandButton>
+                            <br/>
+                            <br/>
+                            <p:commandButton value="Gerar Relatório" actionListener="#{ListarParceirosView.gerarRelatorio()}" 
+                                             immediate="true" ajax="false" onclick="this.form.target='_blank'" 
+                                             update="frmListagemParceiros" icon="Relatorio24-iconfinder" 
+                                             disabled="#{ListarParceirosView.listaParceiros.size() == 0}" />
                         </f:facet>
                     </p:dataTable>
 
