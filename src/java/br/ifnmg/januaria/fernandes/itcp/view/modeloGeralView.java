@@ -1,5 +1,6 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
+import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.IncubadoraBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
@@ -35,6 +36,10 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     private Usuario usuarioLogado;
     private UsuarioBean userBean;
     private UploadArquivo arquivo;
+    
+    //Varial que determina se existe algum EPT cadastrado - Usado por várias paginas
+    private boolean existeEptBd;
+    private EmpreendimentoBean empreendimentoBean;
 
     //CONSTRUTOR
     @PostConstruct
@@ -50,6 +55,14 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
             usuarioLogado = (Usuario) session.getAttribute("USUARIOLogado");
             userBean = new UsuarioBean();
             arquivo = new UploadArquivo();
+
+            //Verifica se existe Empreendimento no banco de dados
+            empreendimentoBean = new EmpreendimentoBean();
+            
+            existeEptBd = true;
+            if (empreendimentoBean.contarLinhasBean() == 0) {
+                existeEptBd = false;
+            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -142,5 +155,13 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
 
     public void setUsuarioLogado(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
+    }
+
+    public boolean isExisteEptBd() {
+        return existeEptBd;
+    }
+
+    public void setExisteEptBd(boolean existeEptBd) {
+        this.existeEptBd = existeEptBd;
     }
 }

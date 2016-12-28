@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -34,7 +33,7 @@ public class RelatoriosManager<TipoClasse> {
     }
     
     public void gerarRelatorioGenerico(List<TipoClasse> lista, String caminhoRelatorio, String nomeRelatorio) throws Exception {
-            stream = this.getClass().getResourceAsStream("/iReport/relatorioParceiros.jasper");
+            stream = this.getClass().getResourceAsStream(caminhoRelatorio);
             Map<String, Object> params = new HashMap<String, Object>();
             baos = new ByteArrayOutputStream();
 
@@ -45,7 +44,7 @@ public class RelatoriosManager<TipoClasse> {
             response.reset();
             response.setContentType("application/pdf");
             response.setContentLength(baos.size());
-            response.setHeader("Content-disposition", "inline; filename=relatorio.pdf");//attachment para download
+            response.setHeader("Content-disposition", "inline; filename="+nomeRelatorio);//attachment para download
             response.getOutputStream().write(baos.toByteArray());
             response.getOutputStream().flush();
             response.getOutputStream().close();

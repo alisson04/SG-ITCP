@@ -10,7 +10,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
                 <!--Listagem de Metas-->
-                <p:panel styleClass="corPanel" header="Metas cadastradas" >
+                <p:panel styleClass="corPanel" header="Metas cadastradas" rendered="#{modeloGeralView.existeEptBd}" >
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." 
                                  value="#{ListarMetasView.listaMetas}" filteredValue="#{ListarMetasView.listaMetasFiltradas}" 
                                  selectionMode="single" selection="#{ListarMetasView.metaSelecionada}" rowKey="#{metaCursor.idMeta}"
@@ -83,6 +83,21 @@
                         </p:outputPanel>
                     </p:dialog>
                 </p:panel>
+
+                <!--Aparece caso não tenha ept cadastrado-->
+                <p:dialog  header="Cadastre um empreendimento primeiro" visible="true" closable="false" draggable="false" 
+                           showEffect="clip" hideEffect="clip"
+                           resizable="false" rendered="#{!modeloGeralView.existeEptBd}" style="text-align:center;" >
+                    <br/>
+                    <p:outputLabel value="Antes de trabalhar os membros dos empreendimentos, cadastre algum primeiro!" />
+                    <p:separator/>
+
+                    <br/>
+                    <p:commandLink value="Ir para pagina de empreendimentos" type="button" immediate="true"
+                                       action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
+                        <!--<p:graphicImage name="fotos/64Question.png" />-->
+                    </p:commandLink>
+                </p:dialog>
             </h:form>
 
             <!--Editar e cadastrar Metas-->

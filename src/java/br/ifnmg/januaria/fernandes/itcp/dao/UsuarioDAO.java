@@ -45,14 +45,6 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
         return listarSingleObjGenerico("Usuario", "email", user.getEmail());
     }
 
-    public Usuario buscarPorCpfDAO(Usuario user) {
-        return listarSingleObjGenerico("Usuario", "cpf", user.getCpf());
-    }
-
-    public Usuario buscarPorRgDAO(Usuario user) {
-        return listarSingleObjGenerico("Usuario", "rg", user.getRg());
-    }
-
     public Usuario buscarPorCodigo(Usuario usr) {
         List<Usuario> listaUsrs;
 

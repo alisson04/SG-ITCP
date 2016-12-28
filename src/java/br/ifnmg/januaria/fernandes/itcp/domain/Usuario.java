@@ -69,12 +69,6 @@ public class Usuario implements Serializable, EntityConverter {
     @Column(name = "dataNascimento")
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
-    @Size(max = 45)
-    @Column(name = "rg")
-    private String rg;
-    @Size(max = 45)
-    @Column(name = "cpf")
-    private String cpf;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -134,8 +128,6 @@ public class Usuario implements Serializable, EntityConverter {
         this.senha = senha;
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
-        this.rg = rg;
-        this.cpf = cpf;
         this.cargo = cargo;
         this.dataEntrada = dataEntrada;
         this.sexo = sexo;
@@ -197,22 +189,6 @@ public class Usuario implements Serializable, EntityConverter {
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
-    }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getCargo() {

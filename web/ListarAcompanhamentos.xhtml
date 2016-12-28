@@ -10,11 +10,11 @@
             <h:form id="frmListagem" >
                 <p:panel header="Acompanhamentos cadastrados" >
                     <!--Listagem de acompanhamentos-->
-                    <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhum acompanhamento cadastrado!." 
-                                 value="#{ListarAcompanhamentosView.listaAcompanhamentosEpt}" 
-                                 filteredValue="#{ListarAcompanhamentosView.listaAcompanhamentosFiltrados}" 
-                                 selectionMode="single" selection="#{ListarAcompanhamentosView.objSelecionado}" rowKey="#{cursor.id}" 
-                                 var="cursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top">
+                    <p:dataTable id="dtListagemParceiros" emptyMessage="Nenhum acompanhamento cadastrado!" 
+                                 value="#{ListarAcompanhamentosView.listaAcompanhamentosEpt}" var="cursor" widgetVar="varGlobal"
+                                 filteredValue="#{ListarAcompanhamentosView.listaAcompanhamentosFiltrados}" selectionMode="single"
+                                 selection="#{ListarAcompanhamentosView.objSelecionado}" rowKey="#{cursor.id}" 
+                                 rows="10" paginator="true" paginatorPosition="top" rendered="#{modeloGeralView.existeEptBd}" >
                         <p:ajax event="rowSelect" update="frmListagem"/>
 
                         <p:column headerText="Objetivo" filterBy="#{cursor.objetivo}" filterMatchMode="contains"
@@ -118,6 +118,21 @@
                         </p:outputPanel>
                     </p:dialog>
                 </p:panel>
+
+                <!--Aparece caso não tenha ept cadastrado-->
+                <p:dialog  header="Cadastre um empreendimento primeiro" visible="true" closable="false" draggable="false" 
+                           showEffect="clip" hideEffect="clip"
+                           resizable="false" rendered="#{!modeloGeralView.existeEptBd}" style="text-align:center;" >
+                    <br/>
+                    <p:outputLabel value="Antes de trabalhar os membros dos empreendimentos, cadastre algum primeiro!" />
+                    <p:separator/>
+
+                    <br/>
+                    <p:commandLink value="Ir para pagina de empreendimentos" type="button" immediate="true"
+                                       action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
+                        <!--<p:graphicImage name="fotos/64Question.png" />-->
+                    </p:commandLink>
+                </p:dialog>
             </h:form>
 
             <!-- Cadastro e edição de acompanhamento-->

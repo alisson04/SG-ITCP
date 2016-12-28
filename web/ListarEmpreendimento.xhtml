@@ -11,10 +11,10 @@
                 <p:panel header="Empreendimentos cadastrados" >
                     <!--Listagem de EES-->
                     <p:dataTable id="dtListagemEmpreendimentos" emptyMessage="Nenhum empreendimento cadastrado." selectionMode="single"
-                                 value="#{ListarEmpreendimentosView.listaEmpreendimentos}" var="empreendimentoCursor" widgetVar="varGlobal"
-                                 filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}" rows="10" paginator="true"
-                                 selection="#{ListarEmpreendimentosView.empreendimentoSelecionado}" rowKey="#{empreendimentoCursor.id}"
-                                 paginatorPosition="top">
+                                 value="#{ListarEmpreendimentosView.listaEmpreendimentos}" var="empreendimentoCursor" 
+                                 widgetVar="varGlobal" filteredValue="#{ListarEmpreendimentosView.listaEmpreendimentosFiltrados}" 
+                                 rows="10" paginator="true" selection="#{ListarEmpreendimentosView.empreendimentoSelecionado}" 
+                                 rowKey="#{empreendimentoCursor.id}" paginatorPosition="top">
 
                         <p:ajax event="rowSelect" update=":frmListagemEmpreendimentos" />
 
@@ -23,17 +23,18 @@
                             <h:outputText value="#{empreendimentoCursor.nome}"/>
                         </p:column>
 
-                        <p:column headerText="Sigla" filterBy="#{empreendimentoCursor.sigla}" 
+                        <p:column headerText="Sigla" filterBy="#{empreendimentoCursor.sigla}" styleClass="colunasTabela200PX"
                                   sortBy="#{empreendimentoCursor.sigla}" filterMatchMode="contains">
                             <h:outputText value="#{empreendimentoCursor.sigla}"/>
                         </p:column>
 
-                        <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.email}" 
+                        <p:column headerText="E-mail" filterBy="#{empreendimentoCursor.email}" styleClass="colunasTabela200PX"
                                   sortBy="#{empreendimentoCursor.email}" filterMatchMode="contains">
                             <h:outputText value="#{empreendimentoCursor.email}"/>
                         </p:column>
 
-                        <p:column filterBy="#{empreendimentoCursor.situacao}" headerText="Fase de Incubação" filterMatchMode="exact">
+                        <p:column filterBy="#{empreendimentoCursor.situacao}" headerText="Fase de Incubação" filterMatchMode="exact"
+                                  styleClass="colunasTabela200PX" >
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
@@ -160,7 +161,7 @@
                                 <p:outputLabel for="tipoEpt" value="Tipo de empreendimento: "/>
                                 <p:selectOneMenu id="tipoEpt" required="true" value="#{ListarEmpreendimentosView.objSalvar.tipo}"
                                                  requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" 
-                                                 style="width:435px" >
+                                                 style="width:455px" >
                                     <f:selectItem itemLabel="Selecione o tipo" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarEmpreendimentosView.tiposEpt}" />
                                 </p:selectOneMenu>
@@ -179,7 +180,7 @@
                                 <p:outputLabel for="situacaoEpt" value="Fase de Incubação: "/>
                                 <p:selectOneMenu id="situacaoEpt" required="true" 
                                                  requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
-                                                 value="#{ListarEmpreendimentosView.objSalvar.situacao}" style="width:435px">
+                                                 value="#{ListarEmpreendimentosView.objSalvar.situacao}" style="width:455px">
                                     <f:selectItem itemLabel="Selecione a situação" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarEmpreendimentosView.situacaoEpt}" />
                                 </p:selectOneMenu>

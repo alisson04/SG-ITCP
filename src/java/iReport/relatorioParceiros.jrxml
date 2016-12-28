@@ -12,6 +12,10 @@
 	<field name="telefone" class="java.lang.String"/>
 	<field name="telefoneAlternativo" class="java.lang.String"/>
 	<field name="endereco" class="java.lang.String"/>
+	<variable name="numLinhas" class="java.math.BigDecimal" calculation="Count">
+		<variableExpression><![CDATA[$V{numLinhas}.add(new BigDecimal(1000))]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(1000) ]]></initialValueExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -25,14 +29,14 @@
 				<textElement textAlignment="Center">
 					<font size="20"/>
 				</textElement>
-				<text><![CDATA[Sistema SIGITEC - Relatório de usuários]]></text>
+				<text><![CDATA[Sistema SIGITEC - Relatório de parceiros]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="140" height="20" uuid="522058f8-d430-4cc0-8d0a-93bf8539af12"/>
+				<reportElement x="30" y="0" width="130" height="20" uuid="522058f8-d430-4cc0-8d0a-93bf8539af12"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -74,7 +78,7 @@
 				<text><![CDATA[Telefone:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="140" y="0" width="140" height="20" uuid="d067397a-2f12-4902-8e08-e3aae1d111a5"/>
+				<reportElement x="160" y="0" width="120" height="20" uuid="d067397a-2f12-4902-8e08-e3aae1d111a5"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -101,12 +105,26 @@
 				</textElement>
 				<text><![CDATA[Endereço]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="30" height="20" uuid="bd484c7a-063b-4cf6-af20-5eeffc41324f"/>
+				<box leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="20" uuid="3947ccc6-04a6-47b5-9b7a-30c75bfea384"/>
+				<reportElement stretchType="RelativeToBandHeight" x="30" y="0" width="130" height="20" uuid="3947ccc6-04a6-47b5-9b7a-30c75bfea384"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -118,7 +136,7 @@
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="140" y="0" width="140" height="20" uuid="a43eb8fb-b2ff-4fd1-9672-1177836cfdd0"/>
+				<reportElement stretchType="RelativeToBandHeight" x="160" y="0" width="120" height="20" uuid="a43eb8fb-b2ff-4fd1-9672-1177836cfdd0"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -164,6 +182,18 @@
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="20" isPrintWhenDetailOverflows="true" uuid="9225f8f2-0429-4c58-8a2c-0a5361480acc"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{numLinhas}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

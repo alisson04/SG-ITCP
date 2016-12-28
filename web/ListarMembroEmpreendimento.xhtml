@@ -10,7 +10,7 @@
             <h:form id="frmListagemMembrosEpts" >
                 <!--Listar -->
                 <p:panel id="pnlListagem" header="Membros de empreendimentos cadastrados" 
-                         rendered="#{ListarMembrosEptsView.existeEptBd}" >
+                         rendered="#{modeloGeralView.existeEptBd}" >
                     <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento cadastrado!" 
                                  value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
                                  filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}" selectionMode="single" 
@@ -44,11 +44,11 @@
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
-                                                   itemValue="#{ept}"/>
+                                    <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" 
+                                                   itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
                                 </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.nome}" />
+                            <h:outputText value="#{membroEmpreendimentoCursor.empreendimento.sigla}" />
                         </p:column>
 
                         <f:facet name="footer">
@@ -109,17 +109,17 @@
 
                 <!--Aparece caso não tenha ept cadastrado-->
                 <p:dialog  header="Cadastre um empreendimento primeiro" visible="true" closable="false" draggable="false" 
-                           resizable="false" rendered="#{!ListarMembrosEptsView.existeEptBd}" style="text-align:center;" >
-
+                           showEffect="clip" hideEffect="clip"
+                           resizable="false" rendered="#{!modeloGeralView.existeEptBd}" style="text-align:center;" >
                     <br/>
                     <p:outputLabel value="Antes de trabalhar os membros dos empreendimentos, cadastre algum primeiro!" />
                     <p:separator/>
 
                     <br/>
-                    <p:commandButton   value="Ir para pagina de empreendimentos" type="button" immediate="true"
-                                       action="/listarEmpreendimento.xhtml?faces-redirect=true" >
+                    <p:commandLink value="Ir para pagina de empreendimentos" type="button" immediate="true"
+                                       action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
                         <!--<p:graphicImage name="fotos/64Question.png" />-->
-                    </p:commandButton>
+                    </p:commandLink>
                 </p:dialog>
             </h:form>
 
@@ -183,11 +183,11 @@
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
                                 <p:selectOneMenu id="empreendimento" required="true" 
                                                  requiredMessage="#{ListarMembrosEptsView.geraMsgGenericaCampoObrigatorioView()}"
-                                                 value="#{ListarMembrosEptsView.objSalvar.empreendimento}" style="width:435px" 
+                                                 value="#{ListarMembrosEptsView.objSalvar.empreendimento}" style="width:455px" 
                                                  converter="generic">
                                     <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
-                                                   itemValue="#{ept}"/>
+                                    <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" 
+                                                   itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
                                 </p:selectOneMenu>
                                 <p:message for="empreendimento"/>
 

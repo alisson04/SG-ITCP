@@ -9,8 +9,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -31,7 +29,6 @@ public class ListarMembrosEptsView extends MensagensGenericas implements Seriali
     private List<MembroEmpreendimento> listaMembrosEmpreendimentos;
     private List<MembroEmpreendimento> listaMembrosEmpreendimentosFiltrados;
     private List<Empreendimento> listaEmpreendimentos;
-    private boolean existeEptBd;
 
     public ListarMembrosEptsView() {
         try {
@@ -43,12 +40,6 @@ public class ListarMembrosEptsView extends MensagensGenericas implements Seriali
             bean = new MembroEmpreendimentoBean();
             objSalvar = new MembroEmpreendimento();
             listaMembrosEmpreendimentos = bean.listarBean();
-
-            //Verifica se existe Empreendimento no banco de dados
-            existeEptBd = true;
-            if (empreendimentoBean.contarLinhasBean() == 0) {
-                existeEptBd = false;
-            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -153,13 +144,5 @@ public class ListarMembrosEptsView extends MensagensGenericas implements Seriali
 
     public void setObjSalvar(MembroEmpreendimento objSalvar) {
         this.objSalvar = objSalvar;
-    }
-
-    public boolean isExisteEptBd() {
-        return existeEptBd;
-    }
-
-    public void setExisteEptBd(boolean existeEptBd) {
-        this.existeEptBd = existeEptBd;
     }
 }

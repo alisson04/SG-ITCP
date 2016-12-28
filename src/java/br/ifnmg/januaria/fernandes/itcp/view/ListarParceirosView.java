@@ -74,6 +74,7 @@ public class ListarParceirosView extends MensagensGenericas implements Serializa
         try {
             bean.salvarBean(objSalvar);
             objSalvar = new Parceiro();
+            listaParceiros = bean.listarBean();
             msgGrowSaveGeneric();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");

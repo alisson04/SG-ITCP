@@ -1,6 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.bean;
 
 import br.ifnmg.januaria.fernandes.itcp.dao.UsuarioDAO;
+import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.EnviarEmail;
 import br.ifnmg.januaria.fernandes.itcp.util.RelatoriosManager;
@@ -26,8 +27,15 @@ public class UsuarioBean implements Serializable  {
         dao.teste();
     }
 
+    //CONSTRUTOR
     public UsuarioBean() {
         dao = new UsuarioDAO();
+    }
+    
+    //METODOS
+    public void gerarRelatorio(List<Usuario> lista) throws Exception {
+        RelatoriosManager m = new RelatoriosManager<Usuario>();
+        m.gerarRelatorioGenerico(lista, "/iReport/relatorioUsers.jasper", "Relatorio-de-Usuarios.pdf");
     }
 
     public Usuario salvarBean(Usuario user) throws EmailException {
@@ -76,14 +84,6 @@ public class UsuarioBean implements Serializable  {
 
     public Usuario buscarPorEmailBean(Usuario user) {
         return dao.buscarPorEmail(user);
-    }
-
-    public Usuario buscarPorCpfBean(Usuario user) {
-        return dao.buscarPorCpfDAO(user);
-    }
-
-    public Usuario buscarPorRgBean(Usuario user) {
-        return dao.buscarPorRgDAO(user);
     }
 
     public void enviarEmail(String enviarPara, String assunto, String mensagem) throws EmailException {

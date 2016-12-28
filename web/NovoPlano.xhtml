@@ -8,7 +8,23 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo" >
             <h:form id="frmCadastro" >
-                <p:tabView  id="tabGeral" activeIndex="#{CadastrarPlanoAcaoView.tabview.activeIndex}" >
+                <!--Aparece caso não tenha ept cadastrado-->
+                <p:dialog  header="Cadastre um empreendimento primeiro" visible="true" closable="false" draggable="false" 
+                           showEffect="clip" hideEffect="clip"
+                           resizable="false" rendered="#{!modeloGeralView.existeEptBd}" style="text-align:center;" >
+                    <br/>
+                    <p:outputLabel value="Antes de trabalhar os membros dos empreendimentos, cadastre algum primeiro!" />
+                    <p:separator/>
+
+                    <br/>
+                    <p:commandLink value="Ir para pagina de empreendimentos" type="button" immediate="true"
+                                       action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
+                        <!--<p:graphicImage name="fotos/64Question.png" />-->
+                    </p:commandLink>
+                </p:dialog>
+                
+                <p:tabView  id="tabGeral" activeIndex="#{CadastrarPlanoAcaoView.tabview.activeIndex}" 
+                            rendered="#{modeloGeralView.existeEptBd}" >
                     <p:ajax event="tabChange" listener="#{CadastrarPlanoAcaoView.onTabChange}" update="frmCadastro" />
                     <!--TAB Cadastro de Plano-->
                     <p:tab id="tabPlano" title="Plano de ação" >

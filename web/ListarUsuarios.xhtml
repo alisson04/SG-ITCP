@@ -56,15 +56,18 @@
                             </p:commandButton>
 
                             <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" 
-                                             update=":frmListagemUsuarios" disabled="#{ListarUsuariosView.objSelecionado == null}" 
+                                             update="frmListagemUsuarios" disabled="#{ListarUsuariosView.objSelecionado == null}" 
                                              actionListener="#{ListarUsuariosView.excluirView()}"
                                              onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert24-iconfinder" />
                             </p:commandButton>
-
-                            <p:tooltip for="btnVisualizarusr" value="Visualizar informações deste usuário!"
-                                       showEffect="clip" hideEffect="explode" />
+                            <br/>
+                            <br/>
+                            <p:commandButton value="Gerar Relatório" actionListener="#{ListarUsuariosView.gerarRelatorio()}" 
+                                             immediate="true" ajax="false" onclick="this.form.target = '_blank'" 
+                                             update="frmListagemUsuarios" icon="Relatorio24-iconfinder" 
+                                             disabled="#{ListarUsuariosView.listaUsuarios.size() == 0}" />
                         </f:facet>
                     </p:dataTable>
 
@@ -93,12 +96,6 @@
 
                             <h:outputText value="Telefone alternatico: " />
                             <h:outputText value="#{ListarUsuariosView.objSelecionado.telefoneAlternativo}" />
-
-                            <p:outputLabel value="RG: " />
-                            <p:outputLabel value="#{ListarUsuariosView.objSelecionado.rg}"/>
-
-                            <p:outputLabel value="CPF: " />
-                            <p:outputLabel value="#{ListarUsuariosView.objSelecionado.cpf}"/>
 
                             <p:outputLabel value="Data de nascimento: " />
                             <p:outputLabel value="#{ListarUsuariosView.conveteData(ListarUsuariosView.objSelecionado.dataNascimento)}"/>
@@ -155,15 +152,6 @@
                                              mask="(99) ?9-9999-9999" size="45" maxlength="11"/>
                                 <p:message for="telefoneAlternativo"/>
 
-                                <p:outputLabel for="rg" value="RG: " />
-                                <p:inputText id="rg" value="#{ListarUsuariosView.objSalvar.rg}" size="45" maxlength="13"/>
-                                <p:message for="rg"/>
-
-                                <p:outputLabel for="cpf" value="CPF: " />
-                                <p:inputMask id="cpf" value="#{ListarUsuariosView.objSalvar.cpf}"
-                                             mask="999-999-999.99" size="45" maxlength="11" />   
-                                <p:message for="cpf"/>
-
                                 <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
                                 <p:calendar id="dataNascimento" value="#{ListarUsuariosView.objSalvar.dataNascimento}" 
                                             pattern="dd/MM/yyyy" 
@@ -180,7 +168,7 @@
                                 <p:outputLabel for="cargoItcp" value="Cargo: " />
                                 <p:selectOneMenu id="cargoItcp" required="true" 
                                                  requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}"
-                                                 value="#{ListarUsuariosView.objSalvar.cargo}" style="width:435px"
+                                                 value="#{ListarUsuariosView.objSalvar.cargo}" style="width:455px"
                                                  rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarUsuariosView.geraTiposDeCargosView()}" />
@@ -201,7 +189,7 @@
                             <p:outputLabel value="* Campos obrigatórios" />
                         </p:panel>
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarUsuariosView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagemUsuarios:ListagemUsuarios" 
+                                         icon="Save24-iconfinder" update="frmEdicao, frmListagemUsuarios" 
                                          onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>

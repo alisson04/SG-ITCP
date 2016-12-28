@@ -10,7 +10,7 @@
         <ui:define name="conteudo">
             <h:form id="frmListagemPlanosAcao" >
                 <!--Listagem de planos de ação-->
-                <p:panel id="panelListagemPlanosAcao" header="Planos de ação cadastrados" >
+                <p:panel id="panelListagemPlanosAcao" header="Planos de ação cadastrados" rendered="#{modeloGeralView.existeEptBd}" >
                     <p:dataTable id="dtListagemPlanosAcao" emptyMessage="Nenhum plano de ação cadastrado." var="planoAcaoCursor"
                                  value="#{ListarPlanoAcaoView.listaPlanoAcao}" filteredValue="#{ListarPlanoAcaoView.listaPlanoAcaoFiltrados}" 
                                  selectionMode="single" selection="#{ListarPlanoAcaoView.planoSelecionado}" paginatorPosition="top"
@@ -46,12 +46,12 @@
                                              update=":frmListagemPlanosAcao" icon="Find24-iconfinder" value="Visualizar" 
                                              oncomplete="PF('carDialog').show()" 
                                              disabled="#{ListarPlanoAcaoView.planoSelecionado == null}"  />
-                            
+
                             <p:commandButton id="btnEditarPlano" value="Editar" icon="Edit24-iconfinder" update=":frmEdicaoPlano"
                                              disabled="#{ListarPlanoAcaoView.planoSelecionado == null}" process="dtListagemPlanosAcao"
                                              oncomplete="PF('wVarDlgEditar').show()" 
                                              actionListener="#{ListarPlanoAcaoView.transfereObj()}"/>
-                            
+
                             <p:commandButton id="btnExcluirPlano"  update=":frmListagemPlanosAcao" value="Excluir" 
                                              icon="Cross24-iconfinder" actionListener="#{ListarPlanoAcaoView.excluirView()}"
                                              disabled="#{ListarPlanoAcaoView.planoSelecionado == null}" 
@@ -82,6 +82,21 @@
                         </p:outputPanel>
                     </p:dialog>
                 </p:panel>
+
+                <!--Aparece caso não tenha ept cadastrado-->
+                <p:dialog  header="Cadastre um empreendimento primeiro" visible="true" closable="false" draggable="false" 
+                           showEffect="clip" hideEffect="clip"
+                           resizable="false" rendered="#{!modeloGeralView.existeEptBd}" style="text-align:center;" >
+                    <br/>
+                    <p:outputLabel value="Antes de trabalhar os membros dos empreendimentos, cadastre algum primeiro!" />
+                    <p:separator/>
+
+                    <br/>
+                    <p:commandLink value="Ir para pagina de empreendimentos" type="button" immediate="true"
+                                   action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
+                        <!--<p:graphicImage name="fotos/64Question.png" />-->
+                    </p:commandLink>
+                </p:dialog>
             </h:form>
 
             <!--Editar e cadastrar planos-->

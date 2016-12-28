@@ -45,6 +45,19 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
     }
 
     //METODOS
+    public void gerarRelatorio() {
+        try {
+            if (!listaUsuarios.isEmpty()) {
+                System.out.println("Não Filtrados");
+                bean.gerarRelatorio(listaUsuarios);
+            } else {
+                msgGrowlErroCustomizavel(null, "Não ha parceiros listados");
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+    
     public String geraMsgGenericaCampoObrigatorioView() {
         try {
             return msgGenericaCampoObrigatorio();
@@ -141,7 +154,7 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
     public void ativarDesativarUsrView() {
         try {
             if (objSelecionado.getStatusSistema().equals("Ativo")) {
-                objSelecionado.setStatusSistema("Inativo");
+                objSelecionado.setStatusSistema("Desativado");
                 bean.salvarBean(objSelecionado);
             } else {
                 objSelecionado.setStatusSistema("Ativo");
