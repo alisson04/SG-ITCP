@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioParceiros" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0917d2cf-b0e5-4b55-aba8-0c58b2ea4edd">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.2396694214876032"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="920de8f8-6bfb-46e6-b049-64b37cf50faf"/>

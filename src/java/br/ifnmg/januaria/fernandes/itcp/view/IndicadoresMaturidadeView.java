@@ -2,10 +2,12 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoIndicadorBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.NotaMaturidadeBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
+import br.ifnmg.januaria.fernandes.itcp.domain.NotaMaturidade;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
@@ -68,7 +70,10 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     
     //CheckBox Indicadores
     private boolean selecionaTodosInds;//Variavel que define que todos os indicadores do check box serão selecionados
-
+    
+    //Variáveis nota de maturidade
+    private List<NotaMaturidade> listaNotas;
+    private NotaMaturidadeBean notaBean;
     //Construtor
     public IndicadoresMaturidadeView() {
         try {
@@ -99,6 +104,10 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
             tamanhoGraficos = 2;//2 significa que é tamanho médio o inicial
             
             selecionaTodosInds = false;
+            
+            //Notas de maturidade
+            notaBean = new NotaMaturidadeBean();
+            listaNotas = notaBean.listarUltimasNotasBean(listaEmpreendimentos);
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -143,9 +152,8 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     }
     
     public void selecionaEptTela(){
-        eptCheckBox = true;//Fecha o painel de empreendimentos: melhora a usabilidade
         liberaPainelIndicadores();
-        selecionaTodosInds=false;//Diz que todos os inds não estão selecionados
+        selecionaTodosInds=false;//Diz que nenhum ind estaselecionados
     }
 
     //METODOS gráfico
@@ -246,7 +254,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         try {
             if (empreendimentoSelecionado != null) {
                 Date dataAtual = new Date();
-                listaEptIndSalvar = bean.buscarListaPorCodigoBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
+                listaEptIndSalvar = bean.listaLastIndsPorEptBean(empreendimentoSelecionado);//Pega os inds para o ESS selecionado
                 List<EmpreendimentoIndicador> listaEptIndAux = new ArrayList();//Lista auxiliar
 
                 System.out.println("===============================");
@@ -286,14 +294,14 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
                 listaIndicadores = gerenIndicadores.listarIndicadores();//Pega todos os inds
                 listaIndsSelecionados = new ArrayList();//Limpa os inds selecionados
             } else {
-                System.out.println("ERRO CRITICO NA PASSAGEM DE EES");
+                msgPanelErroInesperadoGeneric();
             }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
 
-    public void adicionaNota(int posicaoIndi) {
+    public void adicionaNota(int posicaoIndi) {//adiciona a nota a algum indicador
         try {
             EmpreendimentoIndicador eptIndAux;//Cria este para guardar a nota
             EmpreendimentoIndicadorPK EptIndPK;//Criar esta para receber a data nova
@@ -310,7 +318,10 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     public void salvarView() {
         try {
+            System.out.println("Salvar Indicadores =================================");
             bean.salvarBean(listaEptIndSalvar);
+            bean.gerarNotaMaturidade(empreendimentoSelecionado);
+            listaNotas = notaBean.listarUltimasNotasBean(listaEmpreendimentos);//Atualiza a lista de notas
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('wVarEditarDialog').hide()");//fecha o panel de "formulario de indicadores"
             if (!categoriaSelecionada.equals("")) {//Caso algum gráfico esteja sendo mostrado na tela durante o salvamento
@@ -466,5 +477,13 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
 
     public void setSelecionaTodosInds(boolean selecionaTodosInds) {
         this.selecionaTodosInds = selecionaTodosInds;
+    }
+
+    public List<NotaMaturidade> getListaNotas() {
+        return listaNotas;
+    }
+
+    public void setListaNotas(List<NotaMaturidade> listaNotas) {
+        this.listaNotas = listaNotas;
     }
 }

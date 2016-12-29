@@ -19,15 +19,8 @@
                                 <p:ajax update="frmIndicadores frmEdicao" event="change"  
                                         listener="#{IndicadoresMaturidadeView.selecionaEptTela()}"/>
                                 <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
-                                               itemLabel="#{ept.nome}" itemValue="#{ept}"/>
+                                               itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
                             </p:selectOneRadio>
-
-                            <p:separator rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" />
-                            <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
-                                <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
-                                                 update="frmIndicadores" oncomplete="PF('wVarEditarDialog').show()"
-                                                 rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" />
-                            </p:outputPanel>
                         </p:panel>
                         <p:spacer height="10px"/>
 
@@ -108,13 +101,35 @@
                     </p:layoutUnit>
 
                     <p:layoutUnit position="center" >
-                        <p:dataGrid var="graInd" value="#{IndicadoresMaturidadeView.listaGraficoInds}" layout="grid"
-                                    columns="#{IndicadoresMaturidadeView.tamanhoGraficos}"
-                                    rendered="#{IndicadoresMaturidadeView.listaGraficoInds.size() > 0}" >
-                            <p:panel >
-                                <p:chart type="line" model="#{graInd}" />
-                            </p:panel>
-                        </p:dataGrid>
+                        <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{IndicadoresMaturidadeView.listaNotas}" 
+                                     var="cursor" widgetVar="varGlobal" rows="10" paginator="true" style="text-align: center"
+                                     rowKey="#{cursor.id}" paginatorPosition="top">
+
+                            <p:column headerText="Empreendimento" >
+                                <h:outputText value="#{cursor.empreendimento.sigla}"/>
+                            </p:column>
+
+                            <p:column headerText="Notal atual" >
+                                <h:outputText value="#{cursor.nota}"/>
+                            </p:column>
+
+                            <p:column headerText="Notal máxima" >
+                                <h:outputText value="#{cursor.notaMaxima}"/>
+                            </p:column>
+
+                            <p:column headerText="Porcentagem" >
+                                <h:outputText value="#{modeloGeralView.geraPorcentagem(cursor.nota, cursor.notaMaxima)} %"/>
+                            </p:column>
+
+                            <f:facet name="footer">
+                                <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
+                                                 update="frmIndicadores" oncomplete="PF('wVarEditarDialog').show()"
+                                                 disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
+
+                                <p:tooltip value="Seleciona um empreendimento Primeiro!" 
+                                           rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
+                            </f:facet>
+                        </p:dataTable>
                     </p:layoutUnit>
                 </p:layout>
             </h:form>
@@ -138,7 +153,7 @@
                                 <p:outputLabel for="ind2" value="#{IndicadoresMaturidadeView.listaIndicadores[1].nome}: " />
                                 <p:selectOneRadio id="ind2" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[1].nota}" >
                                     <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(1)}"/>
-                                    <f:selectItem itemLabel="Menos de 5" itemValue="2"/>
+                                    <f:selectItem itemLabel="Menos de 5" itemValue="0"/>
                                     <f:selectItem itemLabel="Mais de 5" itemValue="1"/>
                                 </p:selectOneRadio>
 
@@ -147,7 +162,7 @@
                                     <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(2)}"/>
 
                                     <f:selectItem itemLabel="Montado" itemValue="0"/>
-                                    <f:selectItem itemLabel="Espontâneo" itemValue="1"/>
+                                    <f:selectItem itemLabel="Espontâneo" itemValue="2"/>
                                 </p:selectOneRadio>
 
                                 <p:outputLabel for="ind4" value="#{IndicadoresMaturidadeView.listaIndicadores[3].nome}: " />

@@ -4,29 +4,553 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:composite="http://java.sun.com/jsf/composite" >
-
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
+            <h:form id="frmIndicadores" >
+                <p:layout style="min-height:700px;max-height:700px;" >
+                    <p:layoutUnit position="west" size="325" >
+                        <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
+                            <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
+                                             update="frmIndicadores" oncomplete="PF('wVarEditarDialog').show()"
+                                             rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" />
+                        </p:outputPanel>
+                        <p:separator rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" />
 
-            <h:head>
-                <title>TESTES</title>
-            </h:head>
-            <h:body>
+                        <p:panel header="Empreendimentos" toggleable="true" styleClass="painelBordas"
+                                 collapsed="#{IndicadoresMaturidadeView.eptCheckBox}" >
 
-                <h:form>
+                            <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(1)}" />
+                            <p:selectOneRadio value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
+                                              converter="generic" layout="grid" columns="1" >
+                                <p:ajax update="frmIndicadores" event="change"  
+                                        listener="#{IndicadoresMaturidadeView.selecionaEptTela()}"/>
+                                <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
+                                               itemLabel="#{ept.nome}" itemValue="#{ept}"/>
+                            </p:selectOneRadio>
+                        </p:panel>
+                        <p:spacer height="10px"/>
 
-                    <h3 style="margin-top:0">JFreeChart</h3>
-                    <p:graphicImage value="#{TesteView.chart}" stream="false" />
-                    <p:graphicImage value="#{TesteView.chart}" stream="false" />
+                        <p:panel header="Categoria de Indicadores" collapsed="#{IndicadoresMaturidadeView.cateCheckBox}"
+                                 rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" toggleable="true" >
+                            <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(2)}" />
+                            <p:selectOneRadio value="#{IndicadoresMaturidadeView.categoriaSelecionada}" layout="grid" columns="1" >
+                                <p:ajax update="frmIndicadores" event="change"
+                                        listener="#{IndicadoresMaturidadeView.selecionaCategoriaTela()}" />
 
-                    <h3>JFreeChart rendered as DataURI / ViewScoped support</h3>
-                    <p:graphicImage value="#{TesteView.chart}" stream="false" />
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
+
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
+
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
+
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
+
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
+
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
+
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
+
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
+
+                                <f:selectItem itemLabel="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
+                                              itemValue="#{IndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
+                            </p:selectOneRadio>
+                        </p:panel>
+                        <p:spacer height="10px"/>
+
+                        <p:panel header="Indicadores" toggleable="true"
+                                 collapsed="#{IndicadoresMaturidadeView.indCheckBox}"
+                                 rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
+
+                            <f:facet name="options" >
+                                <p:menu  >
+                                    <p:submenu label="Tamanho dos gráficos">
+                                        <p:menuitem value="Pequeno" update="frmIndicadores frmEdicao"
+                                                    onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
+                                                    actionListener="#{IndicadoresMaturidadeView.configuraTamanhoGrafico(3)}" />
+                                        <p:menuitem value="Médio" update="frmIndicadores frmEdicao"
+                                                    onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
+                                                    actionListener="#{IndicadoresMaturidadeView.configuraTamanhoGrafico(2)}" />
+                                        <p:menuitem value="Grande" update="frmIndicadores frmEdicao"
+                                                    onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
+                                                    actionListener="#{IndicadoresMaturidadeView.configuraTamanhoGrafico(1)}" />
+                                    </p:submenu>
+                                </p:menu>
+                            </f:facet>
+
+                            <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(3)}" />
+                            <p:outputPanel style="text-align:center;">
+                                <p:selectBooleanCheckbox value="#{IndicadoresMaturidadeView.selecionaTodosInds}">
+                                    <p:ajax update="frmIndicadores" 
+                                            listener="#{IndicadoresMaturidadeView.selecionaTodosIndsView()}" />
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value=" Todos" />
+                                <p:separator/>
+                            </p:outputPanel>
+                            <p:selectManyCheckbox value="#{IndicadoresMaturidadeView.listaIndsSelecionados}" layout="grid" 
+                                                  converter="generic" columns="1" >
+                                <p:ajax listener="#{IndicadoresMaturidadeView.criaGraficoInd()}" update="frmIndicadores"
+                                        onstart="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"/>
+                                <f:selectItems value="#{IndicadoresMaturidadeView.listaTodosInds}" 
+                                               var="ind" itemLabel="#{ind.nome}" itemValue="#{ind}" />
+                            </p:selectManyCheckbox>
+                        </p:panel>
+                    </p:layoutUnit>
+
+                    <p:layoutUnit position="center" >
+                        <p:panelGrid columns="4" >
+                            <p:panel rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}">
+                                <h:panelGrid columns="2" >
+                                    <p:outputLabel for="ind1" value="#{IndicadoresMaturidadeView.listaIndicadores[0].nome}:" />
+                                    <p:selectOneRadio id="ind1" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[0].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(0)}"/>
+                                        <f:selectItem itemLabel="Menos de 5 anos" itemValue="0"/>
+                                        <f:selectItem itemLabel="Mais de 5 anos" itemValue="1"/>
+                                        <f:selectItem itemLabel="Mais de 15 anos" itemValue="2"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind2" value="#{IndicadoresMaturidadeView.listaIndicadores[1].nome}: " />
+                                    <p:selectOneRadio id="ind2" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[1].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(1)}"/>
+                                        <f:selectItem itemLabel="Menos de 5" itemValue="0"/>
+                                        <f:selectItem itemLabel="Mais de 5" itemValue="1"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind3" value="#{IndicadoresMaturidadeView.listaIndicadores[2].nome}: " />
+                                    <p:selectOneRadio id="ind3" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[2].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(2)}"/>
+
+                                        <f:selectItem itemLabel="Montado" itemValue="0"/>
+                                        <f:selectItem itemLabel="Espontâneo" itemValue="2"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind4" value="#{IndicadoresMaturidadeView.listaIndicadores[3].nome}: " />
+                                    <p:selectOneRadio id="ind4" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[3].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(3)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="0"/>
+                                        <f:selectItem itemLabel="Não" itemValue="1"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind5" value="#{IndicadoresMaturidadeView.listaIndicadores[4].nome}: " />
+                                    <p:selectOneRadio id="ind5" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[4].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(4)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel>
+                                <h:panelGrid columns="2" >
+                                    <p:outputLabel for="ind6" value="#{IndicadoresMaturidadeView.listaIndicadores[5].nome}: " />
+                                    <p:selectOneRadio id="ind6" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[5].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(5)}"/>
+
+                                        <f:selectItem itemLabel="Própria" itemValue="2"/>
+                                        <f:selectItem itemLabel="Alugada" itemValue="1"/>
+                                        <f:selectItem itemLabel="Cedida/Outros" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind7" value="#{IndicadoresMaturidadeView.listaIndicadores[6].nome}: " />
+                                    <p:selectOneRadio id="ind7" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[6].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(6)}"/>
+
+                                        <f:selectItem itemLabel="Próprios" itemValue="2"/>
+                                        <f:selectItem itemLabel="Alugados" itemValue="1"/>
+                                        <f:selectItem itemLabel="Outros" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind8" value="#{IndicadoresMaturidadeView.listaIndicadores[7].nome}: " />
+                                    <p:selectOneRadio id="ind8" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[7].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(7)}"/>
+
+                                        <f:selectItem itemLabel="Próprios" itemValue="2"/>
+                                        <f:selectItem itemLabel="Alugados" itemValue="1"/>
+                                        <f:selectItem itemLabel="Cedido" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind9" value="#{IndicadoresMaturidadeView.listaIndicadores[8].nome}: " />
+                                    <p:selectOneRadio id="ind9" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[8].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(8)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel>
+                                <h:panelGrid columns="2" >
+                                    <p:outputLabel for="ind10" value="#{IndicadoresMaturidadeView.listaIndicadores[9].nome}: " />
+                                    <p:selectOneRadio id="ind10" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[9].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(9)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind11" value="#{IndicadoresMaturidadeView.listaIndicadores[10].nome}: " />
+                                    <p:selectOneRadio id="ind11" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[10].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(10)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind12" value="#{IndicadoresMaturidadeView.listaIndicadores[11].nome}: " />
+                                    <p:selectOneRadio id="ind12" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[11].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(11)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind13" value="#{IndicadoresMaturidadeView.listaIndicadores[12].nome}: " />
+                                    <p:selectOneRadio id="ind13" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[12].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(12)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind14" value="#{IndicadoresMaturidadeView.listaIndicadores[13].nome}: " />
+                                    <p:selectOneRadio id="ind14" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[13].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(13)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind15" value="#{IndicadoresMaturidadeView.listaIndicadores[14].nome}: " />
+                                    <p:selectOneRadio id="ind15" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[14].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(14)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel>
+                                <h:panelGrid columns="2" >
+                                    <p:outputLabel for="ind16" value="#{IndicadoresMaturidadeView.listaIndicadores[15].nome}: " />
+                                    <p:selectOneRadio id="ind16" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[15].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(15)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind17" value="#{IndicadoresMaturidadeView.listaIndicadores[16].nome}:" />
+                                    <p:selectOneRadio id="ind17" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[16].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(16)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind18" value="#{IndicadoresMaturidadeView.listaIndicadores[17].nome}: " />
+                                    <p:selectOneRadio id="ind18" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[17].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(17)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind19" value="#{IndicadoresMaturidadeView.listaIndicadores[18].nome}: " />
+                                    <p:selectOneRadio id="ind19" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[18].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(18)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="2"/>
+                                        <f:selectItem itemLabel="Nem sempre" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind20" value="#{IndicadoresMaturidadeView.listaIndicadores[19].nome}: " />
+                                    <p:selectOneRadio id="ind20" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[19].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(19)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind21" value="#{IndicadoresMaturidadeView.listaIndicadores[20].nome}: " />
+                                    <p:selectOneRadio id="ind21" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[20].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(20)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind22" value="#{IndicadoresMaturidadeView.listaIndicadores[21].nome}: " />
+                                    <p:selectOneRadio id="ind22" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[21].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(21)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind23" value="#{IndicadoresMaturidadeView.listaIndicadores[22].nome}: " />
+                                    <p:selectOneRadio id="ind23" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[22].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(22)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel>
+                                <h:panelGrid columns="2" >
+                                    <p:outputLabel for="ind24" value="#{IndicadoresMaturidadeView.listaIndicadores[23].nome}: " />
+                                    <p:selectOneRadio id="ind24" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[23].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(23)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind25" value="#{IndicadoresMaturidadeView.listaIndicadores[24].nome}: " />
+                                    <p:selectOneRadio id="ind25" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[24].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(24)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind26" value="#{IndicadoresMaturidadeView.listaIndicadores[25].nome}: " />
+                                    <p:selectOneRadio id="ind26" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[25].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(25)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind27" value="#{IndicadoresMaturidadeView.listaIndicadores[26].nome}: " />
+                                    <p:selectOneRadio id="ind27" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[26].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(26)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind28" value="#{IndicadoresMaturidadeView.listaIndicadores[27].nome}: " />
+                                    <p:selectOneRadio id="ind28" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[27].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(27)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind29" value="#{IndicadoresMaturidadeView.listaIndicadores[28].nome}: " />
+                                    <p:selectOneRadio id="ind29" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[28].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(28)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind30" value="#{IndicadoresMaturidadeView.listaIndicadores[29].nome}: " />
+                                    <p:selectOneRadio id="ind30" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[29].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(29)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel>
+                                <h:panelGrid columns="2" >
+                                    <p:outputLabel for="ind31" value="#{IndicadoresMaturidadeView.listaIndicadores[30].nome}: " />
+                                    <p:selectOneRadio id="ind31" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[30].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(30)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind32" value="#{IndicadoresMaturidadeView.listaIndicadores[31].nome}: " />
+                                    <p:selectOneRadio id="ind32" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[31].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(31)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind33" value="#{IndicadoresMaturidadeView.listaIndicadores[32].nome}: " />
+                                    <p:selectOneRadio id="ind33" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[32].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(32)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind34" value="#{IndicadoresMaturidadeView.listaIndicadores[33].nome}: " />
+                                    <p:selectOneRadio id="ind34" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[33].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(33)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind35" value="#{IndicadoresMaturidadeView.listaIndicadores[34].nome}: " />
+                                    <p:selectOneRadio id="ind35" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[34].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(34)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel>
+                                <h:panelGrid columns="2" >
+                                    <p:outputLabel for="ind36" value="#{IndicadoresMaturidadeView.listaIndicadores[35].nome}: " />
+                                    <p:selectOneRadio id="ind36" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[35].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(35)}"/>
+
+                                        <f:selectItem itemLabel="Pouca ou nenhuma" itemValue="2"/>
+                                        <f:selectItem itemLabel="Mediana" itemValue="1"/>
+                                        <f:selectItem itemLabel="Muita" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind37" value="#{IndicadoresMaturidadeView.listaIndicadores[36].nome}: " />
+                                    <p:selectOneRadio id="ind37" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[36].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(36)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind38" value="#{IndicadoresMaturidadeView.listaIndicadores[37].nome}: " />
+                                    <p:selectOneRadio id="ind38" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[37].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(37)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind39" value="#{IndicadoresMaturidadeView.listaIndicadores[38].nome}: " />
+                                    <p:selectOneRadio id="ind39" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[38].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(38)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="2"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind40" value="#{IndicadoresMaturidadeView.listaIndicadores[39].nome}: " />
+                                    <p:selectOneRadio id="ind40" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[39].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(39)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind41" value="#{IndicadoresMaturidadeView.listaIndicadores[40].nome}: " />
+                                    <p:selectOneRadio id="ind41" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[40].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(40)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel>
+                                <h:panelGrid columns="2" >
+                                    <p:outputLabel for="ind42" value="#{IndicadoresMaturidadeView.listaIndicadores[41].nome}: " />
+                                    <p:selectOneRadio id="ind42" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[41].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(41)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind43" value="#{IndicadoresMaturidadeView.listaIndicadores[42].nome}: " />
+                                    <p:selectOneRadio id="ind43" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[42].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(42)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind44" value="#{IndicadoresMaturidadeView.listaIndicadores[43].nome}: " />
+                                    <p:selectOneRadio id="ind44" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[43].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(43)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind45" value="#{IndicadoresMaturidadeView.listaIndicadores[44].nome}: " />
+                                    <p:selectOneRadio id="ind45" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[44].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(44)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel>
+                                <h:panelGrid columns="2" >
+                                    <p:outputLabel for="ind46" value="#{IndicadoresMaturidadeView.listaIndicadores[45].nome}: " />
+                                    <p:selectOneRadio id="ind46" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[45].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(45)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind47" value="#{IndicadoresMaturidadeView.listaIndicadores[46].nome}: " />
+                                    <p:selectOneRadio id="ind47" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[46].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(46)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel for="ind48" value="#{IndicadoresMaturidadeView.listaIndicadores[47].nome}: " />
+                                    <p:selectOneRadio id="ind48" value="#{IndicadoresMaturidadeView.listaEptIndSalvar[47].nota}" >
+                                        <p:ajax process="@this" listener="#{IndicadoresMaturidadeView.adicionaNota(47)}"/>
+
+                                        <f:selectItem itemLabel="Sim" itemValue="1"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0"/>
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
 
 
-                </h:form>
-            </h:body>
+
+                                <p:outputPanel style="text-align:center;">
+                                    <p:commandButton id="btnSalvar" value="Salvar" 
+                                                     actionListener="#{IndicadoresMaturidadeView.salvarView()}" 
+                                                     icon="Save24-iconfinder" update="frmIndicadores" immediate="true" 
+                                                     onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
+                                        <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
+                                    </p:commandButton>
+                                    <p:spacer width="20px" />
+
+                                    <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                                                     onclick="PF('wVarEditarDialog').hide()" /> 
+                                </p:outputPanel>
+                            </p:panel>
+                        </p:panelGrid>
+                    </p:layoutUnit>
+                </p:layout>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

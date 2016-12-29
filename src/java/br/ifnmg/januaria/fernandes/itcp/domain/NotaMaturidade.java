@@ -44,8 +44,12 @@ public class NotaMaturidade implements Serializable {
     private int nota;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "notaMaxima")
+    private int notaMaxima;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "dataNota")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataNota;
     @JoinColumn(name = "idEmpreendimento", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -58,9 +62,10 @@ public class NotaMaturidade implements Serializable {
         this.id = id;
     }
 
-    public NotaMaturidade(Integer id, int nota, Date dataNota) {
+    public NotaMaturidade(Integer id, int nota, int notaMaxima, Date dataNota) {
         this.id = id;
         this.nota = nota;
+        this.notaMaxima = notaMaxima;
         this.dataNota = dataNota;
     }
 
@@ -78,6 +83,14 @@ public class NotaMaturidade implements Serializable {
 
     public void setNota(int nota) {
         this.nota = nota;
+    }
+
+    public int getNotaMaxima() {
+        return notaMaxima;
+    }
+
+    public void setNotaMaxima(int notaMaxima) {
+        this.notaMaxima = notaMaxima;
     }
 
     public Date getDataNota() {

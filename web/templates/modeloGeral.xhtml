@@ -240,15 +240,6 @@
                                                  mask="(99) ?9-9999-9999" size="45" maxlength="11"/>
                                     <p:message for="telefoneAlternativo"/>
 
-                                    <p:outputLabel for="rg" value="RG: " />
-                                    <p:inputText id="rg" value="#{modeloGeralView.usuarioLogado.rg}" size="45" maxlength="13"/>
-                                    <p:message for="rg"/>
-
-                                    <p:outputLabel for="cpf" value="CPF: " />
-                                    <p:inputMask id="cpf" value="#{modeloGeralView.usuarioLogado.cpf}"
-                                                 mask="999-999-999.99" size="45" maxlength="11" />   
-                                    <p:message for="cpf"/>
-
                                     <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
                                     <p:calendar id="dataNascimento" value="#{modeloGeralView.usuarioLogado.dataNascimento}" 
                                                 pattern="dd/MM/yyyy" size="45" mask="true" locale="pt" required="true" 

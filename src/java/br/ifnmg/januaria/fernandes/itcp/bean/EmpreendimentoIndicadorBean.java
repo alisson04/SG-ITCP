@@ -4,11 +4,14 @@ import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoIndicadorDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
+import br.ifnmg.januaria.fernandes.itcp.domain.NotaMaturidade;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -121,12 +124,55 @@ public class EmpreendimentoIndicadorBean implements Serializable {
         }
     }
 
+    //Gera e salva a nota de maturidade
+    public void gerarNotaMaturidade(Empreendimento ept) {
+        List<EmpreendimentoIndicador> listaInds = listaLastIndsPorEptBean(ept);
+        for (int i = 0; i < listaInds.size(); i++) {//
+            System.out.println("VIEW: " + listaInds.get(i).getEmpreendimentoIndicadorPK().getIdIndicador());
+        }
+        
+        NotaMaturidade notaSalvar = new NotaMaturidade();
+
+        Calendar calendar = Calendar.getInstance();//Pega a data atual
+        Date dataAtual = calendar.getTime();
+
+        int notaMaxima = 0;
+        int nota = 0;
+
+        for (int i = 0; i < listaInds.size(); i++) {
+            if (listaInds.get(i) != null) {
+                notaMaxima = notaMaxima + (
+                        (gerenIndicadores.geraIndPorId
+                        (listaInds.get(i).getEmpreendimentoIndicadorPK().getIdIndicador()))
+                                .getNotaMax());
+
+                nota += listaInds.get(i).getNota();
+                System.out.println("MAX: " + notaMaxima + " Nota: " + nota);
+            } else {
+                System.out.println("RRO");
+            }
+
+        }
+        notaSalvar.setEmpreendimento(ept);
+        notaSalvar.setNota(nota);
+        notaSalvar.setNotaMaxima(notaMaxima);
+        notaSalvar.setDataNota(dataAtual);
+
+        NotaMaturidadeBean notaBean = new NotaMaturidadeBean();
+        notaBean.salvarBean(notaSalvar);
+    }
+
+    public List<EmpreendimentoIndicador> listaLastIndsPorEptBean(Empreendimento obj) {
+        return dao.listaLastIndsPorEptDAO(obj);
+    }
+
     //Retorna os EmprendimentoIndicadores por uma categoria
     public List<EmpreendimentoIndicador> listarEesIndisPorcategoriaBean(Empreendimento ees, String categoria) {
         return dao.listarEesIndisPorcategoriaDAO(ees, listarIndicadoresPorCategoriaBean(categoria));
     }
 
-    public List<Indicador> listarIndicadoresPorCategoriaBean(String categoria) {//Retorna os indicadores por uma categoria
+    //Retorna os indicadores por uma categoria
+    public List<Indicador> listarIndicadoresPorCategoriaBean(String categoria) {
         return gerenIndicadores.listarIndicadoresPorCategoria(categoria);
     }
 
@@ -140,9 +186,5 @@ public class EmpreendimentoIndicadorBean implements Serializable {
 
     public long contarLinhasBean() {
         return dao.contarLinhasDAO();
-    }
-
-    public List<EmpreendimentoIndicador> buscarListaPorCodigoBean(Empreendimento obj) {
-        return dao.buscarListaPorCodigo(obj);
     }
 }

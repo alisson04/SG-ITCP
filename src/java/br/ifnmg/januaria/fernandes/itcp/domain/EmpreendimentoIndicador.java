@@ -26,10 +26,12 @@ public class EmpreendimentoIndicador implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected EmpreendimentoIndicadorPK empreendimentoIndicadorPK;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "nota")
     private Integer nota;
+    
     @JoinColumn(name = "idEmpreendimentoFk", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Empreendimento empreendimento;

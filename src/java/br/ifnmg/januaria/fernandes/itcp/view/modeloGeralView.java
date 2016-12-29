@@ -8,6 +8,7 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.PostConstruct;
@@ -36,7 +37,7 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     private Usuario usuarioLogado;
     private UsuarioBean userBean;
     private UploadArquivo arquivo;
-    
+
     //Varial que determina se existe algum EPT cadastrado - Usado por várias paginas
     private boolean existeEptBd;
     private EmpreendimentoBean empreendimentoBean;
@@ -58,7 +59,7 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
 
             //Verifica se existe Empreendimento no banco de dados
             empreendimentoBean = new EmpreendimentoBean();
-            
+
             existeEptBd = true;
             if (empreendimentoBean.contarLinhasBean() == 0) {
                 existeEptBd = false;
@@ -67,6 +68,7 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
             throw new FacesException(ex);
         }
     }
+
     //METODOS GERAIS
     public String converteData(Date data) {
         try {
@@ -81,10 +83,20 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
         }
     }
 
+    public String geraPorcentagem(float porcentagem, float valor) {
+        float resultado;
+
+        resultado = (porcentagem / valor) * 100;
+        
+        DecimalFormat df = new DecimalFormat("00.00");
+        System.out.println("Porcentagem: " + df.format(resultado));
+        return df.format(resultado);
+    }
+
     //METODOS USUARIO
     public void editarUserLogadoView() {
         try {
-            if (userBean.salvarBean(usuarioLogado) != null){//Salvou com sucesso
+            if (userBean.salvarBean(usuarioLogado) != null) {//Salvou com sucesso
                 usuarioLogado = userBean.salvarBean(usuarioLogado);//Salva o usuário
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('UserDia').hide()");
@@ -92,7 +104,7 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
             } else {
                 msgPanelErroCustomizavel("Erro no e-mail", "Este e-mail já esta cadastrado no sistema!");
             }
-        }catch (EmailException ex) {
+        } catch (EmailException ex) {
             msgPanelErroCustomizavel("Impossível salvar", "Verifique a validade do e-mail e a conexão com a internet ");
         } catch (Exception ex) {
             throw new FacesException(ex);

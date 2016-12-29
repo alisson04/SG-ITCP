@@ -300,5 +300,4 @@ public class Empreendimento implements Serializable, EntityConverter {
     public void setNotaMaturidadeList(List<NotaMaturidade> notaMaturidadeList) {
         this.notaMaturidadeList = notaMaturidadeList;
     }
-    
 }

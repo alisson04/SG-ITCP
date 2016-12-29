@@ -33,14 +33,13 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
         return listarObjsGenerico("EmpreendimentoIndicador");
     }
 
-    public List<EmpreendimentoIndicador> buscarListaPorCodigo(Empreendimento obj) {//Busca uma lista por código
+    public List<EmpreendimentoIndicador> listaLastIndsPorEptDAO(Empreendimento obj) {//Busca uma lista por código
         String PU = "sigitecPU";
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         EntityManager em = emf.createEntityManager();
 
-        List<EmpreendimentoIndicador> listaObjsFiltrados;//Cria alista que será retornada
-        listaObjsFiltrados = new ArrayList<>();//Instancia  a lista
-        for (int i = 0; i < 48; i++) {//Roda 48 vezes coletando os indicadores do ESS com maior data
+        List<EmpreendimentoIndicador> listaObjsFiltrados= new ArrayList<>();//Cria alista que será retornada
+        for (int i = 0; i < 48; i++) {//Roda 48 vezes coletando os indicadores do ESS, com maior data
             try {//Precisa estar dentro do FOR
                 em = emf.createEntityManager();
                 em.getTransaction().begin();
@@ -59,6 +58,8 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
 
                 if (indAux != null) {
                     listaObjsFiltrados.add(indAux);
+                    
+                    System.out.println("DAOOOOO: " + indAux.getEmpreendimentoIndicadorPK().getIdIndicador());
                 }
             } catch (NoResultException ex) {
                 System.out.println("IND " + i + " não cadastrado nesse EES");
@@ -67,6 +68,10 @@ public class EmpreendimentoIndicadorDAO extends DaoGenerico<EmpreendimentoIndica
             }
         }
         em.close();
+        
+        for (int i = 0; i < listaObjsFiltrados.size(); i++) {//
+            System.out.println("FOR: " + listaObjsFiltrados.get(i).getEmpreendimentoIndicadorPK().getIdIndicador());
+        }
         return listaObjsFiltrados;
     }
 
