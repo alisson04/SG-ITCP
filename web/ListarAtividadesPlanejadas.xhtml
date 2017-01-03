@@ -8,7 +8,7 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
-                <p:panel styleClass="corPanel" header="Atividades planejadas no sistema:" rendered="#{modeloGeralView.existeEptBd}" >
+                <p:panel header="Atividades planejadas no sistema:" rendered="#{modeloGeralView.existeEptBd}" >
                     <!--Listagem de usuários-->
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma atividade encontrada." 
                                  value="#{ListarAtiviPlanejadasView.listaObjs}" paginatorPosition="top"
@@ -25,34 +25,34 @@
 
                         <p:column headerText="Data início" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" 
                                   filterMatchMode="contains">
-                            <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" />
+                            <h:outputText value="#{modeloGeralView.converteData(objCursor.dataInicio)}" />
                         </p:column>
 
-                        <p:column headerText="Data fim" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" 
+                        <p:column headerText="Data fim" filterBy="#{modeloGeralView.converteData(objCursor.dataFim)}" 
                                   filterMatchMode="contains">
-                            <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
+                            <h:outputText value="#{modeloGeralView.converteData(objCursor.dataFim)}" />
                         </p:column>
 
                         <p:column filterBy="#{objCursor.meta.planoAcao.empreendimento}" headerText="Empreendimento" 
                                   filterMatchMode="exact" >
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" converter="generic"
-                                                 value="#{ListarAtiviPlanejadasView.eesSelecionado}" >
+                                                 value="#{ListarAtiviPlanejadasView.eesSelecionado}" autoWidth="false" >
                                     <p:ajax update="frmListagem" event="itemSelect" 
                                             listener="#{ListarAtiviPlanejadasView.filtraPlanosPorEes()}" />
 
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarAtiviPlanejadasView.listaEmpreendimentos}" var="var" 
-                                                   itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                                   itemLabel="#{var.sigla}" itemValue="#{var}" />
                                 </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{objCursor.meta.planoAcao.empreendimento.nome}" />
+                            <h:outputText value="#{objCursor.meta.planoAcao.empreendimento.sigla}" />
                         </p:column>
 
                         <p:column filterBy="#{objCursor.meta.planoAcao}" headerText="Plano de ação" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" converter="generic"
-                                                 value="#{ListarAtiviPlanejadasView.planoSelecionado}" >
+                                                 value="#{ListarAtiviPlanejadasView.planoSelecionado}" autoWidth="false" >
                                     <p:ajax update="frmListagem" event="itemSelect" 
                                             listener="#{ListarAtiviPlanejadasView.filtraMetasPorPlano()}" />
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
@@ -65,7 +65,7 @@
 
                         <p:column filterBy="#{objCursor.meta}" headerText="Meta" filterMatchMode="exact">
                             <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                <p:selectOneMenu onchange="PF('varGlobal').filter()" autoWidth="false" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="var" itemLabel="#{var.nome}" 
                                                    itemValue="#{var}"/>
@@ -105,9 +105,9 @@
                                 <h:outputText value="Plano de ação: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.meta.nome}" />
                                 <h:outputText value="Data início: " />
-                                <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(ListarAtiviPlanejadasView.objSelecionado.dataInicio)}" />
+                                <h:outputText value="#{modeloGeralView.converteData(ListarAtiviPlanejadasView.objSelecionado.dataInicio)}" />
                                 <h:outputText value="Data fim: " />
-                                <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(ListarAtiviPlanejadasView.objSelecionado.dataFim)}" />
+                                <h:outputText value="#{modeloGeralView.converteData(ListarAtiviPlanejadasView.objSelecionado.dataFim)}" />
                                 <h:outputText value="Descrição: " />
                                 <p:scrollPanel mode="native" style="width:435px;height:100px">
                                     <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.descricao}" />
@@ -140,22 +140,23 @@
                     <p:outputPanel id="panel"  style="text-align:center;">
                         <p:panel style="margin-bottom:20px" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                                <p:outputLabel for="meta" value="Nome: " />
+                                <p:selectOneMenu id="meta" required="true" converter="generic"
+                                                 requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}"
+                                                 value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:455px" 
+                                                 autoWidth="false" >
+                                    <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="obj" 
+                                                   itemLabel="#{obj.nome} - #{obj.planoAcao.empreendimento.sigla} 
+                                                   - Prazo:#{modeloGeralView.converteData(obj.prazo)}" itemValue="#{obj}"/>
+                                </p:selectOneMenu>
+                                <p:message for="meta"/>
+
                                 <p:outputLabel for="nome" value="Nome: " />
                                 <p:inputText id="nome" value="#{ListarAtiviPlanejadasView.objSalvar.nome}" required="true" 
                                              requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}"
                                              size="45" maxlength="45"/>
                                 <p:message for="nome" />
-
-                                <p:outputLabel for="meta" value="Meta: "/>
-                                <p:selectOneMenu id="meta" required="true" converter="generic"
-                                                 requiredMessage="#{ListarAtiviPlanejadasView.geraMsgGenericaCampoObrigatorioView()}"
-                                                 value="#{ListarAtiviPlanejadasView.objSalvar.meta}" style="width:435px" >
-                                    <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="obj" 
-                                                   itemLabel="#{obj.nome} - #{obj.planoAcao.empreendimento.sigla} 
-                                                   - Prazo:#{ListarAtiviPlanejadasView.conveteData(obj.prazo)}" itemValue="#{obj}"/>
-                                </p:selectOneMenu>
-                                <p:message for="meta"/>
 
                                 <p:outputLabel for="dataInicio" value="Data início:" />
                                 <p:calendar id="dataInicio" value="#{ListarAtiviPlanejadasView.objSalvar.dataInicio}"

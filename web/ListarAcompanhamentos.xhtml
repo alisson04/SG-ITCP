@@ -30,13 +30,13 @@
 
                         <p:column filterBy="#{cursor.empreendimento}" headerText="Empreendimento" filterMatchMode="exact">
                             <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                <p:selectOneMenu onchange="PF('varGlobal').filter()" autoWidth="false" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" 
-                                                   itemLabel="#{ept.nome}" itemValue="#{ept}"/>
+                                                   itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
                                 </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{cursor.empreendimento.nome}" />
+                            <h:outputText value="#{cursor.empreendimento.sigla}" />
                         </p:column>
 
                         <f:facet name="footer">
@@ -144,12 +144,12 @@
                         <p:tab id="tabInfo" title="Informações" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                                <p:selectOneMenu id="empreendimento" required="true" converter="generic"  style="width:435px"
+                                <p:selectOneMenu id="empreendimento" required="true" converter="generic"  style="width:455px"
                                                  requiredMessage="#{ListarAcompanhamentosView.geraMsgGenericaCampoObrigatorioView()}"
-                                                 value="#{ListarAcompanhamentosView.objSalvar.empreendimento}" >
+                                                 value="#{ListarAcompanhamentosView.objSalvar.empreendimento}" autoWidth="false" >
                                     <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarAcompanhamentosView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
-                                                   itemValue="#{ept}"/>
+                                    <f:selectItems value="#{ListarAcompanhamentosView.listaEmpreendimentos}" var="ept" 
+                                                   itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
                                 </p:selectOneMenu>
                                 <p:message for="empreendimento"/>
 

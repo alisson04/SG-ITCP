@@ -26,15 +26,11 @@ public class NotaMaturidadeBean implements Serializable {
         return dao.salvarEpt(obj);
     }
     
-    public void excluirBean(NotaMaturidade obj){
-        dao.excluirEptDao(obj);
-    }
-    
     public List<NotaMaturidade> listarUltimasNotasBean(List<Empreendimento> listaEpt) {
-        return dao.listarTodosEptsDao(listaEpt);
+        return dao.listarUltimasNotasDao(listaEpt);
     }
     
-    public long contarLinhasBean(){
-        return dao.contarLinhasDAO();
+    public List<NotaMaturidade> listarNotasPorEesBean(Empreendimento ees) {
+        return dao.listarNotasPorEesDao(ees);
     }
 }

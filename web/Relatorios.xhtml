@@ -51,8 +51,12 @@
                     <p:tab id="tabIndis" title="Indicadores de maturidade">
                         <p:layout style="min-height:700px;max-height:700px;" >
                             <p:layoutUnit position="west" size="325" >
-                                <p:panel header="Empreendimentos" toggleable="true" styleClass="painelBordas"
+                                <p:panel toggleable="true" styleClass="painelBordas"
                                          collapsed="#{IndicadoresMaturidadeView.eptCheckBox}" >
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:outputLabel value="Selecionar empreendimento para modificar nota" />
+                                    </p:outputPanel>
+                                    <p:separator />
 
                                     <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(1)}" />
                                     <p:selectOneRadio value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
@@ -60,23 +64,20 @@
                                         <p:ajax update="frmrelatorios" event="change"  
                                                 listener="#{IndicadoresMaturidadeView.selecionaEptTela()}"/>
                                         <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
-                                                       itemLabel="#{ept.nome}" itemValue="#{ept}"/>
+                                                       itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
                                     </p:selectOneRadio>
-
-                                    <p:separator rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" />
-                                    <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
-                                        <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
-                                                         update="frmrelatorios" oncomplete="PF('wVarEditarDialog').show()"
-                                                         rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" />
-                                    </p:outputPanel>
                                 </p:panel>
                                 <p:spacer height="10px"/>
 
-                                <p:panel header="Categoria de Indicadores" collapsed="#{IndicadoresMaturidadeView.cateCheckBox}"
+                                <p:panel collapsed="#{IndicadoresMaturidadeView.cateCheckBox}"
                                          rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" toggleable="true" >
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:outputLabel value="Selecionar categoria para ver seus indicadores" />
+                                    </p:outputPanel>
+                                    <p:separator />
+
                                     <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(2)}" />
-                                    <p:selectOneRadio value="#{IndicadoresMaturidadeView.categoriaSelecionada}" layout="grid" 
-                                                      columns="1" >
+                                    <p:selectOneRadio value="#{IndicadoresMaturidadeView.categoriaSelecionada}" layout="grid" columns="1" >
                                         <p:ajax update="frmrelatorios" event="change"
                                                 listener="#{IndicadoresMaturidadeView.selecionaCategoriaTela()}" />
 
@@ -113,7 +114,6 @@
                                 <p:panel header="Indicadores" toggleable="true"
                                          collapsed="#{IndicadoresMaturidadeView.indCheckBox}"
                                          rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
-
                                     <f:facet name="options" >
                                         <p:menu  >
                                             <p:submenu label="Tamanho dos gráficos">
@@ -150,13 +150,48 @@
                             </p:layoutUnit>
 
                             <p:layoutUnit position="center" >
-                                <p:dataGrid var="graInd" value="#{IndicadoresMaturidadeView.listaGraficoInds}" layout="grid"
-                                            columns="#{IndicadoresMaturidadeView.tamanhoGraficos}"
+                                <p:fieldset legend="Notas de maturidade" toggleable="true" toggleSpeed="500">
+                                    <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{IndicadoresMaturidadeView.listaNotas}" 
+                                                 var="cursor" widgetVar="varGlobal" rows="10" paginator="true" style="text-align: center"
+                                                 rowKey="#{cursor.id}" paginatorPosition="top">
+
+                                        <p:column headerText="Empreendimento" >
+                                            <h:outputText value="#{cursor.empreendimento.sigla}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Nota atual" >
+                                            <h:outputText value="#{cursor.nota}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Nota máxima" >
+                                            <h:outputText value="#{cursor.notaMaxima}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Porcentagem" >
+                                            <h:outputText value="#{modeloGeralView.geraPorcentagem(cursor.nota, cursor.notaMaxima)} %"/>
+                                        </p:column>
+
+                                        <f:facet name="footer">
+                                            <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
+                                                             update="frmrelatorios" oncomplete="PF('wVarEditarDialog').show()"
+                                                             disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
+
+                                            <p:tooltip value="Seleciona um empreendimento Primeiro!" 
+                                                       rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
+                                        </f:facet>
+                                    </p:dataTable>
+                                </p:fieldset>
+                                <p:spacer height="20px" />
+
+                                <p:fieldset legend="Evolução dos indicadores" toggleable="true" toggleSpeed="500"
                                             rendered="#{IndicadoresMaturidadeView.listaGraficoInds.size() > 0}" >
-                                    <p:panel >
-                                        <p:chart type="line" model="#{graInd}" />
-                                    </p:panel>
-                                </p:dataGrid>
+                                    <p:dataGrid var="graInd" value="#{IndicadoresMaturidadeView.listaGraficoInds}" layout="grid"
+                                                columns="#{IndicadoresMaturidadeView.tamanhoGraficos}" >
+                                        <p:panel >
+                                            <p:chart type="line" model="#{graInd}" />
+                                        </p:panel>
+                                    </p:dataGrid>
+                                </p:fieldset>
                             </p:layoutUnit>
                         </p:layout>
                     </p:tab>
@@ -204,11 +239,11 @@
                                     </p:column>
 
                                     <p:column headerText="Data início" styleClass="colunasTabela100PX" >
-                                        <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" />
+                                        <h:outputText value="#{modeloGeralView.converteData(objCursor.dataInicio)}" />
                                     </p:column>
 
                                     <p:column headerText="Data fim" styleClass="colunasTabela100PX" >
-                                        <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
+                                        <h:outputText value="#{modeloGeralView.converteData(objCursor.dataFim)}" />
                                     </p:column>
 
                                     <p:column headerText="Situação"  filterBy="#{objCursor.status}" filterMatchMode="exact" 
@@ -293,11 +328,11 @@
                                     </p:column>
 
                                     <p:column headerText="Data início" styleClass="colunasTabela100PX" >
-                                        <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" />
+                                        <h:outputText value="#{modeloGeralView.converteData(objCursor.dataInicio)}" />
                                     </p:column>
 
                                     <p:column headerText="Data fim" styleClass="colunasTabela100PX" >
-                                        <h:outputText value="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataFim)}" />
+                                        <h:outputText value="#{modeloGeralView.converteData(objCursor.dataFim)}" />
                                     </p:column>
 
                                     <p:column headerText="Situação"  filterBy="#{objCursor.status}" filterMatchMode="exact" 
@@ -364,7 +399,7 @@
                                     </p:selectOneRadio>
                                 </p:panel>
                                 <p:spacer height="10px" />
-                                
+
                                 <p:panel header="Planos de ação" rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
                                     <p:outputPanel style="text-align:center;" rendered="#{RelatoriosView.listaPlanos.size() == 0}" >
                                         <p:outputLabel value="Não há planos de ação cadastrados para esse empreendimento!" />
@@ -399,6 +434,80 @@
                             </p:layoutUnit>
                         </p:layout>
                     </p:tab>
+
+                    <p:tab id="tabDivisaoForcaTrabalho" title="Divisão da força de trabalho">
+                        <p:layout style="min-height:700px;max-height:700px;" >
+                            <p:layoutUnit position="west" size="325" >
+                                <p:panel >
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:outputLabel value="Selecionar empreendimento para visualizar seu gráfico" />
+                                    </p:outputPanel>
+                                    <p:separator />
+
+                                    <p:selectOneRadio value="#{RelatorioForcaTrabalhoView.eesSelecionado}" 
+                                                      converter="generic" layout="grid" columns="1" >
+                                        <p:ajax update="frmrelatorios" event="change"  
+                                                listener="#{RelatorioForcaTrabalhoView.selecionaEes()}"/>
+                                        <f:selectItems value="#{RelatorioForcaTrabalhoView.listaEes}" var="var" 
+                                                       itemLabel="#{var.sigla}" itemValue="#{var}"/>
+                                    </p:selectOneRadio>
+                                </p:panel>
+                                <p:spacer height="10px"/>
+
+                                <p:panel >
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:outputLabel value="Filtro de Informações da força de trabalho" />
+                                        <p:separator/>
+                                    </p:outputPanel> 
+
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="De " />
+                                        <p:calendar value="#{RelatorioForcaTrabalhoView.dataFiltroInicio}" locale="pt" navigator="true" 
+                                                    pattern="dd/MM/yyyy" size="10" mask="true" >
+                                            <p:ajax event="dateSelect" update="frmrelatorios" onstart="PF('blockUiGeral').show()" 
+                                                    oncomplete="PF('blockUiGeral').hide()"
+                                                    listener="#{RelatorioForcaTrabalhoView.filtraHorasTrabalhoPorData}" />
+                                        </p:calendar>
+
+                                        <p:outputLabel value="até " />
+                                        <p:calendar value="#{RelatorioForcaTrabalhoView.dataFiltroFim}" locale="pt" navigator="true" 
+                                                    pattern="dd/MM/yyyy" size="10" mask="true" >
+                                            <p:ajax event="dateSelect" update="frmrelatorios" onstart="PF('blockUiGeral').show()" 
+                                                    oncomplete="PF('blockUiGeral').hide()"
+                                                    listener="#{RelatorioForcaTrabalhoView.filtraHorasTrabalhoPorData}" />
+                                        </p:calendar>                                 
+                                    </h:panelGrid>
+                                </p:panel>
+
+
+
+                            </p:layoutUnit>
+
+                            <p:layoutUnit position="center" >
+                                <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{RelatorioForcaTrabalhoView.listaEes}" 
+                                             var="eesCursor" widgetVar="eesVarGlobal" rows="10" paginator="true" 
+                                             style="text-align: center" rowKey="#{eesCursor.id}" paginatorPosition="top">
+
+                                    <p:column headerText="Empreendimento" >
+                                        <h:outputText value="#{eesCursor.sigla}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Total de horas em atividades" >
+                                        <h:outputText value="#{RelatorioForcaTrabalhoView.geraHorasTrabAtividades(eesCursor)}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Quantiade de usuários envolvidos" >
+                                        <h:outputText value="#{RelatorioForcaTrabalhoView.geraQuantiUser(eesCursor)}"/>
+                                    </p:column>
+                                </p:dataTable>
+
+                                <p:fieldset legend="Evolução da maturidade e tempo dedicado ao EES" toggleable="true" toggleSpeed="500"
+                                            rendered="#{RelatorioForcaTrabalhoView.eesSelecionado != null}" >
+                                    <p:chart type="line" model="#{RelatorioForcaTrabalhoView.combinedModel}" />
+                                </p:fieldset>
+                            </p:layoutUnit>
+                        </p:layout>
+                    </p:tab>                        
                 </p:tabView>
             </h:form>
         </ui:define>

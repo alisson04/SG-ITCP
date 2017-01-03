@@ -3,6 +3,7 @@ package br.ifnmg.januaria.fernandes.itcp.bean;
 import br.ifnmg.januaria.fernandes.itcp.dao.HorasTrabalhadasDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.AcompanhamentoEpt;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
+import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.HorasTrabalhadas;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import java.io.Serializable;
@@ -35,6 +36,10 @@ public class HorasTrabalhadasBean implements Serializable{
     }
     
     public List<HorasTrabalhadas> listarPorUserAtividadeBean(Usuario user, AtividadePlanejada atv){
-        return dao.listarPorUserDao(user, atv);
+        return dao.listarPorUserAtividadeDao(user, atv);
+    }
+    
+    public List<HorasTrabalhadas> listarPorEesBean(Empreendimento ees){//O ees é encontrado pela atividade
+        return dao.listarPorEesDao(ees);
     }
 }

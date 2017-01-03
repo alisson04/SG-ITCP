@@ -142,6 +142,7 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
             } else {
                 bean.salvarBean(objSalvar);
                 objSalvar = new AtividadePlanejada();
+                listaObjs = bean.listarBean();//Atualiza a lista
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('wVarEditarDialog').hide()");
                 msgGrowSaveGeneric();
@@ -157,19 +158,6 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
             objSelecionado = null;//Volta o usuario para o estado de nulo/ Não retire
             FacesMessage msg = new FacesMessage("Atividade excluida com sucesso!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
-    public String conveteData(Date data) {
-        try {
-            if (data != null) {
-                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-                return forma.format(data);
-            } else {
-                return "";
-            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }

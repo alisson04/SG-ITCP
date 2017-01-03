@@ -10,9 +10,13 @@
             <h:form id="frmIndicadores" >
                 <p:layout style="min-height:700px;max-height:700px;" >
                     <p:layoutUnit position="west" size="325" >
-                        <p:panel header="Empreendimentos" toggleable="true" styleClass="painelBordas"
+                        <p:panel toggleable="true" styleClass="painelBordas"
                                  collapsed="#{IndicadoresMaturidadeView.eptCheckBox}" >
-
+                            <p:outputPanel style="text-align:center;">
+                                <p:outputLabel value="Selecionar empreendimento para modificar nota" />
+                            </p:outputPanel>
+                            <p:separator />
+                            
                             <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(1)}" />
                             <p:selectOneRadio value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
                                               converter="generic" layout="grid" columns="1" >
@@ -24,8 +28,13 @@
                         </p:panel>
                         <p:spacer height="10px"/>
 
-                        <p:panel header="Categoria de Indicadores" collapsed="#{IndicadoresMaturidadeView.cateCheckBox}"
+                        <p:panel collapsed="#{IndicadoresMaturidadeView.cateCheckBox}"
                                  rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado != null}" toggleable="true" >
+                            <p:outputPanel style="text-align:center;">
+                                <p:outputLabel value="Selecionar categoria para ver seus indicadores" />
+                            </p:outputPanel>
+                            <p:separator />
+                            
                             <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(2)}" />
                             <p:selectOneRadio value="#{IndicadoresMaturidadeView.categoriaSelecionada}" layout="grid" columns="1" >
                                 <p:ajax update="frmIndicadores frmEdicao" event="change"
@@ -64,7 +73,6 @@
                         <p:panel header="Indicadores" toggleable="true"
                                  collapsed="#{IndicadoresMaturidadeView.indCheckBox}"
                                  rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
-
                             <f:facet name="options" >
                                 <p:menu  >
                                     <p:submenu label="Tamanho dos gráficos">
@@ -101,35 +109,48 @@
                     </p:layoutUnit>
 
                     <p:layoutUnit position="center" >
-                        <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{IndicadoresMaturidadeView.listaNotas}" 
-                                     var="cursor" widgetVar="varGlobal" rows="10" paginator="true" style="text-align: center"
-                                     rowKey="#{cursor.id}" paginatorPosition="top">
+                        <p:fieldset legend="Notas de maturidade" toggleable="true" toggleSpeed="500">
+                            <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{IndicadoresMaturidadeView.listaNotas}" 
+                                         var="cursor" widgetVar="varGlobal" rows="10" paginator="true" style="text-align: center"
+                                         rowKey="#{cursor.id}" paginatorPosition="top">
 
-                            <p:column headerText="Empreendimento" >
-                                <h:outputText value="#{cursor.empreendimento.sigla}"/>
-                            </p:column>
+                                <p:column headerText="Empreendimento" >
+                                    <h:outputText value="#{cursor.empreendimento.sigla}"/>
+                                </p:column>
 
-                            <p:column headerText="Notal atual" >
-                                <h:outputText value="#{cursor.nota}"/>
-                            </p:column>
+                                <p:column headerText="Notal atual" >
+                                    <h:outputText value="#{cursor.nota}"/>
+                                </p:column>
 
-                            <p:column headerText="Notal máxima" >
-                                <h:outputText value="#{cursor.notaMaxima}"/>
-                            </p:column>
+                                <p:column headerText="Notal máxima" >
+                                    <h:outputText value="#{cursor.notaMaxima}"/>
+                                </p:column>
 
-                            <p:column headerText="Porcentagem" >
-                                <h:outputText value="#{modeloGeralView.geraPorcentagem(cursor.nota, cursor.notaMaxima)} %"/>
-                            </p:column>
+                                <p:column headerText="Porcentagem" >
+                                    <h:outputText value="#{modeloGeralView.geraPorcentagem(cursor.nota, cursor.notaMaxima)} %"/>
+                                </p:column>
 
-                            <f:facet name="footer">
-                                <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
-                                                 update="frmIndicadores" oncomplete="PF('wVarEditarDialog').show()"
-                                                 disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
+                                <f:facet name="footer">
+                                    <p:commandButton id="btnLancarNotas" value="Modificar Indicadores" 
+                                                     update="frmIndicadores" oncomplete="PF('wVarEditarDialog').show()"
+                                                     disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
 
-                                <p:tooltip value="Seleciona um empreendimento Primeiro!" 
-                                           rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
-                            </f:facet>
-                        </p:dataTable>
+                                    <p:tooltip value="Seleciona um empreendimento Primeiro!" 
+                                               rendered="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
+                                </f:facet>
+                            </p:dataTable>
+                        </p:fieldset>
+                        <p:spacer height="20px" />
+
+                        <p:fieldset legend="Evolução dos indicadores" toggleable="true" toggleSpeed="500"
+                                    rendered="#{IndicadoresMaturidadeView.listaGraficoInds.size() > 0}" >
+                            <p:dataGrid var="graInd" value="#{IndicadoresMaturidadeView.listaGraficoInds}" layout="grid"
+                                        columns="#{IndicadoresMaturidadeView.tamanhoGraficos}" >
+                                <p:panel >
+                                    <p:chart type="line" model="#{graInd}" />
+                                </p:panel>
+                            </p:dataGrid>
+                        </p:fieldset>
                     </p:layoutUnit>
                 </p:layout>
             </h:form>

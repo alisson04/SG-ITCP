@@ -124,19 +124,6 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
         }
     }
 
-    public String conveteData(Date data) {
-        try {
-            if (data != null) {
-                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-                return forma.format(data);
-            } else {
-                return "";
-            }
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
     public String btAtivarDesativarUser(Usuario userAtivarDesativar) {//Determina o nome do botão 
         try {
             if (userAtivarDesativar == null) {

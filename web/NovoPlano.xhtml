@@ -23,6 +23,7 @@
                     </p:commandLink>
                 </p:dialog>
                 
+                <!--Cadastro de palnos-->
                 <p:tabView  id="tabGeral" activeIndex="#{CadastrarPlanoAcaoView.tabview.activeIndex}" 
                             rendered="#{modeloGeralView.existeEptBd}" >
                     <p:ajax event="tabChange" listener="#{CadastrarPlanoAcaoView.onTabChange}" update="frmCadastro" />
@@ -33,11 +34,11 @@
                                 <p:outputLabel for="empreendimento" value="Empreendimento: "/>
                                 <p:selectOneMenu id="empreendimento" required="true"
                                                  requiredMessage="#{CadastrarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
-                                                 value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento}" style="width:435px"
+                                                 value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento}" style="width:455px"
                                                  converter="generic">
                                     <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{CadastrarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
-                                                   itemValue="#{ept}"/>
+                                    <f:selectItems value="#{CadastrarPlanoAcaoView.listaEmpreendimentos}" var="ept" 
+                                                   itemLabel="#{ept.sigla}" itemValue="#{ept}" />
                                 </p:selectOneMenu>
                                 <p:message for="empreendimento"/>
 
@@ -83,7 +84,7 @@
                                 <h:panelGrid  columns="2" columnClasses="label,value" >
                                     <p:panel >
                                         <h:outputText value="Empreendimento: " />
-                                        <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento.nome}" /> 
+                                        <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.empreendimento.sigla}" /> 
                                         <br/>
                                         <h:outputText value="Nome: " />
                                         <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.nome}" />
@@ -99,7 +100,7 @@
                                 </h:panelGrid>
                             </p:panel>
 
-                            <p:panel id="panelListMetas" styleClass="corPanel" header="Metas no plano de ação" style="margin-top: 30px">
+                            <p:panel id="panelListMetas" header="Metas no plano de ação" style="margin-top: 30px">
                                 <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta cadastrada." paginatorPosition="top"  paginator="true" 
                                              value="#{CadastrarPlanoAcaoView.listaSalvarMetas}" var="metaCursor" widgetVar="varGlobal" 
                                              selectionMode="single" selection="#{CadastrarPlanoAcaoView.metaSelecionada}" 
@@ -129,8 +130,8 @@
                                                          disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}" 
                                                          actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}"
                                                          onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                                            <p:confirm header="ATENÇÃO! " message="Todas as atividades dessa meta também serão 
-                                                       excluidas, continuar?" icon="Alert24-iconfinder" />
+                                            <p:confirm header="ATENÇÃO! " message="Caso existam atividades nessa meta, elas serão 
+                                                       excluidas, deseja continuar?" icon="Alert24-iconfinder" />
                                         </p:commandButton>
                                     </f:facet>
                                 </p:dataTable>
@@ -149,7 +150,7 @@
                                 <p:column headerText="Meta" >
                                     <h:outputText value="#{atividadeCursor.meta.nome}: " />
                                     <br/>
-                                    <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.meta.prazo)}" />
+                                    <h:outputText value="#{modeloGeralView.converteData(atividadeCursor.meta.prazo)}" />
                                 </p:column>
 
                                 <p:column headerText="Nome" >

@@ -92,6 +92,15 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
         System.out.println("Porcentagem: " + df.format(resultado));
         return df.format(resultado);
     }
+    
+    public String abreviaNomeUser(Usuario u) {
+        int i = u.getNome().indexOf(" ");
+        int x = u.getNome().lastIndexOf(" ");
+        /* Busca na string, a posição do ' ' espaço, e retorna o indice dele */
+        return (u.getNome().substring(0, i) 
+                + u.getNome().substring(x));
+        /* Aqui é separada a String do primeiro caractere até o primeiro espaço*/
+    }
 
     //METODOS USUARIO
     public void editarUserLogadoView() {

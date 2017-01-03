@@ -386,20 +386,6 @@ public class inicioView extends MensagensGenericas implements Serializable {
         }
     }
 
-    //METODOS GERAIS
-    public String conveteData(Date data) {
-        try {
-            if (data != null) {
-                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-                return forma.format(data);
-            } else {
-                return "";
-            }
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
     //SETS E GETS
     public ScheduleModel getEventModel() {
         return eventModel;

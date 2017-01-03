@@ -26,11 +26,11 @@
                             </p:column>
 
                             <p:column headerText="Data início" styleClass="colunasTabela100PX" >
-                                <h:outputText value="#{inicioView.conveteData(atividadeCursor.dataInicio)}" />
+                                <h:outputText value="#{modeloGeralView.converteData(atividadeCursor.dataInicio)}" />
                             </p:column>
 
                             <p:column headerText="Data fim" styleClass="colunasTabela100PX" >
-                                <h:outputText value="#{inicioView.conveteData(atividadeCursor.dataFim)}" />
+                                <h:outputText value="#{modeloGeralView.converteData(atividadeCursor.dataFim)}" />
                             </p:column>
 
                             <p:column headerText="Situação"  filterBy="#{atividadeCursor.status}" filterMatchMode="exact" 
@@ -126,9 +126,9 @@
                                 <h:outputText value="Nome: " />
                                 <h:outputText value="#{inicioView.event.title}" />
                                 <h:outputText value="Data de início: " />
-                                <h:outputText value="#{inicioView.conveteData(inicioView.event.startDate)}" />
+                                <h:outputText value="#{modeloGeralView.converteData(inicioView.event.startDate)}" />
                                 <h:outputText value="Data de fim: " />
-                                <h:outputText value="#{inicioView.conveteData(inicioView.event.endDate)}" />
+                                <h:outputText value="#{modeloGeralView.converteData(inicioView.event.endDate)}" />
                             </h:panelGrid>
                         </p:dialog>
                     </p:tab>
@@ -214,7 +214,7 @@
                         </f:facet>
 
                         <p:column headerText="Data" styleClass="colunasTabela200PX" >
-                            <h:outputText value="#{inicioView.conveteData(horas.dataTrabalho)}"   />
+                            <h:outputText value="#{modeloGeralView.converteData(horas.dataTrabalho)}"   />
                         </p:column>
 
                         <p:column headerText="Horas lançadas" styleClass="colunasTabela200PX" >
@@ -245,7 +245,7 @@
                       appendTo="@(body)" draggable="false" resizable="false" style="text-align: left;" header="Atribuir atividade" >
                 <h:form id="frmAtribuirAtv">
                     <p:pickList id="PojoPickList" value="#{inicioView.usuariosPickList}" var="objPickList" 
-                                effect="bounce" itemValue="#{objPickList}" itemLabel="#{objPickList.nome}" 
+                                effect="bounce" itemValue="#{objPickList}" itemLabel="#{modeloGeralView.abreviaNomeUser(objPickList)}" 
                                 showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
                                 removeLabel="Remover" removeAllLabel="Remover todos">
 
@@ -253,11 +253,11 @@
                         <f:facet name="targetCaption">Já vinculados</f:facet>
 
                         <p:column >
-                            <h:outputText styleClass="ui-theme ui-theme-#{objPickList.nome}" />
+                            <h:outputText styleClass="ui-theme ui-theme-#{modeloGeralView.abreviaNomeUser(objPickList)}" />
                         </p:column>
 
                         <p:column >
-                            <h:outputText value="#{objPickList.nome}" />
+                            <h:outputText value="#{modeloGeralView.abreviaNomeUser(objPickList)}" />
                         </p:column>
                     </p:pickList>
 
