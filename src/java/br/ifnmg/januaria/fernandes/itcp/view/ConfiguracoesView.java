@@ -4,11 +4,13 @@ import br.ifnmg.januaria.fernandes.itcp.bean.IncubadoraBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
+import java.io.File;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
@@ -71,7 +73,8 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
 
     public void setaImagemLogin(FileUploadEvent event) {
         try {
-            arquivo.fileUpload(event, ".jpg", "/image/");
+            limpaPasta("/image/imagenFundo");
+            arquivo.fileUpload(event, ".jpg", "/image/imagenFundo/");
             inc.setFotoFundoLogin(arquivo.getNome());
             arquivo.gravar();
             salvarInc();
@@ -82,8 +85,9 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
 
     public void setaImagemGeral(FileUploadEvent event) {
         try {
+            limpaPasta("/image/imagenTopo");
             System.out.println("METD setaImagemGeral");
-            arquivo.fileUpload(event, ".jpg", "/image/");
+            arquivo.fileUpload(event, ".jpg", "/image/imagenTopo/");
             inc.setFotoTelaGeral(arquivo.getNome());
             arquivo.gravar();
             salvarInc();
@@ -91,6 +95,25 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
             throw new FacesException(ex);
         }
     }
+    
+    public void limpaPasta(String caminhoPasta) {//Apaga todos os arquivos de uma pasta dentro do projeto
+        try {
+            File folder = new File(arquivo.getRealPath() + caminhoPasta);
+            if (folder.isDirectory()) {
+                System.out.println("É diretorio");
+                File[] sun = folder.listFiles();
+                for (File toDelete : sun) {
+                    System.out.println("RDOU");
+                    toDelete.delete();
+                }
+            }else{
+                System.out.println("Não é diretorio");
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
 
     //SETS E GETS
     public Incubadora getInc() {

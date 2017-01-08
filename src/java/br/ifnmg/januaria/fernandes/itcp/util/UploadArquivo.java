@@ -34,16 +34,29 @@ public class UploadArquivo {
 
         return context.getRealPath("/");
     }
-
-    public void fileUpload(FileUploadEvent event, String type, String diretorio) {
+    
+    public void imagemGraficoUpload(byte byteArray[], String nomeArquivo, String type, String diretorio){
         try {
-            this.nome = new java.util.Date().getTime() + type;
+            this.nome = nomeArquivo + type;
+            this.caminho = getRealPath() + diretorio + getNome();
+            this.arquivo = byteArray;
+
+            File file = new File(getRealPath() + diretorio);
+            file.mkdirs();
+
+        } catch (Exception ex) {
+            System.out.println("Erro no upload do arquivo" + ex);
+        }
+    }
+
+    public void fileUpload(FileUploadEvent event, String nome, String diretorio) {//Para fotos do sistema
+        try {
+            this.nome = new java.util.Date().getTime() + nome;
             this.caminho = getRealPath() + diretorio + getNome();
             this.arquivo = event.getFile().getContents();
 
             File file = new File(getRealPath() + diretorio);
             file.mkdirs();
-
         } catch (Exception ex) {
             System.out.println("Erro no upload do arquivo" + ex);
         }

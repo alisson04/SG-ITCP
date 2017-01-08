@@ -478,9 +478,6 @@
                                         </p:calendar>                                 
                                     </h:panelGrid>
                                 </p:panel>
-
-
-
                             </p:layoutUnit>
 
                             <p:layoutUnit position="center" >
@@ -507,7 +504,36 @@
                                 </p:fieldset>
                             </p:layoutUnit>
                         </p:layout>
-                    </p:tab>                        
+                    </p:tab>
+
+                    <p:tab id="tabExecucaoPlanoAcao" title="Execução dos planos de ação">
+                        <p:layout style="min-height:700px;max-height:700px;" >
+                            <p:layoutUnit position="west" size="325" >
+                                <p:panel >
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:outputLabel value="Selecione um empreendimento" />
+                                    </p:outputPanel>
+                                    <p:separator />
+
+                                    <p:selectOneRadio value="#{RelatorioPlanoAcaoView.eesSelecionado}" 
+                                                      converter="generic" layout="grid" columns="1" >
+                                        <p:ajax update="frmrelatorios" event="change"  
+                                                listener="#{RelatorioPlanoAcaoView.selecionaEes()}"/>
+                                        <f:selectItems value="#{RelatorioPlanoAcaoView.listaEes}" var="var" 
+                                                       itemLabel="#{var.sigla}" itemValue="#{var}"/>
+                                    </p:selectOneRadio>
+                                </p:panel>
+                            </p:layoutUnit>
+
+                            <p:layoutUnit position="center" >
+                                <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{RelatorioForcaTrabalhoView.listaEes}" 
+                                             var="eesCursor" widgetVar="eesVarGlobal" rows="10" paginator="true" 
+                                             style="text-align: center" rowKey="#{eesCursor.id}" paginatorPosition="top">
+                                
+                                </p:dataTable>
+                            </p:layoutUnit>
+                        </p:layout>
+                    </p:tab>
                 </p:tabView>
             </h:form>
         </ui:define>

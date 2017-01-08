@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioParceiros" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0917d2cf-b0e5-4b55-aba8-0c58b2ea4edd">
-	<property name="ireport.zoom" value="1.2396694214876032"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="920de8f8-6bfb-46e6-b049-64b37cf50faf"/>
+	<parameter name="paramTeste" class="java.lang.String"/>
+	<parameter name="paramImage" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -14,13 +16,18 @@
 	<field name="endereco" class="java.lang.String"/>
 	<variable name="numLinhas" class="java.math.BigDecimal" calculation="Count">
 		<variableExpression><![CDATA[$V{numLinhas}.add(new BigDecimal(1000))]]></variableExpression>
-		<initialValueExpression><![CDATA[new BigDecimal(1000) ]]></initialValueExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(1000)]]></initialValueExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="18" splitType="Stretch"/>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="70" uuid="c68191b7-c8f8-42d2-be09-59ac133c58c2"/>
+				<imageExpression><![CDATA[$P{paramImage}]]></imageExpression>
+			</image>
+		</band>
 	</title>
 	<pageHeader>
 		<band height="25" splitType="Stretch">
@@ -198,10 +205,19 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="108" splitType="Stretch">
+			<textField>
+				<reportElement x="97" y="68" width="100" height="20" uuid="b3fdcb7a-bb72-483c-aee5-e6f30290bd4d"/>
+				<textFieldExpression><![CDATA[$P{paramTeste}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="88" width="100" height="20" uuid="81314d56-2419-40e8-ab57-56a6c983190d"/>
+				<textFieldExpression><![CDATA[$P{paramImage}]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="59" splitType="Stretch">
 			<textField>
 				<reportElement x="435" y="34" width="80" height="20" uuid="0131ddc3-51d5-4a91-99f4-25ff1d848528"/>
 				<textElement textAlignment="Right"/>

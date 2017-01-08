@@ -1,6 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.util;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,11 @@ public class RelatoriosManager<TipoClasse> {
             Map<String, Object> params = new HashMap<String, Object>();
             baos = new ByteArrayOutputStream();
 
+            String te = "ROLA";
+            params.put( "paramTeste", te);
+            String cam = "/home/alisson/Imagens/asd.jpg";
+            params.put( "paramImage", cam);
+            
             JasperReport report = (JasperReport) JRLoader.loadObject(stream);
             JasperPrint print = JasperFillManager.fillReport(report, params, new JRBeanCollectionDataSource(lista));
             JasperExportManager.exportReportToPdfStream(print, baos);

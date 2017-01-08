@@ -119,9 +119,9 @@
                 <p:ajax event="idle" listener="#{LoginView.sair()}" />
             </p:idleMonitor>
 
-            <p:layoutUnit position="north" size="100" >
+            <p:layoutUnit position="north" size="13%" >
                 <p:graphicImage id="ftmImagemTopoGeral" width="100%" height="100%" styleClass="semMargin"
-                                value="./image/#{modeloGeralView.geraFotoTopo()}"/>
+                                value="./image/imagenTopo/#{modeloGeralView.geraFotoTopo()}"/>
             </p:layoutUnit>
 
             <p:layoutUnit position="south" size="40" resizable="false" closable="false" collapsible="false" rendered="false">
@@ -205,7 +205,7 @@
                     <h:form id="frmEditarMeusDados"><!--Necessário usar um formulária a parte, visto o bloqueio de validação-->
                         <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
                             <p:fileUpload id="upload" label="Mudar foto de perfil" mode="advanced" 
-                                          update="frmEditarMeusDados"
+                                          update="frmEditarMeusDados" invalidFileMessage="Somente arquivos: PNG; JPG; GIF"
                                           fileUploadListener="#{modeloGeralView.uploadAction}" auto="true"/>
                             <p:panel >
                                 <p:graphicImage id="ftmImagemTopoGeral" width="150px" height="150px" styleClass="semMargin"

@@ -2,18 +2,15 @@ package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.IncubadoraBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.LoginBean;
-import br.ifnmg.januaria.fernandes.itcp.bean.ParceiroBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
-import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
-import br.ifnmg.januaria.fernandes.itcp.util.RelatoriosManager;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Random;
 import javax.el.PropertyNotFoundException;
 import javax.faces.FacesException;
@@ -87,11 +84,17 @@ public class LoginView extends MensagensGenericas implements Serializable {
     //METODOS
     public void teste() {
         try {
-            List<Parceiro> lista;
-            ParceiroBean b = new ParceiroBean();
-            lista = b.listarBean();
-            RelatoriosManager m = new RelatoriosManager<Parceiro>();
-            m.gerarRelatorioGenerico(lista, "/iReport/relatorioParceiros.jasper", "Relatorio-de-Parceiros.pdf");
+            File folder = new File("/home/alisson/teste");
+            if (folder.isDirectory()) {
+                System.out.println("É diretorio");
+                File[] sun = folder.listFiles();
+                for (File toDelete : sun) {
+                    System.out.println("RDOU");
+                    toDelete.delete();
+                }
+            }else{
+                System.out.println("Não é diretorio");
+            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }

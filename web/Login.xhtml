@@ -20,7 +20,7 @@
         <link type="text/css" rel="stylesheet" href="dot-luv/skin.css"/>
 
         <style>
-            .Bimage{background-image:url("./image/#{LoginView.geraImagemFundo()}")}
+            .Bimage{background-image:url("./image/imagenFundo/#{LoginView.geraImagemFundo()}")}
         </style>
     </h:head>
 
@@ -120,8 +120,7 @@
                         <p:commandLink id="clReenviarSenha" update="frmLogar frmReenviarSenha" value="Esqueci minha senha" 
                                        immediate="true" actionListener="#{LoginView.MostraCaixaReenvioSenha()}" />
                         
-                        <p:commandButton value="TESTE" actionListener="#{LoginView.teste()}" immediate="true" ajax="false"
-                                         onclick="this.form.target='_blank'" 
+                        <p:commandButton value="TESTE" actionListener="#{TesteView.uploadAction()}" immediate="true" 
                                          style="ui-button" styleClass="ui-button-text" update="frmLogar" />
                     </p:panel>
 
