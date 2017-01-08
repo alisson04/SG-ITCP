@@ -71,10 +71,10 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
         }
     }
 
-    public void setaImagemLogin(FileUploadEvent event) {
+    public void setaImagemFundo(FileUploadEvent event) {
         try {
             limpaPasta("/image/imagenFundo");
-            arquivo.fileUpload(event, ".jpg", "/image/imagenFundo/");
+            arquivo.fileUpload(event.getFile().getContents(), new java.util.Date().getTime() + ".jpg", "/image/imagenFundo/");
             inc.setFotoFundoLogin(arquivo.getNome());
             arquivo.gravar();
             salvarInc();
@@ -83,12 +83,25 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
         }
     }
 
-    public void setaImagemGeral(FileUploadEvent event) {
+    public void setaImagemTopo(FileUploadEvent event) {
         try {
             limpaPasta("/image/imagenTopo");
             System.out.println("METD setaImagemGeral");
-            arquivo.fileUpload(event, ".jpg", "/image/imagenTopo/");
+            arquivo.fileUpload(event.getFile().getContents(), new java.util.Date().getTime() + ".jpg", "/image/imagenTopo/");
             inc.setFotoTelaGeral(arquivo.getNome());
+            arquivo.gravar();
+            salvarInc();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
+    public void setaImagemTopoRelatorio(FileUploadEvent event) {
+        try {
+            limpaPasta("/image/imagemTopoRelatorio");
+            System.out.println("METD setaImagemGeral");
+            arquivo.fileUpload(event.getFile().getContents(), "fotoTopoPadrao.jpg", "/image/imagemTopoRelatorio/");
+            inc.setFotoTopoRelatorio(arquivo.getNome());
             arquivo.gravar();
             salvarInc();
         } catch (Exception ex) {

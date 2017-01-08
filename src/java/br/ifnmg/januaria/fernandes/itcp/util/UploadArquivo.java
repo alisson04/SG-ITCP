@@ -49,11 +49,10 @@ public class UploadArquivo {
         }
     }
 
-    public void fileUpload(FileUploadEvent event, String nome, String diretorio) {//Para fotos do sistema
-        try {
-            this.nome = new java.util.Date().getTime() + nome;
+    public void fileUpload(byte byteArray[], String nome, String diretorio) {//Para fotos do sistema
+        try {this.nome = nome;//Deve conter o tipo
             this.caminho = getRealPath() + diretorio + getNome();
-            this.arquivo = event.getFile().getContents();
+            this.arquivo = byteArray;
 
             File file = new File(getRealPath() + diretorio);
             file.mkdirs();

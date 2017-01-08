@@ -130,7 +130,7 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
 
     public void uploadAction(FileUploadEvent event) {//Upa a foto e seta no user
         try {
-            arquivo.fileUpload(event, ".jpg", "/image/");
+            arquivo.fileUpload(event.getFile().getContents(), new java.util.Date().getTime() + ".jpg", "/image/");
             System.out.println("Nomed o arquivo: " + arquivo.getNome());
             usuarioLogado.setFotoPerfil(arquivo.getNome());
             arquivo.gravar();

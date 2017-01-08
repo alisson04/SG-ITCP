@@ -44,7 +44,7 @@ public class produtoMB {
     }
 
     public void uploadAction(FileUploadEvent event) {
-        this.arquivo.fileUpload(event, ".jpg", "/image/");
+        this.arquivo.fileUpload(event.getFile().getContents(), new java.util.Date().getTime() + ".jpg", "/image/");
         this.produto.setFoto(this.arquivo.getNome());
     }
 

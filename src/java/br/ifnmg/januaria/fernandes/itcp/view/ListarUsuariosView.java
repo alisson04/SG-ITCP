@@ -5,15 +5,10 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.FacesException;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
@@ -103,7 +98,7 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
 
     public void uploadAction(FileUploadEvent event) {//Upa a foto e seta no user
         try {
-            arquivo.fileUpload(event, ".jpg", "/image/");
+            arquivo.fileUpload(event.getFile().getContents(), new java.util.Date().getTime() + ".jpg", "/image/");
             System.out.println("Nomed o arquivo: " + arquivo.getNome());
             objSalvar.setFotoPerfil(arquivo.getNome());
             arquivo.gravar();

@@ -40,7 +40,7 @@ public class RelatoriosManager<TipoClasse> {
 
             String te = "ROLA";
             params.put( "paramTeste", te);
-            String cam = "/home/alisson/Imagens/asd.jpg";
+            String cam = "/home/alisson/Imagens/imagemTopoRelatorio.jpg";
             params.put( "paramImage", cam);
             
             JasperReport report = (JasperReport) JRLoader.loadObject(stream);

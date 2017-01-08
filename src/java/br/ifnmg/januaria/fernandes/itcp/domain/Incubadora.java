@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
@@ -59,6 +54,10 @@ public class Incubadora implements Serializable {
     @Size(max = 255)
     @Column(name = "fotoTelaGeral")
     private String fotoTelaGeral;
+    
+    @Size(max = 255)
+    @Column(name = "fotoTopoRelatorio")
+    private String fotoTopoRelatorio;
 
     public Incubadora() {
     }
@@ -152,6 +151,13 @@ public class Incubadora implements Serializable {
 
     public void setFotoTelaGeral(String fotoTelaGeral) {
         this.fotoTelaGeral = fotoTelaGeral;
+    }    
+
+    public String getFotoTopoRelatorio() {
+        return fotoTopoRelatorio;
     }
-    
+
+    public void setFotoTopoRelatorio(String fotoTopoRelatorio) {
+        this.fotoTopoRelatorio = fotoTopoRelatorio;
+    }
 }

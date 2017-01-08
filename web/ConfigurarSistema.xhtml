@@ -53,7 +53,7 @@
                         <p:tab title="Configurações do sistema">
                             <h:panelGrid columns="3" columnClasses="pgColumns50">
                                 <p:panel header="Configurar imagem de topo" styleClass="pn100px">
-                                    <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemGeral}" mode="advanced" auto="true"
+                                    <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemTopo}" mode="advanced" auto="true"
                                                   label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                                                   update="ftmImagemTopoGeral frmConfiguracao" 
                                                   invalidFileMessage="Somente arquivos: PNG; JPG; GIF"/>
@@ -68,7 +68,7 @@
                                 <p:spacer width="30px" />
 
                                 <p:panel header="Configurar imagem de fundo da tela de login" >
-                                    <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemLogin}" mode="advanced" auto="true"
+                                    <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemFundo}" mode="advanced" auto="true"
                                                   label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                                                   update="ftmImagemTopoGeral frmConfiguracao" 
                                                   invalidFileMessage="Somente arquivos: PNG; JPG; GIF" />
@@ -81,7 +81,7 @@
                                 </p:panel>
                                 
                                 <p:panel header="Configurar imagem de cabeçalho dos relatórios" >
-                                    <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemLogin}" mode="advanced" auto="true"
+                                    <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemTopoRelatorio}" mode="advanced" auto="true"
                                                   label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                                                   update="ftmImagemTopoGeral frmConfiguracao" 
                                                   invalidFileMessage="Somente arquivos: PNG; JPG; GIF"/>
@@ -89,7 +89,7 @@
                                     <p:spacer height="10px"/>
                                     <p:panel header="Imagem atual">
                                         <p:graphicImage width="50%" height="50%" styleClass="semMargin"
-                                                        value="./image/imagensSistema/#{ConfiguracoesView.inc.getFotoFundoLogin()}"/>
+                                                        value="./image/imagemTopoRelatorio/#{ConfiguracoesView.inc.getFotoTopoRelatorio()}"/>
                                     </p:panel>
                                 </p:panel>
                             </h:panelGrid>
