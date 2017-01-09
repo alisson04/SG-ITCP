@@ -6,7 +6,9 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.EnviarEmail;
 import br.ifnmg.januaria.fernandes.itcp.util.RelatoriosManager;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -34,8 +36,9 @@ public class UsuarioBean implements Serializable  {
     
     //METODOS
     public void gerarRelatorio(List<Usuario> lista) throws Exception {
+        Map<String, Object> listaParametros = new HashMap<String, Object>();
         RelatoriosManager m = new RelatoriosManager<Usuario>();
-        m.gerarRelatorioGenerico(lista, "/iReport/relatorioUsers.jasper", "Relatorio-de-Usuarios.pdf");
+        m.gerarRelatorioGenerico(lista, listaParametros, "/iReport/relatorioUsuarios.jasper", "Relatorio-de-Usuarios.pdf");
     }
 
     public Usuario salvarBean(Usuario user) throws EmailException {

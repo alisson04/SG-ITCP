@@ -43,7 +43,7 @@ public class TesteView extends MensagensGenericas implements Serializable {
             fos.write(byteArray);
             fos.close();*/
             
-            arquivo.imagemGraficoUpload(Base64.decodeBase64(base64.getBytes()), "leaf_banner_green", ".png", "/WEB-INF/classes/iReport/");
+            //arquivo.imagemGraficoUpload(Base64.decodeBase64(base64.getBytes()), "leaf_banner_green", ".png", "/WEB-INF/classes/iReport/");
             arquivo.gravar();
             arquivo = new UploadArquivo();//Limpa a variável
         } catch (Exception ex) {

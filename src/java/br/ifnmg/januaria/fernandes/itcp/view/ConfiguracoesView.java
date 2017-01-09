@@ -33,18 +33,8 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
         try {
             //Incubadora CONSTRU
             incBean = new IncubadoraBean();
-
-            if (incBean.contarLinhasBean() != 0) {//Caso existe INC cadastrada
-                inc = incBean.listarBean().get(0);
-                System.out.println("cadastrada: " + inc.getId());
-                if (inc.getFotoTelaGeral() == null) {
-                    inc.setFotoTelaGeral("fotoTopoGeral.jpg");
-                }
-            } else {
-                inc = new Incubadora();
-                inc.setFotoTelaGeral("fotoTopoGeral.jpg");
-                System.out.println("Não incubadora cadastrada");
-            }
+            //Não a necessidade de verificar a existencia de INC, pois essa pagina só pode ser ascessado quando exite uma
+            inc = incBean.listarBean().get(0);
 
             arquivo = new UploadArquivo();
         } catch (Exception ex) {
@@ -100,7 +90,7 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
         try {
             limpaPasta("/image/imagemTopoRelatorio");
             System.out.println("METD setaImagemGeral");
-            arquivo.fileUpload(event.getFile().getContents(), "fotoTopoPadrao.jpg", "/image/imagemTopoRelatorio/");
+            arquivo.fileUpload(event.getFile().getContents(), new java.util.Date().getTime() + ".jpg", "/image/imagemTopoRelatorio/");
             inc.setFotoTopoRelatorio(arquivo.getNome());
             arquivo.gravar();
             salvarInc();
@@ -108,7 +98,7 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
             throw new FacesException(ex);
         }
     }
-    
+
     public void limpaPasta(String caminhoPasta) {//Apaga todos os arquivos de uma pasta dentro do projeto
         try {
             File folder = new File(arquivo.getRealPath() + caminhoPasta);
@@ -119,14 +109,13 @@ public class ConfiguracoesView extends MensagensGenericas implements Serializabl
                     System.out.println("RDOU");
                     toDelete.delete();
                 }
-            }else{
+            } else {
                 System.out.println("Não é diretorio");
             }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
-
 
     //SETS E GETS
     public Incubadora getInc() {

@@ -4,7 +4,9 @@ import br.ifnmg.januaria.fernandes.itcp.dao.ParceiroDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Parceiro;
 import br.ifnmg.januaria.fernandes.itcp.util.RelatoriosManager;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 
@@ -25,8 +27,9 @@ public class ParceiroBean implements Serializable {
 
     //METODOS
     public void gerarRelatorio(List<Parceiro> lista) throws Exception {
-        RelatoriosManager m = new RelatoriosManager<Parceiro>();
-        m.gerarRelatorioGenerico(lista, "/iReport/relatorioParceiros.jasper", "Relatorio-de-Parceiros.pdf");
+        Map<String, Object> listaParametros = new HashMap<String, Object>();
+        RelatoriosManager m = new RelatoriosManager<Parceiro>();//O relatorio desde estar dentro de um pacote do projeto
+        m.gerarRelatorioGenerico(lista, listaParametros, "/iReport/relatorioParceiros.jasper", "Relatorio-de-Parceiros.pdf");
     }
 
     public void salvarBean(Parceiro parceiroSalvar) {

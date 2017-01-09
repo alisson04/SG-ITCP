@@ -34,20 +34,6 @@ public class UploadArquivo {
 
         return context.getRealPath("/");
     }
-    
-    public void imagemGraficoUpload(byte byteArray[], String nomeArquivo, String type, String diretorio){
-        try {
-            this.nome = nomeArquivo + type;
-            this.caminho = getRealPath() + diretorio + getNome();
-            this.arquivo = byteArray;
-
-            File file = new File(getRealPath() + diretorio);
-            file.mkdirs();
-
-        } catch (Exception ex) {
-            System.out.println("Erro no upload do arquivo" + ex);
-        }
-    }
 
     public void fileUpload(byte byteArray[], String nome, String diretorio) {//Para fotos do sistema
         try {this.nome = nome;//Deve conter o tipo
