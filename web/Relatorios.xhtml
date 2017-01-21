@@ -427,8 +427,6 @@
                     <p:tab id="tabDivisaoForcaTrabalho" title="Nota de maturidade e Horas trabalhadas">
                         <p:layout style="min-height:700px;max-height:700px;" >  
                             <p:layoutUnit position="west" size="325" >
-
-
                                 <p:panel >
                                     <p:outputPanel style="text-align:center;">
                                         <p:outputLabel value="Filtro de Informações da força de trabalho" />
@@ -529,24 +527,24 @@
                     <p:outputPanel style="text-align:center;">
                         <p:outputLabel value="Como visualizar o relatório?" />
                         <p:separator />
-                        
+
                         <h:panelGrid columns="3">
                             <p:panel >
                                 <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
-                                                 actionListener="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('attachment')}" >
-                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png" />
+                                               
+                                               actionListener="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('attachment')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png"
+                                                    onclick="PF('diaRelatorioWidGetVar').hide()" />
                                 </p:commandLink>
                             </p:panel>
                             <p:spacer width="10px" />
                             <p:panel >
-                                <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false"
-                                               actionListener="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('inline')}" 
-                                               >
-                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png" />
-                                </p:commandLink>
-                                
-                                <p:commandButton  onclick="this.form.target = '_blank'" >
-                                </p:commandButton>
+
+                                <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
+                                               actionListener="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('inline')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png"
+                                                    onclick="PF('diaRelatorioWidGetVar').hide()" />
+                                </p:commandLink> 
                             </p:panel>
                         </h:panelGrid>
                     </p:outputPanel>
