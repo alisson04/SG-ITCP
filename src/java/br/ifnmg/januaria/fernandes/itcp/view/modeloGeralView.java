@@ -87,19 +87,40 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
         float resultado;
 
         resultado = (porcentagem / valor) * 100;
-        
+
         DecimalFormat df = new DecimalFormat("00.00");
         System.out.println("Porcentagem: " + df.format(resultado));
         return df.format(resultado);
     }
-    
+
     public String abreviaNomeUser(Usuario u) {
         int i = u.getNome().indexOf(" ");
         int x = u.getNome().lastIndexOf(" ");
         /* Busca na string, a posição do ' ' espaço, e retorna o indice dele */
-        return (u.getNome().substring(0, i) 
+        return (u.getNome().substring(0, i)
                 + u.getNome().substring(x));
         /* Aqui é separada a String do primeiro caractere até o primeiro espaço*/
+    }
+
+    public String corrigeImagemBase64(String base64) {
+        if (base64 != null) {
+            int i = base64.indexOf(",");
+            return base64.substring(i+1);
+        } else {
+            System.out.println("Esta nulo!");
+            return null;    
+        }
+    }
+
+    public String geraTipoImagemBase64(String base64) {
+        if (base64 != null) {
+            int i = base64.indexOf("/");
+            System.out.println("Tipo da imagem: " + base64.substring(i+1, (i + 4)));
+            return base64.substring(i+1, (i + 4));
+        } else {
+            System.out.println("Esta nulo!");
+            return null;
+        }
     }
 
     //METODOS USUARIO

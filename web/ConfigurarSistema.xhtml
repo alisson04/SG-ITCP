@@ -14,88 +14,86 @@
             </style>
 
             <h:form id="frmConfiguracao" >
-                <p:panel header="Configuraões gerais">
-                    <!--CADASTRO DE INCUBADORA-->
-                    <p:accordionPanel >
-                        <p:tab id="panel" title="Configurações da incubadora" >
-                            <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                                <p:outputLabel for="nome" value="Nome: " />
-                                <p:inputText id="nome" value="#{ConfiguracoesView.inc.nome}" required="true" size="45" maxlength="255"
-                                             requiredMessage="#{ConfiguracoesView.geraMsgGenericaCampoObrigatorioView()}" />
-                                <p:message for="nome"/>
+                <!--CADASTRO DE INCUBADORA-->
+                <p:accordionPanel >
+                    <p:tab id="panel" title="Modificar informações da incubadora" >
+                        <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                            <p:outputLabel for="nome" value="Nome: " />
+                            <p:inputText id="nome" value="#{ConfiguracoesView.inc.nome}" required="true" size="45" maxlength="255"
+                                         requiredMessage="#{ConfiguracoesView.geraMsgGenericaCampoObrigatorioView()}" />
+                            <p:message for="nome"/>
 
-                                <p:outputLabel for="universidade" value="Universidade: " />  
-                                <p:inputText id="universidade" value="#{ConfiguracoesView.inc.universidade}" size="45" maxlength="255" />
-                                <p:message for="universidade"/>
+                            <p:outputLabel for="universidade" value="Universidade: " />  
+                            <p:inputText id="universidade" value="#{ConfiguracoesView.inc.universidade}" size="45" maxlength="255" />
+                            <p:message for="universidade"/>
 
-                                <p:outputLabel for="redeItcp" value="Rede ITCP " />
-                                <p:inputText id="redeItcp" value="#{ConfiguracoesView.inc.redeItcp}" size="45" maxlength="255" />
-                                <p:message for="redeItcp"/>
+                            <p:outputLabel for="redeItcp" value="Rede ITCP " />
+                            <p:inputText id="redeItcp" value="#{ConfiguracoesView.inc.redeItcp}" size="45" maxlength="255" />
+                            <p:message for="redeItcp"/>
 
-                                <p:outputLabel for="dataCriacao" value="Data de criação " />
-                                <p:calendar id="dataCriacao" value="#{ConfiguracoesView.inc.dataCriacao}" pattern="dd/MM/yyyy" 
-                                            size="45" mask="true" locale="pt" required="true" 
-                                            requiredMessage="A data de criação é obrigatória." />
-                                <p:message for="dataCriacao"/>
-                            </h:panelGrid>
+                            <p:outputLabel for="dataCriacao" value="Data de criação " />
+                            <p:calendar id="dataCriacao" value="#{ConfiguracoesView.inc.dataCriacao}" pattern="dd/MM/yyyy" 
+                                        size="45" mask="true" locale="pt" required="true" 
+                                        requiredMessage="A data de criação é obrigatória." />
+                            <p:message for="dataCriacao"/>
+                        </h:panelGrid>
 
-                            <br/>
-                            <p:outputLabel value="* Campos obrigatórios" />
+                        <br/>
+                        <p:outputLabel value="* Campos obrigatórios" />
 
-                            <p:separator />
-                            <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ConfiguracoesView.salvarInc()}" 
-                                             update="frmConfiguracao" icon="Save24-iconfinder" 
-                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                                <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
-                            </p:commandButton>
-                        </p:tab>
+                        <p:separator />
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ConfiguracoesView.salvarInc()}" 
+                                         update="frmConfiguracao" icon="Save24-iconfinder" 
+                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
+                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
+                        </p:commandButton>
+                    </p:tab>
 
-                        <p:tab title="Configurações do sistema">
-                            <h:panelGrid columns="3" columnClasses="pgColumns50">
-                                <p:panel header="Configurar imagem de topo" styleClass="pn100px">
-                                    <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemTopo}" mode="advanced" auto="true"
-                                                  label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
-                                                  update="ftmImagemTopoGeral frmConfiguracao" 
-                                                  invalidFileMessage="Somente arquivos: PNG; JPG; GIF"/>
+                    <p:tab title="Modificar imagem no topo do sistema">
+                        <p:panel header="Configurar imagem de topo" styleClass="pn100px">
+                            <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemTopo}" mode="advanced" auto="true"
+                                          label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                          update="ftmImagemTopoGeral frmConfiguracao" 
+                                          invalidFileMessage="Somente arquivos: PNG; JPG; GIF"/>
 
-                                    <p:spacer height="10px"/>
-                                    <p:panel header="Imagem atual">
-                                        <p:graphicImage width="50%" height="50%" styleClass="semMargin"
-                                                        value="./image/imagenTopo/#{ConfiguracoesView.inc.getFotoTelaGeral()}"/>
-                                    </p:panel>
-                                </p:panel>
+                            <p:spacer height="10px"/>
+                            <p:panel header="Imagem atual">
+                                <p:graphicImage width="50%" height="50%" styleClass="semMargin"
+                                                value="./image/imagenTopo/#{ConfiguracoesView.inc.getFotoTelaGeral()}"/>
+                            </p:panel>
+                        </p:panel>
+                    </p:tab>
 
-                                <p:spacer width="30px" />
+                    <p:tab title="Modificar imagem de fundo da tela de login">
+                        <p:panel header="Configurar imagem de fundo da tela de login" >
+                            <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemFundo}" mode="advanced" auto="true"
+                                          label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                          update="ftmImagemTopoGeral frmConfiguracao" 
+                                          invalidFileMessage="Somente arquivos: PNG; JPG; GIF" />
 
-                                <p:panel header="Configurar imagem de fundo da tela de login" >
-                                    <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemFundo}" mode="advanced" auto="true"
-                                                  label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
-                                                  update="ftmImagemTopoGeral frmConfiguracao" 
-                                                  invalidFileMessage="Somente arquivos: PNG; JPG; GIF" />
+                            <p:spacer height="10px"/>
+                            <p:panel header="Imagem atual">
+                                <p:graphicImage width="25%" height="25%" styleClass="semMargin"
+                                                value="./image/imagenFundo/#{ConfiguracoesView.inc.getFotoFundoLogin()}"/>
+                            </p:panel>
+                        </p:panel>                        
+                    </p:tab>
 
-                                    <p:spacer height="10px"/>
-                                    <p:panel header="Imagem atual">
-                                        <p:graphicImage width="50%" height="50%" styleClass="semMargin"
-                                                        value="./image/imagenFundo/#{ConfiguracoesView.inc.getFotoFundoLogin()}"/>
-                                    </p:panel>
-                                </p:panel>
-                                
-                                <p:panel header="Configurar imagem de cabeçalho dos relatórios" >
-                                    <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemTopoRelatorio}" mode="advanced" auto="true"
-                                                  label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
-                                                  update="ftmImagemTopoGeral frmConfiguracao" 
-                                                  invalidFileMessage="Somente arquivos: PNG; JPG; GIF"/>
+                    <p:tab title="Modificar imagem do cabeçalho dos relatórios" >
+                        <p:panel header="Configurar imagem de cabeçalho dos relatórios" >
+                            <p:fileUpload fileUploadListener="#{ConfiguracoesView.setaImagemTopoRelatorio}" mode="advanced" auto="true"
+                                          label="Clique para modificar a imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                          update="ftmImagemTopoGeral frmConfiguracao" 
+                                          invalidFileMessage="Somente arquivos: PNG; JPG; GIF"/>
 
-                                    <p:spacer height="10px"/>
-                                    <p:panel header="Imagem atual">
-                                        <p:graphicImage width="50%" height="50%" styleClass="semMargin"
-                                                        value="./image/imagemTopoRelatorio/#{ConfiguracoesView.inc.getFotoTopoRelatorio()}"/>
-                                    </p:panel>
-                                </p:panel>
-                            </h:panelGrid>
-                        </p:tab>
-                    </p:accordionPanel>
-                </p:panel>
+                            <p:spacer height="10px"/>
+                            <p:panel header="Imagem atual">
+                                <p:graphicImage width="50%" height="50%" styleClass="semMargin"
+                                                value="./image/imagemTopoRelatorio/#{ConfiguracoesView.inc.getFotoTopoRelatorio()}"/>
+                            </p:panel>
+                        </p:panel>
+                    </p:tab>
+                </p:accordionPanel>
             </h:form>
         </ui:define>
     </ui:composition>

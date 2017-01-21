@@ -38,7 +38,8 @@ public class UsuarioBean implements Serializable  {
     public void gerarRelatorio(List<Usuario> lista) throws Exception {
         Map<String, Object> listaParametros = new HashMap<String, Object>();
         RelatoriosManager m = new RelatoriosManager<Usuario>();
-        m.gerarRelatorioGenerico(lista, listaParametros, "/iReport/relatorioUsuarios.jasper", "Relatorio-de-Usuarios.pdf");
+        m.gerarRelatorioGenerico(lista, listaParametros, "/iReport/relatorioUsuarios.jasper", "Relatorio-de-Usuarios.pdf",
+                "inline");
     }
 
     public Usuario salvarBean(Usuario user) throws EmailException {

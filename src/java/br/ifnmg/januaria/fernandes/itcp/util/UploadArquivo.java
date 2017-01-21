@@ -48,7 +48,6 @@ public class UploadArquivo {
     }
 
     public void gravar() {
-
         try {
             FileOutputStream fos;
             fos = new FileOutputStream(this.caminho);
@@ -58,6 +57,5 @@ public class UploadArquivo {
         } catch (Exception ex) {
             System.out.println(ex);
         }
-
     }
 }

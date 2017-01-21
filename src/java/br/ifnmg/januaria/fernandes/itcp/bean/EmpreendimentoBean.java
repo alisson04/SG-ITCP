@@ -2,8 +2,12 @@ package br.ifnmg.januaria.fernandes.itcp.bean;
 
 import br.ifnmg.januaria.fernandes.itcp.dao.EmpreendimentoDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
+import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
+import br.ifnmg.januaria.fernandes.itcp.util.RelatoriosManager;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 

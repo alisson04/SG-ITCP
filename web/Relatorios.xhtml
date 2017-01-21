@@ -13,26 +13,15 @@
                 }
             </style>
 
-
-            <script type="text/javascript">
-                function exportChart() {
-                    //export image
-                    $("#frmrelatorios\\:output").empty().append(PF('chartEvolucaoInds').exportAsImage());
-                    //show the dialog
-                    PF('dlg').show();
-                }
-            </script>
-
-            <script type="text/javascript">
-                function exportChartBarra() {
-                    //export image
-                    $("#frmrelatorios\\:outputBarra").empty().append(PF('chartEvolucaoIndsBarra').exportAsImage());
-                    //show the dialog
-                    PF('dlgBarra').show();
-                }
-            </script>
-
             <h:form id="frmrelatorios" >
+                <p:dataGrid id="gridIn" var="imagemEmBase64" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64}" 
+                            layout="grid" rowIndexVar="cont" columns="6" 
+                            emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
+                    <p:inputText id="in" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64[cont]}" >
+                        <p:ajax event="keyup" update="frmrelatorios" />
+                    </p:inputText>
+                </p:dataGrid>
+
                 <!--Dialogo que mostra o gráfico de indicadores em linhas-->
                 <p:dialog widgetVar="dlg" resizable="false"
                           showEffect="clip" hideEffect="clip" modal="true"  appendTo="@(body)" draggable="false">
@@ -435,24 +424,10 @@
                         </p:layout>
                     </p:tab>
 
-                    <p:tab id="tabDivisaoForcaTrabalho" title="Divisão da força de trabalho">
-                        <p:layout style="min-height:700px;max-height:700px;" >
+                    <p:tab id="tabDivisaoForcaTrabalho" title="Nota de maturidade e Horas trabalhadas">
+                        <p:layout style="min-height:700px;max-height:700px;" >  
                             <p:layoutUnit position="west" size="325" >
-                                <p:panel >
-                                    <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Selecionar empreendimento para visualizar seu gráfico" />
-                                    </p:outputPanel>
-                                    <p:separator />
 
-                                    <p:selectOneRadio value="#{RelatorioForcaTrabalhoView.eesSelecionado}" 
-                                                      converter="generic" layout="grid" columns="1" >
-                                        <p:ajax update="frmrelatorios" event="change"  
-                                                listener="#{RelatorioForcaTrabalhoView.selecionaEes()}"/>
-                                        <f:selectItems value="#{RelatorioForcaTrabalhoView.listaEes}" var="var" 
-                                                       itemLabel="#{var.sigla}" itemValue="#{var}"/>
-                                    </p:selectOneRadio>
-                                </p:panel>
-                                <p:spacer height="10px"/>
 
                                 <p:panel >
                                     <p:outputPanel style="text-align:center;">
@@ -462,26 +437,31 @@
 
                                     <h:panelGrid columns="2">
                                         <p:outputLabel value="De " />
-                                        <p:calendar value="#{RelatorioForcaTrabalhoView.dataFiltroInicio}" locale="pt" navigator="true" 
+                                        <p:calendar value="#{RelatorioNotaMatuHorasTrabView.dataFiltroInicio}" locale="pt" navigator="true" 
                                                     pattern="dd/MM/yyyy" size="10" mask="true" >
                                             <p:ajax event="dateSelect" update="frmrelatorios" onstart="PF('blockUiGeral').show()" 
                                                     oncomplete="PF('blockUiGeral').hide()"
-                                                    listener="#{RelatorioForcaTrabalhoView.filtraHorasTrabalhoPorData}" />
+                                                    listener="#{RelatorioNotaMatuHorasTrabView.filtraHorasTrabalhoPorData}" />
                                         </p:calendar>
 
                                         <p:outputLabel value="até " />
-                                        <p:calendar value="#{RelatorioForcaTrabalhoView.dataFiltroFim}" locale="pt" navigator="true" 
+                                        <p:calendar value="#{RelatorioNotaMatuHorasTrabView.dataFiltroFim}" locale="pt" navigator="true" 
                                                     pattern="dd/MM/yyyy" size="10" mask="true" >
                                             <p:ajax event="dateSelect" update="frmrelatorios" onstart="PF('blockUiGeral').show()" 
                                                     oncomplete="PF('blockUiGeral').hide()"
-                                                    listener="#{RelatorioForcaTrabalhoView.filtraHorasTrabalhoPorData}" />
+                                                    listener="#{RelatorioNotaMatuHorasTrabView.filtraHorasTrabalhoPorData}" />
                                         </p:calendar>                                 
                                     </h:panelGrid>
                                 </p:panel>
+
+                                <p:remoteCommand name="rc" update="frmrelatorios" oncomplete="PF('diaRelatorioWidGetVar').show()" />
+                                <p:commandButton value="Gerar Relatório" immediate="true"
+                                                 actionListener="#{RelatorioNotaMatuHorasTrabView.selecionaEes()}"                                                     
+                                                 onsuccess="rc()" icon="Relatorio24-iconfinder" />
                             </p:layoutUnit>
 
                             <p:layoutUnit position="center" >
-                                <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{RelatorioForcaTrabalhoView.listaEes}" 
+                                <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{RelatorioNotaMatuHorasTrabView.listaEes}" 
                                              var="eesCursor" widgetVar="eesVarGlobal" rows="10" paginator="true" 
                                              style="text-align: center" rowKey="#{eesCursor.id}" paginatorPosition="top">
 
@@ -490,17 +470,25 @@
                                     </p:column>
 
                                     <p:column headerText="Total de horas em atividades" >
-                                        <h:outputText value="#{RelatorioForcaTrabalhoView.geraHorasTrabAtividades(eesCursor)}"/>
+                                        <h:outputText value="#{RelatorioNotaMatuHorasTrabView.geraHorasTrabAtividades(eesCursor)}"/>
                                     </p:column>
 
                                     <p:column headerText="Quantiade de usuários envolvidos" >
-                                        <h:outputText value="#{RelatorioForcaTrabalhoView.geraQuantiUser(eesCursor)}"/>
+                                        <h:outputText value="#{RelatorioNotaMatuHorasTrabView.geraQuantiUser(eesCursor)}"/>
                                     </p:column>
                                 </p:dataTable>
 
                                 <p:fieldset legend="Evolução da maturidade e tempo dedicado ao EES" toggleable="true" toggleSpeed="500"
-                                            rendered="#{RelatorioForcaTrabalhoView.eesSelecionado != null}" >
-                                    <p:chart type="line" model="#{RelatorioForcaTrabalhoView.combinedModel}" />
+                                            rendered="#{RelatorioNotaMatuHorasTrabView.listaGraficoCombinado.size() != 0}" >
+
+                                    <p:dataGrid var="graNotasHoras" value="#{RelatorioNotaMatuHorasTrabView.listaGraficoCombinado}" 
+                                                layout="grid" columns="1" rowIndexVar="contador" 
+                                                emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
+                                        <p:panel >
+                                            <p:chart type="line" model="#{graNotasHoras}" 
+                                                     widgetVar="#{RelatorioNotaMatuHorasTrabView.listaWidgetVars[contador]}" />
+                                        </p:panel>
+                                    </p:dataGrid>
                                 </p:fieldset>
                             </p:layoutUnit>
                         </p:layout>
@@ -529,12 +517,41 @@
                                 <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{RelatorioForcaTrabalhoView.listaEes}" 
                                              var="eesCursor" widgetVar="eesVarGlobal" rows="10" paginator="true" 
                                              style="text-align: center" rowKey="#{eesCursor.id}" paginatorPosition="top">
-                                
+
                                 </p:dataTable>
                             </p:layoutUnit>
                         </p:layout>
                     </p:tab>
                 </p:tabView>
+
+                <p:dialog widgetVar="diaRelatorioWidGetVar"  closable="true" showEffect="clip" hideEffect="clip" 
+                          resizable="false" draggable="false" >
+                    <p:outputPanel style="text-align:center;">
+                        <p:outputLabel value="Como visualizar o relatório?" />
+                        <p:separator />
+                        
+                        <h:panelGrid columns="3">
+                            <p:panel >
+                                <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                                 actionListener="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('attachment')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png" />
+                                </p:commandLink>
+                            </p:panel>
+                            <p:spacer width="10px" />
+                            <p:panel >
+                                <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false"
+                                               actionListener="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('inline')}" 
+                                               >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png" />
+                                </p:commandLink>
+                                
+                                <p:commandButton  onclick="this.form.target = '_blank'" >
+                                </p:commandButton>
+                            </p:panel>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
             </h:form>
         </ui:define>
     </ui:composition>

@@ -53,6 +53,15 @@
         };
     </script>
 
+    <script type="text/javascript">
+        function exportImageToPdfGeneric(grafico, caminho) {
+            var imageElement = PF(grafico).exportAsImage();
+
+            //get the value of the 'src' attribute of this object and fill the hidden input
+            $(caminho).val($(imageElement).attr("src"));
+        }
+    </script>
+
     <h:body id="bodyGeral">
         <!--Bloqueador da tela, geral (Não colocar dentro de um formulário: GERA BUG DE TELA BRANCA AO ATUALIZAR O FORM-->
         <p:blockUI block="bodyGeral" widgetVar="blockUiGeral" >

@@ -3,3 +3,9 @@
     height: 128px;
     width: 128px;
 }
+
+.Screen128-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons128/128Screen.png") !important;
+    height: 128px;
+    width: 128px;
+}

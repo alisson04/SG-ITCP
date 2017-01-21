@@ -29,7 +29,8 @@ public class ParceiroBean implements Serializable {
     public void gerarRelatorio(List<Parceiro> lista) throws Exception {
         Map<String, Object> listaParametros = new HashMap<String, Object>();
         RelatoriosManager m = new RelatoriosManager<Parceiro>();//O relatorio desde estar dentro de um pacote do projeto
-        m.gerarRelatorioGenerico(lista, listaParametros, "/iReport/relatorioParceiros.jasper", "Relatorio-de-Parceiros.pdf");
+        m.gerarRelatorioGenerico(lista, listaParametros, "/iReport/relatorioParceiros.jasper", "Relatorio-de-Parceiros.pdf",
+                "inline");
     }
 
     public void salvarBean(Parceiro parceiroSalvar) {

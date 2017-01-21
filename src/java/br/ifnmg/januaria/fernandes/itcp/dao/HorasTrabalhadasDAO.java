@@ -23,7 +23,21 @@ public class HorasTrabalhadasDAO extends DaoGenerico<HorasTrabalhadas> {
     }
 
     public List<HorasTrabalhadas> listarDao() {
-        return listarObjsGenerico("HorasTrabalhadas");
+        EntityManager em = emc.gerarEntityManager();
+        try {
+            List<HorasTrabalhadas> listaObjs;//Cria alista que será retornada
+            em.getTransaction().begin();
+            Query consulta = em.createQuery("SELECT o FROM HorasTrabalhadas o ORDER BY o.dataTrabalho");
+            
+            listaObjs = consulta.getResultList();//Pega a lista de objs
+            em.getTransaction().commit();
+            return listaObjs;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw new FacesException(ex);
+        } finally {
+            em.close();
+        }
     }
 
     public void excluirDao(HorasTrabalhadas obj) {
