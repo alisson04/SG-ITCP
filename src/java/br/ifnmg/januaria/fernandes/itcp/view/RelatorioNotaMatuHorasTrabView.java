@@ -103,38 +103,30 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
     }
 
     //METODOS
-    public void teste() {
-        RequestContext.getCurrentInstance().update("frmrelatorios");
-    }
-
     public String corrigeWidgetVar(String widgetVar) {
         int i = widgetVar.indexOf("r");//Utiliza a letra r pq é a ultima do nome que é dado a widgetVar dos gráficos
-        System.out.println("CORRIGIU: " + widgetVar.substring(i + 1));
         return widgetVar.substring(i + 1);
     }
 
-    public void gerarRelatorio(String tipo) {
-        System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" + tipo);
+    public void gerarRelatorio(String tipo) {//O tipo se refere a "download" ou na "tela"
         try {
             if (!listaEes.isEmpty()) {
                 if (!listaImagensBase64.isEmpty()) {
                     modeloGeralView m = new modeloGeralView();
                     List<InputStream> listaTeste = new ArrayList<>();
 
-                    boolean aux;
-                    String base64Aux;
+                    boolean aux;//Variável auxiliar que determina se á uma imagem para determina posição da lista de imagens
+                    String base64Aux;//Varialvel auxiliar q recebe a correção da base64
                     for (int i = 0; i < listaEes.size(); i++) {//Corrige as bases64 e mantem o objetos vazios
-                        aux = false;
+                        aux = true;
 
-                        for (int x = 0; x < listaWidgetVars.size(); x++) {
+                        for (int x = 0; x < listaWidgetVars.size(); x++) {//Roda alista de WidgetVars
                             if (corrigeWidgetVar(listaWidgetVars.get(x)).equals(i + "")) {//EES com gráfico preenchido
                                 base64Aux = m.corrigeImagemBase64(listaImagensBase64.get(i));//Recebe a base corrigida
-                                System.out.println("CORRIGIDO: " + base64Aux);
                                 listaImagensBase64.set(i, base64Aux);//Seta a base corrigida
                                 listaTeste.add(new ByteArrayInputStream(Base64.decodeBase64(listaImagensBase64.get(i).getBytes())));
-                                aux = true;
-                            } else {
-                                System.out.println("=====================================================EITA");
+                                System.out.println("Adicionou gráfico na posição: " + i);
+                                aux = false;
                             }
                         }
 
@@ -147,12 +139,9 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
 
                     System.out.println("=======================EES: " + listaEes.size());
                     System.out.println("=======================GRA: " + listaTeste.size());
+                    System.out.println("=======================: " + listaTeste.size());
 
-                    //InputStream my = new ByteArrayInputStream(Base64.decodeBase64(listaImagensBase64.get(1).getBytes()));
-                    //InputStream is = new BufferedInputStream(
-                    //new FileInputStream("/home/alisson/MEGA/Sigitec/NetBeansProjects/sigitec/build/web/image/imagensRelatorios/1484408243761.png"));
                     horasTrabBean.gerarRelatorio(listaEes, listaHorasPdf, listaUsuariosPdf, listaTeste, tipo);
-
                 } else {
                     msgGrowlErroCustomizavel(null, "Esta nulo=Não imprime");
                 }
@@ -173,11 +162,27 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
         }
     }
 
-    public void selecionaEes() {//Quando um EES é selecionado no "selectOneMenu"
-        geraImagemBase64();
+    private List<NotaMaturidade> filtrarNotasPorData(List<NotaMaturidade> listaInicial) {
+        List<NotaMaturidade> listaFiltrada = new ArrayList<NotaMaturidade>();
+
+        Date dataNota;
+        for (int i = 0; i < listaInicial.size(); i++) {
+            dataNota = listaInicial.get(i).getDataNota();
+
+            if ((dataNota.after(dataFiltroInicio) || dataNota.equals(dataFiltroInicio))
+                    && (dataNota.before(dataFiltroFim) || dataNota.equals(dataFiltroFim))) {
+                listaFiltrada.add(listaInicial.get(i));
+            }
+        }
+
+        return listaFiltrada;
     }
 
     private void criaGraficoForcaTrabalho() {
+        listaImagensBase64 = new ArrayList<>();//Limpa lista antes de usar
+        listaWidgetVars = new ArrayList<>();//Limpa lista antes de usar
+        listaGraficoCombinado = new ArrayList<>();//Limpa lista antes de usar
+        
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
         float eixoY = 0;//Guarda o maior valor para o eixo Y
 
@@ -188,7 +193,8 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
             CartesianChartModel combinedModel = new LineChartModel();
 
             //Notas maturidade
-            listaNotas = notaBean.listarNotasPorEesBean(listaEes.get(x));
+            listaNotas = notaBean.listarNotasPorEesBean(listaEes.get(x));//Pega as notas do EES
+            listaNotas = filtrarNotasPorData(listaNotas);//Filtra as notas do EES pelas datas de filtro
 
             BarChartSeries notasSeries = new BarChartSeries();
             notasSeries.setLabel("Notas de maturidade");
@@ -236,7 +242,7 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
                 }
             }
 
-            if (!(listaNotas.isEmpty() && quantiHoras == 0)) {
+            if (!(listaNotas.isEmpty() && quantiHoras == 0)) {//Se notas e horas NÃO estão vazias
                 //Geral
                 combinedModel.addSeries(notasSeries);
                 combinedModel.addSeries(horasSeries);
@@ -269,9 +275,9 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
                 listaGraficoCombinado.add(combinedModel);
 
                 listaWidgetVars.add("WidgetVar" + x);
-                listaImagensBase64.add("");
+                listaImagensBase64.add("");//Para cada EES existente, uma widgetVar é criada e adicionada
             } else {
-                listaImagensBase64.add("");
+                listaImagensBase64.add("");//Para cada EES existente, uma widgetVar é criada e adicionada
                 System.out.println("Não adicionou p o EES: " + x);
             }
         }
@@ -292,7 +298,6 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
                 }
             }
             listaHorasTrab = listaAux;
-
             criaGraficoForcaTrabalho();
         } catch (Exception ex) {
             throw new FacesException(ex);

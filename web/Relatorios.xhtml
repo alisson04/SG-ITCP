@@ -454,7 +454,7 @@
 
                                 <p:remoteCommand name="rc" update="frmrelatorios" oncomplete="PF('diaRelatorioWidGetVar').show()" />
                                 <p:commandButton value="Gerar Relatório" immediate="true"
-                                                 actionListener="#{RelatorioNotaMatuHorasTrabView.selecionaEes()}"                                                     
+                                                 actionListener="#{RelatorioNotaMatuHorasTrabView.geraImagemBase64()}"                                                     
                                                  onsuccess="rc()" icon="Relatorio24-iconfinder" />
                             </p:layoutUnit>
 
