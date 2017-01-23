@@ -14,13 +14,13 @@
             </style>
 
             <h:form id="frmrelatorios" >
-                <p:dataGrid id="gridIn" var="imagemEmBase64" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64}" 
+                <p:panel id="panelIn"  >
+                    <p:dataGrid id="gridIn" var="imagemEmBase64" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64}" 
                             layout="grid" rowIndexVar="cont" columns="6" 
                             emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
-                    <p:inputText id="in" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64[cont]}" >
-                        <p:ajax event="keyup" update="frmrelatorios" />
-                    </p:inputText>
+                    <p:inputText id="in" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64[cont]}" />
                 </p:dataGrid>
+                </p:panel>
 
                 <!--Dialogo que mostra o gráfico de indicadores em linhas-->
                 <p:dialog widgetVar="dlg" resizable="false"
@@ -37,6 +37,8 @@
                 <!-- Tabelas que separam os tipos de relatórios-->
                 <p:tabView id="tbGeral" dynamic="true" cache="true">
                     <p:ajax event="tabChange" listener="#{RelatoriosView.InicializaVariaveis()}" />
+                    <p:ajax event="tabChange" listener="#{RelatorioNotaMatuHorasTrabView.onTabChange}" />
+
                     <p:tab id="tabIndis" title="Indicadores de maturidade">
                         <p:layout style="min-height:700px;max-height:700px;" >
                             <p:layoutUnit position="west" size="325" >
@@ -424,37 +426,39 @@
                         </p:layout>
                     </p:tab>
 
-                    <p:tab id="tabDivisaoForcaTrabalho" title="Nota de maturidade e Horas trabalhadas">
+                    <p:tab id="tabDivisaoForcaTrabalho" title="Nota de maturidade e Horas trabalhadas" >
                         <p:layout style="min-height:700px;max-height:700px;" >  
                             <p:layoutUnit position="west" size="325" >
                                 <p:panel >
                                     <p:outputPanel style="text-align:center;">
                                         <p:outputLabel value="Filtro de Informações da força de trabalho" />
                                         <p:separator/>
-                                    </p:outputPanel> 
+                                    </p:outputPanel>
 
-                                    <h:panelGrid columns="2">
+                                    <h:panelGrid columns="2">                                        
                                         <p:outputLabel value="De " />
-                                        <p:calendar value="#{RelatorioNotaMatuHorasTrabView.dataFiltroInicio}" locale="pt" navigator="true" 
-                                                    pattern="dd/MM/yyyy" size="10" mask="true" >
-                                            <p:ajax event="dateSelect" update="frmrelatorios" onstart="PF('blockUiGeral').show()" 
-                                                    oncomplete="PF('blockUiGeral').hide()"
-                                                    listener="#{RelatorioNotaMatuHorasTrabView.filtraHorasTrabalhoPorData}" />
+                                        <p:calendar value="#{RelatorioNotaMatuHorasTrabView.dataFiltroInicio}" locale="pt" 
+                                                    navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
+                                            <p:ajax event="dateSelect" onstart="PF('blockUiGeral').show()" 
+                                                    oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
+                                                    onsuccess="#{RelatorioNotaMatuHorasTrabView.geraImagemBase64()}"
+                                                    listener="#{RelatorioNotaMatuHorasTrabView.modificaDataTela}" />
                                         </p:calendar>
 
                                         <p:outputLabel value="até " />
-                                        <p:calendar value="#{RelatorioNotaMatuHorasTrabView.dataFiltroFim}" locale="pt" navigator="true" 
-                                                    pattern="dd/MM/yyyy" size="10" mask="true" >
-                                            <p:ajax event="dateSelect" update="frmrelatorios" onstart="PF('blockUiGeral').show()" 
-                                                    oncomplete="PF('blockUiGeral').hide()"
-                                                    listener="#{RelatorioNotaMatuHorasTrabView.filtraHorasTrabalhoPorData}" />
+                                        <p:calendar value="#{RelatorioNotaMatuHorasTrabView.dataFiltroFim}" locale="pt" 
+                                                    navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
+                                            <p:ajax event="dateSelect"  onstart="PF('blockUiGeral').show()" 
+                                                    oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
+                                                    onsuccess="#{RelatorioNotaMatuHorasTrabView.geraImagemBase64()}"
+                                                    listener="#{RelatorioNotaMatuHorasTrabView.modificaDataTela}" />
                                         </p:calendar>                                 
                                     </h:panelGrid>
                                 </p:panel>
 
-                                <p:remoteCommand name="rc" update="frmrelatorios" oncomplete="PF('diaRelatorioWidGetVar').show()" />
-                                <p:commandButton value="Gerar Relatório" immediate="true"
-                                                 actionListener="#{RelatorioNotaMatuHorasTrabView.geraImagemBase64()}"                                                     
+                                <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
+                                                 oncomplete="PF('diaRelatorioWidGetVar').show()" />
+                                <p:commandButton value="Gerar Relatório" immediate="true"                                                     
                                                  onsuccess="rc()" icon="Relatorio24-iconfinder" />
                             </p:layoutUnit>
 
@@ -483,7 +487,7 @@
                                                 layout="grid" columns="1" rowIndexVar="contador" 
                                                 emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
                                         <p:panel >
-                                            <p:chart type="line" model="#{graNotasHoras}" 
+                                            <p:chart type="line" model="#{graNotasHoras}"
                                                      widgetVar="#{RelatorioNotaMatuHorasTrabView.listaWidgetVars[contador]}" />
                                         </p:panel>
                                     </p:dataGrid>
@@ -492,7 +496,7 @@
                         </p:layout>
                     </p:tab>
 
-                    <p:tab id="tabExecucaoPlanoAcao" title="Execução dos planos de ação">
+                    <!--<p:tab id="tabExecucaoPlanoAcao" title="Execução dos planos de ação">
                         <p:layout style="min-height:700px;max-height:700px;" >
                             <p:layoutUnit position="west" size="325" >
                                 <p:panel >
@@ -519,7 +523,7 @@
                                 </p:dataTable>
                             </p:layoutUnit>
                         </p:layout>
-                    </p:tab>
+                    </p:tab>-->
                 </p:tabView>
 
                 <p:dialog widgetVar="diaRelatorioWidGetVar"  closable="true" showEffect="clip" hideEffect="clip" 
@@ -531,7 +535,7 @@
                         <h:panelGrid columns="3">
                             <p:panel >
                                 <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
-                                               
+
                                                actionListener="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('attachment')}" >
                                     <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png"
                                                     onclick="PF('diaRelatorioWidGetVar').hide()" />
@@ -549,7 +553,6 @@
                         </h:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
-
             </h:form>
         </ui:define>
     </ui:composition>

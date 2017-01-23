@@ -30,6 +30,7 @@ import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 import org.apache.commons.codec.binary.Base64;
+import org.primefaces.event.TabChangeEvent;
 
 /**
  *
@@ -96,13 +97,20 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
             x.add((Calendar.DAY_OF_MONTH), 30);//soma 7 a data atual
             dataFiltroFim = x.getTime();//Seta a data somada
             filtraHorasTrabalhoPorData();//Filtra as atividades
-
+            
+            System.out.println("11111111111111111111111111111111111111111111111111111111111111111111");
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
 
     //METODOS
+    public void onTabChange(TabChangeEvent event) {
+        if(event.getTab().getId().equals("tabDivisaoForcaTrabalho")){
+            geraImagemBase64();
+        }
+    }
+    
     public String corrigeWidgetVar(String widgetVar) {
         int i = widgetVar.indexOf("r");//Utiliza a letra r pq é a ultima do nome que é dado a widgetVar dos gráficos
         return widgetVar.substring(i + 1);
@@ -153,8 +161,7 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
         }
     }
 
-    public void geraImagemBase64() {
-        //Gera e seta imagem na variavel
+    public void geraImagemBase64() {//Gera e seta imagens nas variaveis
         for (int i = 0; i < listaWidgetVars.size(); i++) {
             //1º parametro é o gráfico - 2º é o receptor da base64
             RequestContext.getCurrentInstance().execute("exportImageToPdfGeneric('" + listaWidgetVars.get(i)
@@ -282,6 +289,10 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
             }
         }
     }
+    
+    public void modificaDataTela(){
+        filtraHorasTrabalhoPorData();      
+    }
 
     public void filtraHorasTrabalhoPorData() {
         try {
@@ -304,7 +315,7 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
         }
     }
 
-    public int geraQuantiUser(Empreendimento ees) {//Gera a quantidade de users envolvidos em atividades de um ees
+    public int geraQuantiUser(Empreendimento ees) {//Gera a quanti de users envolvidos em atividades de um ees. Chamado poela dataTable na tela
         int quantidade = 0;
 
         for (int i = 0; i < listaHorasTrab.size(); i++) {//Conta quantos users lançaram horas em atividades p o ees
@@ -319,7 +330,7 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
         return quantidade;
     }
 
-    public String geraHorasTrabAtividades(Empreendimento ees) {//Gera a quantidade de horas gastas em atividades de um ees
+    public String geraHorasTrabAtividades(Empreendimento ees) {//Gera a quanti de horas gastas em atividades de um ees. Chamado poela dataTable na tela
         try {
             if (!listaHorasTrab.isEmpty()) {//Se não esta vazio
                 int segundos = 0;
