@@ -9,3 +9,9 @@
     height: 128px;
     width: 128px;
 }
+
+.Relatorio64-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons128/64relatorio.png") !important;
+    height: 64px;
+    width: 64px;
+}
