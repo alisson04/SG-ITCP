@@ -37,8 +37,8 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     //Empreendimento Vars
     private Empreendimento empreendimentoSelecionado;
     private List<Empreendimento> listaEmpreendimentos;
-    private List<Empreendimento> listaEmpreendimentosFiltrados;
     private EmpreendimentoBean eptBean;
+    private List<Empreendimento> listaEmpreendimentosFiltrados;    
 
     //EmpreendimentoIndicador Vars
     private List<EmpreendimentoIndicador> listaEptIndSalvar;
@@ -74,6 +74,7 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     //Variáveis nota de maturidade
     private List<NotaMaturidade> listaNotas;
     private NotaMaturidadeBean notaBean;
+    
     //Construtor
     public IndicadoresMaturidadeView() {
         try {
