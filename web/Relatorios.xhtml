@@ -30,92 +30,78 @@
 
                     <!--RELATORIO DOS INDICADORES DE MATURIDADE-->
                     <p:tab id="tabIndis" title="Indicadores de maturidade" >
-                        <p:layout style="min-height:700px;max-height:700px;" >
-                            <p:layoutUnit position="west" size="325" >
+                        <p:layout style="max-height:700px;" >
+                            <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
                                 <p:panel toggleable="true" styleClass="painelBordas" >
                                     <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Selecionar empreendimento para modificar nota" />
+                                        <p:outputLabel value="Empreendimento:" />
+                                        <p:selectOneMenu value="#{RelatorioIndicadoresMaturidadeView.empreendimentoSelecionado}" 
+                                                         converter="generic" autoWidth="false" style="width: 200px" >
+                                            <f:selectItem itemLabel="Clique para selecionar" itemValue="#{null}" />
+                                            <p:ajax update="frmrelatorios" event="change"  
+                                                    listener="#{RelatorioIndicadoresMaturidadeView.selecionaEptTela()}"/>
+                                            <f:selectItems value="#{RelatorioIndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
+                                                           itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
+                                        </p:selectOneMenu>
                                     </p:outputPanel>
-                                    <p:separator />
-                                    
-                                    <p:selectOneRadio value="#{RelatorioIndicadoresMaturidadeView.empreendimentoSelecionado}" 
-                                                      converter="generic" layout="grid" columns="1" >
-                                        <p:ajax update="frmrelatorios" event="change"  
-                                                listener="#{RelatorioIndicadoresMaturidadeView.selecionaEptTela()}"/>
-                                        <f:selectItems value="#{RelatorioIndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
-                                                       itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
-                                    </p:selectOneRadio>
                                 </p:panel>
                                 <p:spacer height="10px"/>
 
                                 <p:panel rendered="#{RelatorioIndicadoresMaturidadeView.empreendimentoSelecionado != null}" 
                                          toggleable="true" >
                                     <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Selecionar categoria para ver seus indicadores" />
+                                        <p:outputLabel value="Categoria:" />
+
+                                        <p:selectOneMenu value="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada}"
+                                                         autoWidth="false" style="width: 200px" >
+                                            <p:ajax update="frmrelatorios" event="change"
+                                                    listener="#{RelatorioIndicadoresMaturidadeView.selecionaCategoriaTela()}" />
+                                            
+                                            <f:selectItem itemLabel="Clique para selecionar" itemValue="" />
+
+                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
+                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
+
+                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
+                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
+
+                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
+                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
+
+                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
+                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
+
+                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
+                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
+
+                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
+                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
+
+                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
+                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
+
+                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
+                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
+
+                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
+                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
+                                        </p:selectOneMenu>
                                     </p:outputPanel>
-                                    <p:separator />
-
-                                    <p:selectOneRadio value="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada}" 
-                                                      layout="grid" columns="1" >
-                                        <p:ajax update="frmrelatorios" event="change"
-                                                listener="#{RelatorioIndicadoresMaturidadeView.selecionaCategoriaTela()}" />
-
-                                        <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
-                                                      itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
-
-                                        <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
-                                                      itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
-
-                                        <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
-                                                      itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
-
-                                        <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
-                                                      itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
-
-                                        <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
-                                                      itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
-
-                                        <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
-                                                      itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
-
-                                        <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
-                                                      itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
-
-                                        <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
-                                                      itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
-
-                                        <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
-                                                      itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
-                                    </p:selectOneRadio>
                                 </p:panel>
                                 <p:spacer height="10px"/>
 
-                                <p:panel header="Indicadores" toggleable="true"
-                                         rendered="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada != ''}" >
-                                    <f:facet name="options" >
-                                        <p:menu  >
-                                            <p:submenu label="Tamanho dos gráficos">
-                                                <p:menuitem value="Pequeno" update="frmrelatorios"
-                                                            onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
-                                                            actionListener="#{RelatorioIndicadoresMaturidadeView.configuraTamanhoGrafico(3)}" />
-                                                <p:menuitem value="Médio" update="frmrelatorios"
-                                                            onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
-                                                            actionListener="#{RelatorioIndicadoresMaturidadeView.configuraTamanhoGrafico(2)}" />
-                                                <p:menuitem value="Grande" update="frmrelatorios"
-                                                            onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"
-                                                            actionListener="#{RelatorioIndicadoresMaturidadeView.configuraTamanhoGrafico(1)}" />
-                                            </p:submenu>
-                                        </p:menu>
-                                    </f:facet>
-
+                                <p:panel rendered="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada != ''}" >
                                     <p:outputPanel style="text-align:center;">
+                                        <!--Esta centralizado por não ficar coerente com os outros se ficar a direita-->
+                                        <p:outputLabel value="Indicadores:" />
+                                        <p:separator />
                                         <p:selectBooleanCheckbox value="#{RelatorioIndicadoresMaturidadeView.selecionaTodosInds}" >
                                             <p:ajax update="frmrelatorios" 
                                                     listener="#{RelatorioIndicadoresMaturidadeView.selecionaTodosIndsView()}" />
                                         </p:selectBooleanCheckbox>
                                         <h:outputText value=" Todos" />
-                                        <p:separator/>
                                     </p:outputPanel>
+                                    
                                     <p:selectManyCheckbox value="#{RelatorioIndicadoresMaturidadeView.listaIndsSelecionados}" 
                                                           layout="grid" converter="generic" columns="1" >
                                         <p:ajax listener="#{RelatorioIndicadoresMaturidadeView.criaGraficoInd()}" update="frmrelatorios"
@@ -468,7 +454,7 @@
                                         </p:column>
                                     </p:dataTable>
                                 </p:fieldset>
-                                
+
                                 <p:spacer height="10px" />
 
                                 <p:fieldset legend="Evolução da nota e tempo dedicado" toggleable="true" 
