@@ -68,6 +68,10 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
             throw new FacesException(ex);
         }
     }
+    
+    public void teste(){
+        System.out.println("DDDDDDDDDDDAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    }
 
     //METODOS GERAIS
     public String converteData(Date data) {

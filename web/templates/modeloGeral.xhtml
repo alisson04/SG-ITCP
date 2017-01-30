@@ -5,8 +5,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:composite="http://java.sun.com/jsf/composite" >
+      xmlns:componentesGenericos="http://xmlns.jcp.org/jsf/composite/componentesGenericos">
 
+    
+    
     <ui:insert name="metadata" />
 
     <h:head>
@@ -140,6 +142,9 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
+                <componentesGenericos:myComponent nome="ROLA=================" act="#{modeloGeralView.teste()}" />
+                
+                <componentesGenericos:myComponent nome="TETA=================" act="#{modeloGeralView.teste()}" />
                 <h:form id="frmModeloGeral">
                     <p:menubar style="ui-button" styleClass="textoMenuPrincipal semMargin">
                         <p:menuitem value="Início" icon="Location24-iconfinder" 
