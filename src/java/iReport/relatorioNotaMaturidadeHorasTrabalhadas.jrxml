@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioNotaMaturidadeHorasTrabalhadas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="858daf9b-0cc1-42e0-bf8a-662c19e8a4ff">
-	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="paramImage" class="java.lang.String"/>
@@ -166,9 +166,24 @@
 		<band height="27" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="28" splitType="Stretch"/>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="436" y="10" width="80" height="20" uuid="cdf34415-7058-4e45-8d78-5d9a52b86cd6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="5" width="555" height="1" uuid="73fa023c-2475-4884-91b3-712bd522adf0"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="226" y="10" width="100" height="20" uuid="219cde72-3791-4b55-9835-92a2e1634f2f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="516" y="10" width="40" height="20" uuid="0446b0ff-f87e-4a1f-a9f2-8ebe5bd6ed17"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

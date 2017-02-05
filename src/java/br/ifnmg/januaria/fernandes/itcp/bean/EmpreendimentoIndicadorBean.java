@@ -6,13 +6,17 @@ import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.NotaMaturidade;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
+import br.ifnmg.januaria.fernandes.itcp.util.RelatoriosManager;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.primefaces.model.chart.BarChartModel;
@@ -46,7 +50,7 @@ public class EmpreendimentoIndicadorBean implements Serializable {
 
         for (int i = 0; i < listaIndsSelecionados.size(); i++) {//Roda a quantidade de indicadores da categoria
             LineChartModel model = new LineChartModel();
-            model.setTitle("Evolução do indicador: " + listaIndsSelecionados.get(i).getNome());//Titulo do gráfico
+            model.setTitle("Indicador: " + listaIndsSelecionados.get(i).getNome());//Titulo do gráfico
             series1 = new LineChartSeries();
             series1.setLabel(listaIndsSelecionados.get(i).getNome());//Seta o nome da série como o nome do indicador
             int verificador = 0;
@@ -186,5 +190,24 @@ public class EmpreendimentoIndicadorBean implements Serializable {
 
     public long contarLinhasBean() {
         return dao.contarLinhasDAO();
+    }
+    
+    public void gerarRelatorio(String ees, String categoria, List<InputStream> listaGraficos, String tipo) throws Exception {
+        List<Empreendimento> listaAux = new ArrayList();
+        Empreendimento objAux;
+        
+        for(int i=0; i<listaGraficos.size(); i++){
+            objAux = new Empreendimento();
+            
+            listaAux.add(objAux);
+        }
+        Map<String, Object> listaParametros = new HashMap<String, Object>();
+        listaParametros.put("listaGraficos", listaGraficos);
+        listaParametros.put("empreendimento", ees);
+        listaParametros.put("categoria", categoria);
+        
+        RelatoriosManager m = new RelatoriosManager<EmpreendimentoIndicador>();
+        m.gerarRelatorioGenerico(listaAux, listaParametros, "/iReport/relatorioIndicadoresMaturidade.jasper", 
+                "Relatorio-de-Evolucao-dos-Indicadores-de-maturidade.pdf", tipo);
     }
 }

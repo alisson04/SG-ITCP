@@ -10,6 +10,8 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.NotaMaturidade;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,9 +22,12 @@ import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.apache.commons.codec.binary.Base64;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -31,9 +36,6 @@ import org.primefaces.model.chart.LineChartModel;
 @ManagedBean(name = "RelatorioIndicadoresMaturidadeView")
 @ViewScoped
 public class RelatorioIndicadoresMaturidadeView extends MensagensGenericas implements Serializable {
-
-    //Tamanho dos gráficos Var
-    private int tamanhoGraficos;
 
     //Empreendimento Vars
     private Empreendimento empreendimentoSelecionado;
@@ -64,15 +66,17 @@ public class RelatorioIndicadoresMaturidadeView extends MensagensGenericas imple
 
     private List<EmpreendimentoIndicador> listaEptIndGrafico;
 
+    //Relatorio PDF vars
+    private List<String> listaUsuariosPdf;
+    private List<String> listaImagensBase64;
+    private List<String> listaWidgetVars;
+
     //CONSTRUTOR
     public RelatorioIndicadoresMaturidadeView() {
         try {
             bean = new EmpreendimentoIndicadorBean();
 
             selecionaTodosInds = false;
-
-            //Tamanho dos gráficos Var
-            tamanhoGraficos = 2;//2 significa que é tamanho médio o inicial
 
             //Indicador
             gerenIndicadores = new GerenciadorIndicadores();
@@ -81,7 +85,7 @@ public class RelatorioIndicadoresMaturidadeView extends MensagensGenericas imple
             //Gráfico Inds
             listaIndsSelecionados = new ArrayList();
             listaTodosInds = gerenIndicadores.listarIndicadores();//Para ser filtrada na tela - precisa ser exclusiva
-            
+
             //Gráfico
             listaEptIndGrafico = new ArrayList();
             categoriaSelecionada = "";//Necessário, não retirar
@@ -92,25 +96,55 @@ public class RelatorioIndicadoresMaturidadeView extends MensagensGenericas imple
             //Notas de maturidade
             notaBean = new NotaMaturidadeBean();
             listaNotas = notaBean.listarUltimasNotasBean(listaEmpreendimentos);
+
+            //Relatorio PDF vars
+            listaUsuariosPdf = new ArrayList<>();
+            listaImagensBase64 = new ArrayList<>();
+            listaWidgetVars = new ArrayList<>();
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
 
     //METODOS
-    public void selecionaEptTela() {
-        selecionaTodosInds = false;//Diz que nenhum ind estaselecionados
+    public void gerarRelatorio(String tipo) {//O tipo se refere a "download" ou na "tela"
+        try {
+            if (!listaTodosInds.isEmpty()) {
+                if (!listaImagensBase64.isEmpty()) {
+                    modeloGeralView m = new modeloGeralView();
+                    List<InputStream> listaTeste = new ArrayList<>();
+
+                    boolean aux;//Variável auxiliar que determina se á uma imagem para determina posição da lista de imagens
+                    String base64Aux;//Varialvel auxiliar q recebe a correção da base64
+                    for (int i = 0; i < listaTodosInds.size(); i++) {//Corrige as bases64 e mantem o objetos vazios
+
+                        for (int x = 0; x < listaWidgetVars.size(); x++) {//Roda alista de WidgetVars
+                            if (corrigeWidgetVar(listaWidgetVars.get(x)).equals(i + "")) {//EES com gráfico preenchido
+                                base64Aux = m.corrigeImagemBase64(listaImagensBase64.get(i));//Recebe a base corrigida
+                                listaImagensBase64.set(i, base64Aux);//Seta a base corrigida
+                                listaTeste.add(new ByteArrayInputStream(Base64.decodeBase64(listaImagensBase64.get(i).getBytes())));
+                                System.out.println("Adicionou gráfico na posição: " + i);
+                            }
+                        }
+                    }
+
+                    System.out.println("=======================EES: " + listaTodosInds.size());
+                    System.out.println("=======================GRA: " + listaTeste.size());
+
+                    bean.gerarRelatorio(empreendimentoSelecionado.getSigla(), categoriaSelecionada, listaTeste, tipo);
+                } else {
+                    msgGrowlErroCustomizavel(null, "Nenhum lançamento em gráfico para imprimir!");
+                }
+            } else {
+                msgGrowlErroCustomizavel(null, "Nenhum indicador selecionado!");
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
     }
 
-    //Metodos tamanho dos gráficos
-    public void configuraTamanhoGrafico(int tamanho) {
-        if (tamanho == 1) {
-            tamanhoGraficos = 1;
-        } else if (tamanho == 2) {
-            tamanhoGraficos = 2;
-        } else {
-            tamanhoGraficos = 3;
-        }
+    public void selecionaEptTela() {
+        selecionaTodosInds = false;//Diz que nenhum ind estaselecionados
     }
 
     public void selecionaTodosIndsView() {
@@ -124,11 +158,12 @@ public class RelatorioIndicadoresMaturidadeView extends MensagensGenericas imple
         listaGraficoInds = new ArrayList();//Limpa a lista de gráficos
         listaIndicadores = gerenIndicadores.listarIndicadores();//Pega todos os inds
         listaIndsSelecionados = new ArrayList();//Limpa os inds selecionados
-        selecionaTodosInds=false;//Diz que todos os inds não estão selecionados
-        
+        selecionaTodosInds = false;//Diz que todos os inds não estão selecionados
+
         //Filtra
         filtraIndsPorCategoria();
     }
+
     public void filtraIndsPorCategoria() {
         listaTodosInds = gerenIndicadores.listarIndicadoresPorCategoria(categoriaSelecionada);
     }
@@ -136,6 +171,9 @@ public class RelatorioIndicadoresMaturidadeView extends MensagensGenericas imple
     //Cria uma lista com os gráficos dos inds selecionados
     public void criaGraficoInd() {
         try {
+            listaImagensBase64 = new ArrayList<>();//Limpa lista antes de usar
+            listaWidgetVars = new ArrayList<>();//Limpa lista antes de usar
+
             if (listaTodosInds.size() == listaIndsSelecionados.size()) {
                 selecionaTodosInds = true;
             } else {
@@ -166,9 +204,46 @@ public class RelatorioIndicadoresMaturidadeView extends MensagensGenericas imple
                 System.out.println("QUANTI: " + listaIndsSelecionados.size());
             }
 
+            geraWidgetVars();
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
+    }
+
+    private void geraWidgetVars() {
+        for (int i = 0; i < listaIndsSelecionados.size(); i++) {//Roda a quantidade de indicadores da categoria
+
+            int verificador = 0;
+            for (int x = 0; x < listaEptIndGrafico.size(); x++) {
+                if (listaIndsSelecionados.get(i).getId().equals(
+                        listaEptIndGrafico.get(x).getEmpreendimentoIndicadorPK().getIdIndicador())) {
+                    verificador = 1;
+                }
+            }
+
+            if (verificador != 0) {
+                listaWidgetVars.add("WidgetVar" + i);
+                listaImagensBase64.add("");//Para cada EES existente, uma widgetVar é criada e adicionada
+                System.out.println("Criou a WV " + i);
+            } else {
+                listaImagensBase64.add("");//Para cada EES existente, uma widgetVar é criada e adicionada
+                System.out.println("Não adicionou o indicador " + listaIndsSelecionados.get(i).getNome() + " ao gráfico!");
+            }
+        }
+    }
+
+    public void geraImagemBase64() {//Gera e seta imagens nas variaveis
+        for (int i = 0; i < listaWidgetVars.size(); i++) {
+            //1º parametro é o gráfico - 2º é o receptor da base64
+            RequestContext.getCurrentInstance().execute("exportImageToPdfGeneric('" + listaWidgetVars.get(i)
+                    + "', '#frmrelatorios\\\\:gridInIndicadoresMaturidade\\\\:"
+                    + corrigeWidgetVar(listaWidgetVars.get(i)) + "\\\\:in');");
+        }
+    }
+
+    private String corrigeWidgetVar(String widgetVar) {
+        int i = widgetVar.indexOf("r");//Utiliza a letra r pq é a ultima do nome que é dado a widgetVar dos gráficos
+        return widgetVar.substring(i + 1);
     }
 
     //Preenche uma lista com os gráficos dos inds selecionados
@@ -247,14 +322,6 @@ public class RelatorioIndicadoresMaturidadeView extends MensagensGenericas imple
         this.listaGraficoInds = listaGraficoInds;
     }
 
-    public int getTamanhoGraficos() {
-        return tamanhoGraficos;
-    }
-
-    public void setTamanhoGraficos(int tamanhoGraficos) {
-        this.tamanhoGraficos = tamanhoGraficos;
-    }
-
     public boolean isSelecionaTodosInds() {
         return selecionaTodosInds;
     }
@@ -269,5 +336,21 @@ public class RelatorioIndicadoresMaturidadeView extends MensagensGenericas imple
 
     public void setListaEptIndGrafico(List<EmpreendimentoIndicador> listaEptIndGrafico) {
         this.listaEptIndGrafico = listaEptIndGrafico;
+    }
+
+    public List<String> getListaImagensBase64() {
+        return listaImagensBase64;
+    }
+
+    public void setListaImagensBase64(List<String> listaImagensBase64) {
+        this.listaImagensBase64 = listaImagensBase64;
+    }
+
+    public List<String> getListaWidgetVars() {
+        return listaWidgetVars;
+    }
+
+    public void setListaWidgetVars(List<String> listaWidgetVars) {
+        this.listaWidgetVars = listaWidgetVars;
     }
 }

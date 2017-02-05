@@ -5,39 +5,44 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
+    <!--Utilizado em:
+        Relatórios.xhtml: Mostrar os tipos de visualizalçao de relatório disponíveis
+    -->
+    
     <!-- INTERFACE -->
     <cc:interface>
+        <cc:attribute name="wvDialogReport" required="true" />
         <cc:attribute name="alDownload" required="true" method-signature="void actionListener()" />
         <cc:attribute name="alEmTela" required="true" method-signature="void actionListener()" />
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
-        <p:dialog widgetVar="diaRelatorioWidGetVar"  closable="true" showEffect="clip" hideEffect="clip" 
-                          resizable="false" draggable="false" >
-                    <p:outputPanel style="text-align:center;">
-                        <p:outputLabel value="Como visualizar o relatório?" />
-                        <p:separator />
+        <p:dialog widgetVar="#{cc.attrs.wvDialogReport}"  closable="true" showEffect="clip" hideEffect="clip" 
+                  resizable="false" draggable="false" >
+            <p:outputPanel style="text-align:center;">
+                <p:outputLabel value="Como visualizar o relatório?" />
+                <p:separator />
 
-                        <h:panelGrid columns="3">
-                            <p:panel >
-                                <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
-                                               actionListener="#{cc.attrs.alDownload}" >
-                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png"
-                                                    onclick="PF('diaRelatorioWidGetVar').hide()" />
-                                </p:commandLink>
-                            </p:panel>
-                            <p:spacer width="10px" />
-                            <p:panel >
+                <h:panelGrid columns="3">
+                    <p:panel >
+                        <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                       actionListener="#{cc.attrs.alDownload}" >
+                            <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png"
+                                            onclick="PF('diaRelatorioWidGetVar').hide()" />
+                        </p:commandLink>
+                    </p:panel>
+                    <p:spacer width="10px" />
+                    <p:panel >
 
-                                <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
-                                               actionListener="#{cc.attrs.alEmTela}" >
-                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png"
-                                                    onclick="PF('diaRelatorioWidGetVar').hide()" />
-                                </p:commandLink> 
-                            </p:panel>
-                        </h:panelGrid>
-                    </p:outputPanel>
-                </p:dialog>
+                        <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
+                                       actionListener="#{cc.attrs.alEmTela}" >
+                            <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png"
+                                            onclick="PF('diaRelatorioWidGetVar').hide()" />
+                        </p:commandLink> 
+                    </p:panel>
+                </h:panelGrid>
+            </p:outputPanel>
+        </p:dialog>
     </cc:implementation>
 </html>

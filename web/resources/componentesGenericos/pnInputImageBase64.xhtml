@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!--Utilizado em:
+        Relatórios.xhtml: Receber as imagens dos relatórios convertidos em base64
+    -->
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="listaValue" required="true" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:panel id="panelIn" visible="true" >
+            <p:dataGrid id="gridIn" var="imagemEmBase64" value="#{cc.attrs.listaValue}" layout="grid" rowIndexVar="cont" 
+                        columns="6" emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
+                <p:inputText id="in" value="#{cc.attrs.listaValue[cont]}" />
+            </p:dataGrid>
+        </p:panel>
+
+        <p:panel id="a" header="A" >
+            <p:panel id="b" header="B" >
+                <p:panel id="c" header="C" >
+                    <p:panel id="d" header="D" >
+
+                    </p:panel> 
+                </p:panel>
+            </p:panel>
+        </p:panel>
+    </cc:implementation>
+</html>

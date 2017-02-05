@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"  
       xmlns:componentesGenericos="http://xmlns.jcp.org/jsf/composite/componentesGenericos">
-    
+
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <style type="text/css">
@@ -16,12 +16,21 @@
             </style>
 
             <h:form id="frmrelatorios" >
-                <!--Painel que guarda as entradas de imagens em base64 vinculadas a view-->
+                <!--Painel que guarda as entradas de imagens em base64 vinculadas a view: RelatorioNotaMatuHorasTrabView-->
                 <p:panel id="panelIn" visible="false" >
                     <p:dataGrid id="gridIn" var="imagemEmBase64" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64}" 
                                 layout="grid" rowIndexVar="cont" columns="6" 
                                 emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
                         <p:inputText id="in" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64[cont]}" />
+                    </p:dataGrid>
+                </p:panel>
+                
+                <!--Painel que guarda as entradas de imagens em base64 vinculadas a view: RelatorioIndicadoresMaturidadeView-->
+                <p:panel id="panelInIndicadoresMaturidade" visible="false" >
+                    <p:dataGrid id="gridInIndicadoresMaturidade" var="imagemEmBase64" value="#{RelatorioIndicadoresMaturidadeView.listaImagensBase64}" 
+                                layout="grid" rowIndexVar="cont" columns="6" 
+                                emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
+                        <p:inputText id="in" value="#{RelatorioIndicadoresMaturidadeView.listaImagensBase64[cont]}" />
                     </p:dataGrid>
                 </p:panel>
 
@@ -58,7 +67,7 @@
                                                          autoWidth="false" style="width: 200px" >
                                             <p:ajax update="frmrelatorios" event="change"
                                                     listener="#{RelatorioIndicadoresMaturidadeView.selecionaCategoriaTela()}" />
-                                            
+
                                             <f:selectItem itemLabel="Clique para selecionar" itemValue="" />
 
                                             <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
@@ -99,22 +108,38 @@
                                         <p:separator />
                                         <p:selectBooleanCheckbox value="#{RelatorioIndicadoresMaturidadeView.selecionaTodosInds}" >
                                             <p:ajax update="frmrelatorios" 
+                                                    onsuccess="#{RelatorioIndicadoresMaturidadeView.geraImagemBase64()}"
                                                     listener="#{RelatorioIndicadoresMaturidadeView.selecionaTodosIndsView()}" />
                                         </p:selectBooleanCheckbox>
                                         <h:outputText value=" Todos" />
                                     </p:outputPanel>
-                                    
+
                                     <p:selectManyCheckbox value="#{RelatorioIndicadoresMaturidadeView.listaIndsSelecionados}" 
                                                           layout="grid" converter="generic" columns="1" >
-                                        <p:ajax listener="#{RelatorioIndicadoresMaturidadeView.criaGraficoInd()}" update="frmrelatorios"
+                                        <p:ajax listener="#{RelatorioIndicadoresMaturidadeView.criaGraficoInd()}" 
+                                                update="frmrelatorios"
+                                                onsuccess="#{RelatorioIndicadoresMaturidadeView.geraImagemBase64()}"
                                                 onstart="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"/>
                                         <f:selectItems value="#{RelatorioIndicadoresMaturidadeView.listaTodosInds}" 
                                                        var="ind" itemLabel="#{ind.nome}" itemValue="#{ind}" />
                                     </p:selectManyCheckbox>
                                 </p:panel>
+
+                                <p:spacer height="20px" />
+
+                                <p:panel rendered="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada != ''}" >
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
+                                        <p:remoteCommand name="rc" update=":frmrelatorios:panelInIndicadoresMaturidade" 
+                                                         oncomplete="PF('dlWidGetVarReportIndicadores').show()" />
+                                        <p:commandButton value="Gerar Relatório" immediate="true"                                               
+                                                         onsuccess="rc()"  />                                        
+                                    </p:outputPanel>
+                                </p:panel>
                             </p:layoutUnit>
 
                             <p:layoutUnit position="center" >
+                                <!-- Decidiu-se retirar a tabela abaixo
                                 <p:fieldset legend="Notas de maturidade" toggleable="true" toggleSpeed="500">
                                     <p:dataTable emptyMessage="Nenhuma nota cadastrada." 
                                                  value="#{RelatorioIndicadoresMaturidadeView.listaNotas}" 
@@ -138,14 +163,15 @@
                                         </p:column>
                                     </p:dataTable>
                                 </p:fieldset>
-                                <p:spacer height="20px" />
-                                
+                                <p:spacer height="20px" />-->
+
                                 <p:fieldset legend="Evolução dos indicadores" toggleable="true" toggleSpeed="500"
                                             rendered="#{RelatorioIndicadoresMaturidadeView.listaGraficoInds.size() > 0}" >
-                                    <p:dataGrid var="graInd" value="#{RelatorioIndicadoresMaturidadeView.listaGraficoInds}" layout="grid"
-                                                columns="#{RelatorioIndicadoresMaturidadeView.tamanhoGraficos}" >
+                                    <p:dataGrid var="graInd" value="#{RelatorioIndicadoresMaturidadeView.listaGraficoInds}" 
+                                                layout="grid" columns="1" rowIndexVar="contador" >
                                         <p:panel >
-                                            <p:chart type="line" model="#{graInd}" />
+                                            <p:chart type="line" model="#{graInd}" 
+                                                     widgetVar="#{RelatorioIndicadoresMaturidadeView.listaWidgetVars[contador]}" />
                                         </p:panel>
                                     </p:dataGrid>
                                 </p:fieldset>
@@ -459,8 +485,7 @@
 
                                 <p:spacer height="10px" />
 
-                                <p:fieldset legend="Evolução da nota e tempo dedicado" toggleable="true" 
-                                            toggleSpeed="500"
+                                <p:fieldset legend="Evolução da nota e tempo dedicado" toggleable="true" toggleSpeed="500"
                                             rendered="#{RelatorioNotaMatuHorasTrabView.listaGraficoCombinado.size() != 0}" >
 
                                     <p:dataGrid var="graNotasHoras" value="#{RelatorioNotaMatuHorasTrabView.listaGraficoCombinado}" 
@@ -505,8 +530,13 @@
                         </p:layout>
                     </p:tab>-->
                 </p:tabView>
-                
-                <componentesGenericos:dlTipoRelatorio alDownload="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('attachment')}"
+
+                <componentesGenericos:dlTipoRelatorio wvDialogReport="dlWidGetVarReportIndicadores"
+                                                      alDownload="#{RelatorioIndicadoresMaturidadeView.gerarRelatorio('attachment')}"
+                                                      alEmTela="#{RelatorioIndicadoresMaturidadeView.gerarRelatorio('inline')}" />
+
+                <componentesGenericos:dlTipoRelatorio wvDialogReport="diaRelatorioWidGetVar"
+                                                      alDownload="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('attachment')}"
                                                       alEmTela="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('inline')}" />
             </h:form>
         </ui:define>
