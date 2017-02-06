@@ -24,7 +24,7 @@
                         <p:inputText id="in" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64[cont]}" />
                     </p:dataGrid>
                 </p:panel>
-                
+
                 <!--Painel que guarda as entradas de imagens em base64 vinculadas a view: RelatorioIndicadoresMaturidadeView-->
                 <p:panel id="panelInIndicadoresMaturidade" visible="false" >
                     <p:dataGrid id="gridInIndicadoresMaturidade" var="imagemEmBase64" value="#{RelatorioIndicadoresMaturidadeView.listaImagensBase64}" 
@@ -35,13 +35,13 @@
                 </p:panel>
 
                 <!-- Tabelas que separam os tipos de relatórios-->
-                <p:tabView id="tbGeral" dynamic="true" cache="true">
+                <p:tabView id="tbGeral" dynamic="true" cache="true" >
                     <p:ajax event="tabChange" listener="#{RelatoriosView.InicializaVariaveis()}" />
                     <p:ajax event="tabChange" listener="#{RelatorioNotaMatuHorasTrabView.onTabChange}" />
 
                     <!--RELATORIO DOS INDICADORES DE MATURIDADE-->
                     <p:tab id="tabIndis" title="Indicadores de maturidade" >
-                        <p:layout style="max-height:700px;" >
+                        <p:layout style="min-height:600px;max-height:1000px;" >
                             <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
                                 <p:panel toggleable="true" styleClass="painelBordas" >
                                     <p:outputPanel style="text-align:center;">
@@ -419,7 +419,7 @@
                     </p:tab>
 
                     <p:tab id="tabDivisaoForcaTrabalho" title="Nota de maturidade e Horas trabalhadas" >
-                        <p:layout style="min-height:700px;max-height:700px;" >  
+                        <p:layout style="min-height:600px;max-height:1000px;" >
                             <p:layoutUnit position="west" size="250" >
                                 <p:panel >
                                     <p:outputPanel style="text-align:center;" >
@@ -500,6 +500,20 @@
                             </p:layoutUnit>
                         </p:layout>
                     </p:tab>
+                    
+                    <p:tab id="tabTrabalhosUsuarios" title="Usuarios" >
+                        <p:layout style="min-height:600px;max-height:1000px;" >
+                            <p:layoutUnit position="west" size="250" >
+                                
+                            </p:layoutUnit>
+
+                            <p:layoutUnit position="center" >
+                                
+                            </p:layoutUnit>
+                        </p:layout>
+                    </p:tab>
+                    
+                    
 
                     <!--<p:tab id="tabExecucaoPlanoAcao" title="Execução dos planos de ação">
                         <p:layout style="min-height:700px;max-height:700px;" >
@@ -531,13 +545,63 @@
                     </p:tab>-->
                 </p:tabView>
 
-                <componentesGenericos:dlTipoRelatorio wvDialogReport="dlWidGetVarReportIndicadores"
-                                                      alDownload="#{RelatorioIndicadoresMaturidadeView.gerarRelatorio('attachment')}"
-                                                      alEmTela="#{RelatorioIndicadoresMaturidadeView.gerarRelatorio('inline')}" />
+                <!-- ==================================Dialogs de tipo de download ==================================== -->
+                
+                <!--Dialogo tipo relatório: indicadpres de maturidade-->
+                <p:dialog widgetVar="dlWidGetVarReportIndicadores"  closable="true" showEffect="clip" hideEffect="clip" 
+                          resizable="false" draggable="false" >
+                    <p:outputPanel style="text-align:center;" >
+                        <p:outputLabel value="Como visualizar o relatório?" />
+                        <p:separator />
 
-                <componentesGenericos:dlTipoRelatorio wvDialogReport="diaRelatorioWidGetVar"
-                                                      alDownload="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('attachment')}"
-                                                      alEmTela="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('inline')}" />
+                        <h:panelGrid columns="3">
+                            <p:panel >
+                                <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                               actionListener="#{RelatorioIndicadoresMaturidadeView.gerarRelatorio('attachment')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png"
+                                                    onclick="PF('dlWidGetVarReportIndicadores').hide()" />
+                                </p:commandLink>
+                            </p:panel>
+                            <p:spacer width="10px" />
+                            <p:panel >
+
+                                <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
+                                               actionListener="#{RelatorioIndicadoresMaturidadeView.gerarRelatorio('inline')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png"
+                                                    onclick="PF('dlWidGetVarReportIndicadores').hide()" />
+                                </p:commandLink> 
+                            </p:panel>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+                
+                <!--Dialogo tipo relatório: indicadpres de maturidade-->
+                <p:dialog widgetVar="diaRelatorioWidGetVar"  closable="true" showEffect="clip" hideEffect="clip" 
+                          resizable="false" draggable="false" >
+                    <p:outputPanel style="text-align:center;" >
+                        <p:outputLabel value="Como visualizar o relatório?" />
+                        <p:separator />
+
+                        <h:panelGrid columns="3">
+                            <p:panel >
+                                <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                               actionListener="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('attachment')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png"
+                                                    onclick="PF('diaRelatorioWidGetVar').hide()" />
+                                </p:commandLink>
+                            </p:panel>
+                            <p:spacer width="10px" />
+                            <p:panel >
+
+                                <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
+                                               actionListener="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('inline')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png"
+                                                    onclick="PF('diaRelatorioWidGetVar').hide()" />
+                                </p:commandLink> 
+                            </p:panel>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
             </h:form>
         </ui:define>
     </ui:composition>

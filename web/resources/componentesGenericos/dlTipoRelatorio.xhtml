@@ -14,6 +14,7 @@
         <cc:attribute name="wvDialogReport" required="true" />
         <cc:attribute name="alDownload" required="true" method-signature="void actionListener()" />
         <cc:attribute name="alEmTela" required="true" method-signature="void actionListener()" />
+        <cc:attribute name="ocWvHide" required="true" />        
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
@@ -29,7 +30,7 @@
                         <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
                                        actionListener="#{cc.attrs.alDownload}" >
                             <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png"
-                                            onclick="PF('diaRelatorioWidGetVar').hide()" />
+                                            onclick="#{cc.attrs.ocWvHide}" />
                         </p:commandLink>
                     </p:panel>
                     <p:spacer width="10px" />
@@ -38,7 +39,7 @@
                         <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
                                        actionListener="#{cc.attrs.alEmTela}" >
                             <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png"
-                                            onclick="PF('diaRelatorioWidGetVar').hide()" />
+                                            onclick="PF(':'#{cc.attrs.ocWvHide}).hide()" />
                         </p:commandLink> 
                     </p:panel>
                 </h:panelGrid>
