@@ -23,7 +23,7 @@
                             <h:outputText value="#{objCursor.nome}"/>
                         </p:column>
 
-                        <p:column headerText="Data início" filterBy="#{ListarAtiviPlanejadasView.conveteData(objCursor.dataInicio)}" 
+                        <p:column headerText="Data início" filterBy="#{modeloGeralView.converteData(objCursor.dataInicio)}" 
                                   filterMatchMode="contains">
                             <h:outputText value="#{modeloGeralView.converteData(objCursor.dataInicio)}" />
                         </p:column>

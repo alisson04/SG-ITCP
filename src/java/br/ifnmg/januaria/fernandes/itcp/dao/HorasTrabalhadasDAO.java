@@ -62,6 +62,25 @@ public class HorasTrabalhadasDAO extends DaoGenerico<HorasTrabalhadas> {
             em.close();
         }
     }
+    
+    public List<HorasTrabalhadas> listarPorAtividadeDao(AtividadePlanejada atv) {
+        EntityManager em = emc.gerarEntityManager();
+        try {
+            List<HorasTrabalhadas> listaObjs;//Cria alista que será retornada
+            em.getTransaction().begin();
+            Query consulta = em.createQuery("SELECT h FROM HorasTrabalhadas h WHERE h.atividadePlanejada.id = :A");
+           
+            consulta.setParameter("A", atv.getId());
+            listaObjs = consulta.getResultList();//Pega a lista de objs
+            em.getTransaction().commit();
+            return listaObjs;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw new FacesException(ex);
+        } finally {
+            em.close();
+        }
+    }
 
     public List<HorasTrabalhadas> listarPorEesDao(Empreendimento ees) {
         System.out.println("ID do EES: " + ees.getId());

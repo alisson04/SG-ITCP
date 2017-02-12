@@ -451,7 +451,7 @@
                                 <p:spacer height="20px" />
 
                                 <p:panel >
-                                    <p:outputPanel style="text-align:center;">
+                                    <p:outputPanel style="text-align:center;" >
                                         <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png"
                                                         onclick="PF('diaRelatorioWidGetVar').hide()" />
                                         <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
@@ -500,20 +500,47 @@
                             </p:layoutUnit>
                         </p:layout>
                     </p:tab>
-                    
-                    <p:tab id="tabTrabalhosUsuarios" title="Usuarios" >
+
+                    <p:tab id="tabTrabalhosUsuarios" title="Atividades" >
                         <p:layout style="min-height:600px;max-height:1000px;" >
                             <p:layoutUnit position="west" size="250" >
-                                
+                                <p:panel >
+                                    <p:outputPanel style="text-align:center;" >
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
+                                        <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
+                                                         oncomplete="PF('diaRelatorioAtiviadesWidGetVar').show()" />
+                                        <p:commandButton value="Gerar Relatório" immediate="true"                                               
+                                                         onsuccess="rc()" />                                        
+                                    </p:outputPanel>
+                                </p:panel>
                             </p:layoutUnit>
 
                             <p:layoutUnit position="center" >
-                                
+                                <p:outputPanel style="text-align:center;" >
+                                    <componentesGenericos:dtListagemGenerica 
+                                        listaValue="#{RelatorioAtividadesView.listaAtv}"
+                                        listaFilteredValue="#{RelatorioAtividadesView.listaAtvFiltradas}" >
+
+                                        <p:column headerText="Data" >
+                                            <h:outputText value="#{RelatorioAtividadesView.converteData(cursor)}" />
+                                        </p:column>
+
+                                        <p:column headerText="Horas Trabalhadas" >
+                                            <h:outputText value="#{RelatorioAtividadesView.geraHorasTrabPorAtv(cursor)}" />
+                                        </p:column>
+
+                                        <p:column headerText="Atividade" >
+                                            <h:outputText value="#{cursor.meta.planoAcao.empreendimento.sigla}"/>
+                                            <h:outputText value=" - "/>
+                                            <h:outputText value="#{cursor.nome}"/>
+                                        </p:column>
+
+                                    </componentesGenericos:dtListagemGenerica>
+                                </p:outputPanel>
+
                             </p:layoutUnit>
                         </p:layout>
                     </p:tab>
-                    
-                    
 
                     <!--<p:tab id="tabExecucaoPlanoAcao" title="Execução dos planos de ação">
                         <p:layout style="min-height:700px;max-height:700px;" >
@@ -546,7 +573,7 @@
                 </p:tabView>
 
                 <!-- ==================================Dialogs de tipo de download ==================================== -->
-                
+
                 <!--Dialogo tipo relatório: indicadpres de maturidade-->
                 <p:dialog widgetVar="dlWidGetVarReportIndicadores"  closable="true" showEffect="clip" hideEffect="clip" 
                           resizable="false" draggable="false" >
@@ -574,7 +601,7 @@
                         </h:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
-                
+
                 <!--Dialogo tipo relatório: indicadpres de maturidade-->
                 <p:dialog widgetVar="diaRelatorioWidGetVar"  closable="true" showEffect="clip" hideEffect="clip" 
                           resizable="false" draggable="false" >
@@ -597,6 +624,34 @@
                                                actionListener="#{RelatorioNotaMatuHorasTrabView.gerarRelatorio('inline')}" >
                                     <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png"
                                                     onclick="PF('diaRelatorioWidGetVar').hide()" />
+                                </p:commandLink> 
+                            </p:panel>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
+                <!--Dialogo tipo relatório: Atividades-->
+                <p:dialog widgetVar="diaRelatorioAtiviadesWidGetVar"  closable="true" showEffect="clip" hideEffect="clip" 
+                          resizable="false" draggable="false" >
+                    <p:outputPanel style="text-align:center;" >
+                        <p:outputLabel value="Como visualizar o relatório?" />
+                        <p:separator />
+
+                        <h:panelGrid columns="3">
+                            <p:panel >
+                                <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                               actionListener="#{RelatorioAtividadesView.gerarRelatorio('attachment')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png"
+                                                    onclick="PF('diaRelatorioWidGetVar').hide()" />
+                                </p:commandLink>
+                            </p:panel>
+                            <p:spacer width="10px" />
+                            <p:panel >
+
+                                <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
+                                               actionListener="#{RelatorioAtividadesView.gerarRelatorio('inline')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png"
+                                                    onclick="PF('diaRelatorioAtiviadesWidGetVar').hide()" />
                                 </p:commandLink> 
                             </p:panel>
                         </h:panelGrid>

@@ -3,11 +3,16 @@ package br.ifnmg.januaria.fernandes.itcp.bean;
 import br.ifnmg.januaria.fernandes.itcp.dao.AtividadePlanejadaDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadeUsuario;
+import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
+import br.ifnmg.januaria.fernandes.itcp.util.RelatoriosManager;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -75,5 +80,29 @@ public class AtividadePlanejadaBean implements Serializable{
             }
         }
         return listaFiltrada;
+    }
+    
+    public void gerarRelatorio(List<AtividadePlanejada> lista, List<String> listaHorasPdf, List<String> listaDatasPdf,
+            String tipo) throws Exception {
+        Map<String, Object> listaParametros = new HashMap<String, Object>();
+        
+        //List<InputStream> listaTeste = new ArrayList<>();
+        //for(int i=0; i<lista.size(); i++){
+        //    listaTeste.add(asd);
+        //    System.out.println("ADD: " + i);
+        //}
+        List<String> listaNomes = new ArrayList<>();
+        
+        for(int i=0; i<lista.size(); i++){
+            listaNomes.add(lista.get(i).getMeta().getPlanoAcao().getEmpreendimento().getSigla() + " - " + lista.get(i).getNome());
+        }
+        
+        listaParametros.put("listaNomes", listaNomes);
+        listaParametros.put("listaHoras", listaHorasPdf);
+        listaParametros.put("listaDatas", listaDatasPdf);
+        
+        RelatoriosManager m = new RelatoriosManager<Empreendimento>();
+        m.gerarRelatorioGenerico(lista, listaParametros, "/iReport/relatorioAtividades.jasper", 
+                "Relatorio-de-Atividades.pdf", tipo);
     }
 }

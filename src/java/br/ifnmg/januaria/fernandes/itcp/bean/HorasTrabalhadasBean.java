@@ -44,6 +44,10 @@ public class HorasTrabalhadasBean implements Serializable{
         return dao.listarPorUserAtividadeDao(user, atv);
     }
     
+    public List<HorasTrabalhadas> listarPorAtividadeBean(AtividadePlanejada atv){
+        return dao.listarPorAtividadeDao(atv);
+    }
+    
     public List<HorasTrabalhadas> listarPorEesBean(Empreendimento ees){//O ees é encontrado pela atividade
         return dao.listarPorEesDao(ees);
     }

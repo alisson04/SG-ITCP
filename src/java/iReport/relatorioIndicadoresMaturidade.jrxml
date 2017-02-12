@@ -23,9 +23,9 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="50" splitType="Stretch">
+		<band height="85" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="10" width="125" height="20" uuid="8b9f3a35-1960-44a9-b96e-8907157cb09e"/>
+				<reportElement x="0" y="45" width="125" height="20" uuid="8b9f3a35-1960-44a9-b96e-8907157cb09e"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -39,7 +39,7 @@
 				<text><![CDATA[Empreendimento:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="30" width="125" height="20" uuid="8408e6ce-dbea-498f-898f-f01d56736e79"/>
+				<reportElement x="0" y="65" width="125" height="20" uuid="8408e6ce-dbea-498f-898f-f01d56736e79"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -53,7 +53,7 @@
 				<text><![CDATA[Categoria:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="125" y="10" width="430" height="20" uuid="56580317-0940-48e3-9a05-0c4a03e6f7a8"/>
+				<reportElement x="125" y="45" width="430" height="20" uuid="56580317-0940-48e3-9a05-0c4a03e6f7a8"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -65,7 +65,7 @@
 				<textFieldExpression><![CDATA[$P{empreendimento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="125" y="30" width="430" height="20" uuid="b5b98c04-c261-4f0a-af14-7fcda77df5b1"/>
+				<reportElement x="125" y="65" width="430" height="20" uuid="b5b98c04-c261-4f0a-af14-7fcda77df5b1"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -76,6 +76,13 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{categoria}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="0" y="10" width="555" height="25" uuid="078716d5-a6df-44dc-8e25-717258fc0d0f"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Relatório de Indicadores de Maturidade]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
