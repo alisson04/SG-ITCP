@@ -5,6 +5,7 @@ import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoIndicadorBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.HorasTrabalhadasBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.NotaMaturidadeBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicador;
@@ -12,6 +13,7 @@ import br.ifnmg.januaria.fernandes.itcp.domain.EmpreendimentoIndicadorPK;
 import br.ifnmg.januaria.fernandes.itcp.domain.HorasTrabalhadas;
 import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.NotaMaturidade;
+import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.ByteArrayInputStream;
@@ -53,6 +55,14 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
     private List<String> listaHorasPdf;
     private List<String> listaDatasPdf;
 
+    //Filtros Vars
+    private List<Usuario> listaUser;
+    private UsuarioBean userlBean;
+    private Usuario userSelecionado;
+    private Empreendimento eesSelecionado;
+    private EmpreendimentoBean eesBean;
+    private List<Empreendimento> listaEes;
+
     //CONSTRUTOR
     public RelatorioAtividadesView() {
         try {
@@ -66,36 +76,81 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
             //Relatorio PDF vars
             listaHorasPdf = new ArrayList<>();
             listaDatasPdf = new ArrayList<>();
+
+            //Filtros Vars
+            userlBean = new UsuarioBean();
+            listaUser = userlBean.listarBean();
+            eesBean = new EmpreendimentoBean();
+            listaEes = eesBean.listarBean();
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
 
-    //METODOS
+    //METODOS    
+    public void filtrarAtividades() {
+        listaAtv = bean.listarBean();
+
+        if (eesSelecionado != null) {//Se a EES selecionado
+            List<AtividadePlanejada> listaAux = new ArrayList<>();
+
+            for (int i = 0; i < listaAtv.size(); i++) {
+                if (listaAtv.get(i).getMeta().getPlanoAcao().getEmpreendimento().equals(eesSelecionado)) {
+                    listaAux.add(listaAtv.get(i));
+                }
+            }
+
+            listaAtv = listaAux;
+        }
+
+        if (userSelecionado != null) {//Se a USER selecionado
+            List<AtividadePlanejada> listaAux = new ArrayList<>();
+            boolean userParticipa = false;
+
+            for (int i = 0; i < listaAtv.size(); i++) {
+                userParticipa = false;
+                
+                for (int x = 0; x < listaAtv.get(i).getHorasTrabalhadasList().size(); x++) {
+                    if (listaAtv.get(i).getHorasTrabalhadasList().get(x).getUsuario().equals(userSelecionado)) {
+                        userParticipa = true;
+
+                        System.out.println("Setou TRUE");
+                    }
+                }
+
+                if (userParticipa) {
+                    listaAux.add(listaAtv.get(i));
+                    System.out.println("TRUE");
+                }
+            }
+            listaAtv = listaAux;
+        }
+    }
+
     public String converteData(AtividadePlanejada atv) {
-        
+
         Date data;
         String dataRetrun;
         try {
-                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-                
-                data = atv.getDataInicio();
-                dataRetrun = forma.format(data);
-                
-                data = atv.getDataFim();
-                dataRetrun = dataRetrun + " - " + forma.format(data);
-                
-                listaDatasPdf.add(dataRetrun);//Adiciona a lista para gerar o PDF
-                return dataRetrun;
+            SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+
+            data = atv.getDataInicio();
+            dataRetrun = forma.format(data);
+
+            data = atv.getDataFim();
+            dataRetrun = dataRetrun + " - " + forma.format(data);
+
+            listaDatasPdf.add(dataRetrun);//Adiciona a lista para gerar o PDF
+            return dataRetrun;
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
-    
+
     public void gerarRelatorio(String tipo) {//O tipo se refere a "download" ou na "tela"
         try {
             if (!listaAtv.isEmpty()) {
-                bean.gerarRelatorio(listaAtv, listaHorasPdf, listaDatasPdf, tipo);
+                bean.gerarRelatorio(listaAtv, listaHorasPdf, listaDatasPdf, eesSelecionado, userSelecionado, tipo);
             } else {
                 msgGrowlErroCustomizavel(null, "Não ha empreendimentos para listar");
             }
@@ -163,4 +218,35 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
         this.listaAtvFiltradas = listaAtvFiltradas;
     }
 
+    public Usuario getUserSelecionado() {
+        return userSelecionado;
+    }
+
+    public void setUserSelecionado(Usuario userSelecionado) {
+        this.userSelecionado = userSelecionado;
+    }
+
+    public Empreendimento getEesSelecionado() {
+        return eesSelecionado;
+    }
+
+    public void setEesSelecionado(Empreendimento eesSelecionado) {
+        this.eesSelecionado = eesSelecionado;
+    }
+
+    public List<Usuario> getListaUser() {
+        return listaUser;
+    }
+
+    public void setListaUser(List<Usuario> listaUser) {
+        this.listaUser = listaUser;
+    }
+
+    public List<Empreendimento> getListaEes() {
+        return listaEes;
+    }
+
+    public void setListaEes(List<Empreendimento> listaEes) {
+        this.listaEes = listaEes;
+    }
 }

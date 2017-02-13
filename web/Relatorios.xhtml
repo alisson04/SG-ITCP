@@ -503,8 +503,38 @@
 
                     <p:tab id="tabTrabalhosUsuarios" title="Atividades" >
                         <p:layout style="min-height:600px;max-height:1000px;" >
-                            <p:layoutUnit position="west" size="250" >
+                            <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
                                 <p:panel >
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:outputLabel value="Empreendimento:" />
+                                        <p:selectOneMenu value="#{RelatorioAtividadesView.eesSelecionado}" converter="generic"
+                                                         autoWidth="false" style="width: 200px" >
+                                            <p:ajax update="frmrelatorios" event="change"  
+                                                    listener="#{RelatorioAtividadesView.filtrarAtividades()}"/>
+                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                            <f:selectItems value="#{RelatorioAtividadesView.listaEes}" var="var" 
+                                                           itemLabel="#{var.sigla}" itemValue="#{var}"/>
+                                        </p:selectOneMenu>
+                                    </p:outputPanel>
+                                </p:panel>
+                                <p:spacer height="10px" />
+                                
+                                <p:panel >
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:outputLabel value="Usuario:" />
+                                        <p:selectOneMenu value="#{RelatorioAtividadesView.userSelecionado}" converter="generic"
+                                                         autoWidth="false" style="width: 200px" >
+                                            <p:ajax update="frmrelatorios" event="change"  
+                                                    listener="#{RelatorioAtividadesView.filtrarAtividades()}"/>
+                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                            <f:selectItems value="#{RelatorioAtividadesView.listaUser}" var="var" 
+                                                           itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                        </p:selectOneMenu>
+                                    </p:outputPanel>
+                                </p:panel>
+                                <p:spacer height="10px" />
+
+                                <p:panel rendered="#{RelatorioAtividadesView.listaAtv.size() > 0}" >
                                     <p:outputPanel style="text-align:center;" >
                                         <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
                                         <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
@@ -537,7 +567,6 @@
 
                                     </componentesGenericos:dtListagemGenerica>
                                 </p:outputPanel>
-
                             </p:layoutUnit>
                         </p:layout>
                     </p:tab>
