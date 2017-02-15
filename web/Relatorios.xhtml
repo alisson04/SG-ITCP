@@ -179,222 +179,53 @@
                         </p:layout>
                     </p:tab>
 
-                    <!--ABA RELATÓRIO DE ATIVIDADES POR EMPREENDIMENTO-->
-                    <p:tab id="tabTeste" title="Atividades por empreendimento">
-                        <p:layout style="min-height:700px;max-height:700px;" >
-                            <p:layoutUnit position="west" size="325" >
-                                <p:outputPanel style="text-align:center;" >
-                                    <p:outputLabel value="Filtrar por: " />
-                                </p:outputPanel>
-                                <p:spacer height="10px"/>
-
-                                <p:panel header="Empreendimentos" toggleable="true" styleClass="painelBordas" >
-                                    <p:selectOneRadio value="#{RelatoriosView.empreendimentoSelecionado}" 
-                                                      converter="generic" layout="grid" columns="1" >
-                                        <p:ajax update="frmrelatorios" event="change"  
-                                                listener="#{RelatoriosView.filtraAtividadesPorEes()}"/>
-                                        <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="ept" 
-                                                       itemLabel="#{ept.nome}" itemValue="#{ept}"/>
-                                    </p:selectOneRadio>
-                                </p:panel>
-                                <p:spacer height="10px"/>
-
-                                <p:panel header="Plano de ação" rendered="#{RelatoriosView.empreendimentoSelecionado != null}">
-                                    <p:selectOneRadio value="#{RelatoriosView.planoSelecionado}" 
-                                                      converter="generic" layout="grid" columns="1" >
-                                        <p:ajax update="frmrelatorios" event="change"  
-                                                listener="#{RelatoriosView.filtraAtividadesPorPlano()}" />
-                                        <f:selectItems value="#{RelatoriosView.listaPlanos}" var="plano" itemLabel="#{plano.nome} 
-                                                       / Início em: #{modeloGeralView.converteData(plano.dataInicio)}" itemValue="#{plano}"/>
-                                    </p:selectOneRadio>
-                                </p:panel>
-                            </p:layoutUnit>
-
-                            <p:layoutUnit position="center" >
-                                <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada " 
-                                             value="#{RelatoriosView.listaAtividades}" style="text-align: center"
-                                             filteredValue="#{RelatoriosView.listaAtividadesFiltradas}" rowKey="#{objCursor.id}"
-                                             var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
-
-                                    <p:column headerText="Nome" filterBy="#{objCursor.nome}" sortBy="#{objCursor.nome}" 
-                                              filterMatchMode="contains" >
-                                        <h:outputText value="#{objCursor.nome}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Data início" styleClass="colunasTabela100PX" >
-                                        <h:outputText value="#{modeloGeralView.converteData(objCursor.dataInicio)}" />
-                                    </p:column>
-
-                                    <p:column headerText="Data fim" styleClass="colunasTabela100PX" >
-                                        <h:outputText value="#{modeloGeralView.converteData(objCursor.dataFim)}" />
-                                    </p:column>
-
-                                    <p:column headerText="Situação"  filterBy="#{objCursor.status}" filterMatchMode="exact" 
-                                              styleClass="colunasTabela200PX" >
-                                        <f:facet name="filter">
-                                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                                <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" />
-                                                <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" />
-                                                <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" />
-                                            </p:selectOneMenu>
-                                        </f:facet>
-
-                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagRed.png"
-                                                        rendered="#{objCursor.status == 'Não iniciada'}" />
-                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagYellow.png"
-                                                        rendered="#{objCursor.status == 'Iniciada'}" />
-                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagGreen.png"
-                                                        rendered="#{objCursor.status == 'Finalizada'}" />
-                                    </p:column>
-
-                                    <p:column filterBy="#{objCursor.meta}" headerText="Meta" filterMatchMode="exact">
-                                        <f:facet name="filter">
-                                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                                <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="var"
-                                                               itemLabel="#{var.nome}" itemValue="#{var}"/>
-                                            </p:selectOneMenu>
-                                        </f:facet>
-                                        <h:outputText value="#{objCursor.meta.nome}" />
-                                    </p:column>
-
-                                    <f:facet name="footer">
-                                        <h:commandLink id="pdfUsr">
-                                            <p:graphicImage name="icons24/Pdf24.png" width="24"/>
-                                            <p:dataExporter type="pdf" target="dtListagemAtividades" fileName="Metas" encoding="ISO-8859-1" />
-                                        </h:commandLink> 
-
-                                        <p:spacer height="20px"/>
-
-                                        <h:commandLink id="xlsUsr">
-                                            <p:graphicImage name="icons24/Xls24.png" width="24"/>
-                                            <p:dataExporter type="xls" target="dtListagemAtividades" fileName="Metas" />
-                                        </h:commandLink>
-
-                                        <p:tooltip for="pdfUsr" value="Exportar para PDF" />
-                                        <p:tooltip for="xlsUsr" value="Exportar para Excel" />
-                                    </f:facet>
-                                </p:dataTable>
-                            </p:layoutUnit>
-                        </p:layout>
-                    </p:tab>
-
-                    <p:tab id="tabAtividadesPorUser" title="Atividades por usuário">
-                        <p:layout style="min-height:700px;max-height:700px;" >
-                            <p:layoutUnit position="west" size="325" >
-                                <p:outputPanel style="text-align:center;" >
-                                    <p:outputLabel value="Filtrar por: " />
-                                </p:outputPanel>
-                                <p:spacer height="10px"/>
-
-                                <p:panel header="Usuários" >
-                                    <p:selectOneRadio value="#{RelatoriosView.userSelecionado}" 
-                                                      converter="generic" layout="grid" columns="1" >
-                                        <p:ajax update="frmrelatorios" event="change"  
-                                                listener="#{RelatoriosView.filtraAtividadesPorUser()}"/>
-                                        <f:selectItems value="#{RelatoriosView.listaUser}" var="var" 
-                                                       itemLabel="#{var.nome}" itemValue="#{var}"/>
-                                    </p:selectOneRadio>
-                                </p:panel>
-                            </p:layoutUnit>
-
-                            <p:layoutUnit position="center" >
-                                <p:dataTable emptyMessage="Nenhuma atividade cadastrada " 
-                                             value="#{RelatoriosView.listaAtividades}" style="text-align: center"
-                                             filteredValue="#{RelatoriosView.listaAtividadesFiltradas}" rowKey="#{objCursor.id}"
-                                             var="objCursor" widgetVar="varGlobal" rows="12" paginator="true" paginatorPosition="top">
-
-                                    <p:column headerText="Nome" filterBy="#{objCursor.nome}" sortBy="#{objCursor.nome}" 
-                                              filterMatchMode="contains" >
-                                        <h:outputText value="#{objCursor.nome}"/>
-                                    </p:column>
-
-                                    <p:column headerText="Data início" styleClass="colunasTabela100PX" >
-                                        <h:outputText value="#{modeloGeralView.converteData(objCursor.dataInicio)}" />
-                                    </p:column>
-
-                                    <p:column headerText="Data fim" styleClass="colunasTabela100PX" >
-                                        <h:outputText value="#{modeloGeralView.converteData(objCursor.dataFim)}" />
-                                    </p:column>
-
-                                    <p:column headerText="Situação"  filterBy="#{objCursor.status}" filterMatchMode="exact" 
-                                              styleClass="colunasTabela200PX" >
-                                        <f:facet name="filter">
-                                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                                <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" />
-                                                <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" />
-                                                <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" />
-                                            </p:selectOneMenu>
-                                        </f:facet>
-
-                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagRed.png"
-                                                        rendered="#{objCursor.status == 'Não iniciada'}" />
-                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagYellow.png"
-                                                        rendered="#{objCursor.status == 'Iniciada'}" />
-                                        <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagGreen.png"
-                                                        rendered="#{objCursor.status == 'Finalizada'}" />
-                                    </p:column>
-
-                                    <p:column filterBy="#{objCursor.meta}" headerText="Meta" filterMatchMode="exact">
-                                        <f:facet name="filter">
-                                            <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                                <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                                <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="var"
-                                                               itemLabel="#{var.nome}" itemValue="#{var}"/>
-                                            </p:selectOneMenu>
-                                        </f:facet>
-                                        <h:outputText value="#{objCursor.meta.nome}" />
-                                    </p:column>
-
-                                    <f:facet name="footer">
-                                        <h:commandLink id="pdfUsr">
-                                            <p:graphicImage name="icons24/Pdf24.png" width="24"/>
-                                            <p:dataExporter type="pdf" target="dtListagemAtividades" fileName="Metas" encoding="ISO-8859-1" />
-                                        </h:commandLink> 
-
-                                        <p:spacer height="20px"/>
-
-                                        <h:commandLink id="xlsUsr">
-                                            <p:graphicImage name="icons24/Xls24.png" width="24"/>
-                                            <p:dataExporter type="xls" target="dtListagemAtividades" fileName="Metas" />
-                                        </h:commandLink>
-
-                                        <p:tooltip for="pdfUsr" value="Exportar para PDF" />
-                                        <p:tooltip for="xlsUsr" value="Exportar para Excel" />
-                                    </f:facet>
-                                </p:dataTable>
-                            </p:layoutUnit>
-                        </p:layout>
-                    </p:tab>
-
                     <p:tab id="tabExecucaoPlano" title="Execução do plano de ação">
                         <p:layout style="min-height:700px;max-height:700px;" >
                             <p:layoutUnit position="west" size="325" >
-                                <p:panel header="Empreendimentos" >
-                                    <p:selectOneRadio value="#{RelatoriosView.empreendimentoSelecionado}" 
-                                                      converter="generic" layout="grid" columns="1" >
-                                        <p:ajax update="frmrelatorios" event="change"  
-                                                listener="#{RelatoriosView.selecionaEes()}"/>
-                                        <f:selectItems value="#{RelatoriosView.listaEmpreendimentos}" var="var" 
-                                                       itemLabel="#{var.nome}" itemValue="#{var}"/>
-                                    </p:selectOneRadio>
+
+                                <p:panel >
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:outputLabel value="Empreendimento:" />
+                                        <p:selectOneMenu value="#{RelatorioPlanoAcaoView.eesSelecionado}" converter="generic"
+                                                         autoWidth="false" style="width: 200px" >
+                                            <p:ajax update="frmrelatorios" event="change"  
+                                                    listener="#{RelatorioPlanoAcaoView.filtrarPlanos()}"/>
+                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                            <f:selectItems value="#{RelatorioPlanoAcaoView.listaEes}" var="var" 
+                                                           itemLabel="#{var.sigla}" itemValue="#{var}"/>
+                                        </p:selectOneMenu>
+                                    </p:outputPanel>
                                 </p:panel>
                                 <p:spacer height="10px" />
 
-                                <p:panel header="Planos de ação" rendered="#{RelatoriosView.empreendimentoSelecionado != null}" >
-                                    <p:outputPanel style="text-align:center;" rendered="#{RelatoriosView.listaPlanos.size() == 0}" >
-                                        <p:outputLabel value="Não há planos de ação cadastrados para esse empreendimento!" />
-                                        <p:separator/>
+                                <p:panel rendered="#{RelatorioPlanoAcaoView.eesSelecionado != null}" >
+                                    <p:outputPanel style="text-align:center;">
+                                        <p:outputLabel value="Planos de ação" />
+
+                                        <p:outputPanel style="text-align:center;" 
+                                                       rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() == 0}" >
+                                            <p:outputLabel value="Não há planos de ação cadastrados para esse empreendimento!" />
+                                        </p:outputPanel>
+                                        
+                                        <p:selectOneRadio value="#{RelatorioPlanoAcaoView.planoSelecionado}" 
+                                                          converter="generic" layout="grid" columns="1" >
+                                            <f:selectItems value="#{RelatorioPlanoAcaoView.listaPlanos}" var="var" 
+                                                           itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                        </p:selectOneRadio>
                                     </p:outputPanel>
-                                    <p:selectOneRadio value="#{RelatoriosView.planoSelecionado}" 
-                                                      converter="generic" layout="grid" columns="1" >
-                                        <p:ajax update="frmrelatorios" event="change"  
-                                                listener="#{RelatoriosView.criaGraficoPieChatAtiviMetas()}"/>
-                                        <f:selectItems value="#{RelatoriosView.listaPlanos}" var="var" 
-                                                       itemLabel="#{var.nome}" itemValue="#{var}"/>
-                                    </p:selectOneRadio>
+                                </p:panel>
+                                
+                                <p:spacer height="20px" />
+                                
+                                <!--Relatório-->
+                                <p:panel >
+                                    <p:outputPanel style="text-align:center;" >
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
+                                        <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
+                                                         oncomplete="PF('diaRelatorioExecucaoPlanoWidGetVar').show()" />
+                                        <p:commandButton value="Gerar Relatório" immediate="true"                                               
+                                                         onsuccess="rc()"  />                                        
+                                    </p:outputPanel>
                                 </p:panel>
                             </p:layoutUnit>
 
@@ -518,7 +349,7 @@
                                     </p:outputPanel>
                                 </p:panel>
                                 <p:spacer height="10px" />
-                                
+
                                 <p:panel >
                                     <p:outputPanel style="text-align:center;">
                                         <p:outputLabel value="Usuario:" />
@@ -686,6 +517,35 @@
                         </h:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
+
+                <!--Dialogo tipo relatório: Execução do plano de ação-->
+                <p:dialog widgetVar="diaRelatorioExecucaoPlanoWidGetVar"  closable="true" showEffect="clip" hideEffect="clip" 
+                          resizable="false" draggable="false" >
+                    <p:outputPanel style="text-align:center;" >
+                        <p:outputLabel value="Como visualizar o relatório?" />
+                        <p:separator />
+
+                        <h:panelGrid columns="3">
+                            <p:panel >
+                                <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                               actionListener="#{RelatorioPlanoAcaoView.gerarRelatorio('attachment')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png"
+                                                    onclick="PF('diaRelatorioExecucaoPlanoWidGetVar').hide()" />
+                                </p:commandLink>
+                            </p:panel>
+                            <p:spacer width="10px" />
+                            <p:panel >
+
+                                <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
+                                               actionListener="#{RelatorioPlanoAcaoView.gerarRelatorio('inline')}" >
+                                    <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png"
+                                                    onclick="PF('diaRelatorioExecucaoPlanoWidGetVar').hide()" />
+                                </p:commandLink> 
+                            </p:panel>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+                
             </h:form>
         </ui:define>
     </ui:composition>

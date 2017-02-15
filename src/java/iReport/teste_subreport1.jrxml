@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="teste_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="634c6715-e876-404e-ac76-8151042a35b5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parameter1" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     Meta.`idMeta` AS Meta_idMeta,
+     Meta.`nome` AS Meta_nome,
+     Meta.`prazo` AS Meta_prazo,
+     Meta.`descricao` AS Meta_descricao,
+     Meta.`idPlanoAcaoFk` AS Meta_idPlanoAcaoFk,
+     Meta.`status` AS Meta_status
+FROM
+     `Meta` Meta
+WHERE
+     Meta.idMeta = $P{parameter1}]]>
+	</queryString>
+	<field name="Meta_idMeta" class="java.lang.Integer"/>
+	<field name="Meta_nome" class="java.lang.String"/>
+	<field name="Meta_prazo" class="java.sql.Date"/>
+	<field name="Meta_descricao" class="java.lang.String"/>
+	<field name="Meta_idPlanoAcaoFk" class="java.lang.Integer"/>
+	<field name="Meta_status" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="92" height="20" uuid="08b73cd4-0919-4aa1-9dc3-a52990d2f357"/>
+				<text><![CDATA[Meta_idMeta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="0" width="92" height="20" uuid="7e91cf4c-0cc7-4fb4-b95c-902f411722ea"/>
+				<text><![CDATA[Meta_nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="0" width="92" height="20" uuid="60233470-5676-4e69-b8b8-bfbf240ad0a6"/>
+				<text><![CDATA[Meta_prazo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="0" width="92" height="20" uuid="ea8b1cb9-d187-459b-94dd-c7000ba12059"/>
+				<text><![CDATA[Meta_descricao]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="0" width="92" height="20" uuid="32170844-c92c-4f9f-8d74-c60e7164d8c0"/>
+				<text><![CDATA[Meta_idPlanoAcaoFk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="92" height="20" uuid="97fb6f86-b6c8-45c4-8c42-1e6dd6f7e909"/>
+				<text><![CDATA[Meta_status]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="92" height="20" uuid="bf297b60-ff17-4d80-a007-2a0c13b1bc59"/>
+				<textFieldExpression><![CDATA[$F{Meta_idMeta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="0" width="92" height="20" uuid="f35b2f13-53ef-45b1-8b38-c6d6d309c70c"/>
+				<textFieldExpression><![CDATA[$F{Meta_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="0" width="92" height="20" uuid="8eabdaa6-6f0d-4e01-a1fe-a4eb96bb51c6"/>
+				<textFieldExpression><![CDATA[$F{Meta_prazo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="92" height="20" uuid="447e2210-8344-45d0-b6c9-a146dabc8bb8"/>
+				<textFieldExpression><![CDATA[$F{Meta_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="0" width="92" height="20" uuid="e1e42945-6a3d-4faa-8d07-cfc75d2608a6"/>
+				<textFieldExpression><![CDATA[$F{Meta_idPlanoAcaoFk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="92" height="20" uuid="6c29e8d6-49e6-40b4-906d-688b0caeff28"/>
+				<textFieldExpression><![CDATA[$F{Meta_status}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

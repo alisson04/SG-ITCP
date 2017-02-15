@@ -105,7 +105,7 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
 
         if (userSelecionado != null) {//Se a USER selecionado
             List<AtividadePlanejada> listaAux = new ArrayList<>();
-            boolean userParticipa = false;
+            boolean userParticipa;
 
             for (int i = 0; i < listaAtv.size(); i++) {
                 userParticipa = false;

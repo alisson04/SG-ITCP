@@ -149,8 +149,8 @@
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement x="30" y="0" width="147" height="20" uuid="e307b33b-cf59-47ff-8c79-4f7a930af218"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="30" y="0" width="147" height="20" uuid="e307b33b-cf59-47ff-8c79-4f7a930af218"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -161,8 +161,8 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{listaDatas}.get($V{numLinhas}.toBigInteger()-1).toString()]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="177" y="0" width="203" height="20" uuid="3c3d2918-312b-4edc-a1bc-387364ded602"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="177" y="0" width="203" height="20" uuid="3c3d2918-312b-4edc-a1bc-387364ded602"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -174,7 +174,7 @@
 				<textFieldExpression><![CDATA[$P{listaHoras}.get($V{numLinhas}.toBigInteger()-1).toString()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="30" height="20" uuid="8dd8540e-8309-40a0-89ff-4c2656cba461"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="20" uuid="8dd8540e-8309-40a0-89ff-4c2656cba461"/>
 				<box leftPadding="0">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -186,7 +186,7 @@
 				<textFieldExpression><![CDATA[$V{numLinhas}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="380" y="0" width="175" height="20" uuid="5c68f744-c48f-4cb2-8a00-a9f9c74ed71e"/>
+				<reportElement stretchType="RelativeToBandHeight" x="380" y="0" width="175" height="20" uuid="5c68f744-c48f-4cb2-8a00-a9f9c74ed71e"/>
 				<box leftPadding="0">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
