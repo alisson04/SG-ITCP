@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioExecucaoPlanoAcao" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a269b5de-c21c-4c16-a534-2b96a44bb0f2">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="paramImage" class="java.lang.String"/>
-	<parameter name="paramEes" class="java.lang.String"/>
-	<parameter name="param" class="java.lang.Integer"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/home/alisson/MEGA/Sigitec/NetBeansProjects/sigitec/src/java/iReport/"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="paramIdPlano" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select * from Meta]]>
+		<![CDATA[select *
+from Meta
+where Meta.idPlanoAcaoFk = $P{paramIdPlano};]]>
 	</queryString>
 	<field name="idMeta" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -30,6 +33,10 @@
 	<field name="status" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<variable name="numLinhas" class="java.math.BigDecimal" calculation="Count">
+		<variableExpression><![CDATA[$V{numLinhas}.add(new BigDecimal(1000))]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(1000)]]></initialValueExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -37,35 +44,26 @@
 		<band height="80" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="70" splitType="Stretch"/>
-	</columnHeader>
-	<detail>
-		<band height="60" splitType="Stretch">
+		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="48" height="20" uuid="747341e3-efe8-4ff5-84d2-afe0a789aa58"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font isBold="true"/>
+				<reportElement x="0" y="0" width="555" height="25" uuid="804f29b9-5e51-49b6-a6dc-fdb8b8180e8d"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
 				</textElement>
-				<text><![CDATA[Meta:]]></text>
+				<text><![CDATA[Sistema SIGITEC - Relatório de parceiros]]></text>
 			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="90" splitType="Stretch">
 			<staticText>
 				<reportElement x="417" y="0" width="50" height="20" uuid="cd63fe3c-d81d-47bc-a6e2-5a47594b8fc3"/>
 				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
@@ -73,46 +71,77 @@
 				<text><![CDATA[Prazo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="48" y="0" width="369" height="20" uuid="2e878cf9-175c-4579-ae59-ae41ede91afc"/>
+				<reportElement x="72" y="0" width="345" height="20" uuid="2e878cf9-175c-4579-ae59-ae41ede91afc"/>
 				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="467" y="0" width="88" height="20" uuid="d34a64a9-47ab-432f-9859-9e94e28f35e6"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+				<reportElement x="0" y="0" width="72" height="20" uuid="182932be-6a1a-4e6e-8134-7eab279e99be"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Meta " + $V{numLinhas} + ":"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="467" y="0" width="88" height="20" uuid="67bc481c-2e02-49ec-ab35-07b49794c432"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{prazo}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="391e643f-8323-4895-93aa-b23f76fb90b0"/>
+			</line>
 			<subreport>
-				<reportElement x="48" y="20" width="507" height="40" uuid="ae819753-a5c5-4691-9355-ac7882741269"/>
-				<subreportParameter name="parameter1">
-					<subreportParameterExpression><![CDATA[$P{param}]]></subreportParameterExpression>
+				<reportElement x="0" y="31" width="555" height="59" uuid="39e88856-14f6-47b2-a6fc-8505860f3609"/>
+				<subreportParameter name="paramIdMeta">
+					<subreportParameterExpression><![CDATA[$F{idMeta}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "teste_subreport1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subRelatorioAtividades.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="435" y="10" width="80" height="20" uuid="3a8687e1-bed7-4220-b2b8-4cd640218bf1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="10" width="40" height="20" uuid="9b1fcb63-392c-410c-bd35-f278e9dcad32"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="5" width="555" height="1" uuid="e3be677b-74bd-4ae1-9423-687ff786f9d6"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="225" y="10" width="100" height="20" uuid="b3766222-6880-4600-abe2-191db411f45a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

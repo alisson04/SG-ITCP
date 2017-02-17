@@ -162,9 +162,6 @@
 		</band>
 		<band height="18"/>
 	</detail>
-	<columnFooter>
-		<band height="27" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="30" splitType="Stretch">
 			<textField>

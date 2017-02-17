@@ -72,7 +72,33 @@ public class RelatoriosManager<TipoClasse> {
         context.responseComplete();
         System.out.println("GEROU");
     }
-
+    
+    public void gerarRelatorioGenericoSemDataSource(Map<String, Object> params, String caminhoRelatorio, 
+            String nomeRelatorio, String tipo) throws Exception {
+        stream = this.getClass().getResourceAsStream(caminhoRelatorio);
+        baos = new ByteArrayOutputStream();
+        String cam = getRealPath() + "image/imagemTopoRelatorio/" + inc.getFotoTopoRelatorio();
+        params.put("paramImage", cam);
+        
+        //CASO QUEIRA USAR IMAGEM COMO INPUT
+        //InputStream is = new BufferedInputStream(
+        //    new FileInputStream("/home/alisson/MEGA/Sigitec/NetBeansProjects/sigitec/build/web/image/imagemTopoRelatorio/1483911375665.jpg"));
+        //params.put("parameter1", is);
+        
+        JasperReport report = (JasperReport) JRLoader.loadObject(stream);
+        JasperPrint print = JasperFillManager.fillReport(report, params);
+        JasperExportManager.exportReportToPdfStream(print, baos);
+        response.reset();
+        response.setContentType("application/pdf");
+        response.setContentLength(baos.size());
+        response.setHeader("Content-disposition", tipo+"; filename=" + nomeRelatorio);//attachment para download, inline para tela
+        response.getOutputStream().write(baos.toByteArray());
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+        context.responseComplete();
+        System.out.println("GEROU");
+    }
+    
     public String getRealPath() {//Gera o caminho do projeto no computador que esta instalado
         ExternalContext externalContext
                 = FacesContext.getCurrentInstance().getExternalContext();

@@ -1,7 +1,9 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
@@ -10,6 +12,9 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.RelatoriosManager;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,17 +72,33 @@ public class RelatorioPlanoAcaoView extends MensagensGenericas implements Serial
         try {
             if (!planoSelecionado.getMetaList().isEmpty()) {
                 Map<String, Object> listaParametros = new HashMap<String, Object>();
+                
+                listaParametros.put("REPORT_CONNECTION",Conexao()); // Aqui passei o método por parâmetro... 
+                listaParametros.put("paramIdPlano", planoSelecionado.getId()); // Aqui passei o método por parâmetro... 
 
-                listaParametros.put("param", 1);
+                listaParametros.put("SUBREPORT_DIR",
+                        "/home/alisson/MEGA/Sigitec/NetBeansProjects/sigitec/src/java/iReport/");
 
                 RelatoriosManager m = new RelatoriosManager<Meta>();
-                m.gerarRelatorioGenerico(planoSelecionado.getMetaList(), listaParametros, "/iReport/relatorioExecucaoPlanoAcao.jasper",
-                        "Relatorio-de-Atividades.pdf", tipo);
+                m.gerarRelatorioGenericoSemDataSource(listaParametros, "/iReport/relatorioExecucaoPlanoAcao.jasper",
+                        "Relatorio-de-execucao-do-Plano-de-Acao.pdf", tipo);
             } else {
                 msgGrowlErroCustomizavel(null, "Não ha empreendimentos para listar");
             }
         } catch (Exception ex) {
             throw new FacesException(ex);
+        }
+    }
+
+    private Connection Conexao() {
+        Connection conexao;
+        try {
+            conexao = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/sigitecbd?zeroDateTimeBehavior=convertToNull", "root", "root");
+            return conexao;
+        } catch (SQLException ex) {
+            System.out.println("ERRO NA CONEXAO!!! " + ex);
+            return null;
         }
     }
 
