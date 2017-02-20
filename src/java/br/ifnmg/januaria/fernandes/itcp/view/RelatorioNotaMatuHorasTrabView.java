@@ -339,7 +339,7 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
                 for (int i = 0; i < listaHorasTrab.size(); i++) {
                     if (listaHorasTrab.get(i).getAtividadePlanejada().getMeta().getPlanoAcao().getEmpreendimento().equals(ees)) {
                         obj = listaHorasTrab.get(i);
-                        segundos += (int) Math.floor(segundos + (((int) (long) (obj.getHorasFim().getTime() - obj.getHorasInicio().getTime())) / 1000));
+                        segundos = (int) Math.floor(segundos + (((int) (long) (obj.getHorasFim().getTime() - obj.getHorasInicio().getTime())) / 1000));
                     }
                 }
 

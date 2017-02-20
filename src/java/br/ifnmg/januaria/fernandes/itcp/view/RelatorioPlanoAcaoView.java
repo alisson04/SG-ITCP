@@ -1,11 +1,13 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.HorasTrabalhadasBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.MetaBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.PlanoAcaoBean;
 import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
 import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
+import br.ifnmg.januaria.fernandes.itcp.domain.HorasTrabalhadas;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.PlanoAcao;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
@@ -15,7 +17,11 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +48,16 @@ public class RelatorioPlanoAcaoView extends MensagensGenericas implements Serial
     private PlanoAcao planoSelecionado;
     private List<PlanoAcao> listaPlanos;
 
+    //Meta Vars
+    private MetaBean metaBean;
+    private List<Meta> listaMetas;
+
     //Gráfico vars
     private CartesianChartModel combinedModel;
+
+    //HorasTrabalhadas Vars
+    private List<HorasTrabalhadas> listaHorasTrab;
+    private HorasTrabalhadasBean horasTrabBean;
 
     //Construtor
     public RelatorioPlanoAcaoView() {
@@ -54,8 +68,16 @@ public class RelatorioPlanoAcaoView extends MensagensGenericas implements Serial
             eesSelecionado = null;//É assim mesmo
 
             //Plano de ação Vars
-            planoSelecionado = new PlanoAcao();
+            planoSelecionado = null;
             listaPlanos = new ArrayList<>();
+
+            //Meta Vars
+            metaBean = new MetaBean();
+            listaMetas = new ArrayList<>();
+
+            //HorasTrabalhadas Vars
+            horasTrabBean = new HorasTrabalhadasBean();
+            listaHorasTrab = horasTrabBean.listarBean();
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -65,6 +87,16 @@ public class RelatorioPlanoAcaoView extends MensagensGenericas implements Serial
     public void filtrarPlanos() {
         if (eesSelecionado != null) {
             listaPlanos = eesSelecionado.getPlanoAcaoList();
+        }else{
+            listaPlanos = new ArrayList<>();
+        }
+    }
+
+    public void gerarMetas() {
+        if (planoSelecionado != null) {
+            listaMetas = metaBean.buscarMetasPorPlanoBean(planoSelecionado);
+        }else{
+            listaMetas = new ArrayList<>();
         }
     }
 
@@ -72,12 +104,12 @@ public class RelatorioPlanoAcaoView extends MensagensGenericas implements Serial
         try {
             if (!planoSelecionado.getMetaList().isEmpty()) {
                 Map<String, Object> listaParametros = new HashMap<String, Object>();
-                
-                listaParametros.put("REPORT_CONNECTION",Conexao()); // Aqui passei o método por parâmetro... 
-                listaParametros.put("paramIdPlano", planoSelecionado.getId()); // Aqui passei o método por parâmetro... 
 
-                listaParametros.put("SUBREPORT_DIR",
-                        "/home/alisson/MEGA/Sigitec/NetBeansProjects/sigitec/src/java/iReport/");
+                listaParametros.put("paramIdPlano", planoSelecionado.getId());
+                listaParametros.put("paramPlanoSelecionado", planoSelecionado.getNome());
+                listaParametros.put("paramEesSelecionado", eesSelecionado.getNome());
+
+                listaParametros.put("SUBREPORT_DIR", "/home/alisson/MEGA/Sigitec/NetBeansProjects/sigitec/src/java/iReport/");
 
                 RelatoriosManager m = new RelatoriosManager<Meta>();
                 m.gerarRelatorioGenericoSemDataSource(listaParametros, "/iReport/relatorioExecucaoPlanoAcao.jasper",
@@ -89,16 +121,46 @@ public class RelatorioPlanoAcaoView extends MensagensGenericas implements Serial
             throw new FacesException(ex);
         }
     }
-
-    private Connection Conexao() {
-        Connection conexao;
+    
+    public String geraHorasTrabAtividades(AtividadePlanejada atv) {//Gera a quanti de horas gastas em atividades de um ees. Chamado poela dataTable na tela
         try {
-            conexao = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/sigitecbd?zeroDateTimeBehavior=convertToNull", "root", "root");
-            return conexao;
-        } catch (SQLException ex) {
-            System.out.println("ERRO NA CONEXAO!!! " + ex);
-            return null;
+            List<HorasTrabalhadas> listaHorasTrabAux = listaHorasTrab;//Feito para evitar q a cada chamada o BD seja consultado
+            
+            if (!listaHorasTrabAux.isEmpty()) {//Se não esta vazio
+                int segundos = 0;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+                HorasTrabalhadas obj;
+                for (int i = 0; i < listaHorasTrabAux.size(); i++) {
+                    if (listaHorasTrabAux.get(i).getAtividadePlanejada().equals(atv)) {
+                        obj = listaHorasTrab.get(i);
+                        segundos = (int) Math.floor(segundos + (((int) (long) (obj.getHorasFim().getTime() - obj.getHorasInicio().getTime())) / 1000));
+                    }
+                }
+
+                int minutos = (segundos / 60);
+                int horas = minutos / 60;
+                int minutosRestantes = minutos % 60;
+
+                if (minutosRestantes == 0
+                        || minutosRestantes == 1
+                        || minutosRestantes == 2
+                        || minutosRestantes == 3
+                        || minutosRestantes == 4
+                        || minutosRestantes == 5
+                        || minutosRestantes == 6
+                        || minutosRestantes == 7
+                        || minutosRestantes == 8
+                        || minutosRestantes == 9) {
+                    return (horas + ":0" + minutosRestantes);
+                } else {
+                    return (horas + ":" + minutosRestantes);
+                }
+            } else {
+                return "0";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
@@ -141,5 +203,13 @@ public class RelatorioPlanoAcaoView extends MensagensGenericas implements Serial
 
     public void setListaPlanos(List<PlanoAcao> listaPlanos) {
         this.listaPlanos = listaPlanos;
+    }
+
+    public List<Meta> getListaMetas() {
+        return listaMetas;
+    }
+
+    public void setListaMetas(List<Meta> listaMetas) {
+        this.listaMetas = listaMetas;
     }
 }

@@ -6,6 +6,9 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import javax.faces.context.ExternalContext;
@@ -79,6 +82,7 @@ public class RelatoriosManager<TipoClasse> {
         baos = new ByteArrayOutputStream();
         String cam = getRealPath() + "image/imagemTopoRelatorio/" + inc.getFotoTopoRelatorio();
         params.put("paramImage", cam);
+        params.put("REPORT_CONNECTION", Conexao()); // Aqui passei o método por parâmetro... 
         
         //CASO QUEIRA USAR IMAGEM COMO INPUT
         //InputStream is = new BufferedInputStream(
@@ -98,8 +102,20 @@ public class RelatoriosManager<TipoClasse> {
         context.responseComplete();
         System.out.println("GEROU");
     }
+
+    private Connection Conexao() {
+        Connection conexao;
+        try {
+            conexao = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/sigitecbd?zeroDateTimeBehavior=convertToNull", "root", "root");
+            return conexao;
+        } catch (SQLException ex) {
+            System.out.println("ERRO NA CONEXAO!!! " + ex);
+            return null;
+        }
+    }
     
-    public String getRealPath() {//Gera o caminho do projeto no computador que esta instalado
+    private String getRealPath() {//Gera o caminho do projeto no computador que esta instalado
         ExternalContext externalContext
                 = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletResponse response

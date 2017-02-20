@@ -4,8 +4,12 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="paramIdMeta" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/alisson/MEGA/Sigitec/NetBeansProjects/sigitec/src/java/iReport/"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
+AtividadePlanejada.`id` AS idAtv,
      AtividadePlanejada.`nome` AS AtividadePlanejada_nome,
      AtividadePlanejada.`dataInicio` AS AtividadePlanejada_dataInicio,
      AtividadePlanejada.`dataFim` AS AtividadePlanejada_dataFim,
@@ -15,6 +19,7 @@ FROM
 WHERE
      AtividadePlanejada.`id` = $P{paramIdMeta}]]>
 	</queryString>
+	<field name="idAtv" class="java.lang.Integer"/>
 	<field name="AtividadePlanejada_nome" class="java.lang.String"/>
 	<field name="AtividadePlanejada_dataInicio" class="java.sql.Date"/>
 	<field name="AtividadePlanejada_dataFim" class="java.sql.Date"/>
@@ -49,7 +54,7 @@ WHERE
 				<text><![CDATA[Início:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="262" y="0" width="108" height="20" uuid="ec241e52-4112-436e-967f-70ba4c8c4420"/>
+				<reportElement x="262" y="0" width="71" height="20" uuid="ec241e52-4112-436e-967f-70ba4c8c4420"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -61,7 +66,7 @@ WHERE
 				<text><![CDATA[Fim:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="370" y="0" width="185" height="20" uuid="542cad4a-dcaf-4c2f-a371-170e93d81219"/>
+				<reportElement x="333" y="0" width="112" height="20" uuid="542cad4a-dcaf-4c2f-a371-170e93d81219"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -71,6 +76,18 @@ WHERE
 				</box>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Situação:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="0" width="110" height="20" uuid="0ca84a61-b60d-485b-a5b7-6f4cc7e917fa"/>
+				<box leftPadding="3">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Horas Trabalhadas:]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -101,7 +118,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{AtividadePlanejada_dataInicio}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="262" y="0" width="108" height="20" uuid="8900d2b6-8f64-461c-a6c0-b149a3df8bf0"/>
+				<reportElement x="262" y="0" width="71" height="20" uuid="8900d2b6-8f64-461c-a6c0-b149a3df8bf0"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -113,7 +130,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{AtividadePlanejada_dataFim}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="370" y="0" width="185" height="20" uuid="7ebc2f47-e81f-4d37-8ffe-190d6f80528f"/>
+				<reportElement x="333" y="0" width="112" height="20" uuid="7ebc2f47-e81f-4d37-8ffe-190d6f80528f"/>
 				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -124,6 +141,14 @@ WHERE
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{AtividadePlanejada_status}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="445" y="0" width="110" height="20" uuid="7a8c283e-1c04-4d38-a03b-ce953a1663d3"/>
+				<subreportParameter name="paramIdAtv">
+					<subreportParameterExpression><![CDATA[$F{idAtv}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subRelatorioHorasTrabPorAtv.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 </jasperReport>

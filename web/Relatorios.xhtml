@@ -182,7 +182,6 @@
                     <p:tab id="tabExecucaoPlano" title="Execução do plano de ação">
                         <p:layout style="min-height:700px;max-height:700px;" >
                             <p:layoutUnit position="west" size="325" >
-
                                 <p:panel >
                                     <p:outputPanel style="text-align:center;">
                                         <p:outputLabel value="Empreendimento:" />
@@ -200,51 +199,80 @@
 
                                 <p:panel rendered="#{RelatorioPlanoAcaoView.eesSelecionado != null}" >
                                     <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Planos de ação" />
+                                        <p:outputLabel value="Planos de ação: "
+                                                       rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() > 0}" />
 
                                         <p:outputPanel style="text-align:center;" 
                                                        rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() == 0}" >
                                             <p:outputLabel value="Não há planos de ação cadastrados para esse empreendimento!" />
                                         </p:outputPanel>
-                                        
-                                        <p:selectOneRadio value="#{RelatorioPlanoAcaoView.planoSelecionado}" 
-                                                          converter="generic" layout="grid" columns="1" >
+
+                                        <p:selectOneMenu value="#{RelatorioPlanoAcaoView.planoSelecionado}" converter="generic"
+                                                         autoWidth="false" style="width: 200px" 
+                                                         rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() > 0}" >
+                                            <p:ajax update="frmrelatorios" event="change" 
+                                                    listener="#{RelatorioPlanoAcaoView.gerarMetas()}" />
+                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
                                             <f:selectItems value="#{RelatorioPlanoAcaoView.listaPlanos}" var="var" 
-                                                           itemLabel="#{var.nome}" itemValue="#{var}"/>
-                                        </p:selectOneRadio>
+                                                           itemLabel="#{var.nome}" itemValue="#{var}"/>                                            
+                                        </p:selectOneMenu>
                                     </p:outputPanel>
                                 </p:panel>
-                                
+
                                 <p:spacer height="20px" />
-                                
-                                <!--Relatório-->
-                                <p:panel >
+
+                                <!-- Botão Relatório-->
+                                <p:panel rendered="#{RelatorioPlanoAcaoView.planoSelecionado != null}" >
                                     <p:outputPanel style="text-align:center;" >
                                         <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
                                         <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
                                                          oncomplete="PF('diaRelatorioExecucaoPlanoWidGetVar').show()" />
                                         <p:commandButton value="Gerar Relatório" immediate="true"                                               
-                                                         onsuccess="rc()"  />                                        
+                                                         onsuccess="rc()"  />
                                     </p:outputPanel>
                                 </p:panel>
                             </p:layoutUnit>
 
                             <p:layoutUnit position="center" >
-                                <p:panelGrid columns="2" layout="grid">
-                                    <p:panel rendered="#{RelatoriosView.planoSelecionado != null 
-                                                         and RelatoriosView.empreendimentoSelecionado != null 
-                                                         and RelatoriosView.graficoAtividadesPlano != null}" >
-                                        <p:chart type="pie" model="#{RelatoriosView.graficoAtividadesPlano}" 
-                                                 style="width:400px;height:300px" />                            
-                                    </p:panel>
+                                <p:dataGrid var="meta" value="#{RelatorioPlanoAcaoView.listaMetas}" rowIndexVar="numLinha"
+                                            layout="grid" columns="1" rendered="#{RelatorioPlanoAcaoView.planoSelecionado != null}"
+                                            emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
 
-                                    <p:panel rendered="#{RelatoriosView.planoSelecionado != null 
-                                                         and RelatoriosView.empreendimentoSelecionado != null 
-                                                         and RelatoriosView.graficoMetasPlano != null}" >
-                                        <p:chart type="pie" model="#{RelatoriosView.graficoMetasPlano}" 
-                                                 style="width:400px;height:300px" />
-                                    </p:panel>
-                                </p:panelGrid>
+                                    <p:fieldset legend="Meta: #{numLinha + 1}: #{meta.nome} 
+                                                - Prazo: #{modeloGeralView.converteData(meta.prazo)} 
+                                                - Situação: #{meta.status}" toggleable="true" toggleSpeed="500" collapsed="true">
+                                        <p:dataTable value="#{meta.atividadePlanejadaList}" 
+                                                     rendered="#{meta.atividadePlanejadaList.size() > 0}"
+                                                     rowKey="#{cursor.id}" var="cursor" rows="10" >
+                                            <p:column headerText="Atividade" >
+                                                <h:outputText value="#{cursor.nome}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Data início" >
+                                                <h:outputText value="#{modeloGeralView.converteData(cursor.dataInicio)}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Data fim" >
+                                                <h:outputText value="#{modeloGeralView.converteData(cursor.dataFim)}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Status" >
+                                                <h:outputText value="#{cursor.status}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Horas Trabalhadas" >
+                                                <h:outputText value="#{RelatorioPlanoAcaoView.geraHorasTrabAtividades(cursor)}"/>
+                                            </p:column>
+                                        </p:dataTable>
+
+                                        <p:outputPanel style="text-align:center;" 
+                                                       rendered="#{meta.atividadePlanejadaList.size() == 0}" >
+                                            <p:outputLabel value="Nenhuma atividade para essa meta!" />
+                                        </p:outputPanel>
+                                    </p:fieldset>
+
+                                    <p:spacer height="20px" />
+                                </p:dataGrid>
                             </p:layoutUnit>
                         </p:layout>
                     </p:tab>
@@ -401,35 +429,6 @@
                             </p:layoutUnit>
                         </p:layout>
                     </p:tab>
-
-                    <!--<p:tab id="tabExecucaoPlanoAcao" title="Execução dos planos de ação">
-                        <p:layout style="min-height:700px;max-height:700px;" >
-                            <p:layoutUnit position="west" size="325" >
-                                <p:panel >
-                                    <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Selecione um empreendimento" />
-                                    </p:outputPanel>
-                                    <p:separator />
-
-                                    <p:selectOneRadio value="#{RelatorioPlanoAcaoView.eesSelecionado}" 
-                                                      converter="generic" layout="grid" columns="1" >
-                                        <p:ajax update="frmrelatorios" event="change"  
-                                                listener="#{RelatorioPlanoAcaoView.selecionaEes()}"/>
-                                        <f:selectItems value="#{RelatorioPlanoAcaoView.listaEes}" var="var" 
-                                                       itemLabel="#{var.sigla}" itemValue="#{var}"/>
-                                    </p:selectOneRadio>
-                                </p:panel>
-                            </p:layoutUnit>
-
-                            <p:layoutUnit position="center" >
-                                <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{RelatorioForcaTrabalhoView.listaEes}" 
-                                             var="eesCursor" widgetVar="eesVarGlobal" rows="10" paginator="true" 
-                                             style="text-align: center" rowKey="#{eesCursor.id}" paginatorPosition="top">
-
-                                </p:dataTable>
-                            </p:layoutUnit>
-                        </p:layout>
-                    </p:tab>-->
                 </p:tabView>
 
                 <!-- ==================================Dialogs de tipo de download ==================================== -->
@@ -545,7 +544,7 @@
                         </h:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
-                
+
             </h:form>
         </ui:define>
     </ui:composition>
