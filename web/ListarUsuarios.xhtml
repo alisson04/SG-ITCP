@@ -98,10 +98,14 @@
                             <h:outputText value="#{ListarUsuariosView.objSelecionado.telefoneAlternativo}" />
 
                             <p:outputLabel value="Data de nascimento: " />
-                            <p:outputLabel value="#{modeloGeralView.converteData(ListarUsuariosView.objSelecionado.dataNascimento)}"/>
+                            <p:outputLabel value="#{ListarUsuariosView.objSelecionado.dataNascimento}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </p:outputLabel>
 
                             <p:outputLabel value="Data de entrada na ITCP: " />
-                            <p:outputLabel value="#{modeloGeralView.converteData(ListarUsuariosView.objSelecionado.dataEntrada)}"/>
+                            <p:outputLabel value="#{ListarUsuariosView.objSelecionado.dataEntrada}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </p:outputLabel>
 
                             <p:outputLabel value="Sexo: " />
                             <p:outputLabel value="#{ListarUsuariosView.objSelecionado.sexo}"/>

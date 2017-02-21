@@ -18,11 +18,11 @@
 
                     <br/>
                     <p:commandLink value="Ir para pagina de empreendimentos" type="button" immediate="true"
-                                       action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
+                                   action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
                         <!--<p:graphicImage name="fotos/64Question.png" />-->
                     </p:commandLink>
                 </p:dialog>
-                
+
                 <!--Cadastro de palnos-->
                 <p:tabView  id="tabGeral" activeIndex="#{CadastrarPlanoAcaoView.tabview.activeIndex}" 
                             rendered="#{modeloGeralView.existeEptBd}" >
@@ -92,10 +92,14 @@
 
                                     <p:panel >
                                         <h:outputText value="Data de início: " />
-                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(CadastrarPlanoAcaoView.objSalvar.dataInicio)}" />
+                                        <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.dataInicio}" >
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
                                         <br/>
                                         <h:outputText value="Data de fim: " />
-                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(CadastrarPlanoAcaoView.objSalvar.dataFim)}" />
+                                        <h:outputText value="#{CadastrarPlanoAcaoView.objSalvar.dataFim}" >
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
                                     </p:panel>
                                 </h:panelGrid>
                             </p:panel>
@@ -111,7 +115,9 @@
                                         <h:outputText value="#{metaCursor.nome}"/>
                                     </p:column>
                                     <p:column headerText="Prazo" >
-                                        <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(metaCursor.prazo)}" />
+                                        <h:outputText value="#{metaCursor.prazo}" >
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
                                     </p:column>
 
                                     <f:facet name="footer">
@@ -150,17 +156,23 @@
                                 <p:column headerText="Meta" >
                                     <h:outputText value="#{atividadeCursor.meta.nome}: " />
                                     <br/>
-                                    <h:outputText value="#{modeloGeralView.converteData(atividadeCursor.meta.prazo)}" />
+                                    <h:outputText value="#{atividadeCursor.meta.prazo}" >
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
                                 </p:column>
 
                                 <p:column headerText="Nome" >
                                     <h:outputText value="#{atividadeCursor.nome}"/>
                                 </p:column>
                                 <p:column headerText="Prazo de início" >
-                                    <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.dataInicio)}" />
+                                    <h:outputText value="#{atividadeCursor.dataInicio}" >
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
                                 </p:column>
                                 <p:column headerText="Prazo de fim" >
-                                    <h:outputText value="#{CadastrarPlanoAcaoView.conveteData(atividadeCursor.dataFim)}" />
+                                    <h:outputText value="#{atividadeCursor.dataFim}" >
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
                                 </p:column>
                                 <p:column headerText="Descrição" >
                                     <h:outputText value="#{atividadeCursor.descricao}" />

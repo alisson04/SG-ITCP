@@ -163,6 +163,19 @@ public class ListarAtiviPlanejadasView extends MensagensGenericas implements Ser
         }
     }
 
+    public String converteData(Date data) {//Necesário por não se aceitar "paterrn" no local
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
     //SETS E GETS
     public AtividadePlanejada getObjSelecionado() {
         return objSelecionado;

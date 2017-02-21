@@ -88,7 +88,7 @@ public class ListarMetasView extends MensagensGenericas implements Serializable 
         }
     }
 
-    public String converteData(Date data) {
+    public String converteData(Date data) {//Necesário por não se aceitar "paterrn" no local
         try {
             if (data != null) {
                 SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");

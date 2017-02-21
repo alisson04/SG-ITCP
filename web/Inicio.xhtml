@@ -26,11 +26,15 @@
                             </p:column>
 
                             <p:column headerText="Data início" styleClass="colunasTabela100PX" >
-                                <h:outputText value="#{modeloGeralView.converteData(atividadeCursor.dataInicio)}" />
+                                <h:outputText value="#{atividadeCursor.dataInicio}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
                             </p:column>
 
                             <p:column headerText="Data fim" styleClass="colunasTabela100PX" >
-                                <h:outputText value="#{modeloGeralView.converteData(atividadeCursor.dataFim)}" />
+                                <h:outputText value="#{atividadeCursor.dataFim}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
                             </p:column>
 
                             <p:column headerText="Situação"  filterBy="#{atividadeCursor.status}" filterMatchMode="exact" 
@@ -126,9 +130,13 @@
                                 <h:outputText value="Nome: " />
                                 <h:outputText value="#{inicioView.event.title}" />
                                 <h:outputText value="Data de início: " />
-                                <h:outputText value="#{modeloGeralView.converteData(inicioView.event.startDate)}" />
+                                <h:outputText value="#{inicioView.event.startDate}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
                                 <h:outputText value="Data de fim: " />
-                                <h:outputText value="#{modeloGeralView.converteData(inicioView.event.endDate)}" />
+                                <h:outputText value="#{inicioView.event.endDate}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
                             </h:panelGrid>
                         </p:dialog>
                     </p:tab>
@@ -214,7 +222,9 @@
                         </f:facet>
 
                         <p:column headerText="Data" styleClass="colunasTabela200PX" >
-                            <h:outputText value="#{modeloGeralView.converteData(horas.dataTrabalho)}"   />
+                            <h:outputText value="#{horas.dataTrabalho}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <p:column headerText="Horas lançadas" styleClass="colunasTabela200PX" >

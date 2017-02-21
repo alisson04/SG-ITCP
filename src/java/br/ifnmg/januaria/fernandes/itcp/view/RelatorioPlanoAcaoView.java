@@ -83,11 +83,24 @@ public class RelatorioPlanoAcaoView extends MensagensGenericas implements Serial
         }
     }
 
-    //METODOS    
+    //METODOS
+    public String converteData(Date data) {//Necessário pq não tem como usar o paterrn no field
+        try {
+            if (data != null) {
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                return forma.format(data);
+            } else {
+                return "";
+            }
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
     public void filtrarPlanos() {
         if (eesSelecionado != null) {
             listaPlanos = eesSelecionado.getPlanoAcaoList();
-        }else{
+        } else {
             listaPlanos = new ArrayList<>();
         }
     }
@@ -95,7 +108,7 @@ public class RelatorioPlanoAcaoView extends MensagensGenericas implements Serial
     public void gerarMetas() {
         if (planoSelecionado != null) {
             listaMetas = metaBean.buscarMetasPorPlanoBean(planoSelecionado);
-        }else{
+        } else {
             listaMetas = new ArrayList<>();
         }
     }
@@ -121,11 +134,11 @@ public class RelatorioPlanoAcaoView extends MensagensGenericas implements Serial
             throw new FacesException(ex);
         }
     }
-    
+
     public String geraHorasTrabAtividades(AtividadePlanejada atv) {//Gera a quanti de horas gastas em atividades de um ees. Chamado poela dataTable na tela
         try {
             List<HorasTrabalhadas> listaHorasTrabAux = listaHorasTrab;//Feito para evitar q a cada chamada o BD seja consultado
-            
+
             if (!listaHorasTrabAux.isEmpty()) {//Se não esta vazio
                 int segundos = 0;
                 SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");

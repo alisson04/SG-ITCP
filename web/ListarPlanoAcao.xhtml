@@ -23,16 +23,21 @@
                         </p:column>
 
                         <p:column headerText="Data de início" filterBy="#{planoAcaoCursor.dataInicio}" filterMatchMode="contains">
-                            <h:outputText value="#{ListarPlanoAcaoView.conveteData(planoAcaoCursor.dataInicio)}"/>
+                            <h:outputText value="#{planoAcaoCursor.dataInicio}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <p:column headerText="Data de fim" filterBy="#{planoAcaoCursor.dataFim}" filterMatchMode="contains">
-                            <h:outputText value="#{ListarPlanoAcaoView.conveteData(planoAcaoCursor.dataFim)}"/>
+                            <h:outputText value="#{planoAcaoCursor.dataFim}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <p:column filterBy="#{planoAcaoCursor.empreendimento}" headerText="Empreendimento" filterMatchMode="exact">
                             <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                <p:selectOneMenu onchange="PF('varGlobal').filter()" autoWidth="false" style="width: 200px"
+                                                 converter="generic" >
                                     <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
                                                    itemValue="#{ept}"/>
@@ -71,9 +76,15 @@
                                 <h:outputText value="Empreendimento: " />
                                 <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.empreendimento.nome}" />
                                 <h:outputText value="Data de início: " />
-                                <h:outputText value="#{ListarPlanoAcaoView.conveteData(ListarPlanoAcaoView.planoSelecionado.dataInicio)}" />
+                                <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.dataInicio}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
                                 <h:outputText value="Data de fim: " />
-                                <h:outputText value="#{ListarPlanoAcaoView.conveteData(ListarPlanoAcaoView.planoSelecionado.dataFim)}" />
+                                <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.dataFim}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
                                 <h:outputText value="Descrição: " />
                                 <p:scrollPanel mode="native" style="width:435px;height:100px">
                                     <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.descricao}" />

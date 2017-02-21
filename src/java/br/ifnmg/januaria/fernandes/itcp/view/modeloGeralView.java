@@ -70,19 +70,6 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     }
 
     //METODOS GERAIS
-    public String converteData(Date data) {
-        try {
-            if (data != null) {
-                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-                return forma.format(data);
-            } else {
-                return "";
-            }
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
     public String geraPorcentagem(float porcentagem, float valor) {
         float resultado;
 

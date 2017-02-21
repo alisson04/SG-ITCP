@@ -1,6 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.HorarioTrabalhoBean;
+import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.HorarioTrabalho;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
@@ -58,6 +59,18 @@ public class HorarioTrabalhoView extends MensagensGenericas implements Serializa
     }
 
     //METODOS
+    public String abreviaNomeUser(HorarioTrabalho ht) {//Não deve ser genérico com o do "modeloGeralView"
+        UsuarioBean userB = new UsuarioBean();
+        Usuario u = userB.buscarPorId(ht.getIdUsuarioFk());
+        
+        int i = u.getNome().indexOf(" ");
+        int x = u.getNome().lastIndexOf(" ");
+        /* Busca na string, a posição do ' ' espaço, e retorna o indice dele */
+        return (u.getNome().substring(0, i)
+                + u.getNome().substring(x));
+        /* Aqui é separada a String do primeiro caractere até o primeiro espaço*/
+    }
+    
     public void salvar() {
         try {
             if (verificaHorario()) {

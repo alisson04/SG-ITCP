@@ -97,6 +97,10 @@ public class UsuarioBean implements Serializable  {
         EnviarEmail enviarEmail = new EnviarEmail();
         enviarEmail.enviarEmail(enviarPara, assunto, mensagem);
     }
+    
+    public Usuario buscarPorId(int id) {
+        return dao.buscarPorId(id);
+    }
 
     public Usuario buscarPorCodigoBean(Usuario user) {
         return dao.buscarPorCodigo(user);

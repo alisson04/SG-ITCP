@@ -94,19 +94,6 @@ public class ListarPlanoAcaoView extends MensagensGenericas implements Serializa
         }
     }
 
-    public String conveteData(Date data) {
-        try {
-            if (data != null) {
-                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-                return forma.format(data);
-            } else {
-                return "";
-            }
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
     //SETS E GETS
     public PlanoAcao getPlanoSelecionado() {
         return planoSelecionado;

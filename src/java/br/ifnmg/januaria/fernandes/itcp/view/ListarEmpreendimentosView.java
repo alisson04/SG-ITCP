@@ -107,19 +107,6 @@ public class ListarEmpreendimentosView extends MensagensGenericas implements Ser
         }
     }
 
-    public String conveteData(Date data) {
-        try {
-            if (data != null) {
-                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-                return forma.format(data);
-            } else {
-                return "";
-            }
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
     //SETS GETS
     public Empreendimento getEmpreendimentoSelecionado() {
         return empreendimentoSelecionado;

@@ -87,9 +87,15 @@
                                 <p:outputLabel value="Telefone alternativo: " />
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.telefoneAlternativo}" />
                                 <p:outputLabel value="Data de criação do empreendimento: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.conveteData(ListarEmpreendimentosView.empreendimentoSelecionado.dataCriacao)}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.dataCriacao}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
                                 <p:outputLabel value="Data de início da incubação: "/>
-                                <h:outputText value="#{ListarEmpreendimentosView.conveteData(ListarEmpreendimentosView.empreendimentoSelecionado.dataIncubacao)}" />
+                                <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.dataIncubacao}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                                
                                 <p:outputLabel value="Tipo de empreendimento: "/>
                                 <h:outputText value="#{ListarEmpreendimentosView.empreendimentoSelecionado.tipo}" />
                                 <p:outputLabel value="Site do empreendimento: "/>

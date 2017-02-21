@@ -44,6 +44,26 @@ public class UsuarioDAO extends DaoGenerico<Usuario> {
     public Usuario buscarPorEmail(Usuario user) {
         return listarSingleObjGenerico("Usuario", "email", user.getEmail());
     }
+    
+    public Usuario buscarPorId(int id) {
+        Usuario usr = null;
+        EntityManager em = emc.gerarEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.id = :id");
+            consulta.setParameter("id", id);
+            usr = (Usuario) consulta.getSingleResult();
+            em.getTransaction().commit();
+            return usr;
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            return usr;
+        } finally {
+            em.close();
+        }
+    }
 
     public Usuario buscarPorCodigo(Usuario usr) {
         List<Usuario> listaUsrs;

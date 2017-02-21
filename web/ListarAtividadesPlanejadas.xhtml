@@ -23,14 +23,18 @@
                             <h:outputText value="#{objCursor.nome}"/>
                         </p:column>
 
-                        <p:column headerText="Data início" filterBy="#{modeloGeralView.converteData(objCursor.dataInicio)}" 
+                        <p:column headerText="Data início" filterBy="#{ListarAtiviPlanejadasView.converteData(objCursor.dataInicio)}" 
                                   filterMatchMode="contains">
-                            <h:outputText value="#{modeloGeralView.converteData(objCursor.dataInicio)}" />
+                            <h:outputText value="#{objCursor.dataInicio}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
 
-                        <p:column headerText="Data fim" filterBy="#{modeloGeralView.converteData(objCursor.dataFim)}" 
+                        <p:column headerText="Data fim" filterBy="#{ListarAtiviPlanejadasView.converteData(objCursor.dataFim)}" 
                                   filterMatchMode="contains">
-                            <h:outputText value="#{modeloGeralView.converteData(objCursor.dataFim)}" />
+                            <h:outputText value="#{objCursor.dataFim}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <p:column filterBy="#{objCursor.meta.planoAcao.empreendimento}" headerText="Empreendimento" 
@@ -105,9 +109,15 @@
                                 <h:outputText value="Plano de ação: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.meta.nome}" />
                                 <h:outputText value="Data início: " />
-                                <h:outputText value="#{modeloGeralView.converteData(ListarAtiviPlanejadasView.objSelecionado.dataInicio)}" />
+                                <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.dataInicio}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
                                 <h:outputText value="Data fim: " />
-                                <h:outputText value="#{modeloGeralView.converteData(ListarAtiviPlanejadasView.objSelecionado.dataFim)}" />
+                                <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.dataFim}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                                
                                 <h:outputText value="Descrição: " />
                                 <p:scrollPanel mode="native" style="width:435px;height:100px">
                                     <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.descricao}" />

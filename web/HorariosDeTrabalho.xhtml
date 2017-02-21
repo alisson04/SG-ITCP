@@ -39,9 +39,9 @@
                                 <p:tooltip for="xlsHoras" value="Exportar para Excel" />
                             </f:facet>
 
-                            <p:column headerText="Nome" filterBy="#{HorarioTrabalhoView.geraPrimeiroNomeUser(horarioCursor)}"
-                                      sortBy="#{HorarioTrabalhoView.geraPrimeiroNomeUser(horarioCursor)}" filterMatchMode="contains">
-                                <h:outputText value="#{HorarioTrabalhoView.geraPrimeiroNomeUser(horarioCursor)}"/>
+                            <p:column headerText="Nome" filterBy="#{HorarioTrabalhoView.abreviaNomeUser(horarioCursor)}"
+                                      sortBy="#{HorarioTrabalhoView.abreviaNomeUser(horarioCursor)}" filterMatchMode="contains">
+                                <h:outputText value="#{HorarioTrabalhoView.abreviaNomeUser(horarioCursor)}"/>
                             </p:column>
 
                             <p:column headerText="Domingo" >

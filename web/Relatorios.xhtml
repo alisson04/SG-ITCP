@@ -239,7 +239,7 @@
                                             emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
 
                                     <p:fieldset legend="Meta: #{numLinha + 1}: #{meta.nome} 
-                                                - Prazo: #{modeloGeralView.converteData(meta.prazo)} 
+                                                - Prazo: #{RelatorioPlanoAcaoView.converteData(meta.prazo)} 
                                                 - Situação: #{meta.status}" toggleable="true" toggleSpeed="500" collapsed="true">
                                         <p:dataTable value="#{meta.atividadePlanejadaList}" 
                                                      rendered="#{meta.atividadePlanejadaList.size() > 0}"
@@ -249,11 +249,15 @@
                                             </p:column>
 
                                             <p:column headerText="Data início" >
-                                                <h:outputText value="#{modeloGeralView.converteData(cursor.dataInicio)}"/>
+                                                <h:outputText value="#{cursor.dataInicio}" >
+                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                </h:outputText>
                                             </p:column>
 
                                             <p:column headerText="Data fim" >
-                                                <h:outputText value="#{modeloGeralView.converteData(cursor.dataFim)}"/>
+                                                <h:outputText value="#{cursor.dataFim}" >
+                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                </h:outputText>
                                             </p:column>
 
                                             <p:column headerText="Status" >

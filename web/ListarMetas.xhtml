@@ -24,7 +24,9 @@
                         </p:column>
                         <p:column headerText="Prazo" filterBy="#{ListarMetasView.converteData(metaCursor.prazo)}" 
                                   filterMatchMode="contains">
-                            <h:outputText value="#{ListarMetasView.converteData(metaCursor.prazo)}" />
+                            <h:outputText value="#{metaCursor.prazo}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <p:column filterBy="#{metaCursor.planoAcao.empreendimento}" headerText="Plano de ação" 
@@ -36,9 +38,10 @@
                                                    itemLabel="#{ept.nome}" />
                                 </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{metaCursor.planoAcao.nome} 
-                                          - #{ListarMetasView.converteData(metaCursor.planoAcao.dataInicio)} 
-                                          até #{ListarMetasView.converteData(metaCursor.planoAcao.dataFim)}" />
+                            <h:outputText value="#{metaCursor.planoAcao.nome} - #{metaCursor.planoAcao.dataInicio} 
+                                          até #{metaCursor.planoAcao.dataFim}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <f:facet name="footer">
@@ -73,7 +76,9 @@
                                 <h:outputText value="#{ListarMetasView.metaSelecionada.planoAcao.nome}" />
 
                                 <h:outputText value="Prazo de início: " />
-                                <h:outputText value="#{ListarMetasView.converteData(ListarMetasView.metaSelecionada.prazo)}" />
+                                <h:outputText value="#{ListarMetasView.metaSelecionada.prazo}" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
 
                                 <h:outputText value="Descrição: " />
                                 <p:scrollPanel mode="native" style="width:435px;height:100px">
@@ -94,7 +99,7 @@
 
                     <br/>
                     <p:commandLink value="Ir para pagina de empreendimentos" type="button" immediate="true"
-                                       action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
+                                   action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
                         <!--<p:graphicImage name="fotos/64Question.png" />-->
                     </p:commandLink>
                 </p:dialog>
