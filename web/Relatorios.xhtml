@@ -139,32 +139,6 @@
                             </p:layoutUnit>
 
                             <p:layoutUnit position="center" >
-                                <!-- Decidiu-se retirar a tabela abaixo
-                                <p:fieldset legend="Notas de maturidade" toggleable="true" toggleSpeed="500">
-                                    <p:dataTable emptyMessage="Nenhuma nota cadastrada." 
-                                                 value="#{RelatorioIndicadoresMaturidadeView.listaNotas}" 
-                                                 var="cursor" widgetVar="varGlobal" rows="10" paginator="true" style="text-align: center"
-                                                 rowKey="#{cursor.id}" paginatorPosition="top">
-
-                                        <p:column headerText="Empreendimento" >
-                                            <h:outputText value="#{cursor.empreendimento.sigla}"/>
-                                        </p:column>
-
-                                        <p:column headerText="Nota atual" >
-                                            <h:outputText value="#{cursor.nota}"/>
-                                        </p:column>
-
-                                        <p:column headerText="Nota máxima" >
-                                            <h:outputText value="#{cursor.notaMaxima}"/>
-                                        </p:column>
-
-                                        <p:column headerText="Porcentagem" >
-                                            <h:outputText value="#{modeloGeralView.geraPorcentagem(cursor.nota, cursor.notaMaxima)} %"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:fieldset>
-                                <p:spacer height="20px" />-->
-
                                 <p:fieldset legend="Evolução dos indicadores" toggleable="true" toggleSpeed="500"
                                             rendered="#{RelatorioIndicadoresMaturidadeView.listaGraficoInds.size() > 0}" >
                                     <p:dataGrid var="graInd" value="#{RelatorioIndicadoresMaturidadeView.listaGraficoInds}" 
@@ -373,7 +347,7 @@
                                         <p:selectOneMenu value="#{RelatorioAtividadesView.eesSelecionado}" converter="generic"
                                                          autoWidth="false" style="width: 200px" >
                                             <p:ajax update="frmrelatorios" event="change"  
-                                                    listener="#{RelatorioAtividadesView.filtrarAtividades()}"/>
+                                                    listener="#{RelatorioAtividadesView.filtrarPorData()}"/>
                                             <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
                                             <f:selectItems value="#{RelatorioAtividadesView.listaEes}" var="var" 
                                                            itemLabel="#{var.sigla}" itemValue="#{var}"/>
@@ -388,13 +362,41 @@
                                         <p:selectOneMenu value="#{RelatorioAtividadesView.userSelecionado}" converter="generic"
                                                          autoWidth="false" style="width: 200px" >
                                             <p:ajax update="frmrelatorios" event="change"  
-                                                    listener="#{RelatorioAtividadesView.filtrarAtividades()}"/>
+                                                    listener="#{RelatorioAtividadesView.filtrarPorData()}"/>
                                             <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
                                             <f:selectItems value="#{RelatorioAtividadesView.listaUser}" var="var" 
                                                            itemLabel="#{var.nome}" itemValue="#{var}"/>
                                         </p:selectOneMenu>
                                     </p:outputPanel>
                                 </p:panel>
+
+                                <p:spacer height="10px" />
+                                
+                                <p:panel >
+                                    <p:outputPanel style="text-align:center;" >
+                                        <p:outputLabel value="Filtro por data" />
+                                        <p:separator/>
+
+                                        <h:panelGrid columns="2">                                        
+                                            <p:outputLabel value="De " />
+                                            <p:calendar value="#{RelatorioAtividadesView.dataFiltroInicio}" locale="pt" 
+                                                        navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
+                                                <p:ajax event="dateSelect" onstart="PF('blockUiGeral').show()" 
+                                                        oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
+                                                        listener="#{RelatorioAtividadesView.filtrarPorData()}" />
+                                            </p:calendar>
+
+                                            <p:outputLabel value="até " />
+                                            <p:calendar value="#{RelatorioAtividadesView.dataFiltroFim}" locale="pt" 
+                                                        navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
+                                                <p:ajax event="dateSelect"  onstart="PF('blockUiGeral').show()" 
+                                                        oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
+                                                        listener="#{RelatorioAtividadesView.filtrarPorData()}" />
+                                            </p:calendar>                               
+                                        </h:panelGrid>
+                                    </p:outputPanel>  
+                                </p:panel>
+                                
                                 <p:spacer height="10px" />
 
                                 <p:panel rendered="#{RelatorioAtividadesView.listaAtv.size() > 0}" >

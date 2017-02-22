@@ -10,6 +10,7 @@ import br.ifnmg.januaria.fernandes.itcp.util.RelatoriosManager;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,11 @@ public class AtividadePlanejadaBean implements Serializable {
     //Exclui uma atividade
     public void excluirBean(AtividadePlanejada obj) {
         dao.excluirDao(obj);
+    }
+    
+    //lista as ativiades por um intervalo de datas
+    public List<AtividadePlanejada> listarPorIntervaloBean(Date dataIni, Date dataFim) {
+        return dao.listarPorIntervaloDao(dataIni, dataFim);
     }
 
     public List<AtividadePlanejada> buscarAtividadesPorMetaBean(Meta obj) {

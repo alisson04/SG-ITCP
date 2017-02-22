@@ -63,6 +63,10 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
     private EmpreendimentoBean eesBean;
     private List<Empreendimento> listaEes;
 
+    //Datas de filtragem
+    private Date dataFiltroInicio;
+    private Date dataFiltroFim;
+
     //CONSTRUTOR
     public RelatorioAtividadesView() {
         try {
@@ -82,15 +86,45 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
             listaUser = userlBean.listarBean();
             eesBean = new EmpreendimentoBean();
             listaEes = eesBean.listarBean();
+
+            //Filtro de datas na listagem de atividades
+            Calendar x = Calendar.getInstance();//Pega a data atual
+            x.add((Calendar.DAY_OF_MONTH), -15);//subtrai 15 dias  a data atual
+            dataFiltroInicio = x.getTime();//Seta a data atual
+            x.add((Calendar.DAY_OF_MONTH), 30);//soma 15 dias a data atual
+            dataFiltroFim = x.getTime();//Seta a data somada
+            filtrarPorData();//Filtra as atividades
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
 
-    //METODOS    
-    public void filtrarAtividades() {
-        listaAtv = bean.listarBean();
+    //METODOS
+    public void filtrarPorData() {
+        try {
+            Date dataTrabalho;
+            
+            List<HorasTrabalhadas> listaAux = new ArrayList();
+            listaHorasTrab = horasTrabBean.listarBean();
+            for (int i = 0; i < listaHorasTrab.size(); i++) {
+                dataTrabalho = listaHorasTrab.get(i).getDataTrabalho();
 
+                if ((dataTrabalho.after(dataFiltroInicio) || dataTrabalho.equals(dataFiltroInicio))
+                        && (dataTrabalho.before(dataFiltroFim) || dataTrabalho.equals(dataFiltroFim))) {
+                    listaAux.add(listaHorasTrab.get(i));
+                }
+            }
+            listaHorasTrab = listaAux;
+            
+            listaAtv = bean.listarPorIntervaloBean(dataFiltroInicio, dataFiltroFim);
+            
+            filtrarAtvsPorUserEes();//Chama o metodo que filtra por User e Ees
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+    
+    private void filtrarAtvsPorUserEes() {//Chamada ao selecionar um EES ou USER
         if (eesSelecionado != null) {//Se a EES selecionado
             List<AtividadePlanejada> listaAux = new ArrayList<>();
 
@@ -109,26 +143,32 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
 
             for (int i = 0; i < listaAtv.size(); i++) {
                 userParticipa = false;
-                
+
                 for (int x = 0; x < listaAtv.get(i).getHorasTrabalhadasList().size(); x++) {
                     if (listaAtv.get(i).getHorasTrabalhadasList().get(x).getUsuario().equals(userSelecionado)) {
                         userParticipa = true;
-
-                        System.out.println("Setou TRUE");
                     }
                 }
 
                 if (userParticipa) {
                     listaAux.add(listaAtv.get(i));
-                    System.out.println("TRUE");
                 }
             }
             listaAtv = listaAux;
+
+            //Filtra a lista de horas trabalhadas pelo User selecionado
+            List<HorasTrabalhadas> listaHorasAux = new ArrayList<>();
+
+            for (int i = 0; i < listaHorasTrab.size(); i++) {
+                if (listaHorasTrab.get(i).getUsuario().equals(userSelecionado)) {
+                    listaHorasAux.add(listaHorasTrab.get(i));
+                }
+            }
+            listaHorasTrab = listaHorasAux;
         }
     }
 
-    public String converteData(AtividadePlanejada atv) {
-
+    public String converteData(AtividadePlanejada atv) {//Só é chamado pela tela
         Date data;
         String dataRetrun;
         try {
@@ -168,7 +208,7 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
                 for (int i = 0; i < listaHorasTrab.size(); i++) {
                     if (listaHorasTrab.get(i).getAtividadePlanejada().equals(atv)) {
                         obj = listaHorasTrab.get(i);
-                        segundos += (int) Math.floor(segundos + (((int) (long) (obj.getHorasFim().getTime() - obj.getHorasInicio().getTime())) / 1000));
+                        segundos = (int) Math.floor(segundos + (((int) (long) (obj.getHorasFim().getTime() - obj.getHorasInicio().getTime())) / 1000));
                     }
                 }
 
@@ -248,5 +288,21 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
 
     public void setListaEes(List<Empreendimento> listaEes) {
         this.listaEes = listaEes;
+    }
+
+    public Date getDataFiltroInicio() {
+        return dataFiltroInicio;
+    }
+
+    public void setDataFiltroInicio(Date dataFiltroInicio) {
+        this.dataFiltroInicio = dataFiltroInicio;
+    }
+
+    public Date getDataFiltroFim() {
+        return dataFiltroFim;
+    }
+
+    public void setDataFiltroFim(Date dataFiltroFim) {
+        this.dataFiltroFim = dataFiltroFim;
     }
 }

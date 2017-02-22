@@ -4,7 +4,9 @@ import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadeUsuario;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.FacesException;
 import javax.persistence.EntityManager;
@@ -53,5 +55,31 @@ public class AtividadePlanejadaDAO extends DaoGenerico<AtividadePlanejada> {
         em.close();
 
         return listaObjsFiltrados;
+    }
+
+    public List<AtividadePlanejada> listarPorIntervaloDao(Date dataIni, Date dataFim) {//
+        String PU = "sigitecPU";
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        EntityManager em;
+        em = emf.createEntityManager();
+
+        SimpleDateFormat forma = new SimpleDateFormat("yyyy/MM/dd");
+
+        List<AtividadePlanejada> listaObjsFiltrados;//Cria alista que será retornada
+        listaObjsFiltrados = new ArrayList();
+
+        try {
+            em.getTransaction().begin();
+            Query consulta = em.createQuery("SELECT o FROM AtividadePlanejada o "
+                    + "WHERE (o.dataInicio between :dataIni AND :dataFim) AND (o.dataFim between :dataIni AND :dataFim) ");
+            consulta.setParameter("dataIni", dataIni);
+            consulta.setParameter("dataFim", dataFim);
+            listaObjsFiltrados = consulta.getResultList();//Pega a lista de objs
+            return listaObjsFiltrados;
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        } finally {
+            em.close();
+        }
     }
 }

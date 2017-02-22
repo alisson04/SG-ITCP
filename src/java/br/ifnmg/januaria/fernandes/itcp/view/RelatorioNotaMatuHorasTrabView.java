@@ -92,9 +92,9 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
 
             //Filtro de datas na listagem de atividades
             Calendar x = Calendar.getInstance();//Pega a data atual
-            x.add((Calendar.DAY_OF_MONTH), -15);//soma 7 a data atual
+            x.add((Calendar.DAY_OF_MONTH), -15);//subtrai 15 dias  a data atual
             dataFiltroInicio = x.getTime();//Seta a data atual
-            x.add((Calendar.DAY_OF_MONTH), 30);//soma 7 a data atual
+            x.add((Calendar.DAY_OF_MONTH), 30);//soma 15 dias a data atual
             dataFiltroFim = x.getTime();//Seta a data somada
             filtraHorasTrabalhoPorData();//Filtra as atividades
             

@@ -9,6 +9,9 @@
 	<parameter name="listaNomes" class="java.util.List"/>
 	<parameter name="paramEes" class="java.lang.String"/>
 	<parameter name="paramUser" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/alisson/MEGA/Sigitec/NetBeansProjects/sigitec/src/java/iReport/"]]></defaultValueExpression>
+	</parameter>
 	<variable name="numLinhas" class="java.math.BigDecimal" calculation="Count">
 		<variableExpression><![CDATA[$V{numLinhas}.add(new BigDecimal(1000))]]></variableExpression>
 		<initialValueExpression><![CDATA[new BigDecimal(1000)]]></initialValueExpression>
@@ -201,23 +204,11 @@
 	</detail>
 	<pageFooter>
 		<band height="30" splitType="Stretch">
-			<textField evaluationTime="Report">
-				<reportElement x="515" y="10" width="40" height="20" uuid="e2f704ac-0c8c-424a-a90f-832f85ddafb5"/>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="435" y="10" width="80" height="20" uuid="112aceaa-cce4-4ed0-be51-73e88a444ca3"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="0" y="5" width="555" height="1" uuid="8d2adcab-b560-4b9d-94a4-0ab27696f57a"/>
-			</line>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="225" y="10" width="100" height="20" uuid="e2c30db4-c0c4-44fc-b39b-c703c30321c4"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="30" uuid="79faf0ea-8121-4601-b255-083db905f928"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subRelatorioDataPagina.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</pageFooter>
 </jasperReport>
