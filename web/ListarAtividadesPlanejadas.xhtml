@@ -45,7 +45,7 @@
                                     <p:ajax update="frmListagem" event="itemSelect" 
                                             listener="#{ListarAtiviPlanejadasView.filtraPlanosPorEes()}" />
 
-                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarAtiviPlanejadasView.listaEmpreendimentos}" var="var" 
                                                    itemLabel="#{var.sigla}" itemValue="#{var}" />
                                 </p:selectOneMenu>

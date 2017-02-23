@@ -114,26 +114,32 @@ public class AtividadePlanejadaBean implements Serializable {
         //Filtro de datas
         listaParametros.put("paramTempo", datas);
         
+        //Lista de nomes e Status e EES
         List<String> listaNomes = new ArrayList<>();
+        List<String> listaStatus = new ArrayList<>();
 
         if (eesSelecionado == null) {
             for (int i = 0; i < lista.size(); i++) {
                 listaNomes.add(lista.get(i).getMeta().getPlanoAcao().getEmpreendimento().getSigla() + " - " + lista.get(i).getNome());
+                listaStatus.add(lista.get(i).getStatus());
             }
             listaParametros.put("paramEes", "Sem filtro");
         } else {
             for (int i = 0; i < lista.size(); i++) {
                 listaNomes.add(lista.get(i).getNome());
+                listaStatus.add(lista.get(i).getStatus());
             }
             listaParametros.put("paramEes", eesSelecionado.getSigla());
         }
         
+        //USER
         if(userSelecionado == null){
             listaParametros.put("paramUser", "Sem filtro");
         }else{
             listaParametros.put("paramUser", userSelecionado.getNome());
         }
 
+        listaParametros.put("listaStatus", listaStatus);
         listaParametros.put("listaNomes", listaNomes);
         listaParametros.put("listaHoras", listaHorasPdf);
         listaParametros.put("listaDatas", listaDatasPdf);

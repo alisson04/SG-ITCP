@@ -214,7 +214,7 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
         try {
             if (!listaAtv.isEmpty()) {
                 SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
-                String datas = forma.format(dataFiltroInicio) + " - " + forma.format(dataFiltroFim);
+                String datas = forma.format(dataFiltroInicio) + " até " + forma.format(dataFiltroFim);
                 bean.gerarRelatorio(totalMinutosGastos, datas, listaAtv, listaHorasPdf, listaDatasPdf, eesSelecionado, userSelecionado, tipo);
             } else {
                 msgGrowlErroCustomizavel(null, "Não ha empreendimentos para listar");

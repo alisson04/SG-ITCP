@@ -29,7 +29,7 @@
                         <p:column filterBy="#{usuarioCursor.cargo}" headerText="Cargo" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarUsuariosView.geraTiposDeCargosView()}" />
                                 </p:selectOneMenu>
                             </f:facet>

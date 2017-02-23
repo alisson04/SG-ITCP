@@ -41,7 +41,7 @@
                                       styleClass="colunasTabela200PX" >
                                 <f:facet name="filter">
                                     <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                        <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
                                         <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" />
                                         <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" />
                                         <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" />
@@ -83,18 +83,28 @@
                                       styleClass="colunasTabela100PX" >
                                 <p:commandLink title="Lançar horas"  update="frmCadastro frmLancarHoras" actionListener="#{
                                                inicioView.setaPrimaryKeyHoras(atividadeCursor, modeloGeralView.usuarioLogado)}"
-                                               oncomplete="PF('wVLancarHorasDialog').show()">
+                                               oncomplete="PF('wVLancarHorasDialog').show()"
+                                               rendered="#{atividadeCursor.status == 'Iniciada'}" >
                                     <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Clock.png" />
                                 </p:commandLink>
+                                
+                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Exclamation.png" 
+                                                rendered="#{atividadeCursor.status != 'Iniciada'}"
+                                                title="Atividade não esta iniciada!" />
                             </p:column>
 
                             <p:column headerText="Atribuir atividade" style="text-align: center;" 
                                       styleClass="colunasTabela100PX" >
                                 <p:commandLink title="Atribuir atividade"  update="frmCadastro frmAtribuirAtv"
                                                actionListener="#{inicioView.configuraPickList(atividadeCursor)}"
-                                               oncomplete="PF('wVAtribuirAtvDialog').show()" >
+                                               oncomplete="PF('wVAtribuirAtvDialog').show()" 
+                                               rendered="#{atividadeCursor.status != 'Finalizada'}" >
                                     <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32AddUser.png" />
                                 </p:commandLink>
+                                
+                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Exclamation.png" 
+                                                rendered="#{atividadeCursor.status == 'Finalizada'}" 
+                                                title="Atividade está finalizada!" />
                             </p:column>
 
                             <f:facet name="footer">

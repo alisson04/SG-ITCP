@@ -38,7 +38,7 @@
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" autoWidth="false" style="width: 200px"
                                                  converter="generic" >
-                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
                                                    itemValue="#{ept}"/>
                                 </p:selectOneMenu>

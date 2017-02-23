@@ -31,7 +31,7 @@
                         <p:column filterBy="#{cursor.empreendimento}" headerText="Empreendimento" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" autoWidth="false" >
-                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" 
                                                    itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
                                 </p:selectOneMenu>

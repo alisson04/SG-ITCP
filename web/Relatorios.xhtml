@@ -48,7 +48,7 @@
                                         <p:outputLabel value="Empreendimento:" />
                                         <p:selectOneMenu value="#{RelatorioIndicadoresMaturidadeView.empreendimentoSelecionado}" 
                                                          converter="generic" autoWidth="false" style="width: 200px" >
-                                            <f:selectItem itemLabel="Clique para selecionar" itemValue="#{null}" />
+                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
                                             <p:ajax update="frmrelatorios" event="change"  
                                                     listener="#{RelatorioIndicadoresMaturidadeView.selecionaEptTela()}"/>
                                             <f:selectItems value="#{RelatorioIndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
@@ -416,11 +416,11 @@
                                         filteredValue="#{RelatorioAtividadesView.listaAtvFiltradas}" rowKey="#{cursor.id}"
                                         var="cursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top" >
 
-                                        <p:column headerText="Data" >
+                                        <p:column headerText="Data" styleClass="colunasTabela200PX" >
                                             <h:outputText value="#{RelatorioAtividadesView.converteData(cursor)}" />
                                         </p:column>
 
-                                        <p:column headerText="Horas Trabalhadas" >
+                                        <p:column headerText="Horas Trabalhadas" styleClass="colunasTabela200PX" >
                                             <h:outputText value="#{RelatorioAtividadesView.geraHorasTrabPorAtv(cursor)}" />
                                         </p:column>
 
@@ -428,6 +428,10 @@
                                             <h:outputText value="#{cursor.meta.planoAcao.empreendimento.sigla}"/>
                                             <h:outputText value=" - "/>
                                             <h:outputText value="#{cursor.nome}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Situação" styleClass="colunasTabela200PX" >
+                                            <h:outputText value="#{cursor.status}"/>
                                         </p:column>
 
                                         <f:facet name="footer">

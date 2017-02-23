@@ -52,7 +52,7 @@
                                 <p:column filterBy="#{usuarioCursor.cargo}" headerText="Cargo" filterMatchMode="exact">
                                     <f:facet name="filter">
                                         <p:selectOneMenu onchange="PF('varGlobalUsuarios').filter()" >
-                                            <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
                                             <f:selectItems value="#{ListarUsuariosView.geraTiposDeCargosView()}" />
                                         </p:selectOneMenu>
                                     </f:facet>
@@ -105,7 +105,7 @@
                                           filterMatchMode="exact">
                                     <f:facet name="filter">
                                         <p:selectOneMenu onchange="PF('varGlobalEmpreendimentos').filter()" >
-                                            <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
                                             <f:selectItems value="#{ListarEmpreendimentosView.processoIncubacao}" />
                                         </p:selectOneMenu>
                                     </f:facet>
@@ -160,7 +160,7 @@
                                           filterMatchMode="exact">
                                     <f:facet name="filter">
                                         <p:selectOneMenu onchange="PF('varGlobalMembro').filter()" >
-                                            <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
+                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
                                             <f:selectItems value="#{ListarMembrosEptsView.listaEmpreendimentos}" var="ept" itemLabel="#{ept.nome}" 
                                                            itemValue="#{ept}"/>
                                         </p:selectOneMenu>

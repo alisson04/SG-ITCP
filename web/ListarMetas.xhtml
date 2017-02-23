@@ -33,7 +33,7 @@
                                   filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                    <f:selectItem itemLabel="Filtrar por empreendimento" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarMetasView.listaEmpreendimentos}" var="ept" itemValue="#{ept}"
                                                    itemLabel="#{ept.nome}" />
                                 </p:selectOneMenu>
