@@ -67,6 +67,8 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
     private Date dataFiltroInicio;
     private Date dataFiltroFim;
 
+    private int totalMinutosGastos;//Guarto o tempo total gasto com atividades
+
     //CONSTRUTOR
     public RelatorioAtividadesView() {
         try {
@@ -102,8 +104,9 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
     //METODOS
     public void filtrarPorData() {
         try {
+            totalMinutosGastos = 0;//Guarto o tempo total gasto com atividades
             Date dataTrabalho;
-            
+
             List<HorasTrabalhadas> listaAux = new ArrayList();
             listaHorasTrab = horasTrabBean.listarBean();
             for (int i = 0; i < listaHorasTrab.size(); i++) {
@@ -115,16 +118,36 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
                 }
             }
             listaHorasTrab = listaAux;
-            
+
             listaAtv = bean.listarPorIntervaloBean(dataFiltroInicio, dataFiltroFim);
-            
+
             filtrarAtvsPorUserEes();//Chama o metodo que filtra por User e Ees
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
-    
-    private void filtrarAtvsPorUserEes() {//Chamada ao selecionar um EES ou USER
+
+    public String geraTotalHoras() {//Chamado pelo footer da tabela
+        int horas = totalMinutosGastos / 60;
+        int minutosRestantes = totalMinutosGastos % 60;
+
+        if (minutosRestantes == 0
+                || minutosRestantes == 1
+                || minutosRestantes == 2
+                || minutosRestantes == 3
+                || minutosRestantes == 4
+                || minutosRestantes == 5
+                || minutosRestantes == 6
+                || minutosRestantes == 7
+                || minutosRestantes == 8
+                || minutosRestantes == 9) {
+            return "Tempo total gasto: " + (horas + ":0" + minutosRestantes);
+        } else {
+            return "Tempo total gasto: " + (horas + ":" + minutosRestantes);
+        }
+    }
+
+    private void filtrarAtvsPorUserEes() {//Chamado pelo metodo filtrarPorData
         if (eesSelecionado != null) {//Se a EES selecionado
             List<AtividadePlanejada> listaAux = new ArrayList<>();
 
@@ -190,7 +213,9 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
     public void gerarRelatorio(String tipo) {//O tipo se refere a "download" ou na "tela"
         try {
             if (!listaAtv.isEmpty()) {
-                bean.gerarRelatorio(listaAtv, listaHorasPdf, listaDatasPdf, eesSelecionado, userSelecionado, tipo);
+                SimpleDateFormat forma = new SimpleDateFormat("dd/MM/yyyy");
+                String datas = forma.format(dataFiltroInicio) + " - " + forma.format(dataFiltroFim);
+                bean.gerarRelatorio(totalMinutosGastos, datas, listaAtv, listaHorasPdf, listaDatasPdf, eesSelecionado, userSelecionado, tipo);
             } else {
                 msgGrowlErroCustomizavel(null, "Não ha empreendimentos para listar");
             }
@@ -213,6 +238,9 @@ public class RelatorioAtividadesView extends MensagensGenericas implements Seria
                 }
 
                 int minutos = (segundos / 60);
+
+                totalMinutosGastos += minutos;//Acumula aq para ser usado no método de geraTotalHoras()
+
                 int horas = minutos / 60;
                 int minutosRestantes = minutos % 60;
 

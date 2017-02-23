@@ -89,15 +89,31 @@ public class AtividadePlanejadaBean implements Serializable {
         return listaFiltrada;
     }
 
-    public void gerarRelatorio(List<AtividadePlanejada> lista, List<String> listaHorasPdf, List<String> listaDatasPdf,
-            Empreendimento eesSelecionado, Usuario userSelecionado, String tipo) throws Exception {
+    public void gerarRelatorio(int totalMinutosGastos, String datas, List<AtividadePlanejada> lista, List<String> listaHorasPdf, 
+            List<String> listaDatasPdf, Empreendimento eesSelecionado, Usuario userSelecionado, String tipo) throws Exception {
         Map<String, Object> listaParametros = new HashMap<String, Object>();
+        //Total de horas gastos
+        int horas = totalMinutosGastos / 60;
+        int minutosRestantes = totalMinutosGastos % 60;
 
-        //List<InputStream> listaTeste = new ArrayList<>();
-        //for(int i=0; i<lista.size(); i++){
-        //    listaTeste.add(asd);
-        //    System.out.println("ADD: " + i);
-        //}
+        if (minutosRestantes == 0
+                || minutosRestantes == 1
+                || minutosRestantes == 2
+                || minutosRestantes == 3
+                || minutosRestantes == 4
+                || minutosRestantes == 5
+                || minutosRestantes == 6
+                || minutosRestantes == 7
+                || minutosRestantes == 8
+                || minutosRestantes == 9) {
+            listaParametros.put("paramTotal", (horas + ":0" + minutosRestantes));
+        } else {
+            listaParametros.put("paramTotal", (horas + ":" + minutosRestantes));
+        }
+        
+        //Filtro de datas
+        listaParametros.put("paramTempo", datas);
+        
         List<String> listaNomes = new ArrayList<>();
 
         if (eesSelecionado == null) {

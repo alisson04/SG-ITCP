@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioAtividades" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe606fe5-5d4c-4ba3-a610-ed8a841dffb2">
-	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.zoom" value="1.4641000000000013"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="paramImage" class="java.lang.String"/>
@@ -12,6 +12,8 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/home/alisson/MEGA/Sigitec/NetBeansProjects/sigitec/src/java/iReport/"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="paramTempo" class="java.lang.String"/>
+	<parameter name="paramTotal" class="java.lang.String"/>
 	<variable name="numLinhas" class="java.math.BigDecimal" calculation="Count">
 		<variableExpression><![CDATA[$V{numLinhas}.add(new BigDecimal(1000))]]></variableExpression>
 		<initialValueExpression><![CDATA[new BigDecimal(1000)]]></initialValueExpression>
@@ -39,61 +41,61 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="80" splitType="Stretch">
+		<band height="110" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="30" width="177" height="20" uuid="e1c61bff-f5a2-41ea-9819-6beb6c72315b"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+				<reportElement x="0" y="21" width="156" height="20" uuid="e1c61bff-f5a2-41ea-9819-6beb6c72315b"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Filtro de usuário:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="10" width="177" height="20" uuid="5d7436f8-9e21-4c3b-be2d-c3f7827189f4"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+				<reportElement x="0" y="0" width="156" height="20" uuid="5d7436f8-9e21-4c3b-be2d-c3f7827189f4"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Filtro de empreendimento:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="177" y="30" width="378" height="20" uuid="2c12e6ae-60df-4501-b3e8-6f3471c6fb0d"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+				<reportElement x="156" y="21" width="399" height="20" uuid="2c12e6ae-60df-4501-b3e8-6f3471c6fb0d"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{paramUser}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="177" y="10" width="378" height="20" uuid="239b6798-5c75-4d5e-9d2c-f46e545bd776"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+				<reportElement x="156" y="0" width="399" height="20" uuid="239b6798-5c75-4d5e-9d2c-f46e545bd776"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{paramEes}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="60" width="30" height="20" uuid="af333893-64af-4a98-b5f1-415e0511190a"/>
+				<reportElement x="0" y="90" width="30" height="20" uuid="af333893-64af-4a98-b5f1-415e0511190a"/>
 				<box leftPadding="0">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -107,7 +109,7 @@
 				<text><![CDATA[Nº]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="30" y="60" width="147" height="20" uuid="96f39b82-8de0-4db9-aa93-056343810232"/>
+				<reportElement x="30" y="90" width="147" height="20" uuid="96f39b82-8de0-4db9-aa93-056343810232"/>
 				<box leftPadding="0">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -121,7 +123,7 @@
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="177" y="60" width="203" height="20" uuid="8b033f81-272b-428d-b463-c931dbd2eb78"/>
+				<reportElement x="177" y="90" width="203" height="20" uuid="8b033f81-272b-428d-b463-c931dbd2eb78"/>
 				<box leftPadding="0">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -135,7 +137,7 @@
 				<text><![CDATA[Horas trabalhadas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="380" y="60" width="175" height="20" uuid="ca7cf090-6b2f-476c-b3c7-bbba71168fbb"/>
+				<reportElement x="380" y="90" width="175" height="20" uuid="ca7cf090-6b2f-476c-b3c7-bbba71168fbb"/>
 				<box leftPadding="0">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -148,6 +150,70 @@
 				</textElement>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="ffdeb7ed-88fb-4fd3-a0ef-7b535a1d175f"/>
+			</line>
+			<line>
+				<reportElement x="0" y="40" width="555" height="1" uuid="f3191399-bab1-403b-802f-2df154d0c6aa"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="41" width="156" height="20" uuid="132cc99b-8fc0-4fa5-b64c-879dd7340112"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Filtro de tempo:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="60" width="555" height="1" uuid="dcc4f507-0c52-4239-b665-4bc75da73a03"/>
+			</line>
+			<textField>
+				<reportElement x="156" y="40" width="399" height="20" uuid="34d51e16-1dda-4696-9d9e-1ce6ed642391"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{paramTempo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="61" width="156" height="20" uuid="12c8adc9-9da2-49a9-a332-96a9a9b1eb11"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tempo total gasto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="156" y="60" width="399" height="20" uuid="593fbf81-a87e-4408-b804-6ff1670a187a"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{paramTotal}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="80" width="555" height="1" uuid="27016564-dbd8-4c58-86d2-081adab09e4e"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -197,7 +263,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{listaNomes}.get($V{numLinhas}.toBigInteger()-1).toString()]]></textFieldExpression>
 			</textField>
 		</band>

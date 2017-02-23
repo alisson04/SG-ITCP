@@ -63,8 +63,6 @@ public class AtividadePlanejadaDAO extends DaoGenerico<AtividadePlanejada> {
         EntityManager em;
         em = emf.createEntityManager();
 
-        SimpleDateFormat forma = new SimpleDateFormat("yyyy/MM/dd");
-
         List<AtividadePlanejada> listaObjsFiltrados;//Cria alista que será retornada
         listaObjsFiltrados = new ArrayList();
 
