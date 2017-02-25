@@ -6,13 +6,32 @@
 	<subDataset name="dataset1" uuid="920de8f8-6bfb-46e6-b049-64b37cf50faf"/>
 	<parameter name="paramImage" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[SELECT
+     Parceiro.`nome` AS nome,
+     Parceiro.`email` AS email,
+     Parceiro.`telefone` AS telefone,
+     Parceiro.`telefoneAlternativo` AS telefoneAlternativo,
+     Parceiro.`endereco` AS endereco
+FROM
+     `Parceiro` Parceiro
+
+order by Parceiro.`nome`;]]>
 	</queryString>
-	<field name="nome" class="java.lang.String"/>
-	<field name="email" class="java.lang.String"/>
-	<field name="telefone" class="java.lang.String"/>
-	<field name="telefoneAlternativo" class="java.lang.String"/>
-	<field name="endereco" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefoneAlternativo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="endereco" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<variable name="numLinhas" class="java.math.BigDecimal" calculation="Count">
 		<variableExpression><![CDATA[$V{numLinhas}.add(new BigDecimal(1000))]]></variableExpression>
 		<initialValueExpression><![CDATA[new BigDecimal(1000)]]></initialValueExpression>
@@ -204,27 +223,25 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="25" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<textField>
-				<reportElement x="435" y="5" width="80" height="20" uuid="0131ddc3-51d5-4a91-99f4-25ff1d848528"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="435" y="10" width="80" height="20" uuid="0131ddc3-51d5-4a91-99f4-25ff1d848528"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="515" y="5" width="40" height="20" uuid="5ff19be3-bf00-4548-a2dc-5825b94e8ee0"/>
+				<reportElement x="515" y="10" width="40" height="20" uuid="5ff19be3-bf00-4548-a2dc-5825b94e8ee0"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="232" y="5" width="100" height="20" uuid="8b070329-9347-4a89-8886-82e02ab92c10"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="232" y="10" width="100" height="20" uuid="8b070329-9347-4a89-8886-82e02ab92c10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="4" width="555" height="1" uuid="09461c85-c04b-4ef5-88dd-0be8a64423c6"/>
+				<reportElement x="0" y="9" width="555" height="1" uuid="09461c85-c04b-4ef5-88dd-0be8a64423c6"/>
 			</line>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

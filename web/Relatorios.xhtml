@@ -39,7 +39,99 @@
                     <p:ajax event="tabChange" listener="#{RelatoriosView.InicializaVariaveis()}" />
                     <p:ajax event="tabChange" listener="#{RelatorioNotaMatuHorasTrabView.onTabChange}" />
 
-                    <!--RELATORIO DOS INDICADORES DE MATURIDADE-->
+                    <!--RELATORIO GERAIS-->
+                    <p:tab id="tabInicio" title="Relatórios gerais" >
+                        <p:panelGrid columns="3" layout="grid">
+                            <p:fieldset legend="Usuários" toggleable="true" toggleSpeed="500" collapsed="true" >
+                                <p:outputPanel style="text-align:center;" >
+                                    <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                                   actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
+                                                                     '/iReport/relatorioUsuarios.jasper',
+                                                                     'Relatorio-de-Usuarios.pdf',
+                                                                     'attachment')}" >
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png" />
+                                    </p:commandLink>
+                                    <p:spacer width="40px" />
+
+                                    <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" 
+                                                   target="_blank"
+                                                   actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
+                                                                     '/iReport/relatorioUsuarios.jasper',
+                                                                     'Relatorio-de-Usuarios.pdf',
+                                                                     'inline')}" >
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png" />
+                                    </p:commandLink>
+                                </p:outputPanel>
+                            </p:fieldset>
+
+                            <p:fieldset legend="Parceiros" toggleable="true" toggleSpeed="500" collapsed="true" >
+                                <p:outputPanel style="text-align:center;" >
+                                    <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                                   actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
+                                                                     '/iReport/relatorioParceiros.jasper',
+                                                                     'Relatorio-de-Parceiros.pdf',
+                                                                     'attachment')}" >
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png" />
+                                    </p:commandLink>
+                                    <p:spacer width="20px" />
+
+                                    <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" 
+                                                   target="_blank"
+                                                   actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
+                                                                     '/iReport/relatorioParceiros.jasper',
+                                                                     'Relatorio-de-Parceiros.pdf',
+                                                                     'inline')}" >
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png" />
+                                    </p:commandLink>
+                                </p:outputPanel>
+                            </p:fieldset>
+
+                            <p:fieldset legend="Horários de trabalho" toggleable="true" toggleSpeed="500" collapsed="true" >
+                                <p:outputPanel style="text-align:center;" >
+                                    <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                                   actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
+                                                                     '/iReport/relatorioHorariosTrabalho.jasper',
+                                                                     'Relatorio-de-Horarios-de-Trabalho.pdf',
+                                                                     'attachment')}" >
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png" />
+                                    </p:commandLink>
+                                    <p:spacer width="20px" />
+
+                                    <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" 
+                                                   target="_blank"
+                                                   actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
+                                                                     '/iReport/relatorioHorariosTrabalho.jasper',
+                                                                     'Relatorio-de-Horarios-de-Trabalho.pdf',
+                                                                     'inline')}" >
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png" />
+                                    </p:commandLink>
+                                </p:outputPanel>
+                            </p:fieldset>
+                            
+                            <p:fieldset legend="Empreendimentos" toggleable="true" toggleSpeed="500" collapsed="true" >
+                                <p:outputPanel style="text-align:center;" >
+                                    <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                                   actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
+                                                                     '/iReport/relatorioEmpreendimentos.jasper',
+                                                                     'Relatorio-de-Empreendimentos.pdf',
+                                                                     'attachment')}" >
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png" />
+                                    </p:commandLink>
+                                    <p:spacer width="20px" />
+
+                                    <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" 
+                                                   target="_blank"
+                                                   actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
+                                                                     '/iReport/relatorioEmpreendimentos.jasper',
+                                                                     'Relatorio-de-Empreendimentos.pdf',
+                                                                     'inline')}" >
+                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png" />
+                                    </p:commandLink>
+                                </p:outputPanel>
+                            </p:fieldset>
+                        </p:panelGrid>
+                    </p:tab>
+
                     <p:tab id="tabIndis" title="Indicadores de maturidade" >
                         <p:layout style="min-height:600px;max-height:1000px;" >
                             <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
@@ -413,8 +505,8 @@
                             <p:layoutUnit position="center" >
                                 <p:outputPanel style="text-align:center;" >
                                     <p:dataTable emptyMessage="Nenhum registro encontrado." value="#{RelatorioAtividadesView.listaAtv}" 
-                                        filteredValue="#{RelatorioAtividadesView.listaAtvFiltradas}" rowKey="#{cursor.id}"
-                                        var="cursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top" >
+                                                 filteredValue="#{RelatorioAtividadesView.listaAtvFiltradas}" rowKey="#{cursor.id}"
+                                                 var="cursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top" >
 
                                         <p:column headerText="Data" styleClass="colunasTabela200PX" >
                                             <h:outputText value="#{RelatorioAtividadesView.converteData(cursor)}" />

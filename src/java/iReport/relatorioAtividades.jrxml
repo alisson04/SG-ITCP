@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioAtividades" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe606fe5-5d4c-4ba3-a610-ed8a841dffb2">
-	<property name="ireport.zoom" value="1.4641000000000013"/>
+	<property name="ireport.zoom" value="1.6105100000000014"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="paramImage" class="java.lang.String"/>
@@ -294,11 +294,24 @@
 	</detail>
 	<pageFooter>
 		<band height="30" splitType="Stretch">
-			<subreport>
-				<reportElement x="0" y="0" width="555" height="30" uuid="79faf0ea-8121-4601-b255-083db905f928"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subRelatorioDataPagina.jasper"]]></subreportExpression>
-			</subreport>
+			<line>
+				<reportElement x="0" y="9" width="555" height="1" uuid="862784cf-6445-447b-8312-e1e9c894f8cb"/>
+			</line>
+			<textField>
+				<reportElement x="435" y="10" width="80" height="20" uuid="3818cffc-3f2e-4b75-a4ca-c834bc1bd009"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="10" width="40" height="20" uuid="d6477da7-4ffa-4910-b272-df6b28dc842e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="227" y="10" width="100" height="20" uuid="effa5fdd-11d9-41d6-86af-ee9e5b490c91"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>

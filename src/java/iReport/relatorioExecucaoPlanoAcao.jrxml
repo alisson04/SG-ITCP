@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioExecucaoPlanoAcao" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a269b5de-c21c-4c16-a534-2b96a44bb0f2">
-	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.zoom" value="1.6105100000000008"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="paramImage" class="java.lang.String"/>
@@ -200,23 +200,24 @@ where Meta.idPlanoAcaoFk = $P{paramIdPlano};]]>
 	</detail>
 	<pageFooter>
 		<band height="30" splitType="Stretch">
-			<textField>
-				<reportElement x="435" y="10" width="80" height="20" uuid="3a8687e1-bed7-4220-b2b8-4cd640218bf1"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="515" y="10" width="40" height="20" uuid="9b1fcb63-392c-410c-bd35-f278e9dcad32"/>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="0" y="5" width="555" height="1" uuid="e3be677b-74bd-4ae1-9423-687ff786f9d6"/>
-			</line>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="225" y="10" width="100" height="20" uuid="b3766222-6880-4600-abe2-191db411f45a"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="227" y="10" width="100" height="20" uuid="87d8fbbe-5cb2-4301-b3ab-6a29e8a70915"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="10" width="40" height="20" uuid="4d72e1dd-88b2-4350-b3dd-f41d1e61467e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="10" width="80" height="20" uuid="a60567c5-a9ab-4fa0-8b0a-19c0597661d1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="9" width="555" height="1" uuid="82460c7f-522f-449f-a20e-b8855856c17b"/>
+			</line>
 		</band>
 	</pageFooter>
 </jasperReport>

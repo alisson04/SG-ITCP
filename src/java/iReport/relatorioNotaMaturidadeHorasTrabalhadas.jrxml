@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioNotaMaturidadeHorasTrabalhadas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="858daf9b-0cc1-42e0-bf8a-662c19e8a4ff">
-	<property name="ireport.zoom" value="1.3310000000000008"/>
+	<property name="ireport.zoom" value="1.464100000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="paramImage" class="java.lang.String"/>
@@ -163,15 +163,27 @@
 				<imageExpression><![CDATA[$P{listaTeste}.get($V{numLinhas}.toBigInteger()-1)]]></imageExpression>
 			</image>
 		</band>
-		<band height="18"/>
 	</detail>
 	<pageFooter>
 		<band height="30" splitType="Stretch">
-			<subreport>
-				<reportElement x="0" y="0" width="555" height="30" uuid="ea78fc3a-01c8-4aff-a783-b37cf7afe838"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subRelatorioDataPagina.jasper"]]></subreportExpression>
-			</subreport>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="10" width="40" height="20" uuid="3b429358-91e9-4397-875c-e6b9060b43a7"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="9" width="555" height="1" uuid="55bbaba5-a9e1-4a42-b50e-60151b70a3de"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="227" y="10" width="100" height="20" uuid="98d2b0eb-bf13-4cfa-953d-e29059795547"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="10" width="80" height="20" uuid="c7c09350-1a8e-44f1-a86a-78b4668c05ae"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>
