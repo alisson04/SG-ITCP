@@ -3,6 +3,7 @@ package br.ifnmg.januaria.fernandes.itcp.bean;
 import br.ifnmg.januaria.fernandes.itcp.dao.AcompanhamentoEptDAO;
 import br.ifnmg.januaria.fernandes.itcp.domain.AcompanhamentoEpt;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -21,6 +22,11 @@ public class AcompanhamentoEptBean implements Serializable{
     
     public AcompanhamentoEpt salvarBean(AcompanhamentoEpt obj) {
         return dao.salvarDao(obj);
+    }
+    
+    //lista as ativiades por um intervalo de datas
+    public List<AcompanhamentoEpt> listarPorIntervaloBean(Date dataIni, Date dataFim) {
+        return dao.listarPorIntervaloDao(dataIni, dataFim);
     }
     
     public List<AcompanhamentoEpt> listarBean() {
