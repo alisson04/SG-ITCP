@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!--Utilizado em:
+        Relatórios.xhtml: Mostrar os tipos de visualizalçao de relatório disponíveis
+    -->
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="alDownload" required="true" method-signature="void actionListener()" />
+        <cc:attribute name="alEmTela" required="true" method-signature="void actionListener()" />     
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:panel closable="true" >
+            <p:outputPanel style="text-align:center;">
+                <p:outputLabel value="Como visualizar o relatório?" />
+                <p:separator />
+
+                <h:panelGrid columns="3">
+                    <p:outputPanel style="text-align:center;">
+                        <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                       actionListener="#{cc.attrs.alDownload}" >
+                            <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png" />
+                        </p:commandLink>
+                        <p:spacer width="10px" />
+
+                        <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
+                                       actionListener="#{cc.attrs.alEmTela}" >
+                            <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png" />
+                        </p:commandLink> 
+                    </p:outputPanel>
+                </h:panelGrid>
+            </p:outputPanel>
+        </p:panel>
+    </cc:implementation>
+</html>

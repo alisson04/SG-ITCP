@@ -74,7 +74,7 @@ ORDER BY e.`sigla`;]]>
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="25" uuid="9e636782-d1d5-4897-9fc4-f25b8a15a809"/>
 				<textElement textAlignment="Center">
-					<font size="20"/>
+					<font size="20" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sistema SIGITEC - Relatório de membros de EES]]></text>
 			</staticText>

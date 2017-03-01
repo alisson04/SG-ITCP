@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioContatos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5bad9650-7320-44ef-9050-7f1b4f407ea2">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="17"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="da3d9dba-e977-455e-b304-a2b43491573f">
 		<queryString>
 			<![CDATA[SELECT
@@ -111,162 +111,7 @@ ORDER BY Usuario.`nome`;]]>
 	<field name="Cargo" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<group name="eesGrupoLista">
-		<groupExpression><![CDATA[$F{Nome}]]></groupExpression>
-		<groupFooter>
-			<band height="16" splitType="Stretch"/>
-		</groupFooter>
-	</group>
-	<group name="teste">
-		<groupFooter>
-			<band height="137">
-				<staticText>
-					<reportElement x="444" y="21" width="111" height="20" uuid="d10fba14-4c69-464b-82c6-d3cd0bf8bb4e"/>
-					<box leftPadding="3">
-						<pen lineWidth="1.0"/>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<text><![CDATA[Telefone2]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="333" y="21" width="111" height="20" uuid="b767d998-ada4-4e54-a128-6e30a2d4b2cb"/>
-					<box leftPadding="3">
-						<pen lineWidth="1.0"/>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<text><![CDATA[Telefone]]></text>
-				</staticText>
-				<componentElement>
-					<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="41" width="555" height="20" isPrintWhenDetailOverflows="true" uuid="31b38b89-b14b-4935-80ec-3c8dff325fd2"/>
-					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical" ignoreWidth="true">
-						<datasetRun subDataset="dataset2" uuid="4bceaecc-f180-4b2d-9fbc-8d7d846bc6b3">
-							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-						</datasetRun>
-						<jr:listContents height="20" width="555">
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="333" y="0" width="111" height="20" uuid="97be1a67-5015-4b37-8952-913ae5fc6981"/>
-								<box leftPadding="3">
-									<pen lineWidth="1.0"/>
-									<topPen lineWidth="1.0"/>
-									<leftPen lineWidth="1.0"/>
-									<bottomPen lineWidth="1.0"/>
-									<rightPen lineWidth="1.0"/>
-								</box>
-								<textElement verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{Telefone2}]]></textFieldExpression>
-							</textField>
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="111" y="0" width="111" height="20" uuid="ef03be9f-6671-4da6-841b-85c809c066bb"/>
-								<box leftPadding="3">
-									<pen lineWidth="1.0"/>
-									<topPen lineWidth="1.0"/>
-									<leftPen lineWidth="1.0"/>
-									<bottomPen lineWidth="1.0"/>
-									<rightPen lineWidth="1.0"/>
-								</box>
-								<textElement verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{Nome}]]></textFieldExpression>
-							</textField>
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="222" y="0" width="111" height="20" uuid="61c17824-9024-4c3a-9512-7deb19d58636"/>
-								<box leftPadding="3">
-									<pen lineWidth="1.0"/>
-									<topPen lineWidth="1.0"/>
-									<leftPen lineWidth="1.0"/>
-									<bottomPen lineWidth="1.0"/>
-									<rightPen lineWidth="1.0"/>
-								</box>
-								<textElement verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
-							</textField>
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="444" y="0" width="111" height="20" uuid="0cf3b58d-b212-4e32-aa01-eeeb462724a0"/>
-								<box leftPadding="3">
-									<pen lineWidth="1.0"/>
-									<topPen lineWidth="1.0"/>
-									<leftPen lineWidth="1.0"/>
-									<bottomPen lineWidth="1.0"/>
-									<rightPen lineWidth="1.0"/>
-								</box>
-								<textElement verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{Telefone2}]]></textFieldExpression>
-							</textField>
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="111" height="20" uuid="31ad6b3f-321c-40d9-bdfd-7176d0c0a2a0"/>
-								<box leftPadding="3">
-									<pen lineWidth="1.0"/>
-									<topPen lineWidth="1.0"/>
-									<leftPen lineWidth="1.0"/>
-									<bottomPen lineWidth="1.0"/>
-									<rightPen lineWidth="1.0"/>
-								</box>
-								<textElement verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{Empreendimento}]]></textFieldExpression>
-							</textField>
-						</jr:listContents>
-					</jr:list>
-				</componentElement>
-				<staticText>
-					<reportElement x="111" y="21" width="111" height="20" uuid="458cac6e-747e-4ff8-a064-45b6f74b7e3f"/>
-					<box leftPadding="3">
-						<pen lineWidth="1.0"/>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<text><![CDATA[Nome]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="222" y="21" width="111" height="20" uuid="18c78d57-8331-41e0-8a56-1d9fd1106f48"/>
-					<box leftPadding="3">
-						<pen lineWidth="1.0"/>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<text><![CDATA[Email]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="0" y="21" width="111" height="20" uuid="2b07356d-5355-4bd3-a662-8353c4525d85"/>
-					<box leftPadding="3">
-						<pen lineWidth="1.0"/>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<text><![CDATA[Empreendimento]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="0" y="1" width="555" height="20" uuid="24cf621b-9e39-40c9-9894-94441e6a8773"/>
-					<box leftPadding="3">
-						<pen lineWidth="1.0"/>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font isBold="true" isUnderline="true"/>
-					</textElement>
-					<text><![CDATA[Contatos dos membros dos empreendimentos]]></text>
-				</staticText>
-			</band>
-		</groupFooter>
-	</group>
+	<group name="teste"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -290,7 +135,16 @@ ORDER BY Usuario.`nome`;]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="80" splitType="Stretch">
+		<band height="65" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="54" uuid="1fda3293-67b4-4120-a033-8dcbd4b69315"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subRelatorioContatosUsers.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="80">
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="20" uuid="7a247036-6d78-40f8-92a3-a9ce1ad9ae56"/>
 				<box leftPadding="3">
@@ -303,7 +157,7 @@ ORDER BY Usuario.`nome`;]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Contatos dos usuários]]></text>
+				<text><![CDATA[ROLA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="444" y="20" width="111" height="20" uuid="bc5d7729-0326-41f6-8f31-e325aaf9d5c7"/>
@@ -315,7 +169,7 @@ ORDER BY Usuario.`nome`;]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<text><![CDATA[Cargo]]></text>
+				<text><![CDATA[ROLA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="111" y="20" width="111" height="20" uuid="1227a81d-d710-4160-8224-bef9b0ca2672"/>
@@ -327,7 +181,7 @@ ORDER BY Usuario.`nome`;]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<text><![CDATA[Email]]></text>
+				<text><![CDATA[ROLA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="20" width="111" height="20" uuid="c8dba273-062f-4a97-b527-727555969bb7"/>
@@ -339,7 +193,7 @@ ORDER BY Usuario.`nome`;]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<text><![CDATA[Nome]]></text>
+				<text><![CDATA[ROLA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="222" y="20" width="111" height="20" uuid="9394e13a-4713-44dd-9447-21406f5b7bc0"/>
@@ -351,7 +205,7 @@ ORDER BY Usuario.`nome`;]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<text><![CDATA[Telefone]]></text>
+				<text><![CDATA[ROLA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="333" y="20" width="111" height="20" uuid="60c038cd-91f7-4963-8ed6-4bf569793caa"/>
@@ -363,11 +217,11 @@ ORDER BY Usuario.`nome`;]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<text><![CDATA[Telefone2]]></text>
+				<text><![CDATA[ROLA]]></text>
 			</staticText>
 			<componentElement>
 				<reportElement x="0" y="40" width="555" height="20" uuid="f02827cf-efc7-49ea-a3ce-239450b77a12"/>
-				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="datasetUsers" uuid="5f0764b5-f46d-4683-9a32-ae485138c615">
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
@@ -382,7 +236,7 @@ ORDER BY Usuario.`nome`;]]>
 								<rightPen lineWidth="1.0"/>
 							</box>
 							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$F{Nome}]]></textFieldExpression>
+							<textFieldExpression><![CDATA["ROLA" + $F{Nome}]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 							<reportElement stretchType="RelativeToBandHeight" x="111" y="0" width="111" height="20" uuid="097e4045-3cd4-4fc2-9a6b-a73b3a27ad77"/>
@@ -435,154 +289,6 @@ ORDER BY Usuario.`nome`;]]>
 					</jr:listContents>
 				</jr:list>
 			</componentElement>
-		</band>
-	</columnHeader>
-	<columnFooter>
-		<band height="80">
-			<componentElement>
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="40" width="555" height="20" isPrintWhenDetailOverflows="true" uuid="3d8e27c5-0597-4722-bb00-0580fb195c3a"/>
-				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical" ignoreWidth="true">
-					<datasetRun subDataset="dataset1" uuid="6f278146-fd52-4e5c-adab-d20ce2890fbb">
-						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					</datasetRun>
-					<jr:listContents height="20" width="555">
-						<textField>
-							<reportElement x="111" y="0" width="111" height="20" uuid="6aec09ba-31a8-4919-a3e6-50deb7be7a22"/>
-							<box leftPadding="3">
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="222" y="0" width="111" height="20" uuid="7e2305c1-a343-4ce6-b173-885ac6c7b3b3"/>
-							<box leftPadding="3">
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$F{Telefone}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="333" y="0" width="111" height="20" uuid="33c39698-d6fd-4984-bd40-d981c77c45b5"/>
-							<box leftPadding="3">
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$F{TelefoneAlternativo}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="0" y="0" width="111" height="20" uuid="f8963295-615c-4de3-8f0f-170aa1830dd0"/>
-							<box leftPadding="3">
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$F{Sigla}]]></textFieldExpression>
-						</textField>
-						<textField>
-							<reportElement x="444" y="0" width="111" height="20" uuid="9ce5f61a-c3a0-4762-bea9-0fd0fa4a049c"/>
-							<box leftPadding="3">
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textElement verticalAlignment="Middle"/>
-							<textFieldExpression><![CDATA[$F{Situacao}]]></textFieldExpression>
-						</textField>
-					</jr:listContents>
-				</jr:list>
-			</componentElement>
-			<staticText>
-				<reportElement x="111" y="20" width="111" height="20" uuid="320117f1-7e09-4f0d-bdb1-0197db98f154"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Email]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="222" y="20" width="111" height="20" uuid="66223762-e61d-429e-8f72-793af7e4c590"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Telefone]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="333" y="20" width="111" height="20" uuid="94a92249-93ea-4d73-980b-61d1459e0cf7"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[TelefoneAlternativo]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="20" width="111" height="20" uuid="84523e50-8640-4467-be3f-f180c117e8d8"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Sigla]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="444" y="20" width="111" height="20" uuid="f22e6fd6-db22-48dc-afa6-8d3db0fe2a6f"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Situacao]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="0" width="555" height="20" uuid="36737fd8-9049-49ac-9d67-637830952850"/>
-				<box leftPadding="3">
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[Contatos dos empreendimentos]]></text>
-			</staticText>
 		</band>
 	</columnFooter>
 	<pageFooter>
