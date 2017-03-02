@@ -40,34 +40,32 @@
                         </p:column>
 
                         <f:facet name="footer">
-                            <p:commandButton id="btnVisualizarusr" process="ListagemUsuarios" update=":frmListagemUsuarios:carDetail" 
-                                             icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarUsuariosView.objSelecionado == null}"/>
-                            <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicao"
-                                             process="ListagemUsuarios" oncomplete="PF('wVarEditarDialog').show()"
-                                             actionListener="#{ListarUsuariosView.reiniciaObj()}"/>
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="4"  layout="grid" >
+                                    <p:commandButton id="btnVisualizarusr" process="ListagemUsuarios" update=":frmListagemUsuarios:carDetail" 
+                                                     icon="OlhoPreto24-iconfinder" oncomplete="PF('carDialog').show()" title="Visualizar"
+                                                     disabled="#{ListarUsuariosView.objSelecionado == null}" />
+                                    <p:commandButton id="btnCadastrar"  icon="AddPreto24-iconfinder" update=":frmEdicao" title="Novo"
+                                                     process="ListagemUsuarios" oncomplete="PF('wVarEditarDialog').show()"
+                                                     actionListener="#{ListarUsuariosView.reiniciaObj()}"/>
 
-                            <p:commandButton id="btnInativarusr" actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}"
-                                             value="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.objSelecionado)}" 
-                                             icon="Refresh24-iconfinder" disabled="#{ListarUsuariosView.objSelecionado == null}" 
-                                             update=":frmListagemUsuarios" 
-                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                                <p:confirm header="ATENÇÃO!" message="Deseja confirmar a ação?" icon="Alert24-iconfinder"/>
-                            </p:commandButton>
+                                    <p:commandButton id="btnInativarusr" actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}"
+                                                     title="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.objSelecionado)}"
+                                                     icon="RefreshPreto24-iconfinder" disabled="#{ListarUsuariosView.objSelecionado == null}" 
+                                                     update=":frmListagemUsuarios" 
+                                                     onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
+                                        <p:confirm header="ATENÇÃO!" message="Deseja confirmar a ação?" icon="Alert24-iconfinder"/>
+                                    </p:commandButton>
 
-                            <p:commandButton id="btnExcluirrusr" value="Excluir" icon="Cross24-iconfinder" 
-                                             update="frmListagemUsuarios" disabled="#{ListarUsuariosView.objSelecionado == null}" 
-                                             actionListener="#{ListarUsuariosView.excluirView()}"
-                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert24-iconfinder" />
-                            </p:commandButton>
-                            <br/>
-                            <br/>
-                            <p:commandButton value="Gerar Relatório" actionListener="#{ListarUsuariosView.gerarRelatorio()}" 
-                                             immediate="true" ajax="false" onclick="this.form.target = '_blank'" 
-                                             update="frmListagemUsuarios" icon="Relatorio24-iconfinder" 
-                                             disabled="#{ListarUsuariosView.listaUsuarios.size() == 0}" />
+                                    <p:commandButton id="btnExcluirrusr" icon="XPreto24-iconfinder" title="Excluir"
+                                                     update="frmListagemUsuarios" disabled="#{ListarUsuariosView.objSelecionado == null}" 
+                                                     actionListener="#{ListarUsuariosView.excluirView()}"
+                                                     onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
+                                        <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                                   icon="Alert24-iconfinder" />
+                                    </p:commandButton>
+                                </p:panelGrid>
+                            </div>
                         </f:facet>
                     </p:dataTable>
 

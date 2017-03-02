@@ -12,7 +12,6 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,10 +27,6 @@ import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -65,8 +60,6 @@ public class inicioView extends MensagensGenericas implements Serializable {
     private boolean existeInc;
     private UploadArquivo arquivo;
 
-    private LineChartModel lineModel1;
-
     //PickList Usuario
     private UsuarioBean usuarioBean;
     private List<Usuario> listaUsuarios;
@@ -92,8 +85,6 @@ public class inicioView extends MensagensGenericas implements Serializable {
                         listaAtividades.get(i).getDataFim(),
                         "corDialog"));
             }
-
-            createLineModels();
 
             //Incubadora CONTRUTOR
             inc = new Incubadora();
@@ -292,59 +283,6 @@ public class inicioView extends MensagensGenericas implements Serializable {
         }
     }
 
-    public LineChartModel getLineModel1() {
-        try {
-            return lineModel1;
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
-    private void createLineModels() {
-        try {
-            lineModel1 = initLinearModel();
-            lineModel1.setTitle("Linear Chart");
-            lineModel1.setLegendPosition("e");
-            Axis yAxis = lineModel1.getAxis(AxisType.Y);
-            yAxis.setMin(0);
-            yAxis.setMax(10);
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
-    private LineChartModel initLinearModel() {
-        try {
-            LineChartModel model = new LineChartModel();
-
-            LineChartSeries series1 = new LineChartSeries();
-            series1.setLabel("Series 1");
-
-            series1.set(1, 2);
-            series1.set(2, 1);
-            series1.set(3, 3);
-            series1.set(4, 6);
-            series1.set(5, 8);
-
-            LineChartSeries series2 = new LineChartSeries();
-            series2.setLabel("Series 2");
-
-            series2.set(1, 6);
-            series2.set(2, 3);
-            series2.set(3, 2);
-            series2.set(4, 7);
-            series2.set(5, 9);
-
-            model.addSeries(series1);
-            model.addSeries(series2);
-
-            return model;
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-
-    //METODOS
     public void mudaAtvParaNaoExecutada(AtividadePlanejada at) {//Muda Status da Atividade para "Não executada"
         try {
             at.setStatus("Não iniciada");

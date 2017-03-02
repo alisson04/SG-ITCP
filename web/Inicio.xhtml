@@ -14,143 +14,122 @@
             </style>
 
             <h:form id="frmCadastro" >
-                <p:tabView id="tvGeral" dynamic="true" cache="true">
-                    <p:tab title="Minhas atividades">
-                        <p:dataTable emptyMessage="Nenhuma atividade cadastrada." value="#{inicioView.listaAtividades}"
-                                     filteredValue="#{inicioView.listaAtividadesFiltradas}" style="text-align: center"
-                                     var="atividadeCursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top">
+                <p:panel >
+                    
+                    <p:button id="myButton" title="My Button" icon="myIcon" styleClass="myButton" />
+                    
+                    <p:outputPanel style="text-align:center;">
+                        <p:outputLabel value="Atividades da Incubadora" />
+                        <p:separator />
+                    </p:outputPanel>
+                    <p:dataTable  emptyMessage="Nenhuma atividade cadastrada." value="#{inicioView.listaAtividades}"
+                                 filteredValue="#{inicioView.listaAtividadesFiltradas}" style="text-align: center"
+                                 var="atividadeCursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top">
 
-                            <p:column headerText="Nome" filterBy="#{atividadeCursor.nome}"
-                                      sortBy="#{atividadeCursor.nome}" filterMatchMode="contains">
-                                <h:outputText value="#{atividadeCursor.nome}"/>
-                            </p:column>
+                        <p:column headerText="Nome" filterBy="#{atividadeCursor.nome}"
+                                  sortBy="#{atividadeCursor.nome}" filterMatchMode="contains">
+                            <h:outputText value="#{atividadeCursor.nome}"/>
+                        </p:column>
 
-                            <p:column headerText="Data início" styleClass="colunasTabela100PX" >
-                                <h:outputText value="#{atividadeCursor.dataInicio}" >
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-                            </p:column>
+                        <p:column headerText="Data início" styleClass="colunasTabela100PX" >
+                            <h:outputText value="#{atividadeCursor.dataInicio}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
 
-                            <p:column headerText="Data fim" styleClass="colunasTabela100PX" >
-                                <h:outputText value="#{atividadeCursor.dataFim}" >
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-                            </p:column>
+                        <p:column headerText="Data fim" styleClass="colunasTabela100PX" >
+                            <h:outputText value="#{atividadeCursor.dataFim}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
 
-                            <p:column headerText="Situação"  filterBy="#{atividadeCursor.status}" filterMatchMode="exact" 
-                                      styleClass="colunasTabela200PX" >
-                                <f:facet name="filter">
-                                    <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                        <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" />
-                                        <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" />
-                                        <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" />
-                                    </p:selectOneMenu>
-                                </f:facet>
-
-                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagRed.png"
-                                                rendered="#{atividadeCursor.status == 'Não iniciada'}" />
-                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagYellow.png"
-                                                rendered="#{atividadeCursor.status == 'Iniciada'}" />
-                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagGreen.png"
-                                                rendered="#{atividadeCursor.status == 'Finalizada'}" />
-                            </p:column>
-
-                            <p:column headerText="Mudar situação para:" style="text-align: center;" styleClass="colunasTabela200PX" >
-                                <p:commandButton id="btnNaoIniciada" title="Não iniciada" update="frmCadastro" 
-                                                 style="background-image:none;background-color:white;"
-                                                 rendered="#{atividadeCursor.status != 'Não iniciada'}"
-                                                 actionListener="#{inicioView.mudaAtvParaNaoExecutada(atividadeCursor)}" 
-                                                 icon="FlagRed24-iconfinder" 
-                                                 onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
-
-                                <p:commandButton title="Iniciada"  update="frmCadastro"
-                                                 style="background-image:none;background-color:white;"
-                                                 rendered="#{atividadeCursor.status != 'Iniciada'}"
-                                                 actionListener="#{inicioView.mudaAtvParaEmExecução(atividadeCursor)}"
-                                                 icon="FlagYellow24-iconfinder" 
-                                                 onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
-
-                                <p:commandButton title="Finalizada"  update="frmCadastro"
-                                                 style="background-image:none;background-color:white;"
-                                                 rendered="#{atividadeCursor.status != 'Finalizada'}"
-                                                 actionListener="#{inicioView.mudaAtvParaExecutada(atividadeCursor)}"
-                                                 icon="FlagGreen24-iconfinder" 
-                                                 onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
-                            </p:column>
-
-                            <p:column headerText="Lançar horas trabalhadas" style="text-align: center;" 
-                                      styleClass="colunasTabela100PX" >
-                                <p:commandLink title="Lançar horas"  update="frmCadastro frmLancarHoras" actionListener="#{
-                                               inicioView.setaPrimaryKeyHoras(atividadeCursor, modeloGeralView.usuarioLogado)}"
-                                               oncomplete="PF('wVLancarHorasDialog').show()"
-                                               rendered="#{atividadeCursor.status == 'Iniciada'}" >
-                                    <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Clock.png" />
-                                </p:commandLink>
-                                
-                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Exclamation.png" 
-                                                rendered="#{atividadeCursor.status != 'Iniciada'}"
-                                                title="Atividade não esta iniciada!" />
-                            </p:column>
-
-                            <p:column headerText="Atribuir atividade" style="text-align: center;" 
-                                      styleClass="colunasTabela100PX" >
-                                <p:commandLink title="Atribuir atividade"  update="frmCadastro frmAtribuirAtv"
-                                               actionListener="#{inicioView.configuraPickList(atividadeCursor)}"
-                                               oncomplete="PF('wVAtribuirAtvDialog').show()" 
-                                               rendered="#{atividadeCursor.status != 'Finalizada'}" >
-                                    <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32AddUser.png" />
-                                </p:commandLink>
-                                
-                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Exclamation.png" 
-                                                rendered="#{atividadeCursor.status == 'Finalizada'}" 
-                                                title="Atividade está finalizada!" />
-                            </p:column>
-
-                            <f:facet name="footer">
-                                <p:outputLabel value="Atividades que iniciam a partir de " />
-                                <p:calendar value="#{inicioView.dataFiltroInicioAtv}" locale="pt" navigator="true" 
-                                            pattern="dd/MM/yyyy" size="10" mask="true" >
-                                    <p:ajax event="dateSelect" listener="#{inicioView.filtraAtividadesPorData}" 
-                                            update="frmCadastro" />
-                                </p:calendar>
-
-                                <p:outputLabel value=" e finalizam até" />
-                                <p:calendar value="#{inicioView.dataFiltroFimAtv}" locale="pt" navigator="true" 
-                                            pattern="dd/MM/yyyy" size="10" mask="true" >
-                                    <p:ajax event="dateSelect" listener="#{inicioView.filtraAtividadesPorData}" 
-                                            update="frmCadastro" />
-                                </p:calendar>
+                        <p:column headerText="Situação"  filterBy="#{atividadeCursor.status}" filterMatchMode="exact" 
+                                  styleClass="colunasTabela200PX" >
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                    <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" />
+                                    <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" />
+                                    <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" />
+                                </p:selectOneMenu>
                             </f:facet>
-                        </p:dataTable>
-                    </p:tab>
 
-                    <p:tab title="Calendário de atividades da incubadora">
-                        <h:panelGrid columnClasses="AlturaLinhas" >
-                            <p:schedule id="schedule" value="#{inicioView.eventModel}" widgetVar="myschedule" timeZone="GMT+2" 
-                                        locale="pt" tooltip="true" >
-                                <p:ajax event="eventSelect" listener="#{inicioView.onEventSelect}" update="eventDetails" 
-                                        oncomplete="PF('eventDialog').show();" />
-                            </p:schedule>
-                        </h:panelGrid>
+                            <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagRed.png"
+                                            rendered="#{atividadeCursor.status == 'Não iniciada'}" />
+                            <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagYellow.png"
+                                            rendered="#{atividadeCursor.status == 'Iniciada'}" />
+                            <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32FlagGreen.png"
+                                            rendered="#{atividadeCursor.status == 'Finalizada'}" />
+                        </p:column>
 
-                        <p:dialog widgetVar="eventDialog" header="Detalhes da atividade" showEffect="clip" hideEffect="clip" 
-                                  closeOnEscape="true" resizable="false">
-                            <h:panelGrid id="eventDetails" columns="2">
-                                <h:outputText value="Nome: " />
-                                <h:outputText value="#{inicioView.event.title}" />
-                                <h:outputText value="Data de início: " />
-                                <h:outputText value="#{inicioView.event.startDate}" >
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-                                <h:outputText value="Data de fim: " />
-                                <h:outputText value="#{inicioView.event.endDate}" >
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-                            </h:panelGrid>
-                        </p:dialog>
-                    </p:tab>
-                </p:tabView>
+                        <p:column headerText="Mudar situação para:" style="text-align: center;" styleClass="colunasTabela200PX" >
+                            <p:commandButton id="btnNaoIniciada" title="Não iniciada" update="frmCadastro" 
+                                             style="background-image:none;background-color:white;"
+                                             rendered="#{atividadeCursor.status != 'Não iniciada'}"
+                                             actionListener="#{inicioView.mudaAtvParaNaoExecutada(atividadeCursor)}" 
+                                             icon="FlagRed24-iconfinder" 
+                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
+
+                            <p:commandButton title="Iniciada"  update="frmCadastro"
+                                             style="background-image:none;background-color:white;"
+                                             rendered="#{atividadeCursor.status != 'Iniciada'}"
+                                             actionListener="#{inicioView.mudaAtvParaEmExecução(atividadeCursor)}"
+                                             icon="FlagYellow24-iconfinder" 
+                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
+
+                            <p:commandButton title="Finalizada"  update="frmCadastro"
+                                             style="background-image:none;background-color:white;"
+                                             rendered="#{atividadeCursor.status != 'Finalizada'}"
+                                             actionListener="#{inicioView.mudaAtvParaExecutada(atividadeCursor)}"
+                                             icon="FlagGreen24-iconfinder" 
+                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
+                        </p:column>
+
+                        <p:column headerText="Lançar horas trabalhadas" style="text-align: center;" 
+                                  styleClass="colunasTabela100PX" >
+                            <p:commandLink title="Lançar horas"  update="frmCadastro frmLancarHoras" actionListener="#{
+                                           inicioView.setaPrimaryKeyHoras(atividadeCursor, modeloGeralView.usuarioLogado)}"
+                                           oncomplete="PF('wVLancarHorasDialog').show()"
+                                           rendered="#{atividadeCursor.status == 'Iniciada'}" >
+                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Clock.png" />
+                            </p:commandLink>
+
+                            <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Exclamation.png" 
+                                            rendered="#{atividadeCursor.status != 'Iniciada'}"
+                                            title="Atividade não esta iniciada!" />
+                        </p:column>
+
+                        <p:column headerText="Atribuir atividade" style="text-align: center;" 
+                                  styleClass="colunasTabela100PX" >
+                            <p:commandLink title="Atribuir atividade"  update="frmCadastro frmAtribuirAtv"
+                                           actionListener="#{inicioView.configuraPickList(atividadeCursor)}"
+                                           oncomplete="PF('wVAtribuirAtvDialog').show()" 
+                                           rendered="#{atividadeCursor.status != 'Finalizada'}" >
+                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32AddUser.png" />
+                            </p:commandLink>
+
+                            <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Exclamation.png" 
+                                            rendered="#{atividadeCursor.status == 'Finalizada'}" 
+                                            title="Atividade está finalizada!" />
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:outputLabel value="Atividades que iniciam a partir de " />
+                            <p:calendar value="#{inicioView.dataFiltroInicioAtv}" locale="pt" navigator="true" 
+                                        pattern="dd/MM/yyyy" size="10" mask="true" >
+                                <p:ajax event="dateSelect" listener="#{inicioView.filtraAtividadesPorData}" 
+                                        update="frmCadastro" />
+                            </p:calendar>
+
+                            <p:outputLabel value=" e finalizam até" />
+                            <p:calendar value="#{inicioView.dataFiltroFimAtv}" locale="pt" navigator="true" 
+                                        pattern="dd/MM/yyyy" size="10" mask="true" >
+                                <p:ajax event="dateSelect" listener="#{inicioView.filtraAtividadesPorData}" 
+                                        update="frmCadastro" />
+                            </p:calendar>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
 
                 <!--CADASTRO DE INCUBADORA-->
                 <p:dialog closable="false" draggable="false" resizable="false" visible="true"

@@ -44,6 +44,12 @@
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons/add.png") !important;
 }
 
+.GrupoPreto32-iconfinder {
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons32/32GrupoPreto.png") !important;
+    height: 32px;
+    width: 32px;
+}
+
 .Information32-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons32/Information32.png") !important;   
     height: 32px;

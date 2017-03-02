@@ -44,7 +44,7 @@
     <!-- Tema do Prime Faces -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>south-street</param-value>
+        <param-value>aristo</param-value>
     </context-param>
     
     <!-- Botões do prime Faces -->

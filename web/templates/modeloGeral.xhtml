@@ -144,60 +144,47 @@
             <p:layoutUnit position="center">
                 <h:form id="frmModeloGeral">
                     <p:menubar style="ui-button" styleClass="textoMenuPrincipal semMargin">
-                        <p:menuitem value="Início" icon="Location24-iconfinder" 
-                                    action="/Inicio.xhtml?faces-redirect=true" style="ui-widget"/>
+                        <p:menuitem value="Início" icon="CasaPreto24-iconfinder" 
+                                    action="/Inicio.xhtml?faces-redirect=true" />
 
-                        <p:menuitem value="teste" icon="Location24-iconfinder" 
-                                    action="/teste.xhtml?faces-redirect=true" style="ui-widget"/>
+                        <p:submenu label="Usuários" icon="UserPreto24-iconfinder" >
+                            <p:menuitem value="Cadastro e edições" action="/ListarUsuarios.xhtml?faces-redirect=true" />
 
-                        <p:submenu label="Usuários" icon="Users24-iconfinder">
-                            <p:menuitem value="Cadastro e edições" icon="SaveEdit24-iconfinder" 
-                                        action="/ListarUsuarios.xhtml?faces-redirect=true" />
-
-                            <p:menuitem value="Horários de trabalho" icon="Clock22-iconfinder" 
-                                        action="/HorariosDeTrabalho.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Horários de trabalho" action="/HorariosDeTrabalho.xhtml?faces-redirect=true" />
                         </p:submenu>
 
-                        <p:submenu label="Incubadora" icon="Home24-iconfinder">
-                            <p:menuitem value="Parceiros" icon="Parceria24-iconfinder" 
-                                        action="/ListarParceiros.xhtml?faces-redirect=true"/>
+                        <p:submenu label="Incubadora" icon="GrupoPreto24-iconfinder" >
+                            <p:menuitem value="Parceiros" action="/ListarParceiros.xhtml?faces-redirect=true"/>
 
-                            <p:menuitem value="Configurações" icon="Gear24-iconfinder" 
-                                        action="/ConfigurarSistema.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Configurações" action="/ConfigurarSistema.xhtml?faces-redirect=true" />
                         </p:submenu>
 
-                        <p:submenu label="Empreendimentos" icon="Empreendimento24-iconfinder">
-                            <p:menuitem value="Cadastro e edições" icon="SaveEdit24-iconfinder" 
-                                        action="/ListarEmpreendimento.xhtml?faces-redirect=true" />
+                        <p:submenu label="Empreendimentos" icon="PredioPreto24-iconfinder">
+                            <p:menuitem value="Cadastro e edições" action="/ListarEmpreendimento.xhtml?faces-redirect=true" />
 
-                            <p:menuitem value="Membros" icon="Membros24-iconfinder" 
-                                        action="/ListarMembroEmpreendimento.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Membros" action="/ListarMembroEmpreendimento.xhtml?faces-redirect=true" />
 
-                            <p:menuitem value="Acompanhamentos" icon="Acompanhamento24-iconfinder" 
-                                        action="/ListarAcompanhamentos.xhtml?faces-redirect=true"/>
+                            <p:menuitem value="Acompanhamentos" action="/ListarAcompanhamentos.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
-                        <p:submenu label="Indicadores" icon="Indicador24-iconfinder">
-                            <p:menuitem value="Cadastro e edições" icon="SaveEdit24-iconfinder" 
-                                        action="/IndicadoresMaturidade.xhtml?faces-redirect=true" /> 
+                        <p:submenu label="Indicadores" icon="IndicadorPreto24-iconfinder">
+                            <p:menuitem value="Cadastro e edições" action="/IndicadoresMaturidade.xhtml?faces-redirect=true" /> 
 
-                            <p:menuitem value="Relatórios" icon="Relatorio24-iconfinder" 
-                                        action="/Relatorios.xhtml?faces-redirect=true" /> 
+                            <p:menuitem value="Relatórios" action="/Relatorios.xhtml?faces-redirect=true" /> 
                         </p:submenu>
 
-                        <p:submenu label="Planos de ação" icon="Grafico24-iconfinder">
-                            <p:menuitem value="Novo plano" icon="Grafico24-iconfinder" action="/NovoPlano.xhtml?faces-redirect=true"/>
+                        <p:submenu label="Planos de ação" icon="PlanoPreto24-iconfinder">
+                            <p:menuitem value="Novo plano" action="/NovoPlano.xhtml?faces-redirect=true"/>
 
-                            <p:menuitem value="Edições" icon="Grafico24-iconfinder" 
+                            <p:menuitem value="Edições" 
                                         action="/ListarPlanoAcao.xhtml?faces-redirect=true"/>
 
-                            <p:menuitem value="Metas" icon="Target24-iconfinder" action="/ListarMetas.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Metas" action="/ListarMetas.xhtml?faces-redirect=true" />
 
-                            <p:menuitem value="Atividades" icon="Ideia24-iconfinder" 
-                                        action="/ListarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
+                            <p:menuitem value="Atividades" action="/ListarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
-                        <p:menuitem value="Lista de contatos" icon="Telephone24-iconfinder" 
+                        <p:menuitem value="Lista de contatos" icon="TelefonePreto24-iconfinder"
                                     action="/ListaContatos.xhtml?faces-redirect=true" />
 
                         <f:facet name="options" >

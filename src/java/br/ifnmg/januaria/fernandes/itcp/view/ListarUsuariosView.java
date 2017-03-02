@@ -39,20 +39,7 @@ public class ListarUsuariosView extends MensagensGenericas implements Serializab
         }
     }
 
-    //METODOS
-    public void gerarRelatorio() {
-        try {
-            if (!listaUsuarios.isEmpty()) {
-                System.out.println("Não Filtrados");
-                bean.gerarRelatorio(listaUsuarios);
-            } else {
-                msgGrowlErroCustomizavel(null, "Não ha parceiros listados");
-            }
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
-    
+    //METODOS    
     public String geraMsgGenericaCampoObrigatorioView() {
         try {
             return msgGenericaCampoObrigatorio();

@@ -1,5 +1,5 @@
 .tamanhoTexto .ui-widget {
-    font-size: 20px !important;
+    font-size: 30px !important;
 }
 
 .styleGreen {    
@@ -33,12 +33,10 @@
 
 .ui-button {
     font-size: 20px !important;
-    align-items: center;
 }
 
 .ui-button-text{
-    margin-top: 5px;
-    margin-bottom: 0px;
+    font-size: 20px !important;
 }
 
 .texto-centralizado {
