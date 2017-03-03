@@ -8,8 +8,12 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmListagemUsuarios" >
-                <p:panel header="Usuários cadastrados" >
-                    <!--Listagem de usuários-->
+                <p:panel >
+                <!--Listagem de usuários-->
+                    <p:outputPanel style="text-align:center;">
+                        <p:outputLabel value="Atividades da Incubadora" />
+                        <p:separator />
+                    </p:outputPanel>
                     <p:dataTable id="ListagemUsuarios" emptyMessage="Nenhum usuário encontrado." selectionMode="single"
                                  value="#{ListarUsuariosView.listaUsuarios}" 
                                  filteredValue="#{ListarUsuariosView.listaUsuariosFiltrados}" 
@@ -72,7 +76,7 @@
                     <!--Mostrar usuários-->
                     <p:dialog id="diaShowUsr" widgetVar="carDialog" showEffect="clip" hideEffect="clip" 
                               header="Informações do usuário" modal="true" resizable="false" draggable="false"   appendTo="@(body)" 
-                              styleClass="corDialog" style="text-align:center;" >
+                              style="text-align:center;" >
                         <p:panelGrid  id="carDetail" columns="2" columnClasses="label,value" >
                             <h:outputText value="Nome: " />
                             <h:outputText value="#{ListarUsuariosView.objSelecionado.nome}" />
@@ -114,17 +118,9 @@
 
             <!-- EDITAR USUÁRIO-->
             <p:dialog id="dlgEditar" header="Novo usuário " widgetVar="wVarEditarDialog" showEffect="clip" hideEffect="clip" 
-                      appendTo="@(body)" styleClass="corDialog" resizable="false" draggable="false" modal="true" dynamic="true" >
+                      appendTo="@(body)" resizable="false" draggable="false" modal="true" dynamic="true" >
                 <h:form id="frmEdicao">
                     <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
-                        <p:fileUpload id="upload" label="Selecinar foto de perfil" mode="advanced" 
-                                      update="frmEdicao" fileUploadListener="#{ListarUsuariosView.uploadAction}" auto="true"/>
-                        <p:panel >
-                            <p:graphicImage id="ftmImagemTopoGeral" width="150px" height="150px" styleClass="semMargin"
-                                            value="./image/#{ListarUsuariosView.objSalvar.fotoPerfil}"/>
-                        </p:panel>
-                        <p:spacer height="10px"/>
-
                         <p:panel id="panel" style="margin-bottom:20px">
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                 <p:outputLabel for="nome" value="Nome: " />
@@ -191,13 +187,13 @@
                             <p:outputLabel value="* Campos obrigatórios" />
                         </p:panel>
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarUsuariosView.salvarView()}" 
-                                         icon="Save24-iconfinder" update="frmEdicao, frmListagemUsuarios" 
+                                         icon="SalvarPreto24-iconfinder" update="frmEdicao, frmListagemUsuarios" 
                                          onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                        <p:commandButton value="Cancelar" type="button" icon="XPreto24-iconfinder" 
                                          onclick="PF('wVarEditarDialog').hide()" />
                     </p:outputPanel>
                 </h:form>

@@ -331,6 +331,12 @@
     background-position: 0px 0x;
 }
 
+.SalvarPreto24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24SalvarPreto.png") !important;
+    height: 24px;
+    width: 24px;
+}
+
 .See24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24See.png") !important;
     height: 24px;
@@ -369,5 +375,5 @@
 .XPreto24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24XPreto.png") !important;
     height: 24px;
-    width: 34px;
+    width: 24px;
 }

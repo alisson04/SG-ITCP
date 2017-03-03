@@ -16,28 +16,16 @@
 
             <h:form id="frmHorarios" >
                 <p:panelGrid columns="2" styleClass="semBorda" >
-                    <p:panel header="Todos os horários" >
+                    <p:panel >
+                        <p:outputPanel style="text-align:center;">
+                            <p:outputLabel value="Todos os horários de trabalho" />
+                            <p:separator />
+                        </p:outputPanel>
+
                         <p:dataTable id="listaHorarios" emptyMessage="Nenhum horário cadastrado." 
                                      value="#{HorarioTrabalhoView.listaHorarios}" 
                                      filteredValue="#{HorarioTrabalhoView.listaHorariosFiltrados}" style="text-align: center"
                                      var="horarioCursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top">
-
-                            <f:facet name="footer" >
-                                <h:commandLink id="pdfHoras">
-                                    <p:graphicImage name="icons24/Pdf24.png" width="24"/>
-                                    <p:dataExporter type="pdf" target="listaHorarios" fileName="Metas" encoding="ISO-8859-1" />
-                                </h:commandLink>
-
-                                <p:spacer height="30px"/>
-
-                                <h:commandLink id="xlsHoras">
-                                    <p:graphicImage name="icons24/Xls24.png" width="24"/>
-                                    <p:dataExporter type="xls" target="listaHorarios" fileName="Metas" />
-                                </h:commandLink>
-
-                                <p:tooltip for="pdfHoras" value="Exportar para PDF" />
-                                <p:tooltip for="xlsHoras" value="Exportar para Excel" />
-                            </f:facet>
 
                             <p:column headerText="Nome" filterBy="#{HorarioTrabalhoView.abreviaNomeUser(horarioCursor)}"
                                       sortBy="#{HorarioTrabalhoView.abreviaNomeUser(horarioCursor)}" filterMatchMode="contains">
@@ -84,71 +72,93 @@
                             </p:column>
 
                             <f:facet name="footer">
+                                <p:panel header="Meus horários" toggleable="true" collapsed="true"  >
+                                    <h:panelGrid columns="6" >
+
+                                        <p:separator/>
+                                        <p:outputLabel value="Domingo:" style="width: 50%" />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.domIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:outputLabel value="até " />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.domFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:separator/>
+
+
+                                        <p:separator/>
+                                        <p:outputLabel value="Segunda:" />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.segIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:outputLabel value="até " />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.segFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:separator/>
+
+
+                                        <p:separator/>
+                                        <p:outputLabel value="Terça:" />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.terIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:outputLabel value="até " />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.terFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:separator/>
+
+
+                                        <p:separator/>
+                                        <p:outputLabel value="Quarta:" />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.quaIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:outputLabel value="até " />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.quaFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:separator/>
+
+
+                                        <p:separator/>
+                                        <p:outputLabel value="Quinta:" />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.quiIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:outputLabel value="até " />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.quiFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:separator/>
+
+
+                                        <p:separator/>
+                                        <p:outputLabel value="Sexta:" />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.sexIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:outputLabel value="até " />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.sexFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:separator/>
+
+
+                                        <p:separator/>
+                                        <p:outputLabel value="Sábado" />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.sabIni}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:outputLabel value="até " />
+                                        <p:calendar value="#{HorarioTrabalhoView.obj.sabFim}" pattern="HH:mm" timeOnly="true" locale="pt"
+                                                    size="4"/>
+                                        <p:separator/>
+                                    </h:panelGrid>
+
+                                    <h:outputText value="Horas por semana: " />
+
+                                    <h:outputText value="#{HorarioTrabalhoView.geraHoras(HorarioTrabalhoView.obj)}" />
+
+                                    <p:separator/>
+                                    <p:commandButton icon="SalvarPreto24-iconfinder" value="Salvar" update="frmHorarios" 
+                                                     actionListener="#{HorarioTrabalhoView.salvar()}"
+                                                     onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"/>
+                                </p:panel>
                             </f:facet>
                         </p:dataTable>
                     </p:panel>
 
-                    <p:panel header="Meus horários" toggleable="true" collapsed="true">
-                        <h:panelGrid columns="4" >
-                            <p:outputLabel value="Domingo:" />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.domIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-                            <p:outputLabel value="até " />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.domFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
 
-                            <p:outputLabel value="Segunda:" />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.segIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-                            <p:outputLabel value="até " />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.segFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-
-                            <p:outputLabel value="Terça:" />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.terIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-                            <p:outputLabel value="até " />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.terFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-
-                            <p:outputLabel value="Quarta:" />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.quaIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-                            <p:outputLabel value="até " />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.quaFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-
-                            <p:outputLabel value="Quinta:" />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.quiIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-                            <p:outputLabel value="até " />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.quiFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-
-                            <p:outputLabel value="Sexta:" />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.sexIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-                            <p:outputLabel value="até " />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.sexFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-
-                            <p:outputLabel value="Sábado" />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.sabIni}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-                            <p:outputLabel value="até " />
-                            <p:calendar value="#{HorarioTrabalhoView.obj.sabFim}" pattern="HH:mm" timeOnly="true" locale="pt"
-                                        size="4"/>
-                        </h:panelGrid>
-
-                        <h:outputText value="Horas por semana: " />
-
-                        <h:outputText value="#{HorarioTrabalhoView.geraHoras(HorarioTrabalhoView.obj)}" />
-
-                        <p:separator/>
-                        <p:commandButton icon="Save24-iconfinder" value="Salvar" update="frmHorarios" 
-                                         actionListener="#{HorarioTrabalhoView.salvar()}"
-                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"/>
-                    </p:panel>
                 </p:panelGrid>
             </h:form>
         </ui:define>
