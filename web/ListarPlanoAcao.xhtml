@@ -6,29 +6,33 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/modeloGeral.xhtml">
-
         <ui:define name="conteudo">
             <h:form id="frmListagemPlanosAcao" >
                 <!--Listagem de planos de ação-->
-                <p:panel id="panelListagemPlanosAcao" header="Planos de ação cadastrados" rendered="#{modeloGeralView.existeEptBd}" >
+                <p:panel id="panelListagemPlanosAcao" rendered="#{modeloGeralView.existeEptBd}" >
+                    <p:outputPanel style="text-align:center;">
+                        <p:outputLabel value="Planos de ação cadastrados" />
+                        <p:separator />
+                    </p:outputPanel>
+
                     <p:dataTable id="dtListagemPlanosAcao" emptyMessage="Nenhum plano de ação cadastrado." var="planoAcaoCursor"
                                  value="#{ListarPlanoAcaoView.listaPlanoAcao}" filteredValue="#{ListarPlanoAcaoView.listaPlanoAcaoFiltrados}" 
                                  selectionMode="single" selection="#{ListarPlanoAcaoView.planoSelecionado}" paginatorPosition="top"
-                                 rowKey="#{planoAcaoCursor.id}"  widgetVar="varGlobal" rows="10" paginator="true" >
+                                 rowKey="#{planoAcaoCursor.id}"  widgetVar="varGlobal" rows="10" paginator="true"  >
 
-                        <p:ajax event="rowSelect" update=":frmListagemPlanosAcao"/>
+                        <p:ajax event="rowSelect" update="frmListagemPlanosAcao"/>
 
                         <p:column headerText="Nome" filterBy="#{planoAcaoCursor.nome}" filterMatchMode="contains">
                             <h:outputText value="#{planoAcaoCursor.nome}"/>
                         </p:column>
 
-                        <p:column headerText="Data de início" filterBy="#{planoAcaoCursor.dataInicio}" filterMatchMode="contains">
+                        <p:column headerText="Data de início" >
                             <h:outputText value="#{planoAcaoCursor.dataInicio}" >
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
 
-                        <p:column headerText="Data de fim" filterBy="#{planoAcaoCursor.dataFim}" filterMatchMode="contains">
+                        <p:column headerText="Data de fim" >
                             <h:outputText value="#{planoAcaoCursor.dataFim}" >
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
@@ -47,51 +51,28 @@
                         </p:column>
 
                         <f:facet name="footer">
-                            <p:commandButton id="btnVisualizarPlanoAcao" process="frmListagemPlanosAcao" 
-                                             update=":frmListagemPlanosAcao" icon="Find24-iconfinder" value="Visualizar" 
-                                             oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarPlanoAcaoView.planoSelecionado == null}"  />
+                            <div class="ui-fluid">
+                                <p:panelGrid id="cbtnsPlano" columns="3"  layout="grid" >
+                                    <p:commandButton id="btnCadastrar" title="Cadastrar" icon="AddPreto24-iconfinder" update="frmEdicaoPlano"
+                                                     oncomplete="PF('wVarDlgEditar').show()"
+                                                     actionListener="#{ListarPlanoAcaoView.btnNovoPlano()}"/>
 
-                            <p:commandButton id="btnEditarPlano" value="Editar" icon="Edit24-iconfinder" update=":frmEdicaoPlano"
-                                             disabled="#{ListarPlanoAcaoView.planoSelecionado == null}" process="dtListagemPlanosAcao"
-                                             oncomplete="PF('wVarDlgEditar').show()" 
-                                             actionListener="#{ListarPlanoAcaoView.transfereObj()}"/>
+                                    <p:commandButton id="btnEditarPlano" title="Editar" icon="Edit24-iconfinder" update=":frmEdicaoPlano"
+                                                     disabled="#{ListarPlanoAcaoView.planoSelecionado == null}" process="dtListagemPlanosAcao"
+                                                     oncomplete="PF('wVarDlgEditar').show()" 
+                                                     actionListener="#{ListarPlanoAcaoView.btnEditarPlano()}"/>
 
-                            <p:commandButton id="btnExcluirPlano"  update=":frmListagemPlanosAcao" value="Excluir" 
-                                             icon="Cross24-iconfinder" actionListener="#{ListarPlanoAcaoView.excluirView()}"
-                                             disabled="#{ListarPlanoAcaoView.planoSelecionado == null}" 
-                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert24-iconfinder" />
-                            </p:commandButton>
+                                    <p:commandButton id="btnExcluirPlano"  update=":frmListagemPlanosAcao" title="Excluir" 
+                                                     icon="XPreto24-iconfinder" actionListener="#{ListarPlanoAcaoView.excluirView()}"
+                                                     disabled="#{ListarPlanoAcaoView.planoSelecionado == null}" 
+                                                     onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
+                                        <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                                   icon="Alert24-iconfinder" />
+                                    </p:commandButton>
+                                </p:panelGrid>
+                            </div>
                         </f:facet>
                     </p:dataTable>
-
-                    <p:dialog id="diaShowUsr" header="Informações do plano" widgetVar="carDialog" showEffect="clip" hideEffect="clip" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" style="text-align:center;" >
-                        <p:outputPanel id="carDetail">
-                            <p:panelGrid  columns="2" columnClasses="label,value" >
-                                <h:outputText value="Nome: " />                            
-                                <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.nome}" />
-                                <h:outputText value="Empreendimento: " />
-                                <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.empreendimento.nome}" />
-                                <h:outputText value="Data de início: " />
-                                <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.dataInicio}" >
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-
-                                <h:outputText value="Data de fim: " />
-                                <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.dataFim}" >
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-
-                                <h:outputText value="Descrição: " />
-                                <p:scrollPanel mode="native" style="width:435px;height:100px">
-                                    <h:outputText value="#{ListarPlanoAcaoView.planoSelecionado.descricao}" />
-                                </p:scrollPanel>
-                            </p:panelGrid>
-                        </p:outputPanel>
-                    </p:dialog>
                 </p:panel>
 
                 <!--Aparece caso não tenha ept cadastrado-->
@@ -112,42 +93,284 @@
 
             <!--Editar e cadastrar planos-->
             <p:dialog id="dlgEditarPlano" header="Plano de ação" widgetVar="wVarDlgEditar" showEffect="clip" hideEffect="clip" 
-                      modal="true" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
+                      modal="true" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" closable="false" >
                 <h:form id="frmEdicaoPlano" >
+                    <p:tabView  id="tabGeral" activeIndex="#{ListarPlanoAcaoView.tabview.activeIndex}" style="width: 1000px" >
+                        <p:ajax event="tabChange" listener="#{ListarPlanoAcaoView.onTabChange}" update="frmEdicaoPlano" />
+
+                        <!--TAB Cadastro de Plano-->
+                        <p:tab id="tabPlano" title="Plano de ação" >
+                            <p:outputPanel style="text-align:center;">
+                                <p:outputLabel value="Informações do plano de ação" />
+                                <p:separator />
+
+                                <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
+                                    <p:outputLabel for="empreendimento" value="Empreendimento: "/>
+                                    <p:selectOneMenu id="empreendimento" required="true"
+                                                     requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
+                                                     value="#{ListarPlanoAcaoView.objSalvar.empreendimento}" style="width:455px"
+                                                     converter="generic">
+                                        <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" 
+                                                       itemLabel="#{ept.sigla}" itemValue="#{ept}" />
+                                    </p:selectOneMenu>
+                                    <p:message for="empreendimento"/>
+
+                                    <p:outputLabel for="nome" value="Nome:" />
+                                    <p:inputText id="nome" value="#{ListarPlanoAcaoView.objSalvar.nome}" required="true"
+                                                 requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
+                                                 size="45" maxlength="45"/>
+                                    <p:message for="nome" />
+
+                                    <p:outputLabel for="dataInicio" value="Data de início: " />
+                                    <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.objSalvar.dataInicio}" 
+                                                pattern="dd/MM/yyyy" size="45" mask="true" locale="pt" required="true" 
+                                                requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
+                                    <p:message for="dataInicio"/>
+
+                                    <p:outputLabel for="dataFim" value="Data de fim: " />
+                                    <p:calendar id="dataFim" value="#{ListarPlanoAcaoView.objSalvar.dataFim}" pattern="dd/MM/yyyy" 
+                                                size="45" mask="true" locale="pt" required="true" 
+                                                requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
+                                    <p:message for="dataInicio"/>
+
+                                    <p:outputLabel for="descricao" value="Descrição: " />
+                                    <p:inputTextarea id="descricao" value="#{ListarPlanoAcaoView.objSalvar.descricao}" rows="5" 
+                                                     cols="45" maxlength="255" />
+                                    <p:message for="descricao" />
+                                </h:panelGrid>
+
+                                <p:outputLabel value="* Campos obrigatórios" />
+
+                                <p:separator />
+                                <p:commandButton value="Salvar" actionListener="#{ListarPlanoAcaoView.salvarView()}" 
+                                                 icon="SalvarPreto24-iconfinder" update="frmEdicaoPlano frmListagemPlanosAcao" 
+                                                 onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
+                                    <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
+                                </p:commandButton>
+                            </p:outputPanel>
+                        </p:tab>
+
+                        <!--TAB Cadastro de Metas-->
+                        <p:tab id="tabMetas" title="Metas" disabled="#{ListarPlanoAcaoView.objSalvar.id == null}">
+                            <p:outputPanel style="text-align:center;">
+                                <p:outputLabel value="Meta do plano de ação" />
+                                <p:separator />
+
+                                <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta cadastrada." paginatorPosition="top"
+                                             paginator="true" value="#{ListarPlanoAcaoView.listaSalvarMetas}" var="metaCursor" 
+                                             widgetVar="varGlobal" selectionMode="single" selection="#{ListarPlanoAcaoView.metaSelecionada}" 
+                                             rowKey="#{metaCursor.idMeta}" >
+                                    <p:ajax event="rowSelect" update="frmEdicaoPlano" />
+
+                                    <p:column headerText="Nome"  >
+                                        <h:outputText value="#{metaCursor.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Prazo" styleClass="colunasTabela100PX" >
+                                        <h:outputText value="#{metaCursor.prazo}" >
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <f:facet name="footer">
+                                        <div class="ui-fluid">
+                                            <p:panelGrid columns="3"  layout="grid" >
+                                                <p:commandButton id="btnCadastrar" title="Nova meta" icon="AddPreto24-iconfinder"
+                                                                 oncomplete="PF('wVarEditarDialog').show()" update="frmEdicaoPlano"
+                                                                 actionListener="#{ListarPlanoAcaoView.reiniciaObj()}"/>
+                                                <p:commandButton title="Editar" icon="Edit24-iconfinder" update="frmEdicaoMeta"
+                                                                 disabled="#{ListarPlanoAcaoView.metaSelecionada == null}"
+                                                                 oncomplete="PF('wVarEditarDialog').show()" 
+                                                                 actionListener="#{ListarPlanoAcaoView.transfereObj()}" />
+                                                <p:commandButton id="btnExcluirMeta" title="Excluir" icon="XPreto24-iconfinder" 
+                                                                 update="frmEdicaoPlano" onclick="PF('blockUiGeral').show()"
+                                                                 disabled="#{ListarPlanoAcaoView.metaSelecionada == null}" 
+                                                                 actionListener="#{ListarPlanoAcaoView.excluirMeta()}"                                                                  
+                                                                 oncomplete="PF('blockUiGeral').hide()" >
+                                                    <p:confirm header="ATENÇÃO! " message="Caso existam atividades nessa meta, elas serão 
+                                                               excluidas, deseja continuar?" icon="Alert24-iconfinder" />
+                                                </p:commandButton>
+                                            </p:panelGrid>
+                                        </div>
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:outputPanel>
+                        </p:tab>
+
+                        <p:tab id="tabAtividades" title="Atividades" disabled="#{ListarPlanoAcaoView.listaSalvarMetas.size() == 0}" >
+                            <p:outputPanel style="text-align:center;">
+                                <p:outputLabel value="Atividades" />
+                                <p:separator />
+
+                                <p:dataTable id="dtListagemAtividades" emptyMessage="Nenhuma atividade cadastrada." 
+                                             value="#{ListarPlanoAcaoView.listaSalvarAtividades}" paginatorPosition="top"  paginator="true"                                                         
+                                             var="atividadeCursor" widgetVar="varGlobalAtividade" selectionMode="single" 
+                                             selection="#{ListarPlanoAcaoView.atividadeSelecionada}" rowKey="#{atividadeCursor.nome}" >
+                                    <p:ajax event="rowSelect" update="frmEdicaoPlano" />
+                                    <p:column headerText="Meta" >
+                                        <h:outputText value="#{atividadeCursor.meta.nome}: " />
+                                        <br/>
+                                        <h:outputText value="#{atividadeCursor.meta.prazo}" >
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Nome" >
+                                        <h:outputText value="#{atividadeCursor.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Prazo de início" styleClass="colunasTabela200PX" >
+                                        <h:outputText value="#{atividadeCursor.dataInicio}" >
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                        <h:outputText value=" - " />
+                                        <h:outputText value="#{atividadeCursor.dataFim}" >
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <f:facet name="footer">
+                                        <div class="ui-fluid">
+                                            <p:panelGrid columns="3"  layout="grid" >
+                                                <p:commandButton title="Nova atividade" icon="AddPreto24-iconfinder"
+                                                                 actionListener="#{ListarPlanoAcaoView.reiniciaObj()}"
+                                                                 oncomplete="PF('wVarEditarAtividadeDialog').show()" update="frmEdicaoAtividade" />
+                                                <p:commandButton title="Editar" icon="Edit24-iconfinder" update="frmEdicaoAtividade"
+                                                                 disabled="#{ListarPlanoAcaoView.atividadeSelecionada == null}"
+                                                                 oncomplete="PF('wVarEditarAtividadeDialog').show()"
+                                                                 actionListener="#{ListarPlanoAcaoView.transfereObj()}"/>
+                                                <p:commandButton title="Excluir" icon="XPreto24-iconfinder" update="frmListagemPlanosAcao"
+                                                                 disabled="#{ListarPlanoAcaoView.atividadeSelecionada == null}"
+                                                                 actionListener="#{ListarPlanoAcaoView.excluirAtividade()}"
+                                                                 onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
+                                                    <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                                               icon="Alert24-iconfinder" />
+                                                </p:commandButton>
+                                            </p:panelGrid>
+                                        </div>
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:outputPanel>
+                        </p:tab>
+
+                        <p:tab id="tabFinal" title="Finalizar"  >
+                            <p:outputPanel style="text-align:center;">
+                                <h:panelGrid  columns="2" columnClasses="label,value" >
+                                    <p:panel >
+                                        <h:outputText value="Empreendimento: " />
+                                        <h:outputText value="#{ListarPlanoAcaoView.objSalvar.empreendimento.sigla}" /> 
+                                        <br/>
+                                        <h:outputText value="Nome: " />
+                                        <h:outputText value="#{ListarPlanoAcaoView.objSalvar.nome}" />
+                                    </p:panel>
+
+                                    <p:panel >
+                                        <h:outputText value="Data de início: " />
+                                        <h:outputText value="#{ListarPlanoAcaoView.objSalvar.dataInicio}" >
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                        <br/>
+                                        <h:outputText value="Data de fim: " />
+                                        <h:outputText value="#{ListarPlanoAcaoView.objSalvar.dataFim}" >
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:panel>
+
+                                    <p:panel >
+                                        <h:outputText value="Quantidade de metas: #{ListarPlanoAcaoView.listaSalvarMetas.size()}" />
+                                    </p:panel>
+
+                                    <p:panel >
+                                        <h:outputText value="Quantidade de metas: #{ListarPlanoAcaoView.listaSalvarAtividades.size()}" />
+                                    </p:panel>
+                                </h:panelGrid>
+                                <p:separator />
+                                <p:commandButton value="Fechar" oncomplete="PF('wVarDlgEditar').hide()" update="frmListagemPlanosAcao"
+                                                 actionListener="#{ListarPlanoAcaoView.fecharDlgPlano()}"/>
+                            </p:outputPanel>
+                        </p:tab>
+                    </p:tabView>
+                </h:form>
+            </p:dialog>
+
+            <!--Editar meta-->
+            <p:dialog id="dlgEditar" header="Meta" widgetVar="wVarEditarDialog" showEffect="clip" hideEffect="clip" modal="true"
+                      resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
+                <h:form id="frmEdicaoMeta">
                     <p:outputPanel id="panel"  style="text-align:center;">
                         <p:panel style="margin-bottom:20px" >
                             <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
-                                <p:outputLabel for="nome" value="Nome:" />
-                                <p:inputText id="nome" value="#{ListarPlanoAcaoView.objSalvar.nome}" required="true"
+
+                                <p:outputLabel for="nome" value="Nome: " />
+                                <p:inputText id="nome" value="#{ListarPlanoAcaoView.metaSalvar.nome}" required="true" 
                                              requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
                                              size="45" maxlength="45"/>
                                 <p:message for="nome" />
 
-                                <p:outputLabel for="empreendimento" value="Empreendimento: "/>
-                                <p:selectOneMenu id="empreendimento" required="true" 
-                                                 requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
-                                                 value="#{ListarPlanoAcaoView.objSalvar.empreendimento}" style="width:435px"
-                                                 converter="generic">
-                                    <f:selectItem itemLabel="Selecione o empreendimento" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarPlanoAcaoView.listaEmpreendimentos}" var="ept" 
-                                                   itemLabel="#{ept.nome}" itemValue="#{ept}"/>
-                                </p:selectOneMenu>
-                                <p:message for="empreendimento"/>
-
-                                <p:outputLabel for="dataInicio" value="Data de início: " />
-                                <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.objSalvar.dataInicio}" pattern="dd/MM/yyyy" 
-                                            size="45" mask="true" locale="pt" required="true" 
+                                <p:outputLabel for="dataInicio" value="Prazo:" />
+                                <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.metaSalvar.prazo}" 
+                                            pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
                                             requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
-                                <p:message for="dataInicio"/>
-
-                                <p:outputLabel for="dataFim" value="Data de fim: " />
-                                <p:calendar id="dataFim" value="#{ListarPlanoAcaoView.objSalvar.dataFim}" pattern="dd/MM/yyyy" 
-                                            size="45" mask="true" locale="pt" required="true" 
-                                            requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
-                                <p:message for="dataInicio"/>
+                                <p:message for="dataInicio" />
 
                                 <p:outputLabel for="descricao" value="Descrição: " />
-                                <p:inputTextarea id="descricao" value="#{ListarPlanoAcaoView.objSalvar.descricao}"                                             
+                                <p:inputTextarea id="descricao" value="#{ListarPlanoAcaoView.metaSalvar.descricao}"
+                                                 rows="5" cols="45" maxlength="200" />
+                                <p:message for="descricao" />
+                            </h:panelGrid>
+
+                            <p:outputLabel value="* Campos obrigatórios" />
+                        </p:panel>
+
+                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarPlanoAcaoView.salvarMeta()}" 
+                                         icon="SalvarPreto24-iconfinder" update="frmEdicaoPlano, frmEdicaoMeta" 
+                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
+                        <p:spacer width="20px" />
+
+                        <p:commandButton value="Cancelar" type="button" icon="XPreto24-iconfinder"
+                                         onclick="PF('wVarEditarDialog').hide()" />
+                    </p:outputPanel>
+                </h:form>
+            </p:dialog>
+
+            <!--Editar ativiade-->
+            <p:dialog id="dlgEditarAtividade" header="Atividade" widgetVar="wVarEditarAtividadeDialog" showEffect="clip" 
+                      hideEffect="clip" modal="true" resizable="false" draggable="false" appendTo="@(body)" dynamic="true" >
+                <h:form id="frmEdicaoAtividade">
+                    <p:outputPanel id="panel"  style="text-align:center;">
+                        <p:panel style="margin-bottom:20px" >
+                            <h:panelGrid style="text-align:right;" columns="3">
+                                <p:outputLabel for="meta" value="Meta: "/>
+                                <p:selectOneMenu id="meta" required="true" 
+                                                 requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
+                                                 value="#{ListarPlanoAcaoView.atividadeSalvar.meta}" style="width:455px" converter="generic" >
+                                    <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{ListarPlanoAcaoView.listaSalvarMetas}" var="obj" 
+                                                   itemLabel="#{obj.nome}: #{ListarPlanoAcaoView.converteData(obj.prazo)}" 
+                                                   itemValue="#{obj}"/>
+                                </p:selectOneMenu>
+                                <p:message for="meta"/>
+
+                                <p:outputLabel for="nome" value="Nome: " />
+                                <p:inputText id="nome" value="#{ListarPlanoAcaoView.atividadeSalvar.nome}" required="true" 
+                                             requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
+                                             size="45" maxlength="45"/>
+                                <p:message for="nome" />
+
+                                <p:outputLabel for="dataInicio" value="Prazo de início:" />
+                                <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.atividadeSalvar.dataInicio}" 
+                                            pattern="dd/MM/yyyy" size="45" required="true" 
+                                            requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
+                                            mask="true" locale="pt"/>
+                                <p:message for="dataInicio" />
+
+                                <p:outputLabel for="dataFim" value="Prazo de fim:" />
+                                <p:calendar id="dataFim" value="#{ListarPlanoAcaoView.atividadeSalvar.dataFim}" pattern="dd/MM/yyyy"
+                                            size="45" required="true" mask="true" locale="pt"
+                                            requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
+                                <p:message for="dataFim" />
+
+                                <p:outputLabel for="descricao" value="Descrição: " />
+                                <p:inputTextarea id="descricao" value="#{ListarPlanoAcaoView.atividadeSalvar.descricao}"
                                                  rows="5" cols="45" maxlength="255" />
                                 <p:message for="descricao" />
                             </h:panelGrid>
@@ -155,15 +378,15 @@
                             <p:outputLabel value="* Campos obrigatórios" />
                         </p:panel>
 
-                        <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarPlanoAcaoView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicaoPlano, :frmListagemPlanosAcao" 
+                        <p:commandButton value="Salvar" actionListener="#{ListarPlanoAcaoView.salvarAtividade()}" 
+                                         icon="SalvarPreto24-iconfinder" update="frmEdicaoPlano, frmEdicaoAtividade" 
                                          onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
-                                         onclick="PF('wVarDlgEditar').hide()" />
+                        <p:commandButton value="Cancelar" type="button" icon="XPreto24-iconfinder"
+                                         onclick="PF('wVarEditarAtividadeDialog').hide()" />
                     </p:outputPanel>
                 </h:form>
             </p:dialog>

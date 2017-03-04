@@ -8,8 +8,12 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
-                <p:panel header="Atividades planejadas no sistema:" rendered="#{modeloGeralView.existeEptBd}" >
-                    <!--Listagem de usuários-->
+                <p:panel rendered="#{modeloGeralView.existeEptBd}" >                    
+                    <!--Listagem de atividades-->
+                    <p:outputPanel style="text-align:center;">
+                        <p:outputLabel value="Atividades cadastradas" />
+                        <p:separator />
+                    </p:outputPanel>
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma atividade encontrada." 
                                  value="#{ListarAtiviPlanejadasView.listaObjs}" paginatorPosition="top"
                                  filteredValue="#{ListarAtiviPlanejadasView.listaObjsFiltradas}" 
@@ -23,15 +27,13 @@
                             <h:outputText value="#{objCursor.nome}"/>
                         </p:column>
 
-                        <p:column headerText="Data início" filterBy="#{ListarAtiviPlanejadasView.converteData(objCursor.dataInicio)}" 
-                                  filterMatchMode="contains">
+                        <p:column headerText="Data início" >
                             <h:outputText value="#{objCursor.dataInicio}" >
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
 
-                        <p:column headerText="Data fim" filterBy="#{ListarAtiviPlanejadasView.converteData(objCursor.dataFim)}" 
-                                  filterMatchMode="contains">
+                        <p:column headerText="Data fim" >
                             <h:outputText value="#{objCursor.dataFim}" >
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
@@ -53,49 +55,36 @@
                             <h:outputText value="#{objCursor.meta.planoAcao.empreendimento.sigla}" />
                         </p:column>
 
-                        <p:column filterBy="#{objCursor.meta.planoAcao}" headerText="Plano de ação" filterMatchMode="exact">
-                            <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('varGlobal').filter()" converter="generic"
-                                                 value="#{ListarAtiviPlanejadasView.planoSelecionado}" autoWidth="false" >
-                                    <p:ajax update="frmListagem" event="itemSelect" 
-                                            listener="#{ListarAtiviPlanejadasView.filtraMetasPorPlano()}" />
-                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaPlanos}" var="var" itemLabel="#{var.nome}" 
-                                                   itemValue="#{var}"/>
-                                </p:selectOneMenu>
-                            </f:facet>
+                        <p:column headerText="Plano de ação" >
                             <h:outputText value="#{objCursor.meta.planoAcao.nome}" />
                         </p:column>
 
-                        <p:column filterBy="#{objCursor.meta}" headerText="Meta" filterMatchMode="exact">
-                            <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('varGlobal').filter()" autoWidth="false" >
-                                    <f:selectItem itemLabel="Não filtrar" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="var" itemLabel="#{var.nome}" 
-                                                   itemValue="#{var}"/>
-                                </p:selectOneMenu>
-                            </f:facet>
+                        <p:column headerText="Meta" >
                             <h:outputText value="#{objCursor.meta.nome}" />
                         </p:column>
 
                         <f:facet name="footer">
-                            <p:commandButton id="btnVisualizar" process="dtListagem" update=":frmListagem:carDetail" 
-                                             icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}"/>
-                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicao"
-                                             process="dtListagem" oncomplete="PF('wVarEditarDialog').show()"
-                                             actionListener="#{ListarAtiviPlanejadasView.reiniciaObj()}"/>
-                            <p:commandButton id="btnEditar" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
-                                             disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" process="dtListagem"
-                                             oncomplete="PF('wVarEditarDialog').show()"
-                                             actionListener="#{ListarAtiviPlanejadasView.transfereObj()}"/>
-                            <p:commandButton id="btnExcluir" value="Excluir" icon="Cross24-iconfinder" update=":frmListagem"
-                                             disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" 
-                                             actionListener="#{ListarAtiviPlanejadasView.excluirView()}" 
-                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert24-iconfinder" />
-                            </p:commandButton>
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="4"  layout="grid" >
+                                    <p:commandButton id="btnVisualizar" process="dtListagem" update=":frmListagem:carDetail" 
+                                                     icon="OlhoPreto24-iconfinder" title="Visualizar" oncomplete="PF('carDialog').show()" 
+                                                     disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}"/>
+                                    <p:commandButton id="btnCadastrar" title="Cadastrar" icon="AddPreto24-iconfinder" update=":frmEdicao"
+                                                     process="dtListagem" oncomplete="PF('wVarEditarDialog').show()"
+                                                     actionListener="#{ListarAtiviPlanejadasView.reiniciaObj()}"/>
+                                    <p:commandButton id="btnEditar" title="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
+                                                     disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" process="dtListagem"
+                                                     oncomplete="PF('wVarEditarDialog').show()"
+                                                     actionListener="#{ListarAtiviPlanejadasView.transfereObj()}"/>
+                                    <p:commandButton id="btnExcluir" title="Excluir" icon="XPreto24-iconfinder" update=":frmListagem"
+                                                     disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" 
+                                                     actionListener="#{ListarAtiviPlanejadasView.excluirView()}" 
+                                                     onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
+                                        <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                                   icon="Alert24-iconfinder" />
+                                    </p:commandButton>
+                                </p:panelGrid>
+                            </div>
                         </f:facet>
                     </p:dataTable>
 
@@ -117,7 +106,7 @@
                                 <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.dataFim}" >
                                     <f:convertDateTime pattern="MM/dd/yyyy" />
                                 </h:outputText>
-                                
+
                                 <h:outputText value="Descrição: " />
                                 <p:scrollPanel mode="native" style="width:435px;height:100px">
                                     <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.descricao}" />
@@ -158,7 +147,7 @@
                                     <f:selectItem itemLabel="Selecione a meta" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarAtiviPlanejadasView.listaMetas}" var="obj" 
                                                    itemLabel="#{obj.nome} - #{obj.planoAcao.empreendimento.sigla} 
-                                                   - Prazo:#{modeloGeralView.converteData(obj.prazo)}" itemValue="#{obj}"/>
+                                                   - Prazo:#{ListarAtiviPlanejadasView.converteData(obj.prazo)}" itemValue="#{obj}"/>
                                 </p:selectOneMenu>
                                 <p:message for="meta"/>
 

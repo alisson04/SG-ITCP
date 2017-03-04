@@ -105,6 +105,7 @@ public class ListarMetasView extends MensagensGenericas implements Serializable 
         try {
             bean.excluirBean(metaSelecionada);
             metaSelecionada = null;//Volta o usuario para o estado de nulo/ Não retire
+            listaMetas = bean.listarBean();
             msgGrowDeleteGeneric();
         } catch (Exception ex) {
             throw new FacesException(ex);

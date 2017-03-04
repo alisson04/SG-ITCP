@@ -194,7 +194,6 @@ public class CadastrarPlanoAcaoView extends MensagensGenericas implements Serial
         try {
             if (objSalvar.getDataInicio().before(objSalvar.getDataFim())) {// SE A DATA DE INÍCIO É ANTES DA DATA DE FIM
                 objSalvar = bean.salvarBean(objSalvar);
-                System.out.println("Tamanho das metas DO PLANO: " + objSalvar.getMetaList().size());
                 msgGrowSaveGeneric();
                 tabview.setActiveIndex(1);
             } else {

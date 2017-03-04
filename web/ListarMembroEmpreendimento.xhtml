@@ -8,9 +8,11 @@
     <ui:composition template="/templates/modeloGeral.xhtml">
         <ui:define name="conteudo">
             <h:form id="frmListagemMembrosEpts" >
-                <!--Listar -->
-                <p:panel id="pnlListagem" header="Membros de empreendimentos cadastrados" 
-                         rendered="#{modeloGeralView.existeEptBd}" >
+                <p:panel id="pnlListagem" rendered="#{modeloGeralView.existeEptBd}" >
+                    <p:outputPanel style="text-align:center;">
+                        <p:outputLabel value="Membros de empreendimentos cadastrados" />
+                        <p:separator />
+                    </p:outputPanel>
                     <p:dataTable id="dtListagemMembrosEpts" emptyMessage="Nenhum membro de empreendimento cadastrado!" 
                                  value="#{ListarMembrosEptsView.listaMembrosEmpreendimentos}" 
                                  filteredValue="#{ListarMembrosEptsView.listaMembrosEmpreendimentosFiltrados}" selectionMode="single" 
@@ -52,30 +54,34 @@
                         </p:column>
 
                         <f:facet name="footer">
-                            <p:commandButton id="btnVisualizarusr" process="dtListagemMembrosEpts" update=":frmListagemMembrosEpts:carDetail" 
-                                             icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}"/>
-                            <p:commandButton id="btnCadastrar" value="Novo" icon="Add24-iconfinder" update=":frmEdicao"
-                                             process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
-                                             actionListener="#{ListarMembrosEptsView.reiniciaObj()}" />
-                            <p:commandButton id="btnEditarMembro" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
-                                             disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
-                                             process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
-                                             actionListener="#{ListarMembrosEptsView.transfereObj()}"/>
-                            <p:commandButton id="btnExcluirMembro" value="Excluir" icon="Cross24-iconfinder" 
-                                             update=":frmListagemMembrosEpts"
-                                             disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
-                                             actionListener="#{ListarMembrosEptsView.excluirMembroView()}"
-                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert24-iconfinder" />
-                            </p:commandButton>
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="4"  layout="grid" >
+                                    <p:commandButton id="btnVisualizarusr" process="dtListagemMembrosEpts" update=":frmListagemMembrosEpts:carDetail" 
+                                                     icon="OlhoPreto24-iconfinder" title="Visualizar" oncomplete="PF('carDialog').show()" 
+                                                     disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}"/>
+                                    <p:commandButton id="btnCadastrar" title="Novo" icon="AddPreto24-iconfinder" update=":frmEdicao"
+                                                     process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
+                                                     actionListener="#{ListarMembrosEptsView.reiniciaObj()}" />
+                                    <p:commandButton id="btnEditarMembro" title="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
+                                                     disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
+                                                     process="dtListagemMembrosEpts" oncomplete="PF('wVarDlgEditar').show()"
+                                                     actionListener="#{ListarMembrosEptsView.transfereObj()}"/>
+                                    <p:commandButton id="btnExcluirMembro" title="Excluir" icon="XPreto24-iconfinder"
+                                                     update=":frmListagemMembrosEpts"
+                                                     disabled="#{ListarMembrosEptsView.membroEmpreendimentoSelecionado == null}" 
+                                                     actionListener="#{ListarMembrosEptsView.excluirMembroView()}"
+                                                     onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
+                                        <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                                   icon="Alert24-iconfinder" />
+                                    </p:commandButton>
+                                </p:panelGrid>
+                            </div>
                         </f:facet>
                     </p:dataTable>
 
                     <!--Exibir EES-->
                     <p:dialog id="diaShowUsr" header="Informações" widgetVar="carDialog" showEffect="clip" hideEffect="clip" 
-                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" styleClass="corDialog" 
+                              resizable="false" draggable="false" modal="true"  appendTo="@(body)" 
                               style="text-align:center;" >
 
                         <p:outputPanel id="carDetail" style="text-align:center;">
@@ -117,7 +123,7 @@
 
                     <br/>
                     <p:commandLink value="Ir para pagina de empreendimentos" type="button" immediate="true"
-                                       action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
+                                   action="/ListarEmpreendimento.xhtml?faces-redirect=true" onclick="PF('blockUiGeral').show()" >
                         <!--<p:graphicImage name="fotos/64Question.png" />-->
                     </p:commandLink>
                 </p:dialog>
@@ -203,15 +209,15 @@
 
                             <p:outputLabel value="* Campos obrigatórios" />
                         </p:panel>
-                        
+
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMembrosEptsView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagemMembrosEpts:pnlListagem" 
+                                         icon="SalvarPreto24-iconfinder" update=":frmEdicao, :frmListagemMembrosEpts:pnlListagem" 
                                          onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                        <p:commandButton value="Cancelar" type="button" icon="XPreto24-iconfinder" 
                                          onclick="PF('wVarDlgEditar').hide()" />
                     </p:outputPanel>
                 </h:form>

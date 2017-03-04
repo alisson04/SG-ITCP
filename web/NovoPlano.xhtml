@@ -70,7 +70,7 @@
 
                             <p:separator />
                             <p:commandButton value="Salvar" actionListener="#{CadastrarPlanoAcaoView.salvarView()}" 
-                                             icon="Save24-iconfinder" update="frmCadastro" 
+                                             icon="SalvarPreto24-iconfinder" update="frmCadastro" 
                                              onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                                 <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                             </p:commandButton>
@@ -121,24 +121,28 @@
                                     </p:column>
 
                                     <f:facet name="footer">
-                                        <p:commandButton update="frmCadastro:diaShowMeta" icon="Find24-iconfinder" value="Visualizar" 
-                                                         oncomplete="PF('widVarShowMeta').show()"
-                                                         disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}"/>
-                                        <p:commandButton id="btnCadastrar" value="Nova meta" icon="Add24-iconfinder"
-                                                         oncomplete="PF('wVarEditarDialog').show()" update=":frmEdicao"
-                                                         actionListener="#{CadastrarPlanoAcaoView.reiniciaObj()}"/>
-                                        <p:commandButton value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
-                                                         disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}"
-                                                         oncomplete="PF('wVarEditarDialog').show()" 
-                                                         actionListener="#{CadastrarPlanoAcaoView.transfereObj()}"/>
-                                        <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cross24-iconfinder" 
-                                                         update="frmCadastro" 
-                                                         disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}" 
-                                                         actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}"
-                                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                                            <p:confirm header="ATENÇÃO! " message="Caso existam atividades nessa meta, elas serão 
-                                                       excluidas, deseja continuar?" icon="Alert24-iconfinder" />
-                                        </p:commandButton>
+                                        <div class="ui-fluid">
+                                            <p:panelGrid columns="4"  layout="grid" >
+                                                <p:commandButton update="frmCadastro:diaShowMeta" icon="OlhoPreto24-iconfinder" 
+                                                                 title="Visualizar" oncomplete="PF('widVarShowMeta').show()"
+                                                                 disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}"/>
+                                                <p:commandButton id="btnCadastrar" title="Nova meta" icon="AddPreto24-iconfinder"
+                                                                 oncomplete="PF('wVarEditarDialog').show()" update=":frmEdicao"
+                                                                 actionListener="#{CadastrarPlanoAcaoView.reiniciaObj()}"/>
+                                                <p:commandButton title="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
+                                                                 disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}"
+                                                                 oncomplete="PF('wVarEditarDialog').show()" 
+                                                                 actionListener="#{CadastrarPlanoAcaoView.transfereObj()}"/>
+                                                <p:commandButton id="btnExcluirMeta" title="Excluir" icon="XPreto24-iconfinder" 
+                                                                 update="frmCadastro" onclick="PF('blockUiGeral').show()"
+                                                                 disabled="#{CadastrarPlanoAcaoView.metaSelecionada == null}" 
+                                                                 actionListener="#{CadastrarPlanoAcaoView.excluirMeta()}"                                                                  
+                                                                 oncomplete="PF('blockUiGeral').hide()" >
+                                                    <p:confirm header="ATENÇÃO! " message="Caso existam atividades nessa meta, elas serão 
+                                                               excluidas, deseja continuar?" icon="Alert24-iconfinder" />
+                                                </p:commandButton>
+                                            </p:panelGrid>
+                                        </div>
                                     </f:facet>
                                 </p:dataTable>
                             </p:panel>

@@ -9,8 +9,13 @@
 
         <ui:define name="conteudo">
             <h:form id="frmListagem" >
-                <!--Listagem de Metas-->
-                <p:panel styleClass="corPanel" header="Metas cadastradas" rendered="#{modeloGeralView.existeEptBd}" >
+
+                <p:panel rendered="#{modeloGeralView.existeEptBd}" >
+                    <!--Listagem de Metas-->
+                    <p:outputPanel style="text-align:center;">
+                        <p:outputLabel value="Metas cadastradas" />
+                        <p:separator />
+                    </p:outputPanel>
                     <p:dataTable id="dtListagem" emptyMessage="Nenhuma meta encontrada." 
                                  value="#{ListarMetasView.listaMetas}" filteredValue="#{ListarMetasView.listaMetasFiltradas}" 
                                  selectionMode="single" selection="#{ListarMetasView.metaSelecionada}" rowKey="#{metaCursor.idMeta}"
@@ -22,46 +27,50 @@
                                   filterMatchMode="contains">
                             <h:outputText value="#{metaCursor.nome}"/>
                         </p:column>
-                        <p:column headerText="Prazo" filterBy="#{ListarMetasView.converteData(metaCursor.prazo)}" 
-                                  filterMatchMode="contains">
+                        <p:column headerText="Prazo" styleClass="colunasTabela100PX" >
                             <h:outputText value="#{metaCursor.prazo}" >
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
 
-                        <p:column filterBy="#{metaCursor.planoAcao.empreendimento}" headerText="Plano de ação" 
+                        <p:column filterBy="#{metaCursor.planoAcao}" headerText="Plano de ação" 
                                   filterMatchMode="exact">
                             <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('varGlobal').filter()" >
+                                <p:selectOneMenu onchange="PF('varGlobal').filter()" autoWidth="false" style="width: 100px" >
                                     <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{ListarMetasView.listaEmpreendimentos}" var="ept" itemValue="#{ept}"
-                                                   itemLabel="#{ept.nome}" />
+                                    <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemValue="#{plano}"
+                                                   itemLabel="#{plano.nome}" />
                                 </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{metaCursor.planoAcao.nome} - #{metaCursor.planoAcao.dataInicio} 
-                                          até #{metaCursor.planoAcao.dataFim}" >
+                            <h:outputText value="#{metaCursor.planoAcao.nome} - 
+                                          #{ListarMetasView.converteData(metaCursor.planoAcao.dataInicio)} 
+                                          até #{ListarMetasView.converteData(metaCursor.planoAcao.dataFim)}" >
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
 
                         <f:facet name="footer">
-                            <p:commandButton id="btnVisualizarMeta" process="dtListagem" update=":frmListagem:carDetail" 
-                                             icon="Find24-iconfinder" value="Visualizar" oncomplete="PF('carDialog').show()" 
-                                             disabled="#{ListarMetasView.metaSelecionada == null}"/>
-                            <p:commandButton id="btnCadastrar" value="Cadastrar" icon="Add24-iconfinder" update=":frmEdicao"
-                                             process="dtListagem" oncomplete="PF('wVarEditarDialog').show()"
-                                             actionListener="#{ListarMetasView.reiniciaObj()}"/>
-                            <p:commandButton id="btnEditarEpt" value="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
-                                             disabled="#{ListarMetasView.metaSelecionada == null}" process="dtListagem"
-                                             oncomplete="PF('wVarEditarDialog').show()"
-                                             actionListener="#{ListarMetasView.transfereObj()}"/>
-                            <p:commandButton id="btnExcluirMeta" value="Excluir" icon="Cross24-iconfinder" update=":frmListagem"
-                                             disabled="#{ListarMetasView.metaSelecionada == null}" 
-                                             actionListener="#{ListarMetasView.excluirView()}"
-                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()">
-                                <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
-                                           icon="Alert24-iconfinder" />
-                            </p:commandButton>
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="4"  layout="grid" >
+                                    <p:commandButton id="btnVisualizarMeta" process="dtListagem" update=":frmListagem:carDetail" 
+                                                     icon="OlhoPreto24-iconfinder" title="Visualizar" oncomplete="PF('carDialog').show()" 
+                                                     disabled="#{ListarMetasView.metaSelecionada == null}"/>
+                                    <p:commandButton id="btnCadastrar" title="Cadastrar" icon="AddPreto24-iconfinder" update=":frmEdicao"
+                                                     process="dtListagem" oncomplete="PF('wVarEditarDialog').show()"
+                                                     actionListener="#{ListarMetasView.reiniciaObj()}"/>
+                                    <p:commandButton id="btnEditarEpt" title="Editar" icon="Edit24-iconfinder" update=":frmEdicao"
+                                                     disabled="#{ListarMetasView.metaSelecionada == null}" process="dtListagem"
+                                                     oncomplete="PF('wVarEditarDialog').show()"
+                                                     actionListener="#{ListarMetasView.transfereObj()}"/>
+                                    <p:commandButton id="btnExcluirMeta" title="Excluir" icon="XPreto24-iconfinder" update="frmListagem"
+                                                     disabled="#{ListarMetasView.metaSelecionada == null}" 
+                                                     actionListener="#{ListarMetasView.excluirView()}"
+                                                     onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()">
+                                        <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
+                                                   icon="Alert24-iconfinder" />
+                                    </p:commandButton>
+                                </p:panelGrid>
+                            </div>
                         </f:facet>
                     </p:dataTable>
 
@@ -120,7 +129,7 @@
                                 <p:outputLabel for="planoAcao" value="Plano de ação: "/>
                                 <p:selectOneMenu id="planoAcao" required="true" value="#{ListarMetasView.objSalvar.planoAcao}"
                                                  requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}"
-                                                 style="width:435px" converter="generic">
+                                                 autoWidth="false" style="width:455px" converter="generic">
                                     <f:selectItem itemLabel="Selecione o plano de ação" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarMetasView.listaPlanos}" var="plano" itemValue="#{plano}"
                                                    itemLabel="#{plano.nome} - #{plano.empreendimento.sigla}" />
@@ -143,13 +152,13 @@
                         </p:panel>
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMetasView.salvarView()}" 
-                                         icon="Save24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" 
+                                         icon="SalvarPreto24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" 
                                          onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                             <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
                         </p:commandButton>
                         <p:spacer width="20px" />
 
-                        <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                        <p:commandButton value="Cancelar" type="button" icon="XPreto24-iconfinder"
                                          onclick="PF('wVarEditarDialog').hide()" />
                     </p:outputPanel>
                 </h:form>
