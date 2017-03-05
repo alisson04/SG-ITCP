@@ -151,7 +151,7 @@
 
                                 <p:outputLabel for="dataNascimento" value="Data de nascimento: " />
                                 <p:calendar id="dataNascimento" value="#{ListarUsuariosView.objSalvar.dataNascimento}" 
-                                            pattern="dd/MM/yyyy" 
+                                            pattern="dd/MM/yyyy" navigator="true" 
                                             size="45" mask="true" locale="pt" required="true"
                                             requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="dataNascimento"/>

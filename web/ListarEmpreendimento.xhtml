@@ -162,14 +162,14 @@
                                              mask="(99) 9999-9999?9" size="45"/>
                                 <p:message for="telefoneAlternativo" />
 
-                                <p:outputLabel for="dataCriacao" value="Data de criação do empreendimento: "/>
+                                <p:outputLabel for="dataCriacao" value="Data de criação: "/>
                                 <p:calendar id="dataCriacao" value="#{ListarEmpreendimentosView.objSalvar.dataCriacao}"
-                                            pattern="dd/MM/yyyy" size="45" mask="true" locale="pt"/>
+                                            pattern="dd/MM/yyyy" size="45" mask="true" locale="pt" navigator="true" />
                                 <p:message for="dataCriacao" />
 
                                 <p:outputLabel for="dataIncubação" value="Data de início da incubação: "/>
                                 <p:calendar id="dataIncubação" value="#{ListarEmpreendimentosView.objSalvar.dataIncubacao}" 
-                                            pattern="dd/MM/yyyy" size="45" mask="true" locale="pt"/>
+                                            pattern="dd/MM/yyyy" size="45" mask="true" locale="pt" navigator="true" />
                                 <p:message for="dataIncubação" />
 
                                 <p:outputLabel for="tipoEpt" value="Tipo de empreendimento: "/>

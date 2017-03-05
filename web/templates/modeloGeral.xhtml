@@ -198,15 +198,6 @@
                           resizable="false" draggable="false" modal="true"  appendTo="@(body)">
                     <h:form id="frmEditarMeusDados"><!--Necessário usar um formulária a parte, visto o bloqueio de validação-->
                         <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
-                            <p:fileUpload id="upload" label="Mudar foto de perfil" mode="advanced" 
-                                          update="frmEditarMeusDados" invalidFileMessage="Somente arquivos: PNG; JPG; GIF"
-                                          fileUploadListener="#{modeloGeralView.uploadAction}" auto="true"/>
-                            <p:panel >
-                                <p:graphicImage id="ftmImagemTopoGeral" width="150px" height="150px" styleClass="semMargin"
-                                                value="./image/#{modeloGeralView.usuarioLogado.fotoPerfil}"/>
-                            </p:panel>
-                            <p:spacer height="10px"/>
-
                             <p:panel id="panel" style="margin-bottom:20px" >
                                 <h:panelGrid id="pgEditar" style="text-align:right;" columns="3">
                                     <p:outputLabel for="nome" value="Nome: " />
@@ -249,7 +240,7 @@
                                     <p:outputLabel for="cargoItcp" value="Cargo: " 
                                                    rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}" />
                                     <p:selectOneMenu id="cargoItcp" required="true" requiredMessage="O cargo na ITCP é obrigatório."
-                                                     value="#{modeloGeralView.usuarioLogado.cargo}" style="width:435px"
+                                                     value="#{modeloGeralView.usuarioLogado.cargo}" style="width:455px"
                                                      rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}">
                                         <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                         <f:selectItems value="#{modeloGeralView.geraTiposDeCargosView()}" />
@@ -269,14 +260,14 @@
                                 <p:outputLabel value="* Campos obrigatórios" />
                             </p:panel>
 
-                            <p:commandButton id="btnSalvar" value="Salvar" icon="Save24-iconfinder" update="frmEditarMeusDados"
+                            <p:commandButton id="btnSalvar" value="Salvar" icon="SalvarPreto24-iconfinder" update="frmEditarMeusDados"
                                              actionListener="#{modeloGeralView.editarUserLogadoView()}" 
                                              onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                                 <p:confirm  header="ATENÇÃO!" message="  Deseja salvar as informações? " icon="Alert24-iconfinder" />
                             </p:commandButton>
                             <p:spacer width="20px" />
 
-                            <p:commandButton value="Cancelar" type="button" icon="Cross24-iconfinder" 
+                            <p:commandButton value="Cancelar" type="button" icon="XPreto24-iconfinder" 
                                              onclick="PF('UserDia').hide()" />
                         </p:outputPanel>
                     </h:form>

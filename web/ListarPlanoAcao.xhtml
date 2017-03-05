@@ -123,14 +123,14 @@
                                     <p:message for="nome" />
 
                                     <p:outputLabel for="dataInicio" value="Data de início: " />
-                                    <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.objSalvar.dataInicio}" 
+                                    <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.objSalvar.dataInicio}" navigator="true" 
                                                 pattern="dd/MM/yyyy" size="45" mask="true" locale="pt" required="true" 
                                                 requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                                     <p:message for="dataInicio"/>
 
                                     <p:outputLabel for="dataFim" value="Data de fim: " />
                                     <p:calendar id="dataFim" value="#{ListarPlanoAcaoView.objSalvar.dataFim}" pattern="dd/MM/yyyy" 
-                                                size="45" mask="true" locale="pt" required="true" 
+                                                size="45" mask="true" locale="pt" required="true" navigator="true" 
                                                 requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                                     <p:message for="dataInicio"/>
 
@@ -307,7 +307,7 @@
                                 <p:message for="nome" />
 
                                 <p:outputLabel for="dataInicio" value="Prazo:" />
-                                <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.metaSalvar.prazo}" 
+                                <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.metaSalvar.prazo}" navigator="true" 
                                             pattern="dd/MM/yyyy" size="45" required="true" mask="true" locale="pt"
                                             requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="dataInicio" />
@@ -358,14 +358,14 @@
 
                                 <p:outputLabel for="dataInicio" value="Prazo de início:" />
                                 <p:calendar id="dataInicio" value="#{ListarPlanoAcaoView.atividadeSalvar.dataInicio}" 
-                                            pattern="dd/MM/yyyy" size="45" required="true" 
+                                            pattern="dd/MM/yyyy" size="45" required="true" navigator="true" 
                                             requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}"
                                             mask="true" locale="pt"/>
                                 <p:message for="dataInicio" />
 
                                 <p:outputLabel for="dataFim" value="Prazo de fim:" />
                                 <p:calendar id="dataFim" value="#{ListarPlanoAcaoView.atividadeSalvar.dataFim}" pattern="dd/MM/yyyy"
-                                            size="45" required="true" mask="true" locale="pt"
+                                            size="45" required="true" mask="true" locale="pt" navigator="true" 
                                             requiredMessage="#{ListarPlanoAcaoView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="dataFim" />
 
