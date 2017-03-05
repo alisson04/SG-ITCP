@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ifnmg.januaria.fernandes.itcp.domain;
 
 import java.io.Serializable;
@@ -54,9 +49,6 @@ public class Parceiro implements Serializable, EntityConverter {
     @Size(max = 45)
     @Column(name = "endereco")
     private String endereco;
-    @Size(max = 45)
-    @Column(name = "tipo")
-    private String tipo;
     
     @ManyToMany(mappedBy = "parceiroList")
     private List<AcompanhamentoEpt> acompanhamentoEptList;
@@ -127,14 +119,6 @@ public class Parceiro implements Serializable, EntityConverter {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public List<AcompanhamentoEpt> getAcompanhamentoEptList() {

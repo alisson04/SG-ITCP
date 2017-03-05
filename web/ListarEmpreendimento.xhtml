@@ -50,7 +50,25 @@
 
                         <f:facet name="footer">
                             <div class="ui-fluid">
-                                <p:panelGrid columns="4"  layout="grid" >
+                                <!--Opções de usuário comum-->
+                                <p:panelGrid columns="3"  layout="grid" 
+                                             rendered="#{modeloGeralView.usuarioLogado.cargo != 'Coordenador'}" >
+                                    <p:commandButton process="dtListagemEmpreendimentos" 
+                                                     update=":frmListagemEmpreendimentos:carDetail" 
+                                                     icon="OlhoPreto24-iconfinder" title="Visualizar" oncomplete="PF('carDialog').show()" 
+                                                     disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" />
+                                    <p:commandButton title="Novo" icon="AddPreto24-iconfinder" update=":frmEdicaoEpt"
+                                                     process="dtListagemEmpreendimentos" oncomplete="PF('wVarEditarDialog').show()"
+                                                     actionListener="#{ListarEmpreendimentosView.reiniciaObj()}"/>
+                                    <p:commandButton title="Editar" icon="Edit24-iconfinder" update=":frmEdicaoEpt"
+                                                     disabled="#{ListarEmpreendimentosView.empreendimentoSelecionado == null}" 
+                                                     process="dtListagemEmpreendimentos" oncomplete="PF('wVarEditarDialog').show()"
+                                                     actionListener="#{ListarEmpreendimentosView.transfereObj()}" />
+                                </p:panelGrid>
+                                
+                                <!--Opções de coordenador-->
+                                <p:panelGrid columns="4"  layout="grid"  
+                                             rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}" >
                                     <p:commandButton id="btnVisualizarusr" process="dtListagemEmpreendimentos" 
                                                      update=":frmListagemEmpreendimentos:carDetail" 
                                                      icon="OlhoPreto24-iconfinder" title="Visualizar" oncomplete="PF('carDialog').show()" 

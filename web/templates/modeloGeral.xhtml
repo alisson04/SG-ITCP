@@ -154,7 +154,8 @@
                         <p:submenu label="Incubadora" icon="GrupoPreto24-iconfinder" >
                             <p:menuitem value="Parceiros" action="/ListarParceiros.xhtml?faces-redirect=true"/>
 
-                            <p:menuitem value="Configurações" action="/ConfigurarSistema.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Configurações" action="/ConfigurarSistema.xhtml?faces-redirect=true" 
+                                        rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}"/>
                         </p:submenu>
 
                         <p:submenu label="Empreendimentos" icon="PredioPreto24-iconfinder">

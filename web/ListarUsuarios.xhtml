@@ -44,13 +44,23 @@
 
                         <f:facet name="footer">
                             <div class="ui-fluid">
-                                <p:panelGrid columns="4"  layout="grid" >
+                                <!--Opções de usuário comum-->
+                                <p:panelGrid columns="1"  layout="grid" 
+                                             rendered="#{modeloGeralView.usuarioLogado.cargo != 'Coordenador'}" >
+                                    <p:commandButton process="ListagemUsuarios" update=":frmListagemUsuarios:carDetail" 
+                                                     icon="OlhoPreto24-iconfinder" oncomplete="PF('carDialog').show()" title="Visualizar"
+                                                     disabled="#{ListarUsuariosView.objSelecionado == null}" />
+                                </p:panelGrid>
+                                
+                                <!--Opções de coordenador-->
+                                <p:panelGrid columns="4"  layout="grid" 
+                                             rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}" >
                                     <p:commandButton id="btnVisualizarusr" process="ListagemUsuarios" update=":frmListagemUsuarios:carDetail" 
                                                      icon="OlhoPreto24-iconfinder" oncomplete="PF('carDialog').show()" title="Visualizar"
                                                      disabled="#{ListarUsuariosView.objSelecionado == null}" />
                                     <p:commandButton id="btnCadastrar"  icon="AddPreto24-iconfinder" update=":frmEdicao" title="Novo"
                                                      process="ListagemUsuarios" oncomplete="PF('wVarEditarDialog').show()"
-                                                     actionListener="#{ListarUsuariosView.reiniciaObj()}"/>
+                                                     actionListener="#{ListarUsuariosView.reiniciaObj()}" />
 
                                     <p:commandButton id="btnInativarusr" actionListener="#{ListarUsuariosView.ativarDesativarUsrView()}"
                                                      title="#{ListarUsuariosView.btAtivarDesativarUser(ListarUsuariosView.objSelecionado)}"
@@ -158,15 +168,14 @@
 
                                 <p:outputLabel for="dataEntrada" value="Entrada na ITCP: " />
                                 <p:calendar id="dataEntrada" value="#{ListarUsuariosView.objSalvar.dataEntrada}" pattern="dd/MM/yyyy" 
-                                            mask="true" locale="pt" size="45" required="true" 
+                                            mask="true" locale="pt" size="45" required="true" navigator="true" 
                                             requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}" />
                                 <p:message for="dataEntrada"/>
 
                                 <p:outputLabel for="cargoItcp" value="Cargo: " />
                                 <p:selectOneMenu id="cargoItcp" required="true" 
                                                  requiredMessage="#{ListarUsuariosView.geraMsgGenericaCampoObrigatorioView()}"
-                                                 value="#{ListarUsuariosView.objSalvar.cargo}" style="width:455px"
-                                                 rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}">
+                                                 value="#{ListarUsuariosView.objSalvar.cargo}" style="width:455px" >
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{ListarUsuariosView.geraTiposDeCargosView()}" />
                                 </p:selectOneMenu>
