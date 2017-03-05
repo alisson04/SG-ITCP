@@ -254,6 +254,12 @@
     width: 34px;
 }
 
+.OutPreto24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24OutPreto.png") !important;
+    height: 24px;
+    width: 34px;
+}
+
 .Parceria24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Parceria24.png") !important;
     height: 24px;
