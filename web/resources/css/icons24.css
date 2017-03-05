@@ -371,6 +371,12 @@
     background-position: 0px 0x;
 }
 
+.TrashPreto24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24TrashPreto.png") !important;
+    height: 24px;
+    width: 24px;
+}
+
 .Xls24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Xls24.png") !important;
     height: 24px;

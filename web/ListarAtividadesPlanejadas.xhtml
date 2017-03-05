@@ -76,7 +76,7 @@
                                                      disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" process="dtListagem"
                                                      oncomplete="PF('wVarEditarDialog').show()"
                                                      actionListener="#{ListarAtiviPlanejadasView.transfereObj()}"/>
-                                    <p:commandButton id="btnExcluir" title="Excluir" icon="XPreto24-iconfinder" update=":frmListagem"
+                                    <p:commandButton id="btnExcluir" title="Excluir" icon="TrashPreto24-iconfinder" update=":frmListagem"
                                                      disabled="#{ListarAtiviPlanejadasView.objSelecionado == null}" 
                                                      actionListener="#{ListarAtiviPlanejadasView.excluirView()}" 
                                                      onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
@@ -95,8 +95,6 @@
                             <p:panelGrid  columns="2" columnClasses="label,value" >
                                 <h:outputText value="Nome: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.nome}" />
-                                <h:outputText value="Plano de ação: " />
-                                <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.meta.nome}" />
                                 <h:outputText value="Data início: " />
                                 <h:outputText value="#{ListarAtiviPlanejadasView.objSelecionado.dataInicio}" >
                                     <f:convertDateTime pattern="MM/dd/yyyy" />

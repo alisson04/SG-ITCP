@@ -48,12 +48,6 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
     @ManyToMany
     private List<Parceiro> parceiroList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "atividadePlanejada")
-    private List<AtividadeUsuario> atividadeUsuarioList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "atividadePlanejada")
-    private List<AtividadeParceiro> atividadeParceiroList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -185,22 +179,6 @@ public class AtividadePlanejada implements Serializable, EntityConverter {
     @Override
     public String toString() {
         return "br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada[ id=" + id + " ]";
-    }
-
-    public List<AtividadeParceiro> getAtividadeParceiroList() {
-        return atividadeParceiroList;
-    }
-
-    public void setAtividadeParceiroList(List<AtividadeParceiro> atividadeParceiroList) {
-        this.atividadeParceiroList = atividadeParceiroList;
-    }
-
-    public List<AtividadeUsuario> getAtividadeUsuarioList() {
-        return atividadeUsuarioList;
-    }
-
-    public void setAtividadeUsuarioList(List<AtividadeUsuario> atividadeUsuarioList) {
-        this.atividadeUsuarioList = atividadeUsuarioList;
     }
 
     public List<Parceiro> getParceiroList() {

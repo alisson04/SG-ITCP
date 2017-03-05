@@ -62,7 +62,7 @@
                                                      disabled="#{ListarMetasView.metaSelecionada == null}" process="dtListagem"
                                                      oncomplete="PF('wVarEditarDialog').show()"
                                                      actionListener="#{ListarMetasView.transfereObj()}"/>
-                                    <p:commandButton id="btnExcluirMeta" title="Excluir" icon="XPreto24-iconfinder" update="frmListagem"
+                                    <p:commandButton id="btnExcluirMeta" title="Excluir" icon="TrashPreto24-iconfinder" update="frmListagem"
                                                      disabled="#{ListarMetasView.metaSelecionada == null}" 
                                                      actionListener="#{ListarMetasView.excluirView()}"
                                                      onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()">

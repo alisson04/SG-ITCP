@@ -96,20 +96,6 @@
                                             title="Atividade não esta iniciada!" />
                         </p:column>
 
-                        <p:column headerText="Atribuir atividade" style="text-align: center;" 
-                                  styleClass="colunasTabela100PX" >
-                            <p:commandLink title="Atribuir atividade"  update="frmCadastro frmAtribuirAtv"
-                                           actionListener="#{inicioView.configuraPickList(atividadeCursor)}"
-                                           oncomplete="PF('wVAtribuirAtvDialog').show()" 
-                                           rendered="#{atividadeCursor.status != 'Finalizada'}" >
-                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32AddUser.png" />
-                            </p:commandLink>
-
-                            <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Exclamation.png" 
-                                            rendered="#{atividadeCursor.status == 'Finalizada'}" 
-                                            title="Atividade está finalizada!" />
-                        </p:column>
-
                         <f:facet name="footer">
                             <p:outputLabel value="Atividades que iniciam a partir de " />
                             <p:calendar value="#{inicioView.dataFiltroInicioAtv}" locale="pt" navigator="true" 
@@ -192,7 +178,7 @@
                                         timeOnly="true" mask="true" locale="pt" size="5" required="true" />
                             <p:separator/>
 
-                            <p:commandButton value="Lançar horas"  update="frmLancarHoras frmCadastro" icon="Save24-iconfinder" 
+                            <p:commandButton value="Lançar horas"  update="frmLancarHoras frmCadastro" icon="SalvarPreto24-iconfinder"
                                              actionListener="#{inicioView.salvarLancamentoHoras()}"
                                              onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
                         </p:panel>
@@ -222,7 +208,7 @@
                                            actionListener="#{inicioView.excluirHorasTrabalhadasView(horas, 
                                                              modeloGeralView.usuarioLogado)}"
                                            onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide() " >
-                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons24/24Cross.png" />
+                                <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons24/24TrashPreto.png" />
 
                                 <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
                                            icon="Alert24-iconfinder" />
@@ -233,38 +219,6 @@
                             <h:outputText value="Total de horas trabalhadas na atividade: #{inicioView.geraHorasTotalAtividade()}" />
                         </f:facet>
                     </p:dataTable>
-                </h:form>
-            </p:dialog>
-
-            <!-- Precisa estar fora do form principal: Todo dialog com input precisa ter se próprio FOR-->
-            <p:dialog widgetVar="wVAtribuirAtvDialog" showEffect="clip" hideEffect="clip" closeOnEscape="true" modal="true"  
-                      appendTo="@(body)" draggable="false" resizable="false" style="text-align: left;" header="Atribuir atividade" >
-                <h:form id="frmAtribuirAtv">
-                    <p:pickList id="PojoPickList" value="#{inicioView.usuariosPickList}" var="objPickList" 
-                                effect="bounce" itemValue="#{objPickList}" itemLabel="#{modeloGeralView.abreviaNomeUser(objPickList)}" 
-                                showCheckbox="true" converter="generic" addAllLabel="Adicionar todos" addLabel="Adicionar"
-                                removeLabel="Remover" removeAllLabel="Remover todos">
-
-                        <f:facet name="sourceCaption">Não vinculados</f:facet>
-                        <f:facet name="targetCaption">Já vinculados</f:facet>
-
-                        <p:column >
-                            <h:outputText styleClass="ui-theme ui-theme-#{modeloGeralView.abreviaNomeUser(objPickList)}" />
-                        </p:column>
-
-                        <p:column >
-                            <h:outputText value="#{modeloGeralView.abreviaNomeUser(objPickList)}" />
-                        </p:column>
-                    </p:pickList>
-
-                    <p:separator/>
-                    <p:outputPanel id="outPaMostrarUsr" style="text-align:center;">
-                        <p:commandButton value="Salvar" icon="Save24-iconfinder" update="frmEditarMeusDados"
-                                         actionListener="#{inicioView.salvarAtribuicaoAtividade()}" 
-                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                            <p:confirm  header="ATENÇÃO!" message="  Deseja salvar as informações? " icon="Alert24-iconfinder" />
-                        </p:commandButton>
-                    </p:outputPanel>
                 </h:form>
             </p:dialog>
         </ui:define>

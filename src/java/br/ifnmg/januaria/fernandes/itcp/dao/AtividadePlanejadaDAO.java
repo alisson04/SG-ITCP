@@ -1,10 +1,8 @@
 package br.ifnmg.januaria.fernandes.itcp.dao;
 
 import br.ifnmg.januaria.fernandes.itcp.domain.AtividadePlanejada;
-import br.ifnmg.januaria.fernandes.itcp.domain.AtividadeUsuario;
 import br.ifnmg.januaria.fernandes.itcp.domain.Meta;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,27 +32,6 @@ public class AtividadePlanejadaDAO extends DaoGenerico<AtividadePlanejada> {
 
     public List<AtividadePlanejada> buscarAtividadesPorMetaDao(Meta obj) {
         return listarObjsFiltradosIntGenerico("AtividadePlanejada", "meta.idMeta", obj.getIdMeta());
-    }
-
-    public List<AtividadeUsuario> listarAtividadesPorUserDao(Usuario user) {//
-        String PU = "sigitecPU";
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
-        EntityManager em = emf.createEntityManager();
-
-        List<AtividadeUsuario> listaObjsFiltrados;//Cria alista que será retornada
-        listaObjsFiltrados = new ArrayList();
-
-        em = emf.createEntityManager();
-        em.getTransaction().begin();
-        Query consulta = em.createQuery("SELECT o FROM AtividadeUsuario o "
-                + "WHERE o.idUsuarioFk = :id ");
-        consulta.setParameter("id", user.getId());
-
-        listaObjsFiltrados = consulta.getResultList();//Pega a lista de objs
-
-        em.close();
-
-        return listaObjsFiltrados;
     }
 
     public List<AtividadePlanejada> listarPorIntervaloDao(Date dataIni, Date dataFim) {//

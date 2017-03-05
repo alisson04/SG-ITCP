@@ -47,7 +47,7 @@
                                                    itemValue="#{ept}"/>
                                 </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{planoAcaoCursor.empreendimento.nome}" />
+                            <h:outputText value="#{planoAcaoCursor.empreendimento.sigla}" />
                         </p:column>
 
                         <f:facet name="footer">
@@ -63,7 +63,7 @@
                                                      actionListener="#{ListarPlanoAcaoView.btnEditarPlano()}"/>
 
                                     <p:commandButton id="btnExcluirPlano"  update=":frmListagemPlanosAcao" title="Excluir" 
-                                                     icon="XPreto24-iconfinder" actionListener="#{ListarPlanoAcaoView.excluirView()}"
+                                                     icon="TrashPreto24-iconfinder" actionListener="#{ListarPlanoAcaoView.excluirView()}"
                                                      disabled="#{ListarPlanoAcaoView.planoSelecionado == null}" 
                                                      onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
                                         <p:confirm header="ATENÇÃO! " message="Essa ação não poderá ser desfeita, continuar?" 
@@ -182,7 +182,7 @@
                                                                  disabled="#{ListarPlanoAcaoView.metaSelecionada == null}"
                                                                  oncomplete="PF('wVarEditarDialog').show()" 
                                                                  actionListener="#{ListarPlanoAcaoView.transfereObj()}" />
-                                                <p:commandButton id="btnExcluirMeta" title="Excluir" icon="XPreto24-iconfinder" 
+                                                <p:commandButton id="btnExcluirMeta" title="Excluir" icon="TrashPreto24-iconfinder" 
                                                                  update="frmEdicaoPlano" onclick="PF('blockUiGeral').show()"
                                                                  disabled="#{ListarPlanoAcaoView.metaSelecionada == null}" 
                                                                  actionListener="#{ListarPlanoAcaoView.excluirMeta()}"                                                                  
@@ -238,7 +238,7 @@
                                                                  disabled="#{ListarPlanoAcaoView.atividadeSelecionada == null}"
                                                                  oncomplete="PF('wVarEditarAtividadeDialog').show()"
                                                                  actionListener="#{ListarPlanoAcaoView.transfereObj()}"/>
-                                                <p:commandButton title="Excluir" icon="XPreto24-iconfinder" update="frmListagemPlanosAcao"
+                                                <p:commandButton title="Excluir" icon="TrashPreto24-iconfinder" update="frmListagemPlanosAcao"
                                                                  disabled="#{ListarPlanoAcaoView.atividadeSelecionada == null}"
                                                                  actionListener="#{ListarPlanoAcaoView.excluirAtividade()}"
                                                                  onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >

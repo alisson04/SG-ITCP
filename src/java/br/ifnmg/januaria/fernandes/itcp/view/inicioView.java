@@ -77,15 +77,6 @@ public class inicioView extends MensagensGenericas implements Serializable {
             metaBean = new MetaBean();
             atividadeSelecionada = new AtividadePlanejada();
 
-            //Adiciona atividade ao calendário
-            for (int i = 0; i < listaAtividades.size(); i++) {
-                eventModel.addEvent(new DefaultScheduleEvent(
-                        listaAtividades.get(i).getNome(),
-                        listaAtividades.get(i).getDataInicio(),
-                        listaAtividades.get(i).getDataFim(),
-                        "corDialog"));
-            }
-
             //Incubadora CONTRUTOR
             inc = new Incubadora();
             incBean = new IncubadoraBean();
