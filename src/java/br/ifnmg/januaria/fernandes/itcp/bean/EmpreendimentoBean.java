@@ -37,6 +37,10 @@ public class EmpreendimentoBean implements Serializable {
         return dao.listarTodosEptsDao();
     }
     
+    public List<Empreendimento> listarEesAtivosBean() {
+        return dao.listarEesAtivosDao();
+    }
+    
     public long contarLinhasBean(){
         return dao.contarLinhasDAO();
     }

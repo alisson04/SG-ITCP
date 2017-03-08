@@ -74,7 +74,7 @@ public class ListarPlanoAcaoView extends MensagensGenericas implements Serializa
 
             //Empreenimento CONSTRU
             empreendimentoBean = new EmpreendimentoBean();
-            listaEmpreendimentos = empreendimentoBean.listarBean();
+            listaEmpreendimentos = empreendimentoBean.listarEesAtivosBean();
 
             //TabVars
             tabview = new TabView();
