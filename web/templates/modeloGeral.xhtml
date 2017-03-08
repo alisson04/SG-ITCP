@@ -106,7 +106,7 @@
                                   value="Recarregar" />
                         <p:spacer width="20px" />
 
-                        <p:commandButton value="Fechar" type="button" icon="Cross24-iconfinder" 
+                        <p:commandButton value="Fechar" type="button" icon="XPreto24-iconfinder" 
                                          onclick="PF('exceptionDialog').hide()" />
                     </p:panel>
 
@@ -128,11 +128,6 @@
                 <p:ajax event="idle" listener="#{LoginView.sair()}" />
             </p:idleMonitor>
 
-            <p:layoutUnit position="north" size="13%" >
-                <p:graphicImage id="ftmImagemTopoGeral" width="100%" height="100%" styleClass="semMargin"
-                                value="./image/imagenTopo/#{modeloGeralView.geraFotoTopo()}"/>
-            </p:layoutUnit>
-
             <p:layoutUnit position="south" size="40" resizable="false" closable="false" collapsible="false" rendered="false">
                 <p:outputPanel style="text-align:center;" >
                     <h:outputText value="Todos os direitos reservados ao IFNMG - Campus Januária" />
@@ -140,6 +135,9 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
+                <p:graphicImage id="ftmImagemTopoGeral" width="100%" height="100px"
+                                value="./image/imagenTopo/#{modeloGeralView.geraFotoTopo()}"/>
+                
                 <h:form id="frmModeloGeral">
                     <p:menubar style="ui-button" styleClass="textoMenuPrincipal semMargin">
                         <p:menuitem value="Início" icon="CasaPreto24-iconfinder" 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subRelatorioParceirosPorAcom" language="groovy" pageWidth="305" pageHeight="802" columnWidth="305" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="edb3bbec-a961-4caa-9228-623429334a5d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="paramIdAcom" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     Parceiro.`nome` AS nome
+FROM
+     `Parceiro` Parceiro INNER JOIN `AcompanhamentoEptParceiro` AcompanhamentoEptParceiro ON Parceiro.`id` = AcompanhamentoEptParceiro.`idParceiroFk`
+where AcompanhamentoEptParceiro.`idAcompanhamentoFk` = $P{paramIdAcom};]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="305" height="20" uuid="c7a2f621-cead-4000-b218-8be85002d141"/>
+				<box leftPadding="3">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -31,13 +31,13 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
+		<band height="45" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="25" uuid="5b86f30c-84f8-4a93-bc2c-329e5820e790"/>
 				<textElement textAlignment="Center">
 					<font size="20"/>
 				</textElement>
-				<text><![CDATA[Relatório de atividadees]]></text>
+				<text><![CDATA[Relatório de atividades]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -72,7 +72,7 @@
 				<text><![CDATA[Filtro de empreendimento:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="156" y="21" width="399" height="20" uuid="2c12e6ae-60df-4501-b3e8-6f3471c6fb0d"/>
+				<reportElement x="156" y="21" width="359" height="20" uuid="2c12e6ae-60df-4501-b3e8-6f3471c6fb0d"/>
 				<box leftPadding="0">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -84,7 +84,7 @@
 				<textFieldExpression><![CDATA[$P{paramUser}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="156" y="0" width="399" height="20" uuid="239b6798-5c75-4d5e-9d2c-f46e545bd776"/>
+				<reportElement x="156" y="0" width="359" height="20" uuid="239b6798-5c75-4d5e-9d2c-f46e545bd776"/>
 				<box leftPadding="0">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
