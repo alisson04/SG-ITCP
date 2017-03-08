@@ -9,7 +9,7 @@
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24TelefonePreto.png") !important;
     height: 24px;
     width: 34px;
-    background-position: 0px 0x;
+    background-position: 5px 0px;
 }
 
 .UserPreto24-iconfinder{
@@ -30,21 +30,21 @@
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24PredioPreto.png") !important;
     height: 24px;
     width: 34px;
-    background-position: 0px 0x;
+    background-position: 5px 0px;
 }
 
 .IndicadorPreto24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24IndicadorPreto.png") !important;
     height: 24px;
     width: 34px;
-    background-position: 0px 0x;
+    background-position: 5px 0px;
 }
 
 .PlanoPreto24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24PlanoPreto.png") !important;
     height: 24px;
     width: 34px;
-    background-position: 0px 0x;
+    background-position: 5px 0px;
 }
 
 .CasaPreto24-iconfinder{
@@ -361,7 +361,7 @@
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Telephone.png") !important;
     height: 24px;
     width: 34px;
-    background-position: 0px 0x;
+    background-position: 5px 0px;
 }
 
 .Membros24-iconfinder{
