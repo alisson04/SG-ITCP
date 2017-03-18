@@ -206,6 +206,12 @@
     background-position: 0px 0x;
 }
 
+.KeyPreto24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Key.png") !important;  
+    height: 24px;
+    width: 34px;
+}
+
 .Home24-iconfinder{
     background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/Home24.png") !important;
     height: 24px;

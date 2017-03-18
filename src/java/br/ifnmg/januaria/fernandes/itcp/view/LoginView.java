@@ -82,23 +82,6 @@ public class LoginView extends MensagensGenericas implements Serializable {
     }
 
     //METODOS
-    public void teste() {
-        try {
-            File folder = new File("/home/alisson/teste");
-            if (folder.isDirectory()) {
-                System.out.println("É diretorio");
-                File[] sun = folder.listFiles();
-                for (File toDelete : sun) {
-                    System.out.println("RDOU");
-                    toDelete.delete();
-                }
-            }else{
-                System.out.println("Não é diretorio");
-            }
-        } catch (Exception ex) {
-            throw new FacesException(ex);
-        }
-    }
 
     public void MostraCaixaReenvioSenha() {
         System.out.println("==============================================================");

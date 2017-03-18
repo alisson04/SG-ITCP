@@ -74,7 +74,7 @@
             <p:confirmDialog global="true" showEffect="clip" hideEffect="clip" closeOnEscape="true" closable="false" >
                 <div style="display:flex;justify-content:center;align-items:center;">
                     <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
-                                         icon="BlackCheck24-iconfinder" />
+                                     icon="BlackCheck24-iconfinder" />
                     <p:spacer width="10px" />
                     <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
                                      icon="XPreto24-iconfinder" />
@@ -137,7 +137,7 @@
             <p:layoutUnit position="center">
                 <p:graphicImage id="ftmImagemTopoGeral" width="100%" height="100px"
                                 value="./image/imagenTopo/#{modeloGeralView.geraFotoTopo()}"/>
-                
+
                 <h:form id="frmModeloGeral">
                     <p:menubar style="ui-button" styleClass="textoMenuPrincipal semMargin">
                         <p:menuitem value="Início" icon="CasaPreto24-iconfinder" 
@@ -184,8 +184,10 @@
 
                         <f:facet name="options" >
                             <p:menuButton value="Minha conta">
-                                <p:menuitem value="Editar  conta" icon="Edit24-iconfinder"
+                                <p:menuitem value="Editar  dados" icon="Edit24-iconfinder"
                                             oncomplete="PF('UserDia').show()" update=":frmEditarMeusDados:outPaMostrarUsr" />
+                                <p:menuitem value="Editar  senha" icon="KeyPreto24-iconfinder"
+                                            oncomplete="PF('diaModificarSenha').show()" update="frmModificarSenha" />
                                 <p:menuitem value=" Sair" icon="OutPreto24-iconfinder" action="#{LoginView.sair()}" />
                             </p:menuButton>
                         </f:facet>
@@ -269,6 +271,42 @@
                             <p:commandButton value="Cancelar" type="button" icon="XPreto24-iconfinder" 
                                              onclick="PF('UserDia').hide()" />
                         </p:outputPanel>
+                    </h:form>
+                </p:dialog>
+
+                <p:dialog id="diaModificarSenha" showEffect="clip" hideEffect="clip" header="Modificar senha" modal="true"  
+                          appendTo="@(body)"
+                          widgetVar="diaModificarSenha" resizable="false" draggable="false" closable="true" >
+                    <h:form id="frmModificarSenha">
+                        <div class="ui-fluid">
+                            <p:panel >
+                                <h:panelGrid columns="3" cellpadding="5" style="ui-widget">
+                                    
+                                    <p:outputLabel for="senhaAtual" value="Senha atual: " />  
+                                    <p:password id="senhaAtual" value="#{modeloGeralView.senhaAntiga}" required="true" 
+                                                 size="45" maxlength="99"
+                                                 requiredMessage="#{modeloGeralView.geraMsgGenericaCampoObrigatorioView()}" />
+                                    <p:message for="senhaAtual"/>
+                                    
+                                    <p:outputLabel for="novaSenha" value="Nova senha: " />  
+                                    <p:password id="novaSenha" value="#{modeloGeralView.novaSenha}" required="true" 
+                                                 size="45" maxlength="99"
+                                                 requiredMessage="#{modeloGeralView.geraMsgGenericaCampoObrigatorioView()}" />
+                                    <p:message for="novaSenha"/>
+                                    
+                                    <p:outputLabel for="confNovaSenha" value="Confirmar nova senha: " />  
+                                    <p:password id="confNovaSenha" value="#{modeloGeralView.confirmaNovaSenha}" required="true" 
+                                                 size="45" maxlength="99"
+                                                 requiredMessage="#{modeloGeralView.geraMsgGenericaCampoObrigatorioView()}" />
+                                    <p:message for="confNovaSenha"/>
+                                </h:panelGrid>
+
+                                <p:separator />
+                                <p:commandButton id="btnReenviarSenha" value="Salvar nova senha" 
+                                                 actionListener="#{modeloGeralView.modificarSenha()}" 
+                                                 update="frmModificarSenha" />
+                            </p:panel>
+                        </div>
                     </h:form>
                 </p:dialog>
 

@@ -46,6 +46,18 @@ public class UploadArquivo {
             System.out.println("Erro no upload do arquivo" + ex);
         }
     }
+    
+    public void fileUpload2(byte byteArray[], String nome, String diretorio) {//Para fotos do sistema
+        try {this.nome = nome;//Deve conter o tipo
+            this.caminho = diretorio + getNome();
+            this.arquivo = byteArray;
+
+            File file = new File(getRealPath() + diretorio);
+            file.mkdirs();
+        } catch (Exception ex) {
+            System.out.println("Erro no upload do arquivo" + ex);
+        }
+    }
 
     public void gravar() {
         try {

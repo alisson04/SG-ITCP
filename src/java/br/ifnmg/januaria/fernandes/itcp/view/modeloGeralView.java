@@ -9,8 +9,6 @@ import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
@@ -21,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -33,6 +32,11 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     //Incubadora VARS
     private Incubadora inc;
     private IncubadoraBean incBean;
+
+    //modificar a senha vars
+    String novaSenha;
+    String confirmaNovaSenha;
+    String senhaAntiga;
 
     private Usuario usuarioLogado;
     private UsuarioBean userBean;
@@ -92,21 +96,29 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     public String corrigeImagemBase64(String base64) {
         if (base64 != null) {
             int i = base64.indexOf(",");
-            return base64.substring(i+1);
+            return base64.substring(i + 1);
         } else {
             System.out.println("Esta nulo!");
-            return null;    
+            return null;
         }
     }
 
     public String geraTipoImagemBase64(String base64) {
         if (base64 != null) {
             int i = base64.indexOf("/");
-            System.out.println("Tipo da imagem: " + base64.substring(i+1, (i + 4)));
-            return base64.substring(i+1, (i + 4));
+            System.out.println("Tipo da imagem: " + base64.substring(i + 1, (i + 4)));
+            return base64.substring(i + 1, (i + 4));
         } else {
             System.out.println("Esta nulo!");
             return null;
+        }
+    }
+
+    public String geraMsgGenericaCampoObrigatorioView() {
+        try {
+            return msgGenericaCampoObrigatorio();
+        } catch (Exception ex) {
+            throw new FacesException(ex);
         }
     }
 
@@ -114,7 +126,7 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
     public void editarUserLogadoView() {
         try {
             if (userBean.salvarBean(usuarioLogado) != null) {//Salvou com sucesso
-                usuarioLogado = userBean.salvarBean(usuarioLogado);//Salva o usuário
+                usuarioLogado = userBean.salvarBean(usuarioLogado);//Salva e atualiza o usuário
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('UserDia').hide()");
                 msgGrowSaveGeneric();
@@ -143,6 +155,26 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
             usuarioLogado.setFotoPerfil(arquivo.getNome());
             arquivo.gravar();
             arquivo = new UploadArquivo();//Limpa a variável
+        } catch (Exception ex) {
+            throw new FacesException(ex);
+        }
+    }
+
+    public void modificarSenha() {
+        try {
+            if (DigestUtils.md5Hex(senhaAntiga).equals(usuarioLogado.getSenha())) {//Se a senha atual confere
+                if (novaSenha.equals(confirmaNovaSenha)) {//Se a nova senha confere
+                    usuarioLogado.setSenha(DigestUtils.md5Hex(novaSenha));
+                    usuarioLogado = userBean.salvarBean(usuarioLogado);//Salva e atualiza o usuário
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("PF('diaModificarSenha').hide()");
+                    msgGrowSaveGeneric();
+                } else {
+                    msgPanelErroCustomizavel("Erro", "Verifire a nova senha e sua confirmação!");
+                }
+            } else {
+                msgPanelErroCustomizavel("Erro", "A senha atual não confere!");
+            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -192,5 +224,29 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
 
     public void setExisteEptBd(boolean existeEptBd) {
         this.existeEptBd = existeEptBd;
+    }
+
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
+    }
+
+    public String getConfirmaNovaSenha() {
+        return confirmaNovaSenha;
+    }
+
+    public void setConfirmaNovaSenha(String confirmaNovaSenha) {
+        this.confirmaNovaSenha = confirmaNovaSenha;
+    }
+
+    public String getSenhaAntiga() {
+        return senhaAntiga;
+    }
+
+    public void setSenhaAntiga(String senhaAntiga) {
+        this.senhaAntiga = senhaAntiga;
     }
 }
