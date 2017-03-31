@@ -57,7 +57,7 @@ INNER JOIN Usuario u
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="555" height="70" uuid="96eb9cf9-6888-40b2-912a-c3b1e66d33dd"/>
 				<imageExpression><![CDATA[$P{paramImage}]]></imageExpression>
 			</image>
@@ -68,9 +68,9 @@ INNER JOIN Usuario u
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="25" uuid="0e2cc2b7-a200-483a-bdba-5df63e37201e"/>
 				<textElement textAlignment="Center">
-					<font size="20"/>
+					<font size="20" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Sistema SIGITEC - Relatório de horários de trabalho]]></text>
+				<text><![CDATA[Relatório de horários de trabalho]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

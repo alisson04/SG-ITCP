@@ -27,7 +27,7 @@
      
     <filter-mapping> 
         <filter-name>controleDeAcesso</filter-name> 
-        <url-pattern>/sigitec/*</url-pattern> 
+        <url-pattern>/sigIncubatecs/*</url-pattern> 
     </filter-mapping>
     
     <session-config>

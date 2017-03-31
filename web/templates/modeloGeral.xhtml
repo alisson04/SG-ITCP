@@ -143,17 +143,17 @@
                         <p:menuitem value="Início" icon="CasaPreto24-iconfinder" 
                                     action="/Inicio.xhtml?faces-redirect=true" />
 
-                        <p:submenu label="Usuários" icon="UserPreto24-iconfinder" >
-                            <p:menuitem value="Cadastro e edições" action="/ListarUsuarios.xhtml?faces-redirect=true" />
-
-                            <p:menuitem value="Horários de trabalho" action="/HorariosDeTrabalho.xhtml?faces-redirect=true" />
-                        </p:submenu>
-
                         <p:submenu label="Incubadora" icon="GrupoPreto24-iconfinder" >
                             <p:menuitem value="Parceiros" action="/ListarParceiros.xhtml?faces-redirect=true"/>
 
                             <p:menuitem value="Configurações" action="/ConfigurarSistema.xhtml?faces-redirect=true" 
                                         rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}"/>
+                        </p:submenu>
+
+                        <p:submenu label="Usuários" icon="UserPreto24-iconfinder" >
+                            <p:menuitem value="Cadastro e edições" action="/ListarUsuarios.xhtml?faces-redirect=true" />
+
+                            <p:menuitem value="Horários de trabalho" action="/HorariosDeTrabalho.xhtml?faces-redirect=true" />
                         </p:submenu>
 
                         <p:submenu label="Empreendimentos" icon="PredioPreto24-iconfinder">
@@ -164,12 +164,6 @@
                             <p:menuitem value="Acompanhamentos" action="/ListarAcompanhamentos.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
-                        <p:submenu label="Indicadores" icon="IndicadorPreto24-iconfinder">
-                            <p:menuitem value="Cadastro e edições" action="/IndicadoresMaturidade.xhtml?faces-redirect=true" /> 
-
-                            <p:menuitem value="Relatórios" action="/Relatorios.xhtml?faces-redirect=true" /> 
-                        </p:submenu>
-
                         <p:submenu label="Planos de ação" icon="PlanoPreto24-iconfinder">
                             <p:menuitem value="Cadastro e edições" 
                                         action="/ListarPlanoAcao.xhtml?faces-redirect=true"/>
@@ -178,6 +172,12 @@
 
                             <p:menuitem value="Atividades" action="/ListarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
                         </p:submenu>
+
+                        <p:menuitem value="Indicadores" action="/IndicadoresMaturidade.xhtml?faces-redirect=true"
+                                    icon="CheckPreto24-iconfinder" /> 
+
+                        <p:menuitem value="Relatórios" action="/Relatorios.xhtml?faces-redirect=true"
+                                    icon="GraficoPreto24-iconfinder" />
 
                         <p:menuitem value="Lista de contatos" icon="TelefonePreto24-iconfinder"
                                     action="/ListaContatos.xhtml?faces-redirect=true" />
@@ -275,29 +275,28 @@
                 </p:dialog>
 
                 <p:dialog id="diaModificarSenha" showEffect="clip" hideEffect="clip" header="Modificar senha" modal="true"  
-                          appendTo="@(body)"
-                          widgetVar="diaModificarSenha" resizable="false" draggable="false" closable="true" >
+                          appendTo="@(body)" widgetVar="diaModificarSenha" resizable="false" draggable="false" closable="true" >
                     <h:form id="frmModificarSenha">
                         <div class="ui-fluid">
                             <p:panel >
                                 <h:panelGrid columns="3" cellpadding="5" style="ui-widget">
-                                    
+
                                     <p:outputLabel for="senhaAtual" value="Senha atual: " />  
                                     <p:password id="senhaAtual" value="#{modeloGeralView.senhaAntiga}" required="true" 
-                                                 size="45" maxlength="99"
-                                                 requiredMessage="#{modeloGeralView.geraMsgGenericaCampoObrigatorioView()}" />
+                                                size="45" maxlength="99"
+                                                requiredMessage="#{modeloGeralView.geraMsgGenericaCampoObrigatorioView()}" />
                                     <p:message for="senhaAtual"/>
-                                    
+
                                     <p:outputLabel for="novaSenha" value="Nova senha: " />  
                                     <p:password id="novaSenha" value="#{modeloGeralView.novaSenha}" required="true" 
-                                                 size="45" maxlength="99"
-                                                 requiredMessage="#{modeloGeralView.geraMsgGenericaCampoObrigatorioView()}" />
+                                                size="45" maxlength="99"
+                                                requiredMessage="#{modeloGeralView.geraMsgGenericaCampoObrigatorioView()}" />
                                     <p:message for="novaSenha"/>
-                                    
+
                                     <p:outputLabel for="confNovaSenha" value="Confirmar nova senha: " />  
                                     <p:password id="confNovaSenha" value="#{modeloGeralView.confirmaNovaSenha}" required="true" 
-                                                 size="45" maxlength="99"
-                                                 requiredMessage="#{modeloGeralView.geraMsgGenericaCampoObrigatorioView()}" />
+                                                size="45" maxlength="99"
+                                                requiredMessage="#{modeloGeralView.geraMsgGenericaCampoObrigatorioView()}" />
                                     <p:message for="confNovaSenha"/>
                                 </h:panelGrid>
 

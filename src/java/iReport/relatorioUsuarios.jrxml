@@ -67,7 +67,7 @@ order by Usuario.`nome`;]]>
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="555" height="70" uuid="82606152-da14-479e-abfb-09abf36e62c2"/>
 				<imageExpression><![CDATA[$P{paramImage}]]></imageExpression>
 			</image>
@@ -78,9 +78,9 @@ order by Usuario.`nome`;]]>
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="25" uuid="518b7b08-e9cb-4380-810c-e1ac8ef6e4c6"/>
 				<textElement textAlignment="Center">
-					<font size="20"/>
+					<font size="20" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Sistema SIGITEC - Relatório de usuários]]></text>
+				<text><![CDATA[Relatório de usuários]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

@@ -40,12 +40,12 @@ public class controleDeAcesso implements Filter {
                 || session.getAttribute("USUARIOLogado") != null) {
             if (session.getAttribute("USUARIOLogado") != null) {//Se user esta logado
                 if (!"Coordenador".equals(((Usuario) session.getAttribute("USUARIOLogado")).getCargo())
-                        && req.getServletPath().endsWith("CadastroUsuario.xhtml")) {
+                        && req.getServletPath().endsWith("ConfigurarSistema.xhtml")) {
                     System.out.println("__________controleDeAcesso(doFilter): Usuario tentando acessar pagina restrita");
-                    redireciona("/sigitec/Inicio.xhtml", response);//redireciona para inicio
+                    redireciona("/sigIncubatecs/Inicio.xhtml", response);//redireciona para inicio
                 } else if ((session.getAttribute("USUARIOLogado") != null)//usuario logado querendo acessar login
                         && req.getServletPath().endsWith("Login.xhtml")) {
-                    redireciona("/sigitec/Inicio.xhtml", response);//redireciona para inicio
+                    redireciona("/sigIncubatecs/Inicio.xhtml", response);//redireciona para inicio
                 } else {//Usuario acessando paginas que tem permissão(Situação comum)
                     chain.doFilter(request, response);
                 }
@@ -54,7 +54,7 @@ public class controleDeAcesso implements Filter {
             }
         } else {
             System.out.println("__________controleDeAcesso(doFilter): Redirecionou para LOGIN");
-            redireciona("/sigitec/Login.xhtml", response);
+            redireciona("/sigIncubatecs/Login.xhtml", response);
         }
     }
 

@@ -24,7 +24,7 @@
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="555" height="70" uuid="1f814202-73af-4806-b855-9026e78c8ec5"/>
 				<imageExpression><![CDATA[$P{paramImage}]]></imageExpression>
 			</image>
@@ -35,9 +35,9 @@
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="50" uuid="9c5a1a3a-f481-4fb5-8291-307b1fa13ba2"/>
 				<textElement textAlignment="Center">
-					<font size="20"/>
+					<font size="20" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Relatório da evolução da nota de maturidade e acumulo de horas trabalhadas]]></text>
+				<text><![CDATA[Relatório da evolução das notas de maturidade e acumulo de horas trabalhadas]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

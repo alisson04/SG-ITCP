@@ -63,7 +63,7 @@ ORDER BY e.`sigla`;]]>
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="555" height="70" uuid="26006848-93cf-47f9-b4ae-6a4a7f8704c0"/>
 				<imageExpression><![CDATA[$P{paramImage}]]></imageExpression>
 			</image>
@@ -74,9 +74,9 @@ ORDER BY e.`sigla`;]]>
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="25" uuid="9e636782-d1d5-4897-9fc4-f25b8a15a809"/>
 				<textElement textAlignment="Center">
-					<font size="20" isBold="true"/>
+					<font size="20" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Sistema SIGITEC - Relatório de membros de EES]]></text>
+				<text><![CDATA[Relatório de membros de EES]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

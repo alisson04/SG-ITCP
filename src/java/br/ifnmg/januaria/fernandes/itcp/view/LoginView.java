@@ -138,7 +138,7 @@ public class LoginView extends MensagensGenericas implements Serializable {
         try {
             obj = usrBean.buscarPorEmailBean(obj);//Busca o user no BD
             obj.setSenha(gerarSenhaAleatoria());//GERA A SENHA ALEATORIA e SETA
-            usrBean.enviarEmail(obj.getEmail(), "Sistema Sigitec", "Sua nova senha é: " + obj.getSenha());//Manda o emaill
+            usrBean.enviarEmail(obj.getEmail(), "Sistema SigIncubatecs", "Sua nova senha é: " + obj.getSenha());//Manda o emaill
             obj.setSenha(DigestUtils.md5Hex(obj.getSenha()));//CRIPTOGRAFA A SENHA ALEATORIA
             usrBean.salvarBean(obj);//Salva o usuário
             obj = new Usuario();//Limpa o usuário salvo
@@ -160,8 +160,8 @@ public class LoginView extends MensagensGenericas implements Serializable {
                     RequestContext context = RequestContext.getCurrentInstance();
                     context.execute("PF('blockLogar').show()");
 
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/Inicio.xhtml");
-                    return "/sigitec/Inicio.xhtml";
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/sigIncubatecs/Inicio.xhtml");
+                    return "/sigIncubatecs/Inicio.xhtml";
                 } else {
                     usuarioLogado = userTemp;//para manter o dados digitados na tela
                     msgGrowlErroCustomizavel("Acesso negado", "Esse usuário esta desativado!");

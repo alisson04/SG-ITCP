@@ -44,23 +44,23 @@ where Meta.idPlanoAcaoFk = $P{paramIdPlano};]]>
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="555" height="70" uuid="7137d193-747c-4680-bea4-546a5ed8dfff"/>
 				<imageExpression><![CDATA[$P{paramImage}]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="100" splitType="Stretch">
+		<band height="90" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="10" width="555" height="50" uuid="804f29b9-5e51-49b6-a6dc-fdb8b8180e8d"/>
+				<reportElement x="0" y="10" width="555" height="30" uuid="804f29b9-5e51-49b6-a6dc-fdb8b8180e8d"/>
 				<textElement textAlignment="Center">
-					<font size="20" isBold="true"/>
+					<font size="20" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Sistema SIGITEC - Relatório de execução do plano de ação]]></text>
+				<text><![CDATA[Relatório de execução do plano de ação]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="80" width="111" height="20" uuid="941b5371-b4c9-4577-8f65-66040f97046a"/>
+				<reportElement x="0" y="70" width="111" height="20" uuid="941b5371-b4c9-4577-8f65-66040f97046a"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -74,7 +74,7 @@ where Meta.idPlanoAcaoFk = $P{paramIdPlano};]]>
 				<text><![CDATA[Plano de ação:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="59" width="111" height="20" uuid="a8563bad-e094-407d-8c04-6a1d1247449f"/>
+				<reportElement x="0" y="49" width="111" height="20" uuid="a8563bad-e094-407d-8c04-6a1d1247449f"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -88,7 +88,7 @@ where Meta.idPlanoAcaoFk = $P{paramIdPlano};]]>
 				<text><![CDATA[Empreendimento:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="111" y="59" width="444" height="20" uuid="9718c3e7-56ef-433e-84be-e779c23862ab"/>
+				<reportElement x="111" y="49" width="444" height="20" uuid="9718c3e7-56ef-433e-84be-e779c23862ab"/>
 				<box leftPadding="3"/>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
@@ -96,7 +96,7 @@ where Meta.idPlanoAcaoFk = $P{paramIdPlano};]]>
 				<textFieldExpression><![CDATA[$P{paramEesSelecionado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="111" y="80" width="444" height="20" uuid="49fdf65b-1687-4613-9d06-dc426db59dee"/>
+				<reportElement x="111" y="70" width="444" height="20" uuid="49fdf65b-1687-4613-9d06-dc426db59dee"/>
 				<box leftPadding="3"/>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
@@ -104,10 +104,10 @@ where Meta.idPlanoAcaoFk = $P{paramIdPlano};]]>
 				<textFieldExpression><![CDATA[$P{paramPlanoSelecionado}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="79" width="555" height="1" uuid="391e643f-8323-4895-93aa-b23f76fb90b0"/>
+				<reportElement x="0" y="69" width="555" height="1" uuid="391e643f-8323-4895-93aa-b23f76fb90b0"/>
 			</line>
 			<line>
-				<reportElement x="0" y="99" width="555" height="1" uuid="9878d8eb-afcd-461d-a7e5-1efbcaf65ea0"/>
+				<reportElement x="0" y="89" width="555" height="1" uuid="9878d8eb-afcd-461d-a7e5-1efbcaf65ea0"/>
 			</line>
 		</band>
 	</pageHeader>
@@ -127,20 +127,6 @@ where Meta.idPlanoAcaoFk = $P{paramIdPlano};]]>
 				</textElement>
 				<text><![CDATA[Prazo:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="70" y="0" width="485" height="20" uuid="2e878cf9-175c-4579-ae59-ae41ede91afc"/>
-				<box leftPadding="3">
-					<pen lineWidth="0.0"/>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Bottom">
-					<font isBold="false" isUnderline="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="70" height="20" uuid="182932be-6a1a-4e6e-8134-7eab279e99be"/>
 				<box leftPadding="3">
@@ -200,6 +186,20 @@ where Meta.idPlanoAcaoFk = $P{paramIdPlano};]]>
 				</box>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{prazo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="485" height="20" uuid="2e878cf9-175c-4579-ae59-ae41ede91afc"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -201,13 +201,13 @@
 
                                 <p:outputLabel for="siteEpt" value="Site do empreendimento: "/>
                                 <p:inputText id="siteEpt" value="#{ListarEmpreendimentosView.objSalvar.site}" size="45" maxlength="255"/>
-                                <p:message for="siteEpt"/>
+                                <p:message for="siteEpt"/>                                
 
-                                <p:outputLabel for="atividadeExercida" value="Atividades exercidas: "/>
-                                <p:inputText id="atividadeExercida" value="#{ListarEmpreendimentosView.objSalvar.atividadeExercida}" 
-                                             size="45" maxlength="255" required="true" 
+                                <p:outputLabel for="atividadeExercida" value="Atividades exercidas: " />
+                                <p:inputTextarea id="atividadeExercida" value="#{ListarEmpreendimentosView.objSalvar.atividadeExercida}"
+                                                 rows="5" cols="45" maxlength="255" required="true" 
                                              requiredMessage="#{LoginView.geraMsgGenericaCampoObrigatorioView()}" />
-                                <p:message for="atividadeExercida"/>
+                                <p:message for="atividadeExercida" />
 
                                 <p:outputLabel for="situacaoEpt" value="Fase de Incubação: "/>
                                 <p:selectOneMenu id="situacaoEpt" required="true" 

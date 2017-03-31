@@ -48,8 +48,8 @@ public class LoginBean implements Serializable {
             System.out.println("User com e-mail: " + usuarioLogado.getEmail() + " saiu!");
             usuarioLogado = null;
             SessionUtil.remove("USUARIOLogado");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/sigitec/Login.xhtml");
-            return "/sigitec/Login.xhtml";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/sigIncubatecs/Login.xhtml");
+            return "/sigIncubatecs/Login.xhtml";
         } catch (IOException ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage msg = new FacesMessage("IOExceptionl: " + ex.getMessage() );

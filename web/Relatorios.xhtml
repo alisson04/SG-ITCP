@@ -16,555 +16,561 @@
             </style>
 
             <h:form id="frmrelatorios" >
-                <!--Painel que guarda as entradas de imagens em base64 vinculadas a view: RelatorioNotaMatuHorasTrabView-->
-                <p:panel id="panelIn" visible="false" >
-                    <p:dataGrid id="gridIn" var="imagemEmBase64" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64}" 
-                                layout="grid" rowIndexVar="cont" columns="6" 
-                                emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
-                        <p:inputText id="in" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64[cont]}" />
-                    </p:dataGrid>
-                </p:panel>
+                <!--Listagem de planos de ação-->
+                <p:panel id="panelListagemPlanosAcao" rendered="#{modeloGeralView.existeEptBd}" >
+                    <p:outputPanel style="text-align:center;">
+                        <p:outputLabel value="Relatórios" />
+                        <p:separator />
+                    </p:outputPanel>
+                    <!--Painel que guarda as entradas de imagens em base64 vinculadas a view: RelatorioNotaMatuHorasTrabView-->
+                    <p:panel id="panelIn" visible="false" >
+                        <p:dataGrid id="gridIn" var="imagemEmBase64" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64}" 
+                                    layout="grid" rowIndexVar="cont" columns="6" 
+                                    emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
+                            <p:inputText id="in" value="#{RelatorioNotaMatuHorasTrabView.listaImagensBase64[cont]}" />
+                        </p:dataGrid>
+                    </p:panel>
 
-                <!--Painel que guarda as entradas de imagens em base64 vinculadas a view: RelatorioIndicadoresMaturidadeView-->
-                <p:panel id="panelInIndicadoresMaturidade" visible="false" >
-                    <p:dataGrid id="gridInIndicadoresMaturidade" var="imagemEmBase64" value="#{RelatorioIndicadoresMaturidadeView.listaImagensBase64}" 
-                                layout="grid" rowIndexVar="cont" columns="6" 
-                                emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
-                        <p:inputText id="in" value="#{RelatorioIndicadoresMaturidadeView.listaImagensBase64[cont]}" />
-                    </p:dataGrid>
-                </p:panel>
+                    <!--Painel que guarda as entradas de imagens em base64 vinculadas a view: RelatorioIndicadoresMaturidadeView-->
+                    <p:panel id="panelInIndicadoresMaturidade" visible="false" >
+                        <p:dataGrid id="gridInIndicadoresMaturidade" var="imagemEmBase64" value="#{RelatorioIndicadoresMaturidadeView.listaImagensBase64}" 
+                                    layout="grid" rowIndexVar="cont" columns="6" 
+                                    emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
+                            <p:inputText id="in" value="#{RelatorioIndicadoresMaturidadeView.listaImagensBase64[cont]}" />
+                        </p:dataGrid>
+                    </p:panel>
 
-                <!-- Tabelas que separam os tipos de relatórios-->
-                <p:tabView id="tbGeral" dynamic="true" cache="true" >
-                    <p:ajax event="tabChange" listener="#{RelatoriosView.InicializaVariaveis()}" />
-                    <p:ajax event="tabChange" listener="#{RelatorioNotaMatuHorasTrabView.onTabChange}" />
+                    <!-- Tabelas que separam os tipos de relatórios-->
+                    <p:tabView id="tbGeral" dynamic="true" cache="true" >
+                        <p:ajax event="tabChange" listener="#{RelatoriosView.InicializaVariaveis()}" />
+                        <p:ajax event="tabChange" listener="#{RelatorioNotaMatuHorasTrabView.onTabChange}" />
 
-                    <!--RELATORIO GERAIS-->
-                    <p:tab id="tabInicio" title="Relatórios gerais" >
-                        <p:layout style="min-height:600px;max-height:1000px;" >
-                            <p:layoutUnit position="west" size="325" > <!--Lado esquerdo-->
-                                <p:panel >
-                                    <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Selecione um relatório" />
-                                        <p:separator/>
-                                    </p:outputPanel>
-                                    <p:selectOneRadio value="#{RelatoriosGeraisView.op}"  layout="grid" columns="1">
-                                        <f:selectItem itemLabel="Lista de usuários" itemValue="5" />
-                                        <f:selectItem itemLabel="Horários de trabalho" itemValue="6" />
-                                        <f:selectItem itemLabel="Lista de empreendimentos" itemValue="7" />
-                                        <f:selectItem itemLabel="Lista de membros de ees" itemValue="8" />
-                                        <f:selectItem itemLabel="Lista de parceiros" itemValue="9" />
+                        <!--RELATORIO GERAIS-->
+                        <p:tab id="tabInicio" title="Relatórios gerais" >
+                            <p:layout style="min-height:600px;max-height:1000px;" >
+                                <p:layoutUnit position="west" size="325" > <!--Lado esquerdo-->
+                                    <p:panel >
+                                        <p:outputPanel style="text-align:center;">
+                                            <p:outputLabel value="Selecione um relatório" />
+                                            <p:separator/>
+                                        </p:outputPanel>
+                                        <p:selectOneRadio value="#{RelatoriosGeraisView.op}"  layout="grid" columns="1">
+                                            <f:selectItem itemLabel="Lista de usuários" itemValue="5" />
+                                            <f:selectItem itemLabel="Horários de trabalho" itemValue="6" />
+                                            <f:selectItem itemLabel="Lista de empreendimentos" itemValue="7" />
+                                            <f:selectItem itemLabel="Lista de membros de ees" itemValue="8" />
+                                            <f:selectItem itemLabel="Lista de parceiros" itemValue="9" />
 
-                                        <f:selectItem itemLabel="Contatos dos usuários" itemValue="1" />
-                                        <f:selectItem itemLabel="Contatos dos empreendimentos" itemValue="2" />
-                                        <f:selectItem itemLabel="Contatos dos membros de ees" itemValue="3" />
-                                        <f:selectItem itemLabel="Contatos dos parceiros" itemValue="4" />   
+                                            <f:selectItem itemLabel="Contatos dos usuários" itemValue="1" />
+                                            <f:selectItem itemLabel="Contatos dos empreendimentos" itemValue="2" />
+                                            <f:selectItem itemLabel="Contatos dos membros de ees" itemValue="3" />
+                                            <f:selectItem itemLabel="Contatos dos parceiros" itemValue="4" />   
 
-                                        <p:ajax update="frmrelatorios" event="change"
-                                                listener="#{RelatoriosGeraisView.setaCaminhoNome()}" />
-                                    </p:selectOneRadio>
-
-                                </p:panel>
-                            </p:layoutUnit>
-
-
-                            <p:layoutUnit position="center" >
-                                <p:outputPanel rendered="#{RelatoriosGeraisView.op != 0}" style="text-align:center;">
-
-                                    <p:spacer width="50px" />
-                                    <p:panel header="Fazer download do relatório" >
-                                        <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
-                                                       actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
-                                                                         RelatoriosGeraisView.caminhoRelatorioGenerico,
-                                                                         RelatoriosGeraisView.nomeRelatorioGenerico,
-                                                                         'attachment')}" >
-                                            <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png" />
-                                        </p:commandLink>
-                                    </p:panel>
-                                    <p:spacer width="50px" />
-
-                                    <p:panel header="Abrir relatório em nova guia" >
-                                        <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
-                                                       actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
-                                                                         RelatoriosGeraisView.caminhoRelatorioGenerico,
-                                                                         RelatoriosGeraisView.nomeRelatorioGenerico,
-                                                                         'inline')}" >
-                                            <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png" />
-                                        </p:commandLink>
-                                    </p:panel>
-                                </p:outputPanel>
-                            </p:layoutUnit>
-                        </p:layout>
-                    </p:tab>
-
-                    <p:tab id="tabIndis" title="Indicadores de maturidade" >
-                        <p:layout style="min-height:600px;max-height:1000px;" >
-                            <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
-                                <p:panel toggleable="true" styleClass="painelBordas" >
-                                    <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Empreendimento:" />
-                                        <p:selectOneMenu value="#{RelatorioIndicadoresMaturidadeView.empreendimentoSelecionado}" 
-                                                         converter="generic" autoWidth="false" style="width: 200px" >
-                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
-                                            <p:ajax update="frmrelatorios" event="change"  
-                                                    listener="#{RelatorioIndicadoresMaturidadeView.selecionaEptTela()}"/>
-                                            <f:selectItems value="#{RelatorioIndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
-                                                           itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
-                                        </p:selectOneMenu>
-                                    </p:outputPanel>
-                                </p:panel>
-                                <p:spacer height="10px"/>
-
-                                <p:panel rendered="#{RelatorioIndicadoresMaturidadeView.empreendimentoSelecionado != null}" 
-                                         toggleable="true" >
-                                    <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Categoria:" />
-
-                                        <p:selectOneMenu value="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada}"
-                                                         autoWidth="false" style="width: 200px" >
                                             <p:ajax update="frmrelatorios" event="change"
-                                                    listener="#{RelatorioIndicadoresMaturidadeView.selecionaCategoriaTela()}" />
+                                                    listener="#{RelatoriosGeraisView.setaCaminhoNome()}" />
+                                        </p:selectOneRadio>
 
-                                            <f:selectItem itemLabel="Clique para selecionar" itemValue="" />
+                                    </p:panel>
+                                </p:layoutUnit>
 
-                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
-                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
 
-                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
-                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
+                                <p:layoutUnit position="center" >
+                                    <p:outputPanel rendered="#{RelatoriosGeraisView.op != 0}" style="text-align:center;">
 
-                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
-                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
-
-                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
-                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
-
-                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
-                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
-
-                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
-                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
-
-                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
-                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
-
-                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
-                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
-
-                                            <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
-                                                          itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
-                                        </p:selectOneMenu>
-                                    </p:outputPanel>
-                                </p:panel>
-                                <p:spacer height="10px"/>
-
-                                <p:panel rendered="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada != ''}" >
-                                    <p:outputPanel style="text-align:center;">
-                                        <!--Esta centralizado por não ficar coerente com os outros se ficar a direita-->
-                                        <p:outputLabel value="Indicadores:" />
-                                        <p:separator />
-                                        <p:selectBooleanCheckbox value="#{RelatorioIndicadoresMaturidadeView.selecionaTodosInds}" >
-                                            <p:ajax update="frmrelatorios" 
-                                                    onsuccess="#{RelatorioIndicadoresMaturidadeView.geraImagemBase64()}"
-                                                    listener="#{RelatorioIndicadoresMaturidadeView.selecionaTodosIndsView()}" />
-                                        </p:selectBooleanCheckbox>
-                                        <h:outputText value=" Todos" />
-                                    </p:outputPanel>
-
-                                    <p:selectManyCheckbox value="#{RelatorioIndicadoresMaturidadeView.listaIndsSelecionados}" 
-                                                          layout="grid" converter="generic" columns="1" >
-                                        <p:ajax listener="#{RelatorioIndicadoresMaturidadeView.criaGraficoInd()}" 
-                                                update="frmrelatorios"
-                                                onsuccess="#{RelatorioIndicadoresMaturidadeView.geraImagemBase64()}"
-                                                onstart="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"/>
-                                        <f:selectItems value="#{RelatorioIndicadoresMaturidadeView.listaTodosInds}" 
-                                                       var="ind" itemLabel="#{ind.nome}" itemValue="#{ind}" />
-                                    </p:selectManyCheckbox>
-                                </p:panel>
-
-                                <p:spacer height="20px" />
-
-                                <p:panel rendered="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada != ''}" >
-                                    <p:outputPanel style="text-align:center;">
-                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
-                                        <p:remoteCommand name="rc" update=":frmrelatorios:panelInIndicadoresMaturidade" 
-                                                         oncomplete="PF('dlWidGetVarReportIndicadores').show()" />
-                                        <p:commandButton value="Gerar Relatório" immediate="true"                                               
-                                                         onsuccess="rc()"  />                                        
-                                    </p:outputPanel>
-                                </p:panel>
-                            </p:layoutUnit>
-
-                            <p:layoutUnit position="center" >
-                                <p:fieldset legend="Evolução dos indicadores" toggleable="true" toggleSpeed="500"
-                                            rendered="#{RelatorioIndicadoresMaturidadeView.listaGraficoInds.size() > 0}" >
-                                    <p:dataGrid var="graInd" value="#{RelatorioIndicadoresMaturidadeView.listaGraficoInds}" 
-                                                layout="grid" columns="1" rowIndexVar="contador" >
-                                        <p:panel >
-                                            <p:chart type="line" model="#{graInd}" 
-                                                     widgetVar="#{RelatorioIndicadoresMaturidadeView.listaWidgetVars[contador]}" />
+                                        <p:spacer width="50px" />
+                                        <p:panel header="Fazer download do relatório" >
+                                            <p:commandLink title="Fazer download do relatório" immediate="true" ajax="false"
+                                                           actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
+                                                                             RelatoriosGeraisView.caminhoRelatorioGenerico,
+                                                                             RelatoriosGeraisView.nomeRelatorioGenerico,
+                                                                             'attachment')}" >
+                                                <p:graphicImage width="128px" height="128px" name="/icons128/128Download.png" />
+                                            </p:commandLink>
                                         </p:panel>
-                                    </p:dataGrid>
-                                </p:fieldset>
-                            </p:layoutUnit>
-                        </p:layout>
-                    </p:tab>
+                                        <p:spacer width="50px" />
 
-                    <p:tab id="tabExecucaoPlano" title="Execução do plano de ação">
-                        <p:layout style="min-height:700px;max-height:700px;" >
-                            <p:layoutUnit position="west" size="325" >
-                                <p:panel >
-                                    <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Empreendimento:" />
-                                        <p:selectOneMenu value="#{RelatorioPlanoAcaoView.eesSelecionado}" converter="generic"
-                                                         autoWidth="false" style="width: 200px" >
-                                            <p:ajax update="frmrelatorios" event="change"  
-                                                    listener="#{RelatorioPlanoAcaoView.filtrarPlanos()}"/>
-                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
-                                            <f:selectItems value="#{RelatorioPlanoAcaoView.listaEes}" var="var" 
-                                                           itemLabel="#{var.sigla}" itemValue="#{var}"/>
-                                        </p:selectOneMenu>
+                                        <p:panel header="Abrir relatório em nova guia" >
+                                            <p:commandLink title="Abrir relatório em nova guia" immediate="true" ajax="false" target="_blank"
+                                                           actionListener="#{RelatoriosGeraisView.gerarRelatorioGenerico(
+                                                                             RelatoriosGeraisView.caminhoRelatorioGenerico,
+                                                                             RelatoriosGeraisView.nomeRelatorioGenerico,
+                                                                             'inline')}" >
+                                                <p:graphicImage width="128px" height="128px" name="/icons128/128Screen.png" />
+                                            </p:commandLink>
+                                        </p:panel>
                                     </p:outputPanel>
-                                </p:panel>
-                                <p:spacer height="10px" />
+                                </p:layoutUnit>
+                            </p:layout>
+                        </p:tab>
 
-                                <p:panel rendered="#{RelatorioPlanoAcaoView.eesSelecionado != null}" >
-                                    <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Planos de ação: "
-                                                       rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() > 0}" />
+                        <p:tab id="tabIndis" title="Indicadores de maturidade" >
+                            <p:layout style="min-height:600px;max-height:1000px;" >
+                                <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
+                                    <p:panel toggleable="true" styleClass="painelBordas" >
+                                        <p:outputPanel style="text-align:center;">
+                                            <p:outputLabel value="Empreendimento:" />
+                                            <p:selectOneMenu value="#{RelatorioIndicadoresMaturidadeView.empreendimentoSelecionado}" 
+                                                             converter="generic" autoWidth="false" style="width: 200px" >
+                                                <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                                <p:ajax update="frmrelatorios" event="change"  
+                                                        listener="#{RelatorioIndicadoresMaturidadeView.selecionaEptTela()}"/>
+                                                <f:selectItems value="#{RelatorioIndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
+                                                               itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
+                                            </p:selectOneMenu>
+                                        </p:outputPanel>
+                                    </p:panel>
+                                    <p:spacer height="10px"/>
 
-                                        <p:outputPanel style="text-align:center;" 
-                                                       rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() == 0}" >
-                                            <p:outputLabel value="Não há planos de ação cadastrados para esse empreendimento!" />
+                                    <p:panel rendered="#{RelatorioIndicadoresMaturidadeView.empreendimentoSelecionado != null}" 
+                                             toggleable="true" >
+                                        <p:outputPanel style="text-align:center;">
+                                            <p:outputLabel value="Categoria:" />
+
+                                            <p:selectOneMenu value="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada}"
+                                                             autoWidth="false" style="width: 200px" >
+                                                <p:ajax update="frmrelatorios" event="change"
+                                                        listener="#{RelatorioIndicadoresMaturidadeView.selecionaCategoriaTela()}" />
+
+                                                <f:selectItem itemLabel="Clique para selecionar" itemValue="" />
+
+                                                <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
+                                                              itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
+
+                                                <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[6].categoria}" 
+                                                              itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[6].categoria}"  />
+
+                                                <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[10].categoria}" 
+                                                              itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[10].categoria}"  />
+
+                                                <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[16].categoria}" 
+                                                              itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[16].categoria}"  />
+
+                                                <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[24].categoria}" 
+                                                              itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[24].categoria}"  />
+
+                                                <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[31].categoria}" 
+                                                              itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[31].categoria}"  />
+
+                                                <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[36].categoria}" 
+                                                              itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[36].categoria}"  />
+
+                                                <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[42].categoria}" 
+                                                              itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[42].categoria}"  />
+
+                                                <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[46].categoria}" 
+                                                              itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[46].categoria}"  />
+                                            </p:selectOneMenu>
+                                        </p:outputPanel>
+                                    </p:panel>
+                                    <p:spacer height="10px"/>
+
+                                    <p:panel rendered="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada != ''}" >
+                                        <p:outputPanel style="text-align:center;">
+                                            <!--Esta centralizado por não ficar coerente com os outros se ficar a direita-->
+                                            <p:outputLabel value="Indicadores:" />
+                                            <p:separator />
+                                            <p:selectBooleanCheckbox value="#{RelatorioIndicadoresMaturidadeView.selecionaTodosInds}" >
+                                                <p:ajax update="frmrelatorios" 
+                                                        onsuccess="#{RelatorioIndicadoresMaturidadeView.geraImagemBase64()}"
+                                                        listener="#{RelatorioIndicadoresMaturidadeView.selecionaTodosIndsView()}" />
+                                            </p:selectBooleanCheckbox>
+                                            <h:outputText value=" Todos" />
                                         </p:outputPanel>
 
-                                        <p:selectOneMenu value="#{RelatorioPlanoAcaoView.planoSelecionado}" converter="generic"
-                                                         autoWidth="false" style="width: 200px" 
-                                                         rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() > 0}" >
-                                            <p:ajax update="frmrelatorios" event="change" 
-                                                    listener="#{RelatorioPlanoAcaoView.gerarMetas()}" />
-                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
-                                            <f:selectItems value="#{RelatorioPlanoAcaoView.listaPlanos}" var="var" 
-                                                           itemLabel="#{var.nome}" itemValue="#{var}"/>                                            
-                                        </p:selectOneMenu>
-                                    </p:outputPanel>
-                                </p:panel>
+                                        <p:selectManyCheckbox value="#{RelatorioIndicadoresMaturidadeView.listaIndsSelecionados}" 
+                                                              layout="grid" converter="generic" columns="1" >
+                                            <p:ajax listener="#{RelatorioIndicadoresMaturidadeView.criaGraficoInd()}" 
+                                                    update="frmrelatorios"
+                                                    onsuccess="#{RelatorioIndicadoresMaturidadeView.geraImagemBase64()}"
+                                                    onstart="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()"/>
+                                            <f:selectItems value="#{RelatorioIndicadoresMaturidadeView.listaTodosInds}" 
+                                                           var="ind" itemLabel="#{ind.nome}" itemValue="#{ind}" />
+                                        </p:selectManyCheckbox>
+                                    </p:panel>
 
-                                <p:spacer height="20px" />
+                                    <p:spacer height="20px" />
 
-                                <!-- Botão Relatório-->
-                                <p:panel rendered="#{RelatorioPlanoAcaoView.planoSelecionado != null}" >
+                                    <p:panel rendered="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada != ''}" >
+                                        <p:outputPanel style="text-align:center;">
+                                            <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
+                                            <p:remoteCommand name="rc" update=":frmrelatorios:panelInIndicadoresMaturidade" 
+                                                             oncomplete="PF('dlWidGetVarReportIndicadores').show()" />
+                                            <p:commandButton value="Gerar Relatório" immediate="true"                                               
+                                                             onsuccess="rc()"  />                                        
+                                        </p:outputPanel>
+                                    </p:panel>
+                                </p:layoutUnit>
+
+                                <p:layoutUnit position="center" >
+                                    <p:fieldset legend="Evolução dos indicadores" toggleable="true" toggleSpeed="500"
+                                                rendered="#{RelatorioIndicadoresMaturidadeView.listaGraficoInds.size() > 0}" >
+                                        <p:dataGrid var="graInd" value="#{RelatorioIndicadoresMaturidadeView.listaGraficoInds}" 
+                                                    layout="grid" columns="1" rowIndexVar="contador" >
+                                            <p:panel >
+                                                <p:chart type="line" model="#{graInd}" 
+                                                         widgetVar="#{RelatorioIndicadoresMaturidadeView.listaWidgetVars[contador]}" />
+                                            </p:panel>
+                                        </p:dataGrid>
+                                    </p:fieldset>
+                                </p:layoutUnit>
+                            </p:layout>
+                        </p:tab>
+
+                        <p:tab id="tabExecucaoPlano" title="Execução do plano de ação">
+                            <p:layout style="min-height:700px;max-height:700px;" >
+                                <p:layoutUnit position="west" size="325" >
+                                    <p:panel >
+                                        <p:outputPanel style="text-align:center;">
+                                            <p:outputLabel value="Empreendimento:" />
+                                            <p:selectOneMenu value="#{RelatorioPlanoAcaoView.eesSelecionado}" converter="generic"
+                                                             autoWidth="false" style="width: 200px" >
+                                                <p:ajax update="frmrelatorios" event="change"  
+                                                        listener="#{RelatorioPlanoAcaoView.filtrarPlanos()}"/>
+                                                <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                                <f:selectItems value="#{RelatorioPlanoAcaoView.listaEes}" var="var" 
+                                                               itemLabel="#{var.sigla}" itemValue="#{var}"/>
+                                            </p:selectOneMenu>
+                                        </p:outputPanel>
+                                    </p:panel>
+                                    <p:spacer height="10px" />
+
+                                    <p:panel rendered="#{RelatorioPlanoAcaoView.eesSelecionado != null}" >
+                                        <p:outputPanel style="text-align:center;">
+                                            <p:outputLabel value="Planos de ação: "
+                                                           rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() > 0}" />
+
+                                            <p:outputPanel style="text-align:center;" 
+                                                           rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() == 0}" >
+                                                <p:outputLabel value="Não há planos de ação cadastrados para esse empreendimento!" />
+                                            </p:outputPanel>
+
+                                            <p:selectOneMenu value="#{RelatorioPlanoAcaoView.planoSelecionado}" converter="generic"
+                                                             autoWidth="false" style="width: 200px" 
+                                                             rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() > 0}" >
+                                                <p:ajax update="frmrelatorios" event="change" 
+                                                        listener="#{RelatorioPlanoAcaoView.gerarMetas()}" />
+                                                <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                                <f:selectItems value="#{RelatorioPlanoAcaoView.listaPlanos}" var="var" 
+                                                               itemLabel="#{var.nome}" itemValue="#{var}"/>                                            
+                                            </p:selectOneMenu>
+                                        </p:outputPanel>
+                                    </p:panel>
+
+                                    <p:spacer height="20px" />
+
+                                    <!-- Botão Relatório-->
+                                    <p:panel rendered="#{RelatorioPlanoAcaoView.planoSelecionado != null}" >
+                                        <p:outputPanel style="text-align:center;" >
+                                            <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
+                                            <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
+                                                             oncomplete="PF('diaRelatorioExecucaoPlanoWidGetVar').show()" />
+                                            <p:commandButton value="Gerar Relatório" immediate="true"                                               
+                                                             onsuccess="rc()"  />
+                                        </p:outputPanel>
+                                    </p:panel>
+                                </p:layoutUnit>
+
+                                <p:layoutUnit position="center" >
+                                    <p:dataGrid var="meta" value="#{RelatorioPlanoAcaoView.listaMetas}" rowIndexVar="numLinha"
+                                                layout="grid" columns="1" rendered="#{RelatorioPlanoAcaoView.planoSelecionado != null}"
+                                                emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
+
+                                        <p:fieldset legend="Meta: #{numLinha + 1}: #{meta.nome} 
+                                                    - Prazo: #{RelatorioPlanoAcaoView.converteData(meta.prazo)} 
+                                                    - Situação: #{meta.status}" toggleable="true" toggleSpeed="500" collapsed="true">
+                                            <p:dataTable value="#{meta.atividadePlanejadaList}" 
+                                                         rendered="#{meta.atividadePlanejadaList.size() > 0}"
+                                                         rowKey="#{cursor.id}" var="cursor" rows="10" >
+                                                <p:column headerText="Atividade" >
+                                                    <h:outputText value="#{cursor.nome}"/>
+                                                </p:column>
+
+                                                <p:column headerText="Data início" >
+                                                    <h:outputText value="#{cursor.dataInicio}" >
+                                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                    </h:outputText>
+                                                </p:column>
+
+                                                <p:column headerText="Data fim" >
+                                                    <h:outputText value="#{cursor.dataFim}" >
+                                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                    </h:outputText>
+                                                </p:column>
+
+                                                <p:column headerText="Status" >
+                                                    <h:outputText value="#{cursor.status}"/>
+                                                </p:column>
+
+                                                <p:column headerText="Horas Trabalhadas" >
+                                                    <h:outputText value="#{RelatorioPlanoAcaoView.geraHorasTrabAtividades(cursor)}"/>
+                                                </p:column>
+                                            </p:dataTable>
+
+                                            <p:outputPanel style="text-align:center;" 
+                                                           rendered="#{meta.atividadePlanejadaList.size() == 0}" >
+                                                <p:outputLabel value="Nenhuma atividade para essa meta!" />
+                                            </p:outputPanel>
+                                        </p:fieldset>
+
+                                        <p:spacer height="20px" />
+                                    </p:dataGrid>
+                                </p:layoutUnit>
+                            </p:layout>
+                        </p:tab>
+
+                        <p:tab id="tabDivisaoForcaTrabalho" title="Notas de maturidade e Horas trabalhadas" >
+                            <p:layout style="min-height:600px;max-height:1000px;" >
+                                <p:layoutUnit position="west" size="250" >
+                                    <p:panel >
+                                        <p:outputPanel style="text-align:center;" >
+                                            <p:outputLabel value="Filtro de Informações da força de trabalho" />
+                                            <p:separator/>
+
+                                            <h:panelGrid columns="2">                                        
+                                                <p:outputLabel value="De " />
+                                                <p:calendar value="#{RelatorioNotaMatuHorasTrabView.dataFiltroInicio}" locale="pt" 
+                                                            navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
+                                                    <p:ajax event="dateSelect" onstart="PF('blockUiGeral').show()" 
+                                                            oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
+                                                            onsuccess="#{RelatorioNotaMatuHorasTrabView.geraImagemBase64()}"
+                                                            listener="#{RelatorioNotaMatuHorasTrabView.modificaDataTela}" />
+                                                </p:calendar>
+
+                                                <p:outputLabel value="até " />
+                                                <p:calendar value="#{RelatorioNotaMatuHorasTrabView.dataFiltroFim}" locale="pt" 
+                                                            navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
+                                                    <p:ajax event="dateSelect"  onstart="PF('blockUiGeral').show()" 
+                                                            oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
+                                                            onsuccess="#{RelatorioNotaMatuHorasTrabView.geraImagemBase64()}"
+                                                            listener="#{RelatorioNotaMatuHorasTrabView.modificaDataTela}" />
+                                                </p:calendar>                               
+                                            </h:panelGrid>
+                                        </p:outputPanel>  
+                                    </p:panel>
+
+                                    <p:spacer height="20px" />
+
+                                    <p:panel >
+                                        <p:outputPanel style="text-align:center;" >
+                                            <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png"
+                                                            onclick="PF('diaRelatorioWidGetVar').hide()" />
+                                            <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
+                                                             oncomplete="PF('diaRelatorioWidGetVar').show()" />
+                                            <p:commandButton value="Gerar Relatório" immediate="true" onsuccess="rc()"  />                                        
+                                        </p:outputPanel>
+                                    </p:panel>
+                                </p:layoutUnit>
+
+                                <p:layoutUnit position="center" >
+                                    <p:fieldset legend="Somatório das horas e usuários" toggleable="true" 
+                                                toggleSpeed="500" >
+                                        <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{RelatorioNotaMatuHorasTrabView.listaEes}" 
+                                                     var="eesCursor" widgetVar="eesVarGlobal" rows="10" paginator="true" 
+                                                     style="text-align: center" rowKey="#{eesCursor.id}" paginatorPosition="top">
+
+                                            <p:column headerText="Empreendimento" >
+                                                <h:outputText value="#{eesCursor.sigla}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Total de horas em atividades" >
+                                                <h:outputText value="#{RelatorioNotaMatuHorasTrabView.geraHorasTrabAtividades(eesCursor)}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Quantiade de usuários envolvidos" >
+                                                <h:outputText value="#{RelatorioNotaMatuHorasTrabView.geraQuantiUser(eesCursor)}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:fieldset>
+
+                                    <p:spacer height="10px" />
+
+                                    <p:fieldset legend="Evolução das notas e tempo dedicado" toggleable="true" toggleSpeed="500"
+                                                rendered="#{RelatorioNotaMatuHorasTrabView.listaGraficoCombinado.size() != 0}" >
+
+                                        <p:dataGrid var="graNotasHoras" value="#{RelatorioNotaMatuHorasTrabView.listaGraficoCombinado}" 
+                                                    layout="grid" columns="1" rowIndexVar="contador" 
+                                                    emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
+                                            <p:panel >
+                                                <p:chart type="line" model="#{graNotasHoras}"
+                                                         widgetVar="#{RelatorioNotaMatuHorasTrabView.listaWidgetVars[contador]}" />
+                                            </p:panel>
+                                        </p:dataGrid>
+                                    </p:fieldset>
+                                </p:layoutUnit>
+                            </p:layout>
+                        </p:tab>
+
+                        <p:tab id="tabTrabalhosUsuarios" title="Atividades" >
+                            <p:layout style="min-height:600px;max-height:1000px;" >
+                                <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
+                                    <p:panel >
+                                        <p:outputPanel style="text-align:center;">
+                                            <p:outputLabel value="Empreendimento:" />
+                                            <p:selectOneMenu value="#{RelatorioAtividadesView.eesSelecionado}" converter="generic"
+                                                             autoWidth="false" style="width: 200px" >
+                                                <p:ajax update="frmrelatorios" event="change"  
+                                                        listener="#{RelatorioAtividadesView.filtrarPorData()}"/>
+                                                <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                                <f:selectItems value="#{RelatorioAtividadesView.listaEes}" var="var" 
+                                                               itemLabel="#{var.sigla}" itemValue="#{var}"/>
+                                            </p:selectOneMenu>
+                                        </p:outputPanel>
+                                    </p:panel>
+                                    <p:spacer height="10px" />
+
+                                    <p:panel >
+                                        <p:outputPanel style="text-align:center;">
+                                            <p:outputLabel value="Usuario:" />
+                                            <p:selectOneMenu value="#{RelatorioAtividadesView.userSelecionado}" converter="generic"
+                                                             autoWidth="false" style="width: 200px" >
+                                                <p:ajax update="frmrelatorios" event="change"
+                                                        listener="#{RelatorioAtividadesView.filtrarPorData()}"/>
+                                                <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                                <f:selectItems value="#{RelatorioAtividadesView.listaUser}" var="var" 
+                                                               itemLabel="#{var.nome}" itemValue="#{var}"/>
+                                            </p:selectOneMenu>
+                                        </p:outputPanel>
+                                    </p:panel>
+
+                                    <p:spacer height="10px" />
+
+                                    <p:panel >
+                                        <p:outputPanel style="text-align:center;" >
+                                            <p:outputLabel value="Filtro por data" />
+                                            <p:separator/>
+
+                                            <h:panelGrid columns="2">                                        
+                                                <p:outputLabel value="De " />
+                                                <p:calendar value="#{RelatorioAtividadesView.dataFiltroInicio}" locale="pt" 
+                                                            navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
+                                                    <p:ajax event="dateSelect" onstart="PF('blockUiGeral').show()" 
+                                                            oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
+                                                            listener="#{RelatorioAtividadesView.filtrarPorData()}" />
+                                                </p:calendar>
+
+                                                <p:outputLabel value="até " />
+                                                <p:calendar value="#{RelatorioAtividadesView.dataFiltroFim}" locale="pt" 
+                                                            navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
+                                                    <p:ajax event="dateSelect"  onstart="PF('blockUiGeral').show()" 
+                                                            oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
+                                                            listener="#{RelatorioAtividadesView.filtrarPorData()}" />
+                                                </p:calendar>                               
+                                            </h:panelGrid>
+                                        </p:outputPanel>  
+                                    </p:panel>
+
+                                    <p:spacer height="10px" />
+
+                                    <p:panel rendered="#{RelatorioAtividadesView.listaAtv.size() > 0}" >
+                                        <p:outputPanel style="text-align:center;" >
+                                            <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
+                                            <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
+                                                             oncomplete="PF('diaRelatorioAtiviadesWidGetVar').show()" />
+                                            <p:commandButton value="Gerar Relatório" immediate="true"                                               
+                                                             onsuccess="rc()" />                                        
+                                        </p:outputPanel>
+                                    </p:panel>
+                                </p:layoutUnit>
+
+                                <p:layoutUnit position="center" >
                                     <p:outputPanel style="text-align:center;" >
-                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
-                                        <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
-                                                         oncomplete="PF('diaRelatorioExecucaoPlanoWidGetVar').show()" />
-                                        <p:commandButton value="Gerar Relatório" immediate="true"                                               
-                                                         onsuccess="rc()"  />
-                                    </p:outputPanel>
-                                </p:panel>
-                            </p:layoutUnit>
+                                        <p:dataTable emptyMessage="Nenhum registro encontrado." value="#{RelatorioAtividadesView.listaAtv}" 
+                                                     filteredValue="#{RelatorioAtividadesView.listaAtvFiltradas}" rowKey="#{cursor.id}"
+                                                     var="cursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top" >
 
-                            <p:layoutUnit position="center" >
-                                <p:dataGrid var="meta" value="#{RelatorioPlanoAcaoView.listaMetas}" rowIndexVar="numLinha"
-                                            layout="grid" columns="1" rendered="#{RelatorioPlanoAcaoView.planoSelecionado != null}"
-                                            emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
+                                            <p:column headerText="Data" styleClass="colunasTabela200PX" >
+                                                <h:outputText value="#{RelatorioAtividadesView.converteData(cursor)}" />
+                                            </p:column>
 
-                                    <p:fieldset legend="Meta: #{numLinha + 1}: #{meta.nome} 
-                                                - Prazo: #{RelatorioPlanoAcaoView.converteData(meta.prazo)} 
-                                                - Situação: #{meta.status}" toggleable="true" toggleSpeed="500" collapsed="true">
-                                        <p:dataTable value="#{meta.atividadePlanejadaList}" 
-                                                     rendered="#{meta.atividadePlanejadaList.size() > 0}"
-                                                     rowKey="#{cursor.id}" var="cursor" rows="10" >
+                                            <p:column headerText="Horas Trabalhadas" styleClass="colunasTabela200PX" >
+                                                <h:outputText value="#{RelatorioAtividadesView.geraHorasTrabPorAtv(cursor)}" />
+                                            </p:column>
+
                                             <p:column headerText="Atividade" >
+                                                <h:outputText value="#{cursor.meta.planoAcao.empreendimento.sigla}"/>
+                                                <h:outputText value=" - "/>
                                                 <h:outputText value="#{cursor.nome}"/>
                                             </p:column>
 
-                                            <p:column headerText="Data início" >
-                                                <h:outputText value="#{cursor.dataInicio}" >
-                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                                </h:outputText>
-                                            </p:column>
-
-                                            <p:column headerText="Data fim" >
-                                                <h:outputText value="#{cursor.dataFim}" >
-                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                                </h:outputText>
-                                            </p:column>
-
-                                            <p:column headerText="Status" >
+                                            <p:column headerText="Situação" styleClass="colunasTabela200PX" >
                                                 <h:outputText value="#{cursor.status}"/>
                                             </p:column>
 
-                                            <p:column headerText="Horas Trabalhadas" >
-                                                <h:outputText value="#{RelatorioPlanoAcaoView.geraHorasTrabAtividades(cursor)}"/>
+                                            <f:facet name="footer">
+                                                <p:outputPanel style="text-align:center;" >
+                                                    <p:outputLabel value="#{RelatorioAtividadesView.geraTotalHoras()}" />                              
+                                                </p:outputPanel>
+                                            </f:facet>
+                                        </p:dataTable>
+                                    </p:outputPanel>
+                                </p:layoutUnit>
+                            </p:layout>
+                        </p:tab>
+
+                        <p:tab id="tabAcompanhamentos" title="Acompanhamentos" >
+                            <p:layout style="min-height:600px;max-height:1000px;" >
+                                <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
+
+                                    <p:panel >
+                                        <p:outputPanel style="text-align:center;" >
+                                            <p:outputLabel value="Filtro por data" />
+                                            <p:separator/>
+
+                                            <h:panelGrid columns="2">                                        
+                                                <p:outputLabel value="De " />
+                                                <p:calendar value="#{RelatorioAcompanhamentosView.dataFiltroInicio}" locale="pt" 
+                                                            navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
+                                                    <p:ajax event="dateSelect" onstart="PF('blockUiGeral').show()" 
+                                                            oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
+                                                            listener="#{RelatorioAcompanhamentosView.filtrarAcons()}" />
+                                                </p:calendar>
+
+                                                <p:outputLabel value="até " />
+                                                <p:calendar value="#{RelatorioAcompanhamentosView.dataFiltroFim}" locale="pt" 
+                                                            navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
+                                                    <p:ajax event="dateSelect"  onstart="PF('blockUiGeral').show()" 
+                                                            oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
+                                                            listener="#{RelatorioAcompanhamentosView.filtrarAcons()}" />
+                                                </p:calendar>                               
+                                            </h:panelGrid>
+                                        </p:outputPanel>  
+                                    </p:panel>
+                                    <p:spacer height="10px" />
+
+                                    <p:panel rendered="#{RelatorioAcompanhamentosView.listaAcom.size() > 0}" >
+                                        <p:outputPanel style="text-align:center;" >
+                                            <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
+                                            <p:remoteCommand name="rc" oncomplete="PF('diaRelatorioAcompaWidGetVar').show()" />
+                                            <p:commandButton value="Gerar Relatório" immediate="true"                                               
+                                                             onsuccess="rc()" />                                        
+                                        </p:outputPanel>
+                                    </p:panel>
+                                </p:layoutUnit>
+
+                                <p:layoutUnit position="center" >
+                                    <p:outputPanel style="text-align:center;" >
+                                        <p:dataTable emptyMessage="Nenhum registro encontrado." 
+                                                     value="#{RelatorioAcompanhamentosView.listaAcom}" rowKey="#{cursor.id}" 
+                                                     var="cursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top" >
+                                            <p:column headerText="Objetivo" >
+                                                <h:outputText value="#{cursor.objetivo}" />
+                                            </p:column>
+
+                                            <p:column headerText="Data" >
+                                                <h:outputText 
+                                                    value="#{RelatorioAcompanhamentosView.converteData(cursor)}" />
+                                            </p:column>
+
+                                            <p:column headerText="Emprendimento" >
+                                                <h:outputText value="#{cursor.empreendimento.sigla}"/>
                                             </p:column>
                                         </p:dataTable>
-
-                                        <p:outputPanel style="text-align:center;" 
-                                                       rendered="#{meta.atividadePlanejadaList.size() == 0}" >
-                                            <p:outputLabel value="Nenhuma atividade para essa meta!" />
-                                        </p:outputPanel>
-                                    </p:fieldset>
-
-                                    <p:spacer height="20px" />
-                                </p:dataGrid>
-                            </p:layoutUnit>
-                        </p:layout>
-                    </p:tab>
-
-                    <p:tab id="tabDivisaoForcaTrabalho" title="Nota de maturidade e Horas trabalhadas" >
-                        <p:layout style="min-height:600px;max-height:1000px;" >
-                            <p:layoutUnit position="west" size="250" >
-                                <p:panel >
-                                    <p:outputPanel style="text-align:center;" >
-                                        <p:outputLabel value="Filtro de Informações da força de trabalho" />
-                                        <p:separator/>
-
-                                        <h:panelGrid columns="2">                                        
-                                            <p:outputLabel value="De " />
-                                            <p:calendar value="#{RelatorioNotaMatuHorasTrabView.dataFiltroInicio}" locale="pt" 
-                                                        navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
-                                                <p:ajax event="dateSelect" onstart="PF('blockUiGeral').show()" 
-                                                        oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
-                                                        onsuccess="#{RelatorioNotaMatuHorasTrabView.geraImagemBase64()}"
-                                                        listener="#{RelatorioNotaMatuHorasTrabView.modificaDataTela}" />
-                                            </p:calendar>
-
-                                            <p:outputLabel value="até " />
-                                            <p:calendar value="#{RelatorioNotaMatuHorasTrabView.dataFiltroFim}" locale="pt" 
-                                                        navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
-                                                <p:ajax event="dateSelect"  onstart="PF('blockUiGeral').show()" 
-                                                        oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
-                                                        onsuccess="#{RelatorioNotaMatuHorasTrabView.geraImagemBase64()}"
-                                                        listener="#{RelatorioNotaMatuHorasTrabView.modificaDataTela}" />
-                                            </p:calendar>                               
-                                        </h:panelGrid>
-                                    </p:outputPanel>  
-                                </p:panel>
-
-                                <p:spacer height="20px" />
-
-                                <p:panel >
-                                    <p:outputPanel style="text-align:center;" >
-                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png"
-                                                        onclick="PF('diaRelatorioWidGetVar').hide()" />
-                                        <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
-                                                         oncomplete="PF('diaRelatorioWidGetVar').show()" />
-                                        <p:commandButton value="Gerar Relatório" immediate="true"                                               
-                                                         onsuccess="rc()"  />                                        
                                     </p:outputPanel>
-                                </p:panel>
-                            </p:layoutUnit>
-
-                            <p:layoutUnit position="center" >
-                                <p:fieldset legend="Somatório das horas e usuários" toggleable="true" 
-                                            toggleSpeed="500" >
-                                    <p:dataTable emptyMessage="Nenhuma nota cadastrada." value="#{RelatorioNotaMatuHorasTrabView.listaEes}" 
-                                                 var="eesCursor" widgetVar="eesVarGlobal" rows="10" paginator="true" 
-                                                 style="text-align: center" rowKey="#{eesCursor.id}" paginatorPosition="top">
-
-                                        <p:column headerText="Empreendimento" >
-                                            <h:outputText value="#{eesCursor.sigla}"/>
-                                        </p:column>
-
-                                        <p:column headerText="Total de horas em atividades" >
-                                            <h:outputText value="#{RelatorioNotaMatuHorasTrabView.geraHorasTrabAtividades(eesCursor)}"/>
-                                        </p:column>
-
-                                        <p:column headerText="Quantiade de usuários envolvidos" >
-                                            <h:outputText value="#{RelatorioNotaMatuHorasTrabView.geraQuantiUser(eesCursor)}"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:fieldset>
-
-                                <p:spacer height="10px" />
-
-                                <p:fieldset legend="Evolução da nota e tempo dedicado" toggleable="true" toggleSpeed="500"
-                                            rendered="#{RelatorioNotaMatuHorasTrabView.listaGraficoCombinado.size() != 0}" >
-
-                                    <p:dataGrid var="graNotasHoras" value="#{RelatorioNotaMatuHorasTrabView.listaGraficoCombinado}" 
-                                                layout="grid" columns="1" rowIndexVar="contador" 
-                                                emptyMessage="Nenhum empreendimento tem lançamentos de horas ou notas" >
-                                        <p:panel >
-                                            <p:chart type="line" model="#{graNotasHoras}"
-                                                     widgetVar="#{RelatorioNotaMatuHorasTrabView.listaWidgetVars[contador]}" />
-                                        </p:panel>
-                                    </p:dataGrid>
-                                </p:fieldset>
-                            </p:layoutUnit>
-                        </p:layout>
-                    </p:tab>
-
-                    <p:tab id="tabTrabalhosUsuarios" title="Atividades" >
-                        <p:layout style="min-height:600px;max-height:1000px;" >
-                            <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
-                                <p:panel >
-                                    <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Empreendimento:" />
-                                        <p:selectOneMenu value="#{RelatorioAtividadesView.eesSelecionado}" converter="generic"
-                                                         autoWidth="false" style="width: 200px" >
-                                            <p:ajax update="frmrelatorios" event="change"  
-                                                    listener="#{RelatorioAtividadesView.filtrarPorData()}"/>
-                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
-                                            <f:selectItems value="#{RelatorioAtividadesView.listaEes}" var="var" 
-                                                           itemLabel="#{var.sigla}" itemValue="#{var}"/>
-                                        </p:selectOneMenu>
-                                    </p:outputPanel>
-                                </p:panel>
-                                <p:spacer height="10px" />
-
-                                <p:panel >
-                                    <p:outputPanel style="text-align:center;">
-                                        <p:outputLabel value="Usuario:" />
-                                        <p:selectOneMenu value="#{RelatorioAtividadesView.userSelecionado}" converter="generic"
-                                                         autoWidth="false" style="width: 200px" >
-                                            <p:ajax update="frmrelatorios" event="change"
-                                                    listener="#{RelatorioAtividadesView.filtrarPorData()}"/>
-                                            <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
-                                            <f:selectItems value="#{RelatorioAtividadesView.listaUser}" var="var" 
-                                                           itemLabel="#{var.nome}" itemValue="#{var}"/>
-                                        </p:selectOneMenu>
-                                    </p:outputPanel>
-                                </p:panel>
-
-                                <p:spacer height="10px" />
-
-                                <p:panel >
-                                    <p:outputPanel style="text-align:center;" >
-                                        <p:outputLabel value="Filtro por data" />
-                                        <p:separator/>
-
-                                        <h:panelGrid columns="2">                                        
-                                            <p:outputLabel value="De " />
-                                            <p:calendar value="#{RelatorioAtividadesView.dataFiltroInicio}" locale="pt" 
-                                                        navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
-                                                <p:ajax event="dateSelect" onstart="PF('blockUiGeral').show()" 
-                                                        oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
-                                                        listener="#{RelatorioAtividadesView.filtrarPorData()}" />
-                                            </p:calendar>
-
-                                            <p:outputLabel value="até " />
-                                            <p:calendar value="#{RelatorioAtividadesView.dataFiltroFim}" locale="pt" 
-                                                        navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
-                                                <p:ajax event="dateSelect"  onstart="PF('blockUiGeral').show()" 
-                                                        oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
-                                                        listener="#{RelatorioAtividadesView.filtrarPorData()}" />
-                                            </p:calendar>                               
-                                        </h:panelGrid>
-                                    </p:outputPanel>  
-                                </p:panel>
-
-                                <p:spacer height="10px" />
-
-                                <p:panel rendered="#{RelatorioAtividadesView.listaAtv.size() > 0}" >
-                                    <p:outputPanel style="text-align:center;" >
-                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
-                                        <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
-                                                         oncomplete="PF('diaRelatorioAtiviadesWidGetVar').show()" />
-                                        <p:commandButton value="Gerar Relatório" immediate="true"                                               
-                                                         onsuccess="rc()" />                                        
-                                    </p:outputPanel>
-                                </p:panel>
-                            </p:layoutUnit>
-
-                            <p:layoutUnit position="center" >
-                                <p:outputPanel style="text-align:center;" >
-                                    <p:dataTable emptyMessage="Nenhum registro encontrado." value="#{RelatorioAtividadesView.listaAtv}" 
-                                                 filteredValue="#{RelatorioAtividadesView.listaAtvFiltradas}" rowKey="#{cursor.id}"
-                                                 var="cursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top" >
-
-                                        <p:column headerText="Data" styleClass="colunasTabela200PX" >
-                                            <h:outputText value="#{RelatorioAtividadesView.converteData(cursor)}" />
-                                        </p:column>
-
-                                        <p:column headerText="Horas Trabalhadas" styleClass="colunasTabela200PX" >
-                                            <h:outputText value="#{RelatorioAtividadesView.geraHorasTrabPorAtv(cursor)}" />
-                                        </p:column>
-
-                                        <p:column headerText="Atividade" >
-                                            <h:outputText value="#{cursor.meta.planoAcao.empreendimento.sigla}"/>
-                                            <h:outputText value=" - "/>
-                                            <h:outputText value="#{cursor.nome}"/>
-                                        </p:column>
-
-                                        <p:column headerText="Situação" styleClass="colunasTabela200PX" >
-                                            <h:outputText value="#{cursor.status}"/>
-                                        </p:column>
-
-                                        <f:facet name="footer">
-                                            <p:outputPanel style="text-align:center;" >
-                                                <p:outputLabel value="#{RelatorioAtividadesView.geraTotalHoras()}" />                              
-                                            </p:outputPanel>
-                                        </f:facet>
-                                    </p:dataTable>
-                                </p:outputPanel>
-                            </p:layoutUnit>
-                        </p:layout>
-                    </p:tab>
-
-                    <p:tab id="tabAcompanhamentos" title="Acompanhamentos" >
-                        <p:layout style="min-height:600px;max-height:1000px;" >
-                            <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
-                                
-                                <p:panel >
-                                    <p:outputPanel style="text-align:center;" >
-                                        <p:outputLabel value="Filtro por data" />
-                                        <p:separator/>
-
-                                        <h:panelGrid columns="2">                                        
-                                            <p:outputLabel value="De " />
-                                            <p:calendar value="#{RelatorioAcompanhamentosView.dataFiltroInicio}" locale="pt" 
-                                                        navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
-                                                <p:ajax event="dateSelect" onstart="PF('blockUiGeral').show()" 
-                                                        oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
-                                                        listener="#{RelatorioAcompanhamentosView.filtrarAcons()}" />
-                                            </p:calendar>
-
-                                            <p:outputLabel value="até " />
-                                            <p:calendar value="#{RelatorioAcompanhamentosView.dataFiltroFim}" locale="pt" 
-                                                        navigator="true" pattern="dd/MM/yyyy" size="10" mask="true" >
-                                                <p:ajax event="dateSelect"  onstart="PF('blockUiGeral').show()" 
-                                                        oncomplete="PF('blockUiGeral').hide()" update="frmrelatorios"
-                                                        listener="#{RelatorioAcompanhamentosView.filtrarAcons()}" />
-                                            </p:calendar>                               
-                                        </h:panelGrid>
-                                    </p:outputPanel>  
-                                </p:panel>
-                                <p:spacer height="10px" />
-
-                                <p:panel rendered="#{RelatorioAcompanhamentosView.listaAcom.size() > 0}" >
-                                    <p:outputPanel style="text-align:center;" >
-                                        <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
-                                        <p:remoteCommand name="rc" oncomplete="PF('diaRelatorioAcompaWidGetVar').show()" />
-                                        <p:commandButton value="Gerar Relatório" immediate="true"                                               
-                                                         onsuccess="rc()" />                                        
-                                    </p:outputPanel>
-                                </p:panel>
-                            </p:layoutUnit>
-
-                            <p:layoutUnit position="center" >
-                                <p:outputPanel style="text-align:center;" >
-                                    <p:dataTable emptyMessage="Nenhum registro encontrado." 
-                                                 value="#{RelatorioAcompanhamentosView.listaAcom}" rowKey="#{cursor.id}" 
-                                                 var="cursor" widgetVar="varGlobal" rows="10" paginator="true" paginatorPosition="top" >
-                                        <p:column headerText="Objetivo" >
-                                            <h:outputText value="#{cursor.objetivo}" />
-                                        </p:column>
-
-                                        <p:column headerText="Data" >
-                                            <h:outputText 
-                                                value="#{RelatorioAcompanhamentosView.converteData(cursor)}" />
-                                        </p:column>
-
-                                        <p:column headerText="Emprendimento" >
-                                            <h:outputText value="#{cursor.empreendimento.sigla}"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:outputPanel>
-                            </p:layoutUnit>
-                        </p:layout>
-                    </p:tab>
-                </p:tabView>
+                                </p:layoutUnit>
+                            </p:layout>
+                        </p:tab>
+                    </p:tabView>
+                </p:panel>
 
                 <!-- ==================================Dialogs de tipo de download ==================================== -->
 
@@ -679,7 +685,7 @@
                         </h:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
-                
+
                 <!--Dialogo tipo relatório: Acompanhamentos-->
                 <p:dialog widgetVar="diaRelatorioAcompaWidGetVar"  closable="true" showEffect="clip" hideEffect="clip" 
                           resizable="false" draggable="false" >

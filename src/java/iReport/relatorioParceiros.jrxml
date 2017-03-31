@@ -41,7 +41,7 @@ order by Parceiro.`nome`;]]>
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="555" height="70" uuid="c68191b7-c8f8-42d2-be09-59ac133c58c2"/>
 				<imageExpression><![CDATA[$P{paramImage}]]></imageExpression>
 			</image>
@@ -52,9 +52,9 @@ order by Parceiro.`nome`;]]>
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="25" uuid="f411f2f1-4bc0-4b17-bdd3-430cbf79c6b4"/>
 				<textElement textAlignment="Center">
-					<font size="20"/>
+					<font size="20" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Sistema SIGITEC - Relatório de parceiros]]></text>
+				<text><![CDATA[Relatório de parceiros]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

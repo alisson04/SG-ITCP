@@ -108,11 +108,10 @@
     background-position: 0px 0x;
 }
 
-.Check24-iconfinder{
-    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24Check.png") !important;
+.CheckPreto24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24CheckPreto.png") !important;
     height: 24px;
     width: 34px;
-    background-position: 0px 0x;
 }
 
 .CancelPreto24-iconfinder{
@@ -190,6 +189,13 @@
     height: 24px;
     width: 34px;
     background-position: 0px 0x;
+}
+
+.GraficoPreto24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24raficoPreto.png") !important;
+    height: 24px;
+    width: 34px;
+    background-position: 5px 0px;
 }
 
 .Ideia24-iconfinder{
@@ -292,6 +298,12 @@
     height: 24px;
     width: 34px;
     background-position: 0px 0x;
+}
+
+.ReportPreto24-iconfinder{
+    background-image: url("#{facesContext.externalContext.request.contextPath}/resources/icons24/24ReportPreto.png") !important;
+    height: 24px;
+    width: 34px;
 }
 
 .Target24-iconfinder{

@@ -97,8 +97,6 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
             x.add((Calendar.DAY_OF_MONTH), 30);//soma 15 dias a data atual
             dataFiltroFim = x.getTime();//Seta a data somada
             filtraHorasTrabalhoPorData();//Filtra as atividades
-            
-            System.out.println("11111111111111111111111111111111111111111111111111111111111111111111");
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -106,11 +104,11 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
 
     //METODOS
     public void onTabChange(TabChangeEvent event) {
-        if(event.getTab().getId().equals("tabDivisaoForcaTrabalho")){
+        if (event.getTab().getId().equals("tabDivisaoForcaTrabalho")) {
             geraImagemBase64();
         }
     }
-    
+
     public String corrigeWidgetVar(String widgetVar) {
         int i = widgetVar.indexOf("r");//Utiliza a letra r pq é a ultima do nome que é dado a widgetVar dos gráficos
         return widgetVar.substring(i + 1);
@@ -189,7 +187,7 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
         listaImagensBase64 = new ArrayList<>();//Limpa lista antes de usar
         listaWidgetVars = new ArrayList<>();//Limpa lista antes de usar
         listaGraficoCombinado = new ArrayList<>();//Limpa lista antes de usar
-        
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//Cria o formato q data sera mostrada
         float eixoY = 0;//Guarda o maior valor para o eixo Y
 
@@ -229,7 +227,7 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
             int quantiHoras = 0;//Salva a quantidade de objetos de "horas" encontrados para tal EES
             for (int i = 0; i < listaHorasTrab.size(); i++) {
                 System.out.println("RODA");
-                if (listaHorasTrab.get(i).getAtividadePlanejada().getMeta().getPlanoAcao().getEmpreendimento().equals(eesSelecionado)) {
+                if (listaHorasTrab.get(i).getAtividadePlanejada().getMeta().getPlanoAcao().getEmpreendimento().equals(listaEes.get(x))) {
                     quantiHoras++;
                     obj = listaHorasTrab.get(i);
                     segundos += (int) Math.floor((((int) (long) (obj.getHorasFim().getTime() - obj.getHorasInicio().getTime())) / 1000));
@@ -289,9 +287,9 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
             }
         }
     }
-    
-    public void modificaDataTela(){
-        filtraHorasTrabalhoPorData();      
+
+    public void modificaDataTela() {
+        filtraHorasTrabalhoPorData();
     }
 
     public void filtraHorasTrabalhoPorData() {
@@ -299,8 +297,10 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
             Date dataTrabalho;
             List<HorasTrabalhadas> listaAux = new ArrayList();
             listaHorasTrab = horasTrabBean.listarBean();
+            System.out.println("HORAS TRAB------------------------------------------------------- " + listaHorasTrab.size());
 
             for (int i = 0; i < listaHorasTrab.size(); i++) {
+                System.out.println("HORAS TRAB------------------------------------------------------- " + i);
                 dataTrabalho = listaHorasTrab.get(i).getDataTrabalho();
 
                 if ((dataTrabalho.after(dataFiltroInicio) || dataTrabalho.equals(dataFiltroInicio))
@@ -309,6 +309,8 @@ public class RelatorioNotaMatuHorasTrabView extends MensagensGenericas implement
                 }
             }
             listaHorasTrab = listaAux;
+
+            System.out.println("HORAS TRAB------------------------------------------------------- " + listaHorasTrab.size());
             criaGraficoForcaTrabalho();
         } catch (Exception ex) {
             throw new FacesException(ex);

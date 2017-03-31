@@ -35,7 +35,7 @@ order by Empreendimento.`nome`]]>
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="555" height="70" uuid="fa9ea268-c647-4f60-81c9-876a40058b1c"/>
 				<imageExpression><![CDATA[$P{paramImage}]]></imageExpression>
 			</image>
@@ -46,9 +46,9 @@ order by Empreendimento.`nome`]]>
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="25" uuid="ae8dae02-4a74-4a22-9b2f-8a0051f25d74"/>
 				<textElement textAlignment="Center">
-					<font size="20" isBold="true"/>
+					<font size="20" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Sistema SIGITEC - Lista de contatos]]></text>
+				<text><![CDATA[Lista de contatos]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

@@ -53,7 +53,7 @@ WHERE
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="555" height="70" uuid="44883a3d-685e-43c5-9145-1d9d512d1ef2"/>
 				<imageExpression><![CDATA[$P{paramImage}]]></imageExpression>
 			</image>
@@ -64,9 +64,9 @@ WHERE
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="25" uuid="290faace-4ebb-4b00-a970-92f57cdde91f"/>
 				<textElement textAlignment="Center">
-					<font size="20"/>
+					<font size="20" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Sistema SIGITEC - Relatório de acompanhamentos]]></text>
+				<text><![CDATA[Relatório de acompanhamentos]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

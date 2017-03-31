@@ -24,7 +24,7 @@
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="555" height="70" uuid="6d12497e-7142-4a73-9a4b-51c967aff12a"/>
 				<imageExpression><![CDATA[$P{paramImage}]]></imageExpression>
 			</image>
@@ -35,7 +35,7 @@
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="25" uuid="5b86f30c-84f8-4a93-bc2c-329e5820e790"/>
 				<textElement textAlignment="Center">
-					<font size="20"/>
+					<font size="20" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Relatório de atividades]]></text>
 			</staticText>
