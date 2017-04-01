@@ -17,21 +17,18 @@
                     </p:outputPanel>
                     <p:layout style="min-height:700px;max-height:700px;" >
                         <p:layoutUnit position="west" size="325" >
-                            <p:panel toggleable="true" styleClass="painelBordas"
-                                     collapsed="#{IndicadoresMaturidadeView.eptCheckBox}" >
+                            <p:panel toggleable="true" styleClass="painelBordas" >
                                 <p:outputPanel style="text-align:center;">
-                                    <p:outputLabel value="Selecionar empreendimento para modificar nota" />
-                                </p:outputPanel>
-                                <p:separator />
-
-                                <p:ajax event="toggle" listener="#{IndicadoresMaturidadeView.configuraCheckBox(1)}" />
-                                <p:selectOneRadio value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
-                                                  converter="generic" layout="grid" columns="1" >
-                                    <p:ajax update="frmIndicadores frmEdicao" event="change"  
+                                    <p:outputLabel value="Empreendimento:" />
+                                    <p:selectOneMenu value="#{IndicadoresMaturidadeView.empreendimentoSelecionado}" 
+                                                     converter="generic" autoWidth="false" style="width: 200px" >
+                                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+                                        <p:ajax update="frmIndicadores frmEdicao" event="change"  
                                             listener="#{IndicadoresMaturidadeView.selecionaEptTela()}"/>
-                                    <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
+                                        <f:selectItems value="#{IndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
                                                    itemLabel="#{ept.sigla}" itemValue="#{ept}"/>
-                                </p:selectOneRadio>
+                                    </p:selectOneMenu>
+                                </p:outputPanel>
                             </p:panel>
                             <p:spacer height="10px"/>
 
@@ -77,7 +74,8 @@
                             </p:panel>
                             <p:spacer height="10px"/>
 
-                            <p:panel header="Indicadores" rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != ''}" >
+                            <p:panel header="Indicadores" rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != ''}" 
+                                     rendered="#{IndicadoresMaturidadeView.categoriaSelecionada != null}" >
                                 <f:facet name="options" >
                                     <p:menu  >
                                         <p:submenu label="Tamanho dos gráficos">
@@ -136,7 +134,7 @@
                                     </p:column>
 
                                     <f:facet name="footer">
-                                        <p:commandButton id="btnLancarNotas" value="Modificar notas" 
+                                        <p:commandButton id="btnLancarNotas" value="Lançar notas" 
                                                          update="frmIndicadores" oncomplete="PF('wVarEditarDialog').show()"
                                                          disabled="#{IndicadoresMaturidadeView.empreendimentoSelecionado == null}" />
 

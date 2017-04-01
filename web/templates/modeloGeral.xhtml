@@ -151,26 +151,26 @@
                         </p:submenu>
 
                         <p:submenu label="Usuários" icon="UserPreto24-iconfinder" >
-                            <p:menuitem value="Cadastro e edições" action="/ListarUsuarios.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Gerir usuários" action="/ListarUsuarios.xhtml?faces-redirect=true" />
 
                             <p:menuitem value="Horários de trabalho" action="/HorariosDeTrabalho.xhtml?faces-redirect=true" />
                         </p:submenu>
 
                         <p:submenu label="Empreendimentos" icon="PredioPreto24-iconfinder">
-                            <p:menuitem value="Cadastro e edições" action="/ListarEmpreendimento.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Gerir empreendimentos" action="/ListarEmpreendimento.xhtml?faces-redirect=true" />
 
-                            <p:menuitem value="Membros" action="/ListarMembroEmpreendimento.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Gerir membros" action="/ListarMembroEmpreendimento.xhtml?faces-redirect=true" />
 
-                            <p:menuitem value="Acompanhamentos" action="/ListarAcompanhamentos.xhtml?faces-redirect=true"/>
+                            <p:menuitem value="Gerir acompanhamentos" action="/ListarAcompanhamentos.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <p:submenu label="Planos de ação" icon="PlanoPreto24-iconfinder">
-                            <p:menuitem value="Cadastro e edições" 
+                            <p:menuitem value="Gerir planos de ação" 
                                         action="/ListarPlanoAcao.xhtml?faces-redirect=true"/>
 
-                            <p:menuitem value="Metas" action="/ListarMetas.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Gerir metas" action="/ListarMetas.xhtml?faces-redirect=true" />
 
-                            <p:menuitem value="Atividades" action="/ListarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
+                            <p:menuitem value="Gerir atividades" action="/ListarAtividadesPlanejadas.xhtml?faces-redirect=true"/>
                         </p:submenu>
 
                         <p:menuitem value="Indicadores" action="/IndicadoresMaturidade.xhtml?faces-redirect=true"
@@ -183,7 +183,7 @@
                                     action="/ListaContatos.xhtml?faces-redirect=true" />
 
                         <f:facet name="options" >
-                            <p:menuButton value="Minha conta">
+                            <p:menuButton value="#{modeloGeralView.abreviaNomeUser(modeloGeralView.usuarioLogado)}">
                                 <p:menuitem value="Editar  dados" icon="Edit24-iconfinder"
                                             oncomplete="PF('UserDia').show()" update=":frmEditarMeusDados:outPaMostrarUsr" />
                                 <p:menuitem value="Editar  senha" icon="KeyPreto24-iconfinder"
@@ -263,9 +263,7 @@
 
                             <p:commandButton id="btnSalvar" value="Salvar" icon="SalvarPreto24-iconfinder" update="frmEditarMeusDados"
                                              actionListener="#{modeloGeralView.editarUserLogadoView()}" 
-                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                                <p:confirm  header="ATENÇÃO!" message="  Deseja salvar as informações? " icon="Alert24-iconfinder" />
-                            </p:commandButton>
+                                             onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
                             <p:spacer width="20px" />
 
                             <p:commandButton value="Cancelar" type="button" icon="XPreto24-iconfinder" 

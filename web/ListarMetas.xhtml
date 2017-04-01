@@ -153,9 +153,7 @@
 
                         <p:commandButton id="btnSalvar" value="Salvar" actionListener="#{ListarMetasView.salvarView()}" 
                                          icon="SalvarPreto24-iconfinder" update=":frmEdicao, :frmListagem:dtListagem" 
-                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" >
-                            <p:confirm header="ATENÇÃO!" message="Deseja realmente salvar?" icon="Alert24-iconfinder" />
-                        </p:commandButton>
+                                         onclick="PF('blockUiGeral').show()" oncomplete="PF('blockUiGeral').hide()" />
                         <p:spacer width="20px" />
 
                         <p:commandButton value="Cancelar" type="button" icon="XPreto24-iconfinder"

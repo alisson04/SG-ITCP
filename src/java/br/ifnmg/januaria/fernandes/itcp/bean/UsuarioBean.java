@@ -127,14 +127,14 @@ public class UsuarioBean implements Serializable  {
         String[] cargos;//para a tela de listar usuarios
 
         cargos = new String[8];
-        cargos[0] = "Coordenador";
-        cargos[1] = "Professor";
-        cargos[2] = "Técnico Administrativo";
-        cargos[3] = "Estagiário Remunerado";
-        cargos[4] = "Estagiário Voluntário";
-        cargos[5] = "Bolsista - PIBED";
-        cargos[6] = "Bolsista - PIBIC";
-        cargos[7] = "Bolsista - PROEXT";
+        cargos[0] = "Coordenador(a)";
+        cargos[1] = "Professor(a)";
+        cargos[2] = "Técnico administrativo(a)";
+        cargos[3] = "Estagiári(a) remunerado(a)";
+        cargos[4] = "Estagiário(a) voluntário(a)";
+        cargos[5] = "Bolsista de pesquisa";
+        cargos[6] = "Bolsista de extensão";
+        cargos[7] = "Outro";
 
         return cargos;
     }

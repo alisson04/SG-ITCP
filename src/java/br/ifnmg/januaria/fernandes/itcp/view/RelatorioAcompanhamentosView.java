@@ -1,11 +1,7 @@
 package br.ifnmg.januaria.fernandes.itcp.view;
 
 import br.ifnmg.januaria.fernandes.itcp.bean.AcompanhamentoEptBean;
-import br.ifnmg.januaria.fernandes.itcp.bean.EmpreendimentoBean;
-import br.ifnmg.januaria.fernandes.itcp.bean.UsuarioBean;
 import br.ifnmg.januaria.fernandes.itcp.domain.AcompanhamentoEpt;
-import br.ifnmg.januaria.fernandes.itcp.domain.Empreendimento;
-import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

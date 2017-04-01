@@ -57,6 +57,8 @@ public class RelatoriosManager<TipoClasse> {
         String cam = getRealPath() + "image/imagemTopoRelatorio/" + inc.getFotoTopoRelatorio();
         params.put("paramImage", cam);
         
+        System.out.println("Relatorio COM: " + caminhoRelatorio);
+        
         //CASO QUEIRA USAR IMAGEM COMO INPUT
         //InputStream is = new BufferedInputStream(
         //    new FileInputStream("/home/alisson/MEGA/Sigitec/NetBeansProjects/sigitec/build/web/image/imagemTopoRelatorio/1483911375665.jpg"));
@@ -83,6 +85,8 @@ public class RelatoriosManager<TipoClasse> {
         String cam = getRealPath() + "image/imagemTopoRelatorio/" + inc.getFotoTopoRelatorio();
         params.put("paramImage", cam);
         params.put("REPORT_CONNECTION", Conexao()); // Aqui passei o método por parâmetro... 
+        
+        System.out.println("Relatorio SEM: " + caminhoRelatorio);
         
         //CASO QUEIRA USAR IMAGEM COMO INPUT
         //InputStream is = new BufferedInputStream(

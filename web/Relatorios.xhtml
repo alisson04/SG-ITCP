@@ -111,7 +111,7 @@
                                             <p:outputLabel value="Empreendimento:" />
                                             <p:selectOneMenu value="#{RelatorioIndicadoresMaturidadeView.empreendimentoSelecionado}" 
                                                              converter="generic" autoWidth="false" style="width: 200px" >
-                                                <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                                <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
                                                 <p:ajax update="frmrelatorios" event="change"  
                                                         listener="#{RelatorioIndicadoresMaturidadeView.selecionaEptTela()}"/>
                                                 <f:selectItems value="#{RelatorioIndicadoresMaturidadeView.listaEmpreendimentos}" var="ept" 
@@ -131,7 +131,7 @@
                                                 <p:ajax update="frmrelatorios" event="change"
                                                         listener="#{RelatorioIndicadoresMaturidadeView.selecionaCategoriaTela()}" />
 
-                                                <f:selectItem itemLabel="Clique para selecionar" itemValue="" />
+                                                <f:selectItem itemLabel="Selecione" itemValue="" />
 
                                                 <f:selectItem itemLabel="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}" 
                                                               itemValue="#{RelatorioIndicadoresMaturidadeView.listaIndicadores[0].categoria}"  />
@@ -193,10 +193,10 @@
                                     <p:panel rendered="#{RelatorioIndicadoresMaturidadeView.categoriaSelecionada != ''}" >
                                         <p:outputPanel style="text-align:center;">
                                             <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
-                                            <p:remoteCommand name="rc" update=":frmrelatorios:panelInIndicadoresMaturidade" 
+                                            <p:remoteCommand name="rc1" update=":frmrelatorios:panelInIndicadoresMaturidade" 
                                                              oncomplete="PF('dlWidGetVarReportIndicadores').show()" />
                                             <p:commandButton value="Gerar Relatório" immediate="true"                                               
-                                                             onsuccess="rc()"  />                                        
+                                                             onsuccess="rc1()"  />                                        
                                         </p:outputPanel>
                                     </p:panel>
                                 </p:layoutUnit>
@@ -226,7 +226,7 @@
                                                              autoWidth="false" style="width: 200px" >
                                                 <p:ajax update="frmrelatorios" event="change"  
                                                         listener="#{RelatorioPlanoAcaoView.filtrarPlanos()}"/>
-                                                <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                                <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
                                                 <f:selectItems value="#{RelatorioPlanoAcaoView.listaEes}" var="var" 
                                                                itemLabel="#{var.sigla}" itemValue="#{var}"/>
                                             </p:selectOneMenu>
@@ -249,7 +249,7 @@
                                                              rendered="#{RelatorioPlanoAcaoView.listaPlanos.size() > 0}" >
                                                 <p:ajax update="frmrelatorios" event="change" 
                                                         listener="#{RelatorioPlanoAcaoView.gerarMetas()}" />
-                                                <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                                <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
                                                 <f:selectItems value="#{RelatorioPlanoAcaoView.listaPlanos}" var="var" 
                                                                itemLabel="#{var.nome}" itemValue="#{var}"/>                                            
                                             </p:selectOneMenu>
@@ -262,10 +262,10 @@
                                     <p:panel rendered="#{RelatorioPlanoAcaoView.planoSelecionado != null}" >
                                         <p:outputPanel style="text-align:center;" >
                                             <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
-                                            <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
+                                            <p:remoteCommand name="rc2" update=":frmrelatorios:panelIn" 
                                                              oncomplete="PF('diaRelatorioExecucaoPlanoWidGetVar').show()" />
                                             <p:commandButton value="Gerar Relatório" immediate="true"                                               
-                                                             onsuccess="rc()"  />
+                                                             onsuccess="rc2()"  />
                                         </p:outputPanel>
                                     </p:panel>
                                 </p:layoutUnit>
@@ -354,9 +354,9 @@
                                         <p:outputPanel style="text-align:center;" >
                                             <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png"
                                                             onclick="PF('diaRelatorioWidGetVar').hide()" />
-                                            <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
+                                            <p:remoteCommand name="rc3" update=":frmrelatorios:panelIn" 
                                                              oncomplete="PF('diaRelatorioWidGetVar').show()" />
-                                            <p:commandButton value="Gerar Relatório" immediate="true" onsuccess="rc()"  />                                        
+                                            <p:commandButton value="Gerar Relatório" immediate="true" onsuccess="rc3()"  />                                        
                                         </p:outputPanel>
                                     </p:panel>
                                 </p:layoutUnit>
@@ -405,12 +405,12 @@
                                 <p:layoutUnit position="west" size="325" ><!--Lado esquerdo-->
                                     <p:panel >
                                         <p:outputPanel style="text-align:center;">
-                                            <p:outputLabel value="Empreendimento:" />
+                                            <p:outputLabel value="Filtrar por empreendimento:" />
                                             <p:selectOneMenu value="#{RelatorioAtividadesView.eesSelecionado}" converter="generic"
                                                              autoWidth="false" style="width: 200px" >
                                                 <p:ajax update="frmrelatorios" event="change"  
                                                         listener="#{RelatorioAtividadesView.filtrarPorData()}"/>
-                                                <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                                <f:selectItem itemLabel="Todos" itemValue="#{null}" />
                                                 <f:selectItems value="#{RelatorioAtividadesView.listaEes}" var="var" 
                                                                itemLabel="#{var.sigla}" itemValue="#{var}"/>
                                             </p:selectOneMenu>
@@ -420,12 +420,12 @@
 
                                     <p:panel >
                                         <p:outputPanel style="text-align:center;">
-                                            <p:outputLabel value="Usuario:" />
+                                            <p:outputLabel value="Filtrar por usuário:" />
                                             <p:selectOneMenu value="#{RelatorioAtividadesView.userSelecionado}" converter="generic"
                                                              autoWidth="false" style="width: 200px" >
                                                 <p:ajax update="frmrelatorios" event="change"
                                                         listener="#{RelatorioAtividadesView.filtrarPorData()}"/>
-                                                <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" />
+                                                <f:selectItem itemLabel="Todos" itemValue="#{null}" />
                                                 <f:selectItems value="#{RelatorioAtividadesView.listaUser}" var="var" 
                                                                itemLabel="#{var.nome}" itemValue="#{var}"/>
                                             </p:selectOneMenu>
@@ -464,10 +464,10 @@
                                     <p:panel rendered="#{RelatorioAtividadesView.listaAtv.size() > 0}" >
                                         <p:outputPanel style="text-align:center;" >
                                             <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
-                                            <p:remoteCommand name="rc" update=":frmrelatorios:panelIn" 
+                                            <p:remoteCommand name="rc4" update=":frmrelatorios:panelIn" 
                                                              oncomplete="PF('diaRelatorioAtiviadesWidGetVar').show()" />
                                             <p:commandButton value="Gerar Relatório" immediate="true"                                               
-                                                             onsuccess="rc()" />                                        
+                                                             onsuccess="rc()4" />                                        
                                         </p:outputPanel>
                                     </p:panel>
                                 </p:layoutUnit>
@@ -540,9 +540,9 @@
                                     <p:panel rendered="#{RelatorioAcompanhamentosView.listaAcom.size() > 0}" >
                                         <p:outputPanel style="text-align:center;" >
                                             <p:graphicImage width="128px" height="128px" name="/icons128/128Relatorio.png" />
-                                            <p:remoteCommand name="rc" oncomplete="PF('diaRelatorioAcompaWidGetVar').show()" />
+                                            <p:remoteCommand name="rc5" oncomplete="PF('diaRelatorioAcompaWidGetVar').show()" />
                                             <p:commandButton value="Gerar Relatório" immediate="true"                                               
-                                                             onsuccess="rc()" />                                        
+                                                             onsuccess="rc5()" />                                        
                                         </p:outputPanel>
                                     </p:panel>
                                 </p:layoutUnit>
