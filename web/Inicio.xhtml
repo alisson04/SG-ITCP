@@ -44,7 +44,7 @@
                                   styleClass="colunasTabela200PX" >
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('varGlobal').filter()" >
-                                    <f:selectItem itemLabel="Sem filtro" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Todas" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItem itemLabel="Não iniciada" itemValue="Não iniciada" />
                                     <f:selectItem itemLabel="Iniciada" itemValue="Iniciada" />
                                     <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" />
@@ -93,7 +93,7 @@
 
                             <p:graphicImage width="32px" height="32px" styleClass="semMargin" name="/icons32/32Exclamation.png" 
                                             rendered="#{atividadeCursor.status != 'Iniciada'}"
-                                            title="Atividade não esta iniciada!" />
+                                            title="Atividade precisa estar iniciada!" />
                         </p:column>
 
                         <f:facet name="footer">

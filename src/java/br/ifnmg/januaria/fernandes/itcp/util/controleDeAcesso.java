@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 import javax.servlet.Filter;
 import java.util.logging.LogRecord;
-import javax.faces.application.ViewExpiredException;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -42,10 +41,10 @@ public class controleDeAcesso implements Filter {
                 if (!"Coordenador".equals(((Usuario) session.getAttribute("USUARIOLogado")).getCargo())
                         && req.getServletPath().endsWith("ConfigurarSistema.xhtml")) {
                     System.out.println("__________controleDeAcesso(doFilter): Usuario tentando acessar pagina restrita");
-                    redireciona("/sigIncubatecs/Inicio.xhtml", response);//redireciona para inicio
+                    redireciona("/sgitcp/Inicio.xhtml", response);//redireciona para inicio
                 } else if ((session.getAttribute("USUARIOLogado") != null)//usuario logado querendo acessar login
                         && req.getServletPath().endsWith("Login.xhtml")) {
-                    redireciona("/sigIncubatecs/Inicio.xhtml", response);//redireciona para inicio
+                    redireciona("/sgitcp/Inicio.xhtml", response);//redireciona para inicio
                 } else {//Usuario acessando paginas que tem permissão(Situação comum)
                     chain.doFilter(request, response);
                 }
@@ -54,7 +53,7 @@ public class controleDeAcesso implements Filter {
             }
         } else {
             System.out.println("__________controleDeAcesso(doFilter): Redirecionou para LOGIN");
-            redireciona("/sigIncubatecs/Login.xhtml", response);
+            redireciona("/sgitcp/Login.xhtml", response);
         }
     }
 

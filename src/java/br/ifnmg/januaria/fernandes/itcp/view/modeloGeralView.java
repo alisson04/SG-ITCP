@@ -7,14 +7,18 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Incubadora;
 import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.UploadArquivo;
+import java.io.File;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.mail.EmailException;
 import org.primefaces.context.RequestContext;
@@ -198,6 +202,32 @@ public class modeloGeralView extends MensagensGenericas implements Serializable 
             return inc.getFotoTelaGeral();
         } catch (Exception ex) {
             throw new FacesException(ex);
+        }
+    }
+
+    private String getRealPath() {
+        ExternalContext externalContext
+                = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletResponse response
+                = (HttpServletResponse) externalContext.getResponse();
+
+        FacesContext aFacesContext = FacesContext.getCurrentInstance();
+        ServletContext context
+                = (ServletContext) aFacesContext.getExternalContext().getContext();
+
+        return context.getRealPath("/");
+    }
+
+    public boolean renderisaFotoTopo() {
+        File file2 = new File(getRealPath() + "image/imagenTopo");
+        int count = file2.listFiles().length;
+
+        if (count >0) {
+            System.out.println("EX---------------------------");
+            return true;
+        } else {
+            System.out.println("NA-----------------------");
+            return false;
         }
     }
 

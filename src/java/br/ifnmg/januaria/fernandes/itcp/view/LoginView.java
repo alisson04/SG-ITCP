@@ -8,7 +8,6 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Usuario;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
 import br.ifnmg.januaria.fernandes.itcp.util.SessionUtil;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Random;
@@ -160,8 +159,8 @@ public class LoginView extends MensagensGenericas implements Serializable {
                     RequestContext context = RequestContext.getCurrentInstance();
                     context.execute("PF('blockLogar').show()");
 
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("/sigIncubatecs/Inicio.xhtml");
-                    return "/sigIncubatecs/Inicio.xhtml";
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/sgitcp/Inicio.xhtml");
+                    return "/sgitcp/Inicio.xhtml";
                 } else {
                     usuarioLogado = userTemp;//para manter o dados digitados na tela
                     msgGrowlErroCustomizavel("Acesso negado", "Esse usuário esta desativado!");

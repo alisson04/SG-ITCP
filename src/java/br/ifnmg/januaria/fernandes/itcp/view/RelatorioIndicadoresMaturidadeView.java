@@ -204,6 +204,13 @@ public class RelatorioIndicadoresMaturidadeView extends MensagensGenericas imple
                 System.out.println("QUANTI: " + listaIndsSelecionados.size());
             }
 
+            //AS condições abaixo servem para mostrar uma mensagem caso não aja lançamento para os inds selecionados
+            if(listaIndsSelecionados.isEmpty()){
+                System.out.println("Nenhum ind selecionado!");
+            }else if (listaGraficoInds.isEmpty()) {
+                msgPanelErroCustomizavel("Impossível gerar gráficos", "Nenhum desses indicadores tem lançamentos!");
+            }
+
             geraWidgetVars();
         } catch (Exception ex) {
             throw new FacesException(ex);

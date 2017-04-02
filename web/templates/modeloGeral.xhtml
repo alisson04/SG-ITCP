@@ -11,7 +11,7 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>SIGITEC - Modelo Global</title>
+        <title>Sistema SG-ITCP</title>
 
         <h:outputStylesheet library="css" name="icons16.css" />
         <link rel="stylesheet" href="/resources/css/icons16.css"/>
@@ -135,7 +135,7 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
-                <p:graphicImage id="ftmImagemTopoGeral" width="100%" height="100px"
+                <p:graphicImage id="ftmImagemTopoGeral" width="100%" height="100px" rendered="#{modeloGeralView.renderisaFotoTopo()}"
                                 value="./image/imagenTopo/#{modeloGeralView.geraFotoTopo()}"/>
 
                 <h:form id="frmModeloGeral">
@@ -144,7 +144,7 @@
                                     action="/Inicio.xhtml?faces-redirect=true" />
 
                         <p:submenu label="Incubadora" icon="GrupoPreto24-iconfinder" >
-                            <p:menuitem value="Parceiros" action="/ListarParceiros.xhtml?faces-redirect=true"/>
+                            <p:menuitem value="Gerir parceiros" action="/ListarParceiros.xhtml?faces-redirect=true"/>
 
                             <p:menuitem value="Configurações" action="/ConfigurarSistema.xhtml?faces-redirect=true" 
                                         rendered="#{modeloGeralView.usuarioLogado.cargo == 'Coordenador'}"/>

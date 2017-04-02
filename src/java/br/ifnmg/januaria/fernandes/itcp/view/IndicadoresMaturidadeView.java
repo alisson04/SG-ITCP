@@ -10,7 +10,14 @@ import br.ifnmg.januaria.fernandes.itcp.domain.Indicador;
 import br.ifnmg.januaria.fernandes.itcp.domain.NotaMaturidade;
 import br.ifnmg.januaria.fernandes.itcp.util.GerenciadorIndicadores;
 import br.ifnmg.januaria.fernandes.itcp.util.MensagensGenericas;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,8 +27,12 @@ import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
@@ -33,12 +44,12 @@ import org.primefaces.model.chart.LineChartModel;
 @ManagedBean(name = "IndicadoresMaturidadeView")
 @ViewScoped
 public class IndicadoresMaturidadeView extends MensagensGenericas implements Serializable {
-    
+
     //Empreendimento Vars
     private Empreendimento empreendimentoSelecionado;
     private List<Empreendimento> listaEmpreendimentos;
     private EmpreendimentoBean eptBean;
-    private List<Empreendimento> listaEmpreendimentosFiltrados;    
+    private List<Empreendimento> listaEmpreendimentosFiltrados;
 
     //EmpreendimentoIndicador Vars
     private List<EmpreendimentoIndicador> listaEptIndSalvar;
@@ -64,17 +75,20 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     private boolean eptCheckBox;
     private boolean cateCheckBox;
     private boolean indCheckBox;
-    
+
     //Tamanho dos gráficos Var
     private int tamanhoGraficos;
-    
+
     //CheckBox Indicadores
     private boolean selecionaTodosInds;//Variavel que define que todos os indicadores do check box serão selecionados
-    
+
     //Variáveis nota de maturidade
     private List<NotaMaturidade> listaNotas;
     private NotaMaturidadeBean notaBean;
-    
+
+    //Formulário de inds em PDF download
+    private StreamedContent file;
+
     //Construtor
     public IndicadoresMaturidadeView() {
         try {
@@ -100,30 +114,32 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
             eptCheckBox = false;
             cateCheckBox = false;
             indCheckBox = false;
-            
+
             //Tamanho dos gráficos Var
             tamanhoGraficos = 2;//2 significa que é tamanho médio o inicial
-            
+
             selecionaTodosInds = false;
-            
+
             //Notas de maturidade
             notaBean = new NotaMaturidadeBean();
             listaNotas = notaBean.listarUltimasNotasBean(listaEmpreendimentos);
+
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
     }
+
     //Metodos tamanho dos gráficos
-    public void configuraTamanhoGrafico(int tamanho){
-        if(tamanho == 1){
+    public void configuraTamanhoGrafico(int tamanho) {
+        if (tamanho == 1) {
             tamanhoGraficos = 1;
-        }else if(tamanho == 2){
+        } else if (tamanho == 2) {
             tamanhoGraficos = 2;
-        }else{
+        } else {
             tamanhoGraficos = 3;
         }
     }
-    
+
     //Metodos CheckBox
     public void configuraCheckBox(int tipo) {
         if (tipo == 1) {
@@ -134,8 +150,8 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
             indCheckBox = true;
         }
     }
-    
-    public void selecionaTodosIndsView(){
+
+    public void selecionaTodosIndsView() {
         listaIndsSelecionados = listaTodosInds;
         criaGraficoInd();
     }
@@ -146,15 +162,19 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         listaGraficoInds = new ArrayList();//Limpa a lista de gráficos
         listaIndicadores = gerenIndicadores.listarIndicadores();//Pega todos os inds
         listaIndsSelecionados = new ArrayList();//Limpa os inds selecionados
-        selecionaTodosInds=false;//Diz que todos os inds não estão selecionados
-        
+        selecionaTodosInds = false;//Diz que todos os inds não estão selecionados
+
         //Filtra
         filtraIndsPorCategoria();
     }
-    
-    public void selecionaEptTela(){
-        liberaPainelIndicadores();
-        selecionaTodosInds=false;//Diz que nenhum ind estaselecionados
+
+    public void selecionaEptTela() {
+        if (empreendimentoSelecionado != null) {
+            liberaPainelIndicadores();
+            selecionaTodosInds = false;//Diz que nenhum ind estaselecionados            
+        } else {
+            System.out.println("NULI");
+        }
     }
 
     //METODOS gráfico
@@ -165,10 +185,10 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
     //Cria uma lista com os gráficos dos inds selecionados
     public void criaGraficoInd() {
         try {
-            if(listaTodosInds.size() == listaIndsSelecionados.size()){
-                selecionaTodosInds=true;
-            }else{
-                selecionaTodosInds=false;
+            if (listaTodosInds.size() == listaIndsSelecionados.size()) {
+                selecionaTodosInds = true;
+            } else {
+                selecionaTodosInds = false;
             }
             Calendar calendar = Calendar.getInstance();//Pega a data atual
             calendar.add(Calendar.DAY_OF_MONTH, 3);//Adiciona 3 dias - P ficar + bonito no gráfico
@@ -197,6 +217,12 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
                 System.out.println("QUANTI: " + listaIndsSelecionados.size());
             }
 
+            //AS condições abaixo servem para mostrar uma mensagem caso não aja lançamento para os inds selecionados
+            if (listaIndsSelecionados.isEmpty()) {
+                System.out.println("Nenhum ind selecionado!");
+            } else if (listaGraficoInds.isEmpty()) {
+                msgPanelErroCustomizavel("Impossível gerar gráficos", "Nenhum desses indicadores tem lançamentos!");
+            }
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
@@ -345,6 +371,12 @@ public class IndicadoresMaturidadeView extends MensagensGenericas implements Ser
         } catch (Exception ex) {
             throw new FacesException(ex);
         }
+    }
+
+    public StreamedContent getFile() throws FileNotFoundException {
+        InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/fotos/a.pdf"); //Caminho onde está salvo o arquivo.
+        file = new DefaultStreamedContent(stream, "application/pdf", "indicadores.pdf");
+        return file;
     }
 
     //SETS GETS

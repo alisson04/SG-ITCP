@@ -37,7 +37,7 @@
 				<textElement textAlignment="Center">
 					<font size="20" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Relatório da evolução das notas de maturidade e acumulo de horas trabalhadas]]></text>
+				<text><![CDATA[Relatório da evolução das notas de maturidade e acúmulo de horas trabalhadas]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
